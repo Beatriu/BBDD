@@ -13,6 +13,6 @@ class ComarcaPoblacioMigration extends Migration
 
     public function down()
     {
-        //
+        // 
     }
 }
