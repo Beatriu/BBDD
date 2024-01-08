@@ -14,7 +14,7 @@ class AfegirTiquetSeeder extends Seeder
         for ($i = 0; $i < 10; $i++) {
 
             $data = [
-                'id_tiquet' => $fake->uuid(),
+                'id_tiquet' => $fake->randomDigit(12),
                 'codi_equip' => $fake->uuid(),
                 'descripcio_avaria' => $fake->realText(512),
                 'nom_persona_contacte_centre' => $fake->name(),
