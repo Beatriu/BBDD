@@ -21,7 +21,7 @@ class TipusInventariInventariMigration extends Migration
             ]
         ]);
         $this->forge->addKey('id_tipus_inventari', true);
-        $this->forge->createTable('tipus_Inventari');
+        $this->forge->createTable('tipus_inventari');
 
         $this->forge->addField([
             'id_inventari' =>[
@@ -63,7 +63,7 @@ class TipusInventariInventariMigration extends Migration
         $this->forge->addForeignKey('codi_centre','centre','codi_centre');
         $this->forge->addForeignKey('id_tipus_inventari','tipus_inventari','id_tipus_inventari');
         $this->forge->addForeignKey('id_intervencio','intervencio','id_intervencio');
-        $this->forge->createTable('tiquet');
+        $this->forge->createTable('inventari');
     }
 
     public function down()
