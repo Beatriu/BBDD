@@ -14,8 +14,8 @@ class AfegirTipusDispositiuSeeder extends Seeder
         for ($i = 1; $i < 11; $i++) {
 
             $data = [
-                'id_tipus_dispositiu' => $i,    //$fake -> randomDigit()
-                'nom_tipus_dispositiu' => $fake -> word()
+                'id_tipus_dispositiu' => $fake ->randomDigit(8),
+                'nom_tipus_dispositiu' => $fake -> word(2)
             ];
             $this->db->table('tipus_dispositiu')->insert($data);
         }

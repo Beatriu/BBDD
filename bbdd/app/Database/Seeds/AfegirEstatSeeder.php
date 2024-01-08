@@ -14,8 +14,8 @@ class AfegirEstatSeeder extends Seeder
         for ($i = 1; $i < 11; $i++) {
 
             $data = [
-                'id_estat' => $i,//$fake -> randomDigit(),
-                'nom_estat' => $fake-> word()
+                'id_estat' => $fake ->randomDigit(8),
+                'nom_estat' => $fake->word(2),
             ];
             $this->db->table('estat')->insert($data);
         }

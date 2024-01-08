@@ -19,8 +19,8 @@ class AfegirInventariSeeder extends Seeder
                 'data_compra' => $fake->date('d-m-y h:i:s'),
                 'preu' => $fake->randomFloat(),
                 'codi_centre' => $fake->uuid(),
-                'id_tipus_inventari' => $fake->randomDigit(),
-                'id_intervencio' => $fake->randomDigit()
+                'id_tipus_inventari' => $fake->randomDigit(2),
+                'id_intervencio' => $fake->randomDigit(8)
             ];
             $this->db->table('inventari')->insert($data);
         }
