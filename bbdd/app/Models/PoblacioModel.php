@@ -10,9 +10,9 @@ class PoblacioModel extends Model
     protected $primaryKey       = 'id_poblacio';
     protected $useAutoIncrement = false;
     protected $returnType       = 'array';
-    protected $useSoftDeletes   = true;
+    protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['nom_poblacio','id_comarca'];
+    protected $allowedFields    = ['id_poblacio','nom_poblacio','id_comarca'];
 
     // Dates
     protected $useTimestamps = false;
@@ -38,12 +38,12 @@ class PoblacioModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function addCountry($d1,$d2,$d3)
+    public function addPoblacio($d1,$d2,$d3)
     {
         $this->insert([
-            "sortname" => $d1,
-            "name" => $d2,
-            "phonecode" => $d3
+            "id_poblacio" => $d1,
+            "nom_poblacio" => $d2,
+            "id_comarca" => $d3
         ]);
     }
 }
