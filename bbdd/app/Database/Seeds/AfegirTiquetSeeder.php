@@ -11,21 +11,21 @@ class AfegirTiquetSeeder extends Seeder
     {
         $fake = Factory::create("es_ES");
 
-        for ($i = 1; $i < 11; $i++) {
+        for ($i = 0; $i < 10; $i++) {
+
             $data = [
-                'id_tiquet' => $fake->uuid(),
-                'codi_equip' =>$fake->word(),
+                'id_tiquet' => $fake->randomDigit(12),
+                'codi_equip' => $fake->uuid(),
                 'descripcio_avaria' => $fake->realText(512),
-                'nom_persona_contacte_centre' =>$fake->firstName(),
-                'correu_persona_contacte_centre' =>$fake->email(),
-                'data_alta' =>$fake->date('d-m-y h:i:s'),
+                'nom_persona_contacte_centre' => $fake->name(),
+                'correu_persona_contacte_centre' => $fake->email(),
+                'data_alta' => $fake->date('d-m-y h:i:s'),
                 'data_ultima_modificacio' => $fake->date('d-m-y h:i:s'),
-                'id_tipus_dispositiu' =>$fake->randomDigit(),
-                'id_estat' => $fake->randomDigit(),
-                'codi_centre_emissor' =>$fake->uuid(),
+                'id_tipus_dispositiu' => $fake->randomDigit(8),
+                'id_estat' => $fake->randomDigit(8),
+                'codi_centre_emissor' => $fake->uuid(),
                 'codi_centre_reparador' => $fake->uuid()
             ];
-
             $this->db->table('tiquet')->insert($data);
         }
     }

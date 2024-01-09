@@ -5,7 +5,7 @@ namespace App\Database\Seeds;
 use CodeIgniter\Database\Seeder;
 use Faker\Factory;
 
-class AfegirTipusInventariSeeder extends Seeder
+class AfegirTipusIntervencioSeeder extends Seeder
 {
     public function run()
     {
@@ -14,10 +14,10 @@ class AfegirTipusInventariSeeder extends Seeder
         for ($i = 1; $i < 11; $i++) {
 
             $data = [
-                'id_tipus_inventari' => $fake->randomDigit(8),
-                'nom_tipus_inventari' => $fake -> word(2),
+                'id_tipus_intervencio' => $i,    //$fake -> randomDigit()
+                'nom_tipus_intervencio' => $fake -> word()
             ];
-            $this->db->table('tipus_inventari')->insert($data);
+            $this->db->table('tipus_intervencio')->insert($data);
         }
     }
 }

@@ -95,8 +95,8 @@ class EstatTipusDispositiuTiquetMigration extends Migration
         $this->forge->addKey('id_tiquet', true);
         $this->forge->addForeignKey('id_tipus_dispositiu','tipus_dispositiu','id_tipus_dispositiu');
         $this->forge->addForeignKey('id_estat','estat','id_estat');
-        $this->forge->addForeignKey('codi_centre_emisso','centre','codi_centre_emisso');
-        $this->forge->addForeignKey('codi_centre_reparador','centre','codi_centre_reparador');
+        $this->forge->addForeignKey('codi_centre_emissor','centre','codi_centre');
+        $this->forge->addForeignKey('codi_centre_reparador','centre','codi_centre');
         $this->forge->createTable('tiquet');
     }
 
