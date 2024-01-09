@@ -25,7 +25,7 @@ class TipusInventariInventariMigration extends Migration
 
         $this->forge->addField([
             'id_inventari' =>[
-                'type' => 'VARCAHR',
+                'type' => 'VARCHAR',
                 'constraint' => '8',
                 'null' => false,
             ],
