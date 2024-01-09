@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class InventariModel extends Model
 {
-    protected $table            = 'inventaris';
+    protected $table            = 'inventari';
     protected $primaryKey       = 'id_inventari';
     protected $useAutoIncrement = false;
     protected $returnType       = 'array';

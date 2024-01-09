@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class IntervencioModel extends Model
 {
-    protected $table            = 'intervencios';
+    protected $table            = 'intervencio';
     protected $primaryKey       = 'id_intervencio';
     protected $useAutoIncrement = false;
     protected $returnType       = 'array';
