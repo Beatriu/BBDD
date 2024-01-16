@@ -38,7 +38,7 @@ class ComarcaModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function addCentre($d1,$d2)
+    public function addComarca($d1,$d2)
     {
         $this->insert([
             "id_comarca" => $d1,

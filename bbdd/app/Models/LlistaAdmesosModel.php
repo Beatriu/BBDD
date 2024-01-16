@@ -38,7 +38,7 @@ class LlistaAdmesosModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function addCentre($d1,$d2,$d3)
+    public function addLlistaAdmesos($d1,$d2,$d3)
     {
         $this->insert([
             "correu_professor" => $d1,

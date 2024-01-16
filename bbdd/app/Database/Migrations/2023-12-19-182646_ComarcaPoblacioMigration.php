@@ -27,6 +27,12 @@ class ComarcaPoblacioMigration extends Migration
         $this->forge->addField([
             'id_poblacio'          => [
                 'type'           => 'INT',
+                'constraint'     => 10,
+                'unsigned'       => true,
+                'null'          => false,
+            ],
+            'codi_postal'          => [
+                'type'           => 'INT',
                 'constraint'     => 5,
                 'unsigned'       => true,
                 'null'          => false,

@@ -3,30 +3,24 @@
 namespace App\Database\Seeds;
 
 use CodeIgniter\Database\Seeder;
-use Faker\Factory;
 
 class AfegirCentreSeeder extends Seeder
 {
     public function run()
     {
-        $fake = Factory::create("es_ES");
+        $csvFile = fopen(WRITEPATH."uploads". DIRECTORY_SEPARATOR ."centres_bona.csv", "r"); // read file from /writable/uploads folder.
 
-        for ($i = 1; $i < 11; $i++) {
+        $firstline = true;
 
-            $data = [
-                'codi_centre' => $fake->uuid(),
-                'nom_centre' => $fake->word(),
-                'actiu' => $fake->randomElement([0, 1]),
-                'taller' => $fake->randomElement([0, 1]),
-                'telefon_centre' => $fake->randomNumber(12, true),
-                'adreca_fisica_centre' => $fake->streetAddress(),
-                'nom_persona_contacte_centre' => $fake->name(),
-                'correu_persona_contacte_centre' => $fake->email(),
-                'id_sstt' => $fake->uuid(),
-                'id_poblacio' => $fake->randomDigit(5, true),
-            ];
-            
-            $this->db->table('centre')->insert($data);
+        while (($data = fgetcsv($csvFile, 6000, ";")) !== FALSE) {
+            if (!$firstline) {
+                $model = new \App\Models\CentreModel;
+                $model->addCentre($data[0], $data[1], 1, 0, $data[4], $data[2], '', '', $data[5], $data[11]);
+                echo $data[0].$data[5];
+            }
+            $firstline = false;
         }
+
+        fclose($csvFile);
     }
 }

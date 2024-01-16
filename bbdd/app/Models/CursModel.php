@@ -38,7 +38,7 @@ class CursModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function addCentre($d1,$d2,$d3)
+    public function addCurs($d1,$d2,$d3)
     {
         $this->insert([
             "cicle" => $d1,

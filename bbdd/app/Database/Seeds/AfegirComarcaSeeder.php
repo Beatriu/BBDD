@@ -9,16 +9,18 @@ class AfegirComarcaSeeder extends Seeder
 {
     public function run()
     {
-        $fake = Factory::create("es_ES");
+        $csvFile = fopen(WRITEPATH."uploads". DIRECTORY_SEPARATOR ."comarques.csv", "r"); // read file from /writable/uploads folder.
 
-        for ($i = 1; $i < 11; $i++) {
+        $firstline = true;
 
-            $data = [
-                'id_comarca' => $fake->randomDigit(2, false),
-                'nom_comarca' => $fake->state(),
-            ];
-
-            $this->db->table('comarca')->insert($data);
+        while (($data = fgetcsv($csvFile, 2000, ";")) !== FALSE) {
+            if (!$firstline) {
+                $model = new \App\Models\ComarcaModel();
+                $model->addComarca($data[0], $data[1]);
+            }
+            $firstline = false;
         }
+
+        fclose($csvFile);
     }
 }

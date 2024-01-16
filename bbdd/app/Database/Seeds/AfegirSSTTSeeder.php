@@ -9,18 +9,18 @@ class AfegirSSTTSeeder extends Seeder
 {
     public function run()
     {
-        $fake = Factory::create("es_ES");
+        $csvFile = fopen(WRITEPATH."uploads". DIRECTORY_SEPARATOR ."sstt.csv", "r"); // read file from /writable/uploads folder.
 
-        for ($i = 1; $i < 11; $i++) {
+        $firstline = true;
 
-            $data = [
-                'id_sstt' => $fake -> uuid(),    //$fake -> randomDigit()
-                'nom_sstt' => $fake -> word(),
-                'adreca_fisica_sstt' => $fake ->streetAddress(),   
-                'telefon_sstt' => $fake -> phoneNumber(),
-                'correu_sstt' => $fake -> email(),
-            ];
-            $this->db->table('sstt')->insert($data);
+        while (($data = fgetcsv($csvFile, 2000, ";")) !== FALSE) {
+            if (!$firstline) {
+                $model = new \App\Models\SSTTModel();
+                $model->addSSTT($data[0], $data[1], $data[2], $data[3], $data[4]);
+            }
+            $firstline = false;
         }
+
+        fclose($csvFile);
     }
 }

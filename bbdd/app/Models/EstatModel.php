@@ -38,7 +38,7 @@ class EstatModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function addCentre($d1)
+    public function addEstat($d1)
     {
         $this->insert([
             "nom_estat" => $d1
