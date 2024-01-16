@@ -1,0 +1,1413 @@
+﻿Identificador;Codi postal;Codi municipi;Nom municipi;Comarca;Comarca en text
+1;8630;80018;Abrera;11;Baix Llobregat
+2;8256;80023;Aguilar de Segarra;7;Bages
+3;8281;80023;Aguilar de Segarra;7;Bages
+4;8328;80039;Alella;21;Maresme
+5;8587;80044;Alpens;43;Lluçanès
+6;8480;80057;Ametlla del Vallès, l';41;Vallès Oriental
+7;8350;80060;Arenys de Mar;21;Maresme
+8;8358;80076;Arenys de Munt;21;Maresme
+9;8717;80082;Argençola;6;Anoia
+10;8310;80095;Argentona;21;Maresme
+11;8271;80109;Artés;7;Bages
+12;8610;80116;Avià;14;Berguedà
+13;8611;80116;Avià;14;Berguedà
+14;8279;80121;Avinyó;7;Bages
+15;8734;80137;Avinyonet del Penedès;3;Alt Penedès
+16;8792;80137;Avinyonet del Penedès;3;Alt Penedès
+17;8793;80137;Avinyonet del Penedès;3;Alt Penedès
+18;8798;80137;Avinyonet del Penedès;3;Alt Penedès
+19;8591;80142;Aiguafreda;41;Vallès Oriental
+20;8911;80155;Badalona;13;Barcelonès
+21;8912;80155;Badalona;13;Barcelonès
+22;8913;80155;Badalona;13;Barcelonès
+23;8914;80155;Badalona;13;Barcelonès
+24;8915;80155;Badalona;13;Barcelonès
+25;8916;80155;Badalona;13;Barcelonès
+26;8917;80155;Badalona;13;Barcelonès
+27;8918;80155;Badalona;13;Barcelonès
+28;8695;80168;Bagà;14;Berguedà
+29;8550;80174;Balenyà;24;Osona
+30;8660;80180;Balsareny;7;Bages
+31;8001;80193;Barcelona;13;Barcelonès
+32;8002;80193;Barcelona;13;Barcelonès
+33;8003;80193;Barcelona;13;Barcelonès
+34;8004;80193;Barcelona;13;Barcelonès
+35;8005;80193;Barcelona;13;Barcelonès
+36;8006;80193;Barcelona;13;Barcelonès
+37;8007;80193;Barcelona;13;Barcelonès
+38;8008;80193;Barcelona;13;Barcelonès
+39;8009;80193;Barcelona;13;Barcelonès
+40;8010;80193;Barcelona;13;Barcelonès
+41;8011;80193;Barcelona;13;Barcelonès
+42;8012;80193;Barcelona;13;Barcelonès
+43;8013;80193;Barcelona;13;Barcelonès
+44;8014;80193;Barcelona;13;Barcelonès
+45;8015;80193;Barcelona;13;Barcelonès
+46;8016;80193;Barcelona;13;Barcelonès
+47;8017;80193;Barcelona;13;Barcelonès
+48;8018;80193;Barcelona;13;Barcelonès
+49;8019;80193;Barcelona;13;Barcelonès
+50;8020;80193;Barcelona;13;Barcelonès
+51;8021;80193;Barcelona;13;Barcelonès
+52;8022;80193;Barcelona;13;Barcelonès
+53;8023;80193;Barcelona;13;Barcelonès
+54;8024;80193;Barcelona;13;Barcelonès
+55;8025;80193;Barcelona;13;Barcelonès
+56;8026;80193;Barcelona;13;Barcelonès
+57;8027;80193;Barcelona;13;Barcelonès
+58;8028;80193;Barcelona;13;Barcelonès
+59;8029;80193;Barcelona;13;Barcelonès
+60;8030;80193;Barcelona;13;Barcelonès
+61;8031;80193;Barcelona;13;Barcelonès
+62;8032;80193;Barcelona;13;Barcelonès
+63;8033;80193;Barcelona;13;Barcelonès
+64;8034;80193;Barcelona;13;Barcelonès
+65;8035;80193;Barcelona;13;Barcelonès
+66;8036;80193;Barcelona;13;Barcelonès
+67;8037;80193;Barcelona;13;Barcelonès
+68;8038;80193;Barcelona;13;Barcelonès
+69;8039;80193;Barcelona;13;Barcelonès
+70;8040;80193;Barcelona;13;Barcelonès
+71;8041;80193;Barcelona;13;Barcelonès
+72;8042;80193;Barcelona;13;Barcelonès
+73;8750;80193;Barcelona;13;Barcelonès
+74;8859;80207;Begues;11;Baix Llobregat
+75;43421;80214;Bellprat;6;Anoia
+76;8600;80229;Berga;14;Berguedà
+77;8611;80229;Berga;14;Berguedà
+78;8415;80235;Bigues i Riells del Fai;41;Vallès Oriental
+79;8416;80235;Bigues i Riells del Fai;41;Vallès Oriental
+80;8619;80240;Borredà;14;Berguedà
+81;8294;80253;Bruc, el;6;Anoia
+82;8553;80266;Brull, el;24;Osona
+83;8559;80266;Brull, el;24;Osona
+84;8794;80272;Cabanyes, les;3;Alt Penedès
+85;8718;80288;Cabrera d'Anoia;6;Anoia
+86;8349;80291;Cabrera de Mar;21;Maresme
+87;8348;80305;Cabrils;21;Maresme
+88;8280;80312;Calaf;6;Anoia
+89;8393;80327;Caldes d'Estrac;21;Maresme
+90;8140;80333;Caldes de Montbui;41;Vallès Oriental
+91;8275;80348;Calders;42;Moianès
+92;8370;80351;Calella;21;Maresme
+93;8281;80364;Calonge de Segarra;6;Anoia
+94;8506;80370;Calldetenes;24;Osona
+95;8262;80386;Callús;7;Bages
+96;8472;80399;Campins;41;Vallès Oriental
+97;8360;80403;Canet de Mar;21;Maresme
+98;8420;80410;Canovelles;41;Vallès Oriental
+99;8445;80425;Cànoves i Samalús;41;Vallès Oriental
+100;8811;80431;Canyelles;17;Garraf
+101;8786;80446;Capellades;6;Anoia
+102;8617;80459;Capolat;14;Berguedà
+103;8440;80462;Cardedeu;41;Vallès Oriental
+104;8261;80478;Cardona;7;Bages
+105;8787;80484;Carme;6;Anoia
+106;8789;80484;Carme;6;Anoia
+107;8680;80497;Casserres;14;Berguedà
+108;8693;80497;Casserres;14;Berguedà
+109;8618;80500;Castellar del Riu;14;Berguedà
+110;8211;80517;Castellar del Vallès;40;Vallès Occidental
+111;8696;80522;Castellar de n'Hug;14;Berguedà
+112;8296;80538;Castellbell i el Vilar;7;Bages
+113;8755;80543;Castellbisbal;40;Vallès Occidental
+114;8183;80556;Castellcir;42;Moianès
+115;8860;80569;Castelldefels;11;Baix Llobregat
+116;8604;80575;Castell de l'Areny;14;Berguedà
+117;8729;80581;Castellet i la Gornal;3;Alt Penedès
+118;8732;80581;Castellet i la Gornal;3;Alt Penedès
+119;8255;80594;Castellfollit del Boix;7;Bages
+120;8283;80608;Castellfollit de Riubregós;6;Anoia
+121;8297;80615;Castellgalí;7;Bages
+122;8251;80620;Castellnou de Bages;7;Bages
+123;8260;80620;Castellnou de Bages;7;Bages
+124;8719;80636;Castellolí;6;Anoia
+125;8183;80641;Castellterçol;42;Moianès
+126;8732;80654;Castellví de la Marca;3;Alt Penedès
+127;8769;80667;Castellví de Rosanes;11;Baix Llobregat
+128;8540;80673;Centelles;24;Osona
+129;8758;80689;Cervelló;11;Baix Llobregat
+130;8293;80692;Collbató;11;Baix Llobregat
+131;8178;80706;Collsuspina;42;Moianès
+132;8289;80713;Copons;6;Anoia
+133;8757;80728;Corbera de Llobregat;11;Baix Llobregat
+134;8940;80734;Cornellà de Llobregat;11;Baix Llobregat
+135;8880;80749;Cubelles;17;Garraf
+136;8318;80752;Dosrius;21;Maresme
+137;8319;80752;Dosrius;21;Maresme
+138;8292;80765;Esparreguera;11;Baix Llobregat
+139;8950;80771;Esplugues de Llobregat;11;Baix Llobregat
+140;8614;80787;Espunyola, l';14;Berguedà
+141;8148;80790;Estany, l';42;Moianès
+142;8698;80804;Fígols;14;Berguedà
+143;8469;80811;Fogars de Montclús;41;Vallès Oriental
+144;8479;80811;Fogars de Montclús;41;Vallès Oriental
+145;8495;80826;Fogars de la Selva;34;Selva
+146;8519;80832;Folgueroles;24;Osona
+147;8259;80847;Fonollosa;7;Bages
+148;8736;80850;Font-rubí;3;Alt Penedès
+149;8520;80863;Franqueses del Vallès, les;41;Vallès Oriental
+150;8521;80863;Franqueses del Vallès, les;41;Vallès Oriental
+151;8146;80879;Gallifa;40;Vallès Occidental
+152;8530;80885;Garriga, la;41;Vallès Oriental
+153;8850;80898;Gavà;11;Baix Llobregat
+154;8672;80902;Gaià;7;Bages
+155;8757;80919;Gelida;3;Alt Penedès
+156;8790;80919;Gelida;3;Alt Penedès
+157;8680;80924;Gironella;14;Berguedà
+158;8695;80930;Gisclareny;14;Berguedà
+159;8792;80945;Granada, la;3;Alt Penedès
+160;8183;80958;Granera;42;Moianès
+161;8401;80961;Granollers;41;Vallès Oriental
+162;8402;80961;Granollers;41;Vallès Oriental
+163;8403;80961;Granollers;41;Vallès Oriental
+164;8474;80977;Gualba;41;Vallès Oriental
+165;8253;80983;Sant Salvador de Guardiola;7;Bages
+166;8694;80996;Guardiola de Berguedà;14;Berguedà
+167;8503;81000;Gurb;24;Osona
+168;8901;81017;Hospitalet de Llobregat, l';13;Barcelonès
+169;8902;81017;Hospitalet de Llobregat, l';13;Barcelonès
+170;8903;81017;Hospitalet de Llobregat, l';13;Barcelonès
+171;8904;81017;Hospitalet de Llobregat, l';13;Barcelonès
+172;8905;81017;Hospitalet de Llobregat, l';13;Barcelonès
+173;8906;81017;Hospitalet de Llobregat, l';13;Barcelonès
+174;8907;81017;Hospitalet de Llobregat, l';13;Barcelonès
+175;8908;81017;Hospitalet de Llobregat, l';13;Barcelonès
+176;8700;81022;Igualada;6;Anoia
+177;8712;81022;Igualada;6;Anoia
+178;8719;81038;Jorba;6;Anoia
+179;8779;81043;Llacuna, la;6;Anoia
+180;8120;81056;Llagosta, la;41;Vallès Oriental
+181;8450;81069;Llinars del Vallès;41;Vallès Oriental
+182;8186;81075;Lliçà d'Amunt;41;Vallès Oriental
+183;8185;81081;Lliçà de Vall;41;Vallès Oriental
+184;8514;81094;Lluçà;43;Lluçanès
+185;8380;81108;Malgrat de Mar;21;Maresme
+186;8522;81115;Malla;24;Osona
+187;8560;81120;Manlleu;24;Osona
+188;8240;81136;Manresa;7;Bages
+189;8241;81136;Manresa;7;Bages
+190;8242;81136;Manresa;7;Bages
+191;8243;81136;Manresa;7;Bages
+192;8760;81141;Martorell;11;Baix Llobregat
+193;8107;81154;Martorelles;41;Vallès Oriental
+194;8510;81167;Masies de Roda, les;24;Osona
+195;8508;81173;Masies de Voltregà, les;24;Osona
+196;8320;81189;Masnou, el;21;Maresme
+197;8782;81192;Masquefa;6;Anoia
+198;8783;81192;Masquefa;6;Anoia
+199;8230;81206;Matadepera;40;Vallès Occidental
+200;8301;81213;Mataró;21;Maresme
+201;8302;81213;Mataró;21;Maresme
+202;8303;81213;Mataró;21;Maresme
+203;8304;81213;Mataró;21;Maresme
+204;8773;81228;Mediona;3;Alt Penedès
+205;8750;81234;Molins de Rei;11;Baix Llobregat
+206;8100;81249;Mollet del Vallès;41;Vallès Oriental
+207;8104;81249;Mollet del Vallès;41;Vallès Oriental
+208;8110;81252;Montcada i Reixac;40;Vallès Occidental
+209;8390;81265;Montgat;21;Maresme
+210;8199;81271;Monistrol de Montserrat;7;Bages
+211;8298;81271;Monistrol de Montserrat;7;Bages
+212;8691;81271;Monistrol de Montserrat;7;Bages
+213;8275;81287;Monistrol de Calders;42;Moianès
+214;8529;81290;Muntanyola;24;Osona
+215;8605;81304;Montclar;14;Berguedà
+216;8585;81311;Montesquiu;24;Osona
+217;8612;81326;Montmajor;14;Berguedà
+218;8717;81332;Montmaneu;6;Anoia
+219;8590;81347;Figaró-Montmany;41;Vallès Oriental
+220;8160;81350;Montmeló;41;Vallès Oriental
+221;8170;81363;Montornès del Vallès;41;Vallès Oriental
+222;8469;81379;Montseny;41;Vallès Oriental
+223;8180;81385;Moià;42;Moianès
+224;8278;81398;Mura;7;Bages
+225;8270;81402;Navarcles;7;Bages
+226;8269;81419;Navàs;7;Bages
+227;8670;81419;Navàs;7;Bages
+228;8671;81419;Navàs;7;Bages
+229;8698;81424;Nou de Berguedà, la;14;Berguedà
+230;8711;81430;Òdena;6;Anoia
+231;8611;81445;Olvan;14;Berguedà
+232;8734;81458;Olèrdola;3;Alt Penedès
+233;8799;81458;Olèrdola;3;Alt Penedès
+234;8795;81461;Olesa de Bonesvalls;3;Alt Penedès
+235;8640;81477;Olesa de Montserrat;11;Baix Llobregat
+236;8818;81483;Olivella;17;Garraf
+237;8515;81496;Olost;43;Lluçanès
+238;8516;81496;Olost;43;Lluçanès
+239;8573;81509;Orís;24;Osona
+240;8518;81516;Oristà;43;Lluçanès
+241;8787;81521;Orpí;6;Anoia
+242;8317;81537;Òrrius;21;Maresme
+243;8796;81542;Pacs del Penedès;3;Alt Penedès
+244;8389;81555;Palafolls;21;Maresme
+245;8184;81568;Palau-solità i Plegamans;40;Vallès Occidental
+246;8753;81574;Pallejà;11;Baix Llobregat
+247;8780;81574;Pallejà;11;Baix Llobregat
+248;8754;81580;Papiol, el;11;Baix Llobregat
+249;8150;81593;Parets del Vallès;41;Vallès Oriental
+250;8589;81607;Perafita;43;Lluçanès
+251;8784;81614;Piera;6;Anoia
+252;8292;81629;Hostalets de Pierola, els;6;Anoia
+253;8294;81629;Hostalets de Pierola, els;6;Anoia
+254;8781;81629;Hostalets de Pierola, els;6;Anoia
+255;8397;81635;Pineda de Mar;21;Maresme
+256;8733;81640;Pla del Penedès, el;3;Alt Penedès
+257;8787;81653;Pobla de Claramunt, la;6;Anoia
+258;8696;81666;Pobla de Lillet, la;14;Berguedà
+259;8213;81672;Polinyà;40;Vallès Occidental
+260;8738;81688;Pontons;3;Alt Penedès
+261;8820;81691;Prat de Llobregat, el;11;Baix Llobregat
+262;8281;81705;Prats de Rei, els;6;Anoia
+263;8513;81712;Prats de Lluçanès;43;Lluçanès
+264;8330;81727;Premià de Mar;21;Maresme
+265;8797;81748;Puigdàlber;3;Alt Penedès
+266;8672;81751;Puig-reig;14;Berguedà
+267;8692;81751;Puig-reig;14;Berguedà
+268;8282;81764;Pujalt;6;Anoia
+269;8606;81770;Quar, la;14;Berguedà
+270;8256;81786;Rajadell;7;Bages
+271;8299;81799;Rellinars;40;Vallès Occidental
+272;8291;81803;Ripollet;40;Vallès Occidental
+273;8430;81810;Roca del Vallès, la;41;Vallès Oriental
+274;8254;81825;Pont de Vilomara i Rocafort, el;7;Bages
+275;8510;81831;Roda de Ter;24;Osona
+276;8191;81846;Rubí;40;Vallès Occidental
+277;8719;81859;Rubió;6;Anoia
+278;8201;81878;Sabadell;40;Vallès Occidental
+279;8202;81878;Sabadell;40;Vallès Occidental
+280;8203;81878;Sabadell;40;Vallès Occidental
+281;8204;81878;Sabadell;40;Vallès Occidental
+282;8205;81878;Sabadell;40;Vallès Occidental
+283;8206;81878;Sabadell;40;Vallès Occidental
+284;8207;81878;Sabadell;40;Vallès Occidental
+285;8208;81878;Sabadell;40;Vallès Occidental
+286;8517;81884;Sagàs;14;Berguedà
+287;8281;81897;Sant Pere Sallavinera;6;Anoia
+288;8697;81901;Saldes;14;Berguedà
+289;8650;81918;Sallent;7;Bages
+290;8251;81923;Santpedor;7;Bages
+291;8359;81939;Sant Iscle de Vallalta;21;Maresme
+292;8930;81944;Sant Adrià de Besòs;13;Barcelonès
+293;8586;81957;Sant Agustí de Lluçanès;24;Osona
+294;8740;81960;Sant Andreu de la Barca;11;Baix Llobregat
+295;8392;81976;Sant Andreu de Llavaneres;21;Maresme
+296;8459;81982;Sant Antoni de Vilamajor;41;Vallès Oriental
+297;8503;81995;Sant Bartomeu del Grau;24;Osona
+298;8830;82009;Sant Boi de Llobregat;11;Baix Llobregat
+299;8589;82016;Sant Boi de Lluçanès;24;Osona
+300;8470;82021;Sant Celoni;41;Vallès Oriental
+301;8476;82021;Sant Celoni;41;Vallès Oriental
+302;8396;82037;Sant Cebrià de Vallalta;21;Maresme
+303;8849;82042;Sant Climent de Llobregat;11;Baix Llobregat
+304;8172;82055;Sant Cugat del Vallès;40;Vallès Occidental
+305;8173;82055;Sant Cugat del Vallès;40;Vallès Occidental
+306;8174;82055;Sant Cugat del Vallès;40;Vallès Occidental
+307;8195;82055;Sant Cugat del Vallès;40;Vallès Occidental
+308;8196;82055;Sant Cugat del Vallès;40;Vallès Occidental
+309;8197;82055;Sant Cugat del Vallès;40;Vallès Occidental
+310;8198;82055;Sant Cugat del Vallès;40;Vallès Occidental
+311;8798;82068;Sant Cugat Sesgarrigues;3;Alt Penedès
+312;8461;82074;Sant Esteve de Palautordera;41;Vallès Oriental
+313;8635;82080;Sant Esteve Sesrovires;11;Baix Llobregat
+314;8105;82093;Sant Fost de Campsentelles;41;Vallès Oriental
+315;8182;82107;Sant Feliu de Codines;41;Vallès Oriental
+316;8980;82114;Sant Feliu de Llobregat;11;Baix Llobregat
+317;8274;82129;Sant Feliu Sasserra;7;Bages
+318;8272;82135;Sant Fruitós de Bages;7;Bages
+319;8339;82140;Vilassar de Dalt;21;Maresme
+320;8512;82153;Sant Hipòlit de Voltregà;24;Osona
+321;8607;82166;Sant Jaume de Frontanyà;14;Berguedà
+322;8970;82172;Sant Joan Despí;11;Baix Llobregat
+323;8250;82188;Sant Joan de Vilatorrada;7;Bages
+324;8340;82191;Vilassar de Mar;21;Maresme
+325;8504;82205;Sant Julià de Vilatorta;24;Osona
+326;8960;82212;Sant Just Desvern;11;Baix Llobregat
+327;8791;82227;Sant Llorenç d'Hortons;3;Alt Penedès
+328;8212;82233;Sant Llorenç Savall;40;Vallès Occidental
+329;8592;82248;Sant Martí de Centelles;24;Osona
+330;8515;82251;Sant Martí d'Albars;43;Lluçanès
+331;8712;82264;Sant Martí de Tous;6;Anoia
+332;8731;82270;Sant Martí Sarroca;3;Alt Penedès
+333;8282;82286;Sant Martí Sesgueioles;6;Anoia
+334;8263;82299;Sant Mateu de Bages;7;Bages
+335;8269;82299;Sant Mateu de Bages;7;Bages
+336;8338;82303;Premià de Dalt;21;Maresme
+337;8810;82310;Sant Pere de Ribes;17;Garraf
+338;8812;82310;Sant Pere de Ribes;17;Garraf
+339;8776;82325;Sant Pere de Riudebitlles;3;Alt Penedès
+340;8572;82331;Sant Pere de Torelló;24;Osona
+341;8458;82346;Sant Pere de Vilamajor;41;Vallès Oriental
+342;8395;82359;Sant Pol de Mar;21;Maresme
+343;8777;82362;Sant Quintí de Mediona;3;Alt Penedès
+344;8580;82378;Sant Quirze de Besora;24;Osona
+345;8192;82384;Sant Quirze del Vallès;40;Vallès Occidental
+346;8194;82384;Sant Quirze del Vallès;40;Vallès Occidental
+347;8189;82397;Sant Quirze Safaja;42;Moianès
+348;8770;82401;Sant Sadurní d'Anoia;3;Alt Penedès
+349;8504;82418;Sant Sadurní d'Osormort;24;Osona
+350;8199;82423;Marganell;7;Bages
+351;8298;82423;Marganell;7;Bages
+352;8509;82439;Santa Cecília de Voltregà;24;Osona
+353;8690;82444;Santa Coloma de Cervelló;11;Baix Llobregat
+354;8921;82457;Santa Coloma de Gramenet;13;Barcelonès
+355;8922;82457;Santa Coloma de Gramenet;13;Barcelonès
+356;8923;82457;Santa Coloma de Gramenet;13;Barcelonès
+357;8924;82457;Santa Coloma de Gramenet;13;Barcelonès
+358;8507;82460;Santa Eugènia de Berga;24;Osona
+359;8505;82476;Santa Eulàlia de Riuprimer;24;Osona
+360;8187;82482;Santa Eulàlia de Ronçana;41;Vallès Oriental
+361;8792;82495;Santa Fe del Penedès;3;Alt Penedès
+362;8710;82508;Santa Margarida de Montbui;6;Anoia
+363;8730;82515;Santa Margarida i els Monjos;3;Alt Penedès
+364;8210;82520;Barberà del Vallès;40;Vallès Occidental
+365;8584;82536;Santa Maria de Besora;24;Osona
+366;8511;82541;Esquirol, l';24;Osona
+367;8569;82541;Esquirol, l';24;Osona
+368;8517;82554;Santa Maria de Merlès;14;Berguedà
+369;8106;82567;Santa Maria de Martorelles;41;Vallès Oriental
+370;8787;82573;Santa Maria de Miralles;6;Anoia
+371;8273;82589;Santa Maria d'Oló;42;Moianès
+372;8460;82592;Santa Maria de Palautordera;41;Vallès Oriental
+373;8130;82606;Santa Perpètua de Mogoda;40;Vallès Occidental
+374;8398;82613;Santa Susanna;21;Maresme
+375;8295;82628;Sant Vicenç de Castellet;7;Bages
+376;8620;82634;Sant Vicenç dels Horts;11;Baix Llobregat
+377;8394;82649;Sant Vicenç de Montalt;21;Maresme
+378;8571;82652;Sant Vicenç de Torelló;24;Osona
+379;8193;82665;Cerdanyola del Vallès;40;Vallès Occidental
+380;8290;82665;Cerdanyola del Vallès;40;Vallès Occidental
+381;8181;82671;Sentmenat;40;Vallès Occidental
+382;8698;82687;Cercs;14;Berguedà
+383;8553;82690;Seva;24;Osona
+384;8554;82690;Seva;24;Osona
+385;8860;82704;Sitges;17;Garraf
+386;8870;82704;Sitges;17;Garraf
+387;8871;82704;Sitges;17;Garraf
+388;8589;82711;Sobremunt;43;Lluçanès
+389;8588;82726;Sora;24;Osona
+390;8739;82732;Subirats;3;Alt Penedès
+391;8260;82747;Súria;7;Bages
+392;8519;82750;Tavèrnoles;24;Osona
+393;8593;82763;Tagamanent;41;Vallès Oriental
+394;8278;82779;Talamanca;7;Bages
+395;8552;82785;Taradell;24;Osona
+396;8221;82798;Terrassa;40;Vallès Occidental
+397;8222;82798;Terrassa;40;Vallès Occidental
+398;8223;82798;Terrassa;40;Vallès Occidental
+399;8224;82798;Terrassa;40;Vallès Occidental
+400;8225;82798;Terrassa;40;Vallès Occidental
+401;8226;82798;Terrassa;40;Vallès Occidental
+402;8227;82798;Terrassa;40;Vallès Occidental
+403;8228;82798;Terrassa;40;Vallès Occidental
+404;8511;82802;Tavertet;24;Osona
+405;8329;82819;Teià;21;Maresme
+406;8390;82824;Tiana;21;Maresme
+407;8391;82824;Tiana;21;Maresme
+408;8916;82824;Tiana;21;Maresme
+409;8551;82830;Tona;24;Osona
+410;8396;82845;Tordera;21;Maresme
+411;8490;82845;Tordera;21;Maresme
+412;8570;82858;Torelló;24;Osona
+413;8789;82861;Torre de Claramunt, la;6;Anoia
+414;8775;82877;Torrelavit;3;Alt Penedès
+415;8737;82883;Torrelles de Foix;3;Alt Penedès
+416;8629;82896;Torrelles de Llobregat;11;Baix Llobregat
+417;8231;82900;Ullastrell;40;Vallès Occidental
+418;8233;82917;Vacarisses;40;Vallès Occidental
+419;8785;82922;Vallbona d'Anoia;6;Anoia
+420;8699;82938;Vallcebre;14;Berguedà
+421;8471;82943;Vallgorguina;41;Vallès Oriental
+422;8758;82956;Vallirana;11;Baix Llobregat
+423;8759;82956;Vallirana;11;Baix Llobregat
+424;8188;82969;Vallromanes;41;Vallès Oriental
+425;8289;82975;Veciana;6;Anoia
+426;8719;82975;Veciana;6;Anoia
+427;8500;82981;Vic;24;Osona
+428;8505;82981;Vic;24;Osona
+429;8613;82994;Vilada;14;Berguedà
+430;8232;83008;Viladecavalls;40;Vallès Occidental
+431;8840;83015;Viladecans;11;Baix Llobregat
+432;8788;83020;Vilanova del Camí;6;Anoia
+433;8519;83036;Vilanova de Sau;24;Osona
+434;8735;83041;Vilobí del Penedès;3;Alt Penedès
+435;8720;83054;Vilafranca del Penedès;3;Alt Penedès
+436;8455;83067;Vilalba Sasserra;41;Vallès Oriental
+437;8800;83073;Vilanova i la Geltrú;17;Garraf
+438;8673;83089;Viver i Serrateix;14;Berguedà
+439;8569;89019;Rupit i Pruit;24;Osona
+440;8410;89024;Vilanova del Vallès;41;Vallès Oriental
+441;8694;89030;Sant Julià de Cerdanyola;14;Berguedà
+442;8214;89045;Badia del Vallès;40;Vallès Occidental
+443;8756;89058;Palma de Cervelló, la;11;Baix Llobregat
+444;17707;170010;Agullana;2;Alt Empordà
+445;17181;170025;Aiguaviva;20;Gironès
+446;17733;170031;Albanyà;2;Alt Empordà
+447;17734;170031;Albanyà;2;Alt Empordà
+448;17136;170046;Albons;10;Baix Empordà
+449;17469;170059;Far d'Empordà, el;2;Alt Empordà
+450;17537;170062;Alp;15;Cerdanya
+451;17538;170062;Alp;15;Cerdanya
+452;17170;170078;Amer;34;Selva
+453;17160;170084;Anglès;34;Selva
+454;17401;170097;Arbúcies;34;Selva
+455;17402;170097;Arbúcies;34;Selva
+456;17404;170097;Arbúcies;34;Selva
+457;17853;170101;Argelaguer;19;Garrotxa
+458;17472;170118;Armentera, l';2;Alt Empordà
+459;17742;170123;Avinyonet de Puigventós;2;Alt Empordà
+460;17213;170139;Begur;10;Baix Empordà
+461;17255;170139;Begur;10;Baix Empordà
+462;17707;170144;Vajol, la;2;Alt Empordà
+463;17820;170157;Banyoles;28;Pla de l'Estany
+464;17468;170160;Bàscara;2;Alt Empordà
+465;17483;170160;Bàscara;2;Alt Empordà
+466;17141;170182;Bellcaire d'Empordà;10;Baix Empordà
+467;17850;170195;Besalú;19;Garrotxa
+468;17162;170209;Bescanó;20;Gironès
+469;17182;170209;Bescanó;20;Gironès
+470;17850;170216;Beuda;19;Garrotxa
+471;17851;170216;Beuda;19;Garrotxa
+472;17100;170221;Bisbal d'Empordà, la;10;Baix Empordà
+473;17115;170221;Bisbal d'Empordà, la;10;Baix Empordà
+474;17300;170237;Blanes;34;Selva
+475;17539;170242;Bolvir;15;Cerdanya
+476;17462;170255;Bordils;20;Gironès
+477;17770;170268;Borrassà;2;Alt Empordà
+478;17400;170274;Breda;34;Selva
+479;17441;170280;Brunyola i Sant Martí Sapresa;34;Selva
+480;17723;170293;Boadella i les Escaules;2;Alt Empordà
+481;17761;170307;Cabanes;2;Alt Empordà
+482;17746;170314;Cabanelles;2;Alt Empordà
+483;17747;170314;Cabanelles;2;Alt Empordà
+484;17488;170329;Cadaqués;2;Alt Empordà
+485;17455;170335;Caldes de Malavella;34;Selva
+486;17456;170335;Caldes de Malavella;34;Selva
+487;17251;170340;Calonge i Sant Antoni;10;Baix Empordà
+488;17252;170340;Calonge i Sant Antoni;10;Baix Empordà
+489;17834;170353;Camós;28;Pla de l'Estany
+490;17530;170366;Campdevànol;31;Ripollès
+491;17531;170366;Campdevànol;31;Ripollès
+492;17534;170372;Campelles;31;Ripollès
+493;17459;170388;Campllong;20;Gironès
+494;17866;170391;Camprodon;31;Ripollès
+495;17867;170391;Camprodon;31;Ripollès
+496;17199;170405;Canet d'Adri;20;Gironès
+497;17843;170405;Canet d'Adri;20;Gironès
+498;17708;170412;Cantallops;2;Alt Empordà
+499;17750;170427;Capmany;2;Alt Empordà
+500;17534;170433;Queralbs;31;Ripollès
+501;17244;170448;Cassà de la Selva;20;Gironès
+502;17856;170464;Castellfollit de la Roca;19;Garrotxa
+503;17486;170470;Castelló d'Empúries;2;Alt Empordà
+504;17487;170470;Castelló d'Empúries;2;Alt Empordà
+505;17248;170486;Castell d'Aro, Platja d'Aro i s'Agaró;10;Baix Empordà
+506;17249;170486;Castell d'Aro, Platja d'Aro i s'Agaró;10;Baix Empordà
+507;17250;170486;Castell d'Aro, Platja d'Aro i s'Agaró;10;Baix Empordà
+508;17460;170499;Celrà;20;Gironès
+509;17464;170502;Cervià de Ter;20;Gironès
+510;17741;170519;Cistella;2;Alt Empordà
+511;17469;170524;Siurana;2;Alt Empordà
+512;17496;170545;Colera;2;Alt Empordà
+513;17144;170558;Colomers;10;Baix Empordà
+514;17844;170561;Cornellà del Terri;28;Pla de l'Estany
+515;17845;170561;Cornellà del Terri;28;Pla de l'Estany
+516;17120;170577;Corçà;10;Baix Empordà
+517;17121;170577;Corçà;10;Baix Empordà
+518;17832;170583;Crespià;28;Pla de l'Estany
+519;17722;170600;Darnius;2;Alt Empordà
+520;17538;170617;Das;15;Cerdanya
+521;17130;170622;Escala, l';2;Alt Empordà
+522;17405;170638;Espinelves;24;Osona
+523;17753;170643;Espolla;2;Alt Empordà
+524;17832;170656;Esponellà;28;Pla de l'Estany
+525;17484;170669;Figueres;2;Alt Empordà
+526;17600;170669;Figueres;2;Alt Empordà
+527;17463;170675;Flaçà;20;Gironès
+528;17132;170681;Foixà;10;Baix Empordà
+529;17133;170681;Foixà;10;Baix Empordà
+530;17463;170681;Foixà;10;Baix Empordà
+531;17538;170694;Fontanals de Cerdanya;15;Cerdanya
+532;17257;170708;Fontanilles;10;Baix Empordà
+533;17833;170715;Fontcoberta;28;Pla de l'Estany
+534;17458;170736;Fornells de la Selva;20;Gironès
+535;17469;170741;Fortià;2;Alt Empordà
+536;17476;170754;Garrigàs;2;Alt Empordà
+537;17773;170754;Garrigàs;2;Alt Empordà
+538;17466;170767;Garrigoles;10;Baix Empordà
+539;17780;170773;Garriguella;2;Alt Empordà
+540;17539;170789;Ger;15;Cerdanya
+541;17001;170792;Girona;20;Gironès
+542;17002;170792;Girona;20;Gironès
+543;17003;170792;Girona;20;Gironès
+544;17004;170792;Girona;20;Gironès
+545;17005;170792;Girona;20;Gironès
+546;17006;170792;Girona;20;Gironès
+547;17007;170792;Girona;20;Gironès
+548;17461;170792;Girona;20;Gironès
+549;17531;170806;Gombrèn;31;Ripollès
+550;17257;170813;Gualta;10;Baix Empordà
+551;17528;170828;Guils de Cerdanya;15;Cerdanya
+552;17450;170834;Hostalric;34;Selva
+553;17539;170849;Isòvol;15;Cerdanya
+554;17143;170852;Jafre;10;Baix Empordà
+555;17700;170865;Jonquera, la;2;Alt Empordà
+556;17708;170865;Jonquera, la;2;Alt Empordà
+557;17709;170865;Jonquera, la;2;Alt Empordà
+558;17462;170871;Juià;20;Gironès
+559;17745;170887;Lladó;2;Alt Empordà
+560;17240;170890;Llagostera;20;Gironès
+561;17243;170904;Llambilles;20;Gironès
+562;17869;170911;Llanars;31;Ripollès
+563;17490;170926;Llançà;2;Alt Empordà
+564;17730;170932;Llers;2;Alt Empordà
+565;17527;170947;Llívia;15;Cerdanya
+566;17310;170950;Lloret de Mar;34;Selva
+567;17512;170963;Llosses, les;31;Ripollès
+568;17513;170963;Llosses, les;31;Ripollès
+569;17514;170963;Llosses, les;31;Ripollès
+570;17532;170963;Llosses, les;31;Ripollès
+571;17462;170979;Madremanya;20;Gironès
+572;17851;170985;Maià de Montcal;19;Garrotxa
+573;17539;170998;Meranges;15;Cerdanya
+574;17762;171002;Masarac;2;Alt Empordà
+575;17763;171002;Masarac;2;Alt Empordà
+576;17452;171019;Massanes;34;Selva
+577;17720;171024;Maçanet de Cabrenys;2;Alt Empordà
+578;17721;171024;Maçanet de Cabrenys;2;Alt Empordà
+579;17412;171030;Maçanet de la Selva;34;Selva
+580;17453;171030;Maçanet de la Selva;34;Selva
+581;17830;171058;Mieres;19;Garrotxa
+582;17752;171061;Mollet de Peralada;2;Alt Empordà
+583;17868;171077;Molló;31;Ripollès
+584;17855;171096;Montagut i Oix;19;Garrotxa
+585;17856;171096;Montagut i Oix;19;Garrotxa
+586;17253;171100;Mont-ras;10;Baix Empordà
+587;17744;171117;Navata;2;Alt Empordà
+588;17861;171122;Ogassa;31;Ripollès
+589;17800;171143;Olot;19;Garrotxa
+590;17810;171143;Olot;19;Garrotxa
+591;17812;171143;Olot;19;Garrotxa
+592;17772;171156;Ordis;2;Alt Empordà
+593;17161;171169;Osor;34;Selva
+594;17442;171169;Osor;34;Selva
+595;17124;171175;Palafrugell;10;Baix Empordà
+596;17200;171175;Palafrugell;10;Baix Empordà
+597;17210;171175;Palafrugell;10;Baix Empordà
+598;17211;171175;Palafrugell;10;Baix Empordà
+599;17212;171175;Palafrugell;10;Baix Empordà
+600;17230;171181;Palamós;10;Baix Empordà
+601;17476;171194;Palau de Santa Eulàlia;2;Alt Empordà
+602;17495;171208;Palau-saverdera;2;Alt Empordà
+603;17256;171215;Palau-sator;10;Baix Empordà
+604;17843;171236;Palol de Revardit;28;Pla de l'Estany
+605;17256;171241;Pals;10;Baix Empordà
+606;17534;171254;Pardines;31;Ripollès
+607;17133;171267;Parlavà;10;Baix Empordà
+608;17494;171289;Pau;2;Alt Empordà
+609;17493;171292;Pedret i Marzà;2;Alt Empordà
+610;17120;171306;Pera, la;10;Baix Empordà
+611;17491;171328;Peralada;2;Alt Empordà
+612;17492;171328;Peralada;2;Alt Empordà
+613;17172;171334;Planes d'Hostoles, les;19;Garrotxa
+614;17173;171334;Planes d'Hostoles, les;19;Garrotxa
+615;17535;171349;Planoles;31;Ripollès
+616;17536;171349;Planoles;31;Ripollès
+617;17706;171352;Pont de Molins;2;Alt Empordà
+618;17773;171365;Pontós;2;Alt Empordà
+619;17834;171371;Porqueres;28;Pla de l'Estany
+620;17846;171371;Porqueres;28;Pla de l'Estany
+621;17497;171387;Portbou;2;Alt Empordà
+622;17178;171390;Preses, les;19;Garrotxa
+623;17489;171404;Port de la Selva, el;2;Alt Empordà
+624;17520;171411;Puigcerdà;15;Cerdanya
+625;17529;171411;Puigcerdà;15;Cerdanya
+626;17241;171426;Quart;20;Gironès
+627;17242;171426;Quart;20;Gironès
+628;17754;171432;Rabós;2;Alt Empordà
+629;17755;171432;Rabós;2;Alt Empordà
+630;17214;171447;Regencós;10;Baix Empordà
+631;17533;171450;Ribes de Freser;31;Ripollès
+632;17534;171450;Ribes de Freser;31;Ripollès
+633;17404;171463;Riells i Viabrea;34;Selva
+634;17500;171479;Ripoll;31;Ripollès
+635;17510;171479;Ripoll;31;Ripollès
+636;17863;171479;Ripoll;31;Ripollès
+637;17420;171485;Riudarenes;34;Selva
+638;17421;171485;Riudarenes;34;Selva
+639;17179;171498;Riudaura;19;Garrotxa
+640;17457;171501;Riudellots de la Selva;34;Selva
+641;17469;171518;Riumors;2;Alt Empordà
+642;17480;171523;Roses;2;Alt Empordà
+643;17131;171539;Rupià;10;Baix Empordà
+644;17853;171544;Sales de Llierca;19;Garrotxa
+645;17190;171557;Salt;20;Gironès
+646;17454;171576;Sant Andreu Salou;20;Gironès
+647;17751;171582;Sant Climent Sescebes;2;Alt Empordà
+648;17451;171595;Sant Feliu de Buixalleu;34;Selva
+649;17220;171609;Sant Feliu de Guíxols;10;Baix Empordà
+650;17248;171609;Sant Feliu de Guíxols;10;Baix Empordà
+651;17174;171616;Sant Feliu de Pallerols;19;Garrotxa
+652;17175;171616;Sant Feliu de Pallerols;19;Garrotxa
+653;17830;171621;Sant Ferriol;19;Garrotxa
+654;17850;171621;Sant Ferriol;19;Garrotxa
+655;17150;171637;Sant Gregori;20;Gironès
+656;17151;171637;Sant Gregori;20;Gironès
+657;17164;171637;Sant Gregori;20;Gironès
+658;17199;171637;Sant Gregori;20;Gironès
+659;17403;171642;Sant Hilari Sacalm;34;Selva
+660;17854;171655;Sant Jaume de Llierca;19;Garrotxa
+661;17464;171668;Sant Jordi Desvalls;20;Gironès
+662;17860;171674;Sant Joan de les Abadesses;31;Ripollès
+663;17463;171680;Sant Joan de Mollet;20;Gironès
+664;17481;171693;Sant Julià de Ramis;20;Gironès
+665;17482;171693;Sant Julià de Ramis;20;Gironès
+666;17862;171707;Vallfogona de Ripollès;31;Ripollès
+667;17732;171714;Sant Llorenç de la Muga;2;Alt Empordà
+668;17152;171729;Sant Martí de Llémena;20;Gironès
+669;17153;171729;Sant Martí de Llémena;20;Gironès
+670;17164;171729;Sant Martí de Llémena;20;Gironès
+671;17462;171735;Sant Martí Vell;20;Gironès
+672;17830;171740;Sant Miquel de Campmajor;28;Pla de l'Estany
+673;17831;171740;Sant Miquel de Campmajor;28;Pla de l'Estany
+674;17475;171753;Sant Miquel de Fluvià;2;Alt Empordà
+675;17467;171766;Sant Mori;2;Alt Empordà
+676;17864;171772;Sant Pau de Segúries;31;Ripollès
+677;17865;171772;Sant Pau de Segúries;31;Ripollès
+678;17470;171788;Sant Pere Pescador;2;Alt Empordà
+679;17430;171805;Santa Coloma de Farners;34;Selva
+680;17443;171805;Santa Coloma de Farners;34;Selva
+681;17444;171805;Santa Coloma de Farners;34;Selva
+682;17445;171805;Santa Coloma de Farners;34;Selva
+683;17240;171812;Santa Cristina d'Aro;10;Baix Empordà
+684;17245;171812;Santa Cristina d'Aro;10;Baix Empordà
+685;17246;171812;Santa Cristina d'Aro;10;Baix Empordà
+686;17771;171827;Santa Llogaia d'Àlguema;2;Alt Empordà
+687;17154;171833;Sant Aniol de Finestres;19;Garrotxa
+688;17811;171848;Santa Pau;19;Garrotxa
+689;17857;171851;Sant Joan les Fonts;19;Garrotxa
+690;17840;171864;Sarrià de Ter;20;Gironès
+691;17465;171870;Saus, Camallera i Llampaies;2;Alt Empordà
+692;17467;171870;Saus, Camallera i Llampaies;2;Alt Empordà
+693;17489;171886;Selva de Mar, la;2;Alt Empordà
+694;17165;171899;Cellera de Ter, la;34;Selva
+695;17166;171899;Cellera de Ter, la;34;Selva
+696;17852;171903;Serinyà;28;Pla de l'Estany
+697;17133;171910;Serra de Daró;10;Baix Empordà
+698;17869;171925;Setcases;31;Ripollès
+699;17410;171931;Sils;34;Selva
+700;17166;171946;Susqueda;34;Selva
+701;17171;171946;Susqueda;34;Selva
+702;17134;171959;Tallada d'Empordà, la;10;Baix Empordà
+703;17731;171962;Terrades;2;Alt Empordà
+704;17123;171978;Torrent;10;Baix Empordà
+705;17474;171984;Torroella de Fluvià;2;Alt Empordà
+706;17130;171997;Torroella de Montgrí;10;Baix Empordà
+707;17141;171997;Torroella de Montgrí;10;Baix Empordà
+708;17257;171997;Torroella de Montgrí;10;Baix Empordà
+709;17258;171997;Torroella de Montgrí;10;Baix Empordà
+710;17853;172001;Tortellà;19;Garrotxa
+711;17536;172018;Toses;31;Ripollès
+712;17320;172023;Tossa de Mar;34;Selva
+713;17133;172039;Ultramort;10;Baix Empordà
+714;17140;172044;Ullà;10;Baix Empordà
+715;17114;172057;Ullastret;10;Baix Empordà
+716;17538;172060;Urús;15;Cerdanya
+717;17176;172076;Vall d'en Bas, la;19;Garrotxa
+718;17177;172076;Vall d'en Bas, la;19;Garrotxa
+719;17178;172076;Vall d'en Bas, la;19;Garrotxa
+720;17179;172076;Vall d'en Bas, la;19;Garrotxa
+721;17813;172082;Vall de Bianya, la;19;Garrotxa
+722;17858;172082;Vall de Bianya, la;19;Garrotxa
+723;17253;172095;Vall-llobrega;10;Baix Empordà
+724;17137;172109;Ventalló;2;Alt Empordà
+725;17472;172109;Ventalló;2;Alt Empordà
+726;17473;172109;Ventalló;2;Alt Empordà
+727;17475;172109;Ventalló;2;Alt Empordà
+728;17142;172116;Verges;10;Baix Empordà
+729;17515;172121;Vidrà;24;Osona
+730;17411;172137;Vidreres;34;Selva
+731;17760;172142;Vilabertran;2;Alt Empordà
+732;17180;172155;Vilablareix;20;Gironès
+733;17464;172168;Viladasens;20;Gironès
+734;17137;172174;Viladamat;2;Alt Empordà
+735;17468;172180;Vilademuls;28;Pla de l'Estany
+736;17833;172180;Vilademuls;28;Pla de l'Estany
+737;17406;172207;Viladrau;24;Osona
+738;17740;172214;Vilafant;2;Alt Empordà
+739;17483;172229;Vilaür;2;Alt Empordà
+740;17493;172235;Vilajuïga;2;Alt Empordà
+741;17869;172240;Vilallonga de Ter;31;Ripollès
+742;17474;172253;Vilamacolum;2;Alt Empordà
+743;17469;172266;Vilamalla;2;Alt Empordà
+744;17781;172272;Vilamaniscle;2;Alt Empordà
+745;17743;172288;Vilanant;2;Alt Empordà
+746;17485;172305;Vila-sacra;2;Alt Empordà
+747;17466;172327;Vilopriu;10;Baix Empordà
+748;17183;172333;Vilobí d'Onyar;34;Selva
+749;17184;172333;Vilobí d'Onyar;34;Selva
+750;17185;172333;Vilobí d'Onyar;34;Selva
+751;17723;172348;Biure;2;Alt Empordà
+752;17116;179011;Cruïlles, Monells i Sant Sadurní de l'Heura;10;Baix Empordà
+753;17117;179011;Cruïlles, Monells i Sant Sadurní de l'Heura;10;Baix Empordà
+754;17118;179011;Cruïlles, Monells i Sant Sadurní de l'Heura;10;Baix Empordà
+755;17121;179011;Cruïlles, Monells i Sant Sadurní de l'Heura;10;Baix Empordà
+756;17244;179011;Cruïlles, Monells i Sant Sadurní de l'Heura;10;Baix Empordà
+757;17110;179026;Forallac;10;Baix Empordà
+758;17111;179026;Forallac;10;Baix Empordà
+759;17113;179026;Forallac;10;Baix Empordà
+760;17164;179032;Sant Julià del Llor i Bonmatí;34;Selva
+761;25651;250019;Abella de la Conca;25;Pallars Jussà
+762;25652;250019;Abella de la Conca;25;Pallars Jussà
+763;25611;250024;Àger;23;Noguera
+764;25691;250024;Àger;23;Noguera
+765;25692;250024;Àger;23;Noguera
+766;25310;250030;Agramunt;38;Urgell
+767;25317;250030;Agramunt;38;Urgell
+768;25318;250030;Agramunt;38;Urgell
+769;25331;250030;Agramunt;38;Urgell
+770;25221;250045;Alamús, els;33;Segrià
+771;25715;250058;Alàs i Cerc;4;Alt Urgell
+772;25717;250058;Alàs i Cerc;4;Alt Urgell
+773;25718;250058;Alàs i Cerc;4;Alt Urgell
+774;25155;250061;Albagés, l';18;Garrigues
+775;25171;250077;Albatàrrec;33;Segrià
+776;25135;250083;Albesa;23;Noguera
+777;25450;250096;Albi, l';18;Garrigues
+778;25162;250100;Alcanó;33;Segrià
+779;25180;250117;Alcarràs;33;Segrià
+780;25193;250117;Alcarràs;33;Segrià
+781;25660;250122;Alcoletge;33;Segrià
+782;25120;250138;Alfarràs;33;Segrià
+783;25121;250138;Alfarràs;33;Segrià
+784;25161;250143;Alfés;33;Segrià
+785;25130;250156;Algerri;23;Noguera
+786;25125;250169;Alguaire;33;Segrià
+787;25573;250175;Alins;26;Pallars Sobirà
+788;25574;250175;Alins;26;Pallars Sobirà
+789;25575;250175;Alins;26;Pallars Sobirà
+790;25100;250194;Almacelles;33;Segrià
+791;25109;250194;Almacelles;33;Segrià
+792;25187;250208;Almatret;33;Segrià
+793;25126;250215;Almenar;33;Segrià
+794;25737;250220;Alòs de Balaguer;23;Noguera
+795;25110;250236;Alpicat;33;Segrià
+796;25586;250241;Alt Àneu;26;Pallars Sobirà
+797;25587;250241;Alt Àneu;26;Pallars Sobirà
+798;25589;250241;Alt Àneu;26;Pallars Sobirà
+799;25539;250254;Naut Aran;39;Aran
+800;25598;250254;Naut Aran;39;Aran
+801;25599;250254;Naut Aran;39;Aran
+802;25262;250273;Anglesola;38;Urgell
+803;25320;250273;Anglesola;38;Urgell
+804;25140;250292;Arbeca;18;Garrigues
+805;25722;250306;Pont de Bar, el;4;Alt Urgell
+806;25723;250306;Pont de Bar, el;4;Alt Urgell
+807;25551;250313;Arres;39;Aran
+808;25722;250328;Arsèguel;4;Alt Urgell
+809;25150;250334;Artesa de Lleida;33;Segrià
+810;25730;250349;Artesa de Segre;23;Noguera
+811;25736;250349;Artesa de Segre;23;Noguera
+812;25737;250349;Artesa de Segre;23;Noguera
+813;25738;250349;Artesa de Segre;23;Noguera
+814;25739;250349;Artesa de Segre;23;Noguera
+815;25617;250352;Sentiu de Sió, la;23;Noguera
+816;25151;250365;Aspa;33;Segrià
+817;25611;250371;Avellanes i Santa Linya, les;23;Noguera
+818;25612;250371;Avellanes i Santa Linya, les;23;Noguera
+819;25182;250387;Aitona;33;Segrià
+820;25513;250390;Baix Pallars;26;Pallars Sobirà
+821;25590;250390;Baix Pallars;26;Pallars Sobirà
+822;25591;250390;Baix Pallars;26;Pallars Sobirà
+823;25592;250390;Baix Pallars;26;Pallars Sobirà
+824;25600;250404;Balaguer;23;Noguera
+825;25262;250411;Barbens;27;Pla d'Urgell
+826;25747;250426;Baronia de Rialb, la;23;Noguera
+827;25526;250432;Vall de Boí, la;5;Alta Ribagorça
+828;25527;250432;Vall de Boí, la;5;Alta Ribagorça
+829;25528;250432;Vall de Boí, la;5;Alta Ribagorça
+830;25289;250447;Bassella;4;Alt Urgell
+831;25792;250447;Bassella;4;Alt Urgell
+832;25549;250450;Bausen;39;Aran
+833;25266;250463;Belianes;38;Urgell
+834;25337;250479;Bellcaire d'Urgell;23;Noguera
+835;25220;250485;Bell-lloc d'Urgell;27;Pla d'Urgell
+836;25336;250498;Bellmunt d'Urgell;23;Noguera
+837;25250;250501;Bellpuig;38;Urgell
+838;25262;250501;Bellpuig;38;Urgell
+839;25720;250518;Bellver de Cerdanya;15;Cerdanya
+840;25721;250518;Bellver de Cerdanya;15;Cerdanya
+841;25724;250518;Bellver de Cerdanya;15;Cerdanya
+842;25142;250523;Bellvís;27;Pla d'Urgell
+843;25144;250523;Bellvís;27;Pla d'Urgell
+844;25132;250539;Benavent de Segrià;33;Segrià
+845;25752;250557;Biosca;35;Solsonès
+846;25753;250557;Biosca;35;Solsonès
+847;25178;250560;Bovera;18;Garrigues
+848;25551;250576;Bòrdes, Es;39;Aran
+849;25400;250582;Borges Blanques, les;18;Garrigues
+850;25550;250595;Bossòst;39;Aran
+851;25748;250609;Cabanabona;23;Noguera
+852;25794;250616;Cabó;4;Alt Urgell
+853;25613;250621;Camarasa;23;Noguera
+854;25615;250621;Camarasa;23;Noguera
+855;25692;250621;Camarasa;23;Noguera
+856;25548;250637;Canejan;39;Aran
+857;25549;250637;Canejan;39;Aran
+858;25289;250642;Castellar de la Ribera;35;Solsonès
+859;25154;250674;Castelldans;18;Garrigues
+860;25265;250680;Castellnou de Seana;27;Pla d'Urgell
+861;25136;250693;Castelló de Farfanya;23;Noguera
+862;25334;250707;Castellserà;38;Urgell
+863;25722;250714;Cava;4;Alt Urgell
+864;25723;250714;Cava;4;Alt Urgell
+865;25200;250729;Cervera;32;Segarra
+866;25213;250729;Cervera;32;Segarra
+867;25214;250729;Cervera;32;Segarra
+868;25218;250729;Cervera;32;Segarra
+869;25460;250735;Cervià de les Garrigues;18;Garrigues
+870;25341;250740;Ciutadilla;38;Urgell
+871;25290;250753;Clariana de Cardener;35;Solsonès
+872;25152;250766;Cogul, el;18;Garrigues
+873;25793;250772;Coll de Nargó;4;Alt Urgell
+874;25794;250772;Coll de Nargó;4;Alt Urgell
+875;25137;250788;Corbins;33;Segrià
+876;25737;250791;Cubells;23;Noguera
+877;25410;250812;Espluga Calba, l';18;Garrigues
+878;25597;250827;Espot;26;Pallars Sobirà
+879;25214;250851;Estaràs;32;Segarra
+880;25215;250851;Estaràs;32;Segarra
+881;25216;250851;Estaràs;32;Segarra
+882;25271;250851;Estaràs;32;Segarra
+883;25580;250864;Esterri d'Àneu;26;Pallars Sobirà
+884;25571;250870;Esterri de Cardós;26;Pallars Sobirà
+885;25719;250886;Estamariu;4;Alt Urgell
+886;25595;250899;Farrera;26;Pallars Sobirà
+887;25413;250925;Floresta, la;18;Garrigues
+888;25244;250931;Fondarella;27;Pla d'Urgell
+889;25737;250946;Foradada;23;Noguera
+890;25332;250962;Fuliola, la;38;Urgell
+891;25411;250978;Fulleda;18;Garrigues
+892;25638;250984;Gavet de la Conca;25;Pallars Jussà
+893;25639;250984;Gavet de la Conca;25;Pallars Jussà
+894;25241;250997;Golmés;27;Pla d'Urgell
+895;25716;251001;Gósol;14;Berguedà
+896;25177;251018;Granadella, la;18;Garrigues
+897;25185;251023;Granja d'Escarp, la;33;Segrià
+898;25218;251039;Granyanella;32;Segarra
+899;25217;251044;Granyena de Segarra;32;Segarra
+900;25160;251057;Granyena de les Garrigues;18;Garrigues
+901;25341;251095;Guimerà;38;Urgell
+902;25210;251109;Guissona;32;Segarra
+903;25211;251109;Guissona;32;Segarra
+904;25285;251116;Guixers;35;Solsonès
+905;25122;251121;Ivars de Noguera;23;Noguera
+906;25260;251137;Ivars d'Urgell;27;Pla d'Urgell
+907;25261;251137;Ivars d'Urgell;27;Pla d'Urgell
+908;25216;251142;Ivorra;32;Segarra
+909;25650;251155;Isona i Conca Dellà;25;Pallars Jussà
+910;25651;251155;Isona i Conca Dellà;25;Pallars Jussà
+911;25653;251155;Isona i Conca Dellà;25;Pallars Jussà
+912;25655;251155;Isona i Conca Dellà;25;Pallars Jussà
+913;25656;251155;Isona i Conca Dellà;25;Pallars Jussà
+914;25657;251155;Isona i Conca Dellà;25;Pallars Jussà
+915;25658;251155;Isona i Conca Dellà;25;Pallars Jussà
+916;25165;251180;Juncosa;18;Garrigues
+917;25430;251193;Juneda;18;Garrigues
+918;25001;251207;Lleida;33;Segrià
+919;25002;251207;Lleida;33;Segrià
+920;25003;251207;Lleida;33;Segrià
+921;25004;251207;Lleida;33;Segrià
+922;25005;251207;Lleida;33;Segrià
+923;25006;251207;Lleida;33;Segrià
+924;25007;251207;Lleida;33;Segrià
+925;25008;251207;Lleida;33;Segrià
+926;25110;251207;Lleida;33;Segrià
+927;25111;251207;Lleida;33;Segrià
+928;25113;251207;Lleida;33;Segrià
+929;25191;251207;Lleida;33;Segrià
+930;25192;251207;Lleida;33;Segrià
+931;25193;251207;Lleida;33;Segrià
+932;25194;251207;Lleida;33;Segrià
+933;25195;251207;Lleida;33;Segrià
+934;25196;251207;Lleida;33;Segrià
+935;25197;251207;Lleida;33;Segrià
+936;25198;251207;Lleida;33;Segrià
+937;25199;251207;Lleida;33;Segrià
+938;25540;251214;Les;39;Aran
+939;25240;251229;Linyola;27;Pla d'Urgell
+940;25571;251235;Lladorre;26;Pallars Sobirà
+941;25576;251235;Lladorre;26;Pallars Sobirà
+942;25577;251235;Lladorre;26;Pallars Sobirà
+943;25283;251240;Lladurs;35;Solsonès
+944;25288;251240;Lladurs;35;Solsonès
+945;25186;251253;Llardecans;33;Segrià
+946;25594;251266;Llavorsí;26;Pallars Sobirà
+947;25595;251266;Llavorsí;26;Pallars Sobirà
+948;25726;251272;Lles de Cerdanya;15;Cerdanya
+949;25638;251288;Llimiana;25;Pallars Jussà
+950;25639;251288;Llimiana;25;Pallars Jussà
+951;25281;251291;Llobera;35;Solsonès
+952;25266;251305;Maldà;38;Urgell
+953;25184;251312;Massalcoreig;33;Segrià
+954;25211;251327;Massoteres;32;Segarra
+955;25179;251333;Maials;33;Segrià
+956;25139;251348;Menàrguens;23;Noguera
+957;25242;251351;Miralcamp;27;Pla d'Urgell
+958;8281;251364;Molsosa, la;35;Solsonès
+959;25230;251370;Mollerussa;27;Pla d'Urgell
+960;25315;251386;Montgai;23;Noguera
+961;25616;251386;Montgai;23;Noguera
+962;25724;251399;Montellà i Martinet;15;Cerdanya
+963;25725;251399;Montellà i Martinet;15;Cerdanya
+964;25711;251403;Montferrer i Castellbò;4;Alt Urgell
+965;25712;251403;Montferrer i Castellbò;4;Alt Urgell
+966;25714;251403;Montferrer i Castellbò;4;Alt Urgell
+967;25795;251403;Montferrer i Castellbò;4;Alt Urgell
+968;25217;251410;Montoliu de Segarra;32;Segarra
+969;25172;251425;Montoliu de Lleida;33;Segrià
+970;25340;251431;Montornès de Segarra;32;Segarra
+971;25341;251459;Nalec;38;Urgell
+972;25286;251462;Navès;35;Solsonès
+973;25283;251484;Odèn;35;Solsonès
+974;25790;251484;Odèn;35;Solsonès
+975;25790;251497;Oliana;4;Alt Urgell
+976;25318;251500;Oliola;23;Noguera
+977;25748;251500;Oliola;23;Noguera
+978;25749;251500;Oliola;23;Noguera
+979;25280;251517;Olius;35;Solsonès
+980;25286;251517;Olius;35;Solsonès
+981;25287;251517;Olius;35;Solsonès
+982;25214;251522;Oluges, les;32;Segarra
+983;25412;251538;Omellons, els;18;Garrigues
+984;25268;251543;Omells de na Gaia, els;38;Urgell
+985;25794;251556;Organyà;4;Alt Urgell
+986;25610;251569;Os de Balaguer;23;Noguera
+987;25611;251569;Os de Balaguer;23;Noguera
+988;25612;251569;Os de Balaguer;23;Noguera
+989;25614;251569;Os de Balaguer;23;Noguera
+990;25318;251575;Ossó de Sió;38;Urgell
+991;25243;251581;Palau d'Anglesola, el;27;Pla d'Urgell
+992;25516;251615;Conca de Dalt;25;Pallars Jussà
+993;25517;251615;Conca de Dalt;25;Pallars Jussà
+994;25518;251615;Conca de Dalt;25;Pallars Jussà
+995;25693;251615;Conca de Dalt;25;Pallars Jussà
+996;25284;251636;Coma i la Pedra, la;35;Solsonès
+997;25261;251641;Penelles;23;Noguera
+998;25333;251641;Penelles;23;Noguera
+999;25335;251641;Penelles;23;Noguera
+1000;25790;251654;Peramola;4;Alt Urgell
+1001;25286;251667;Pinell de Solsonès;35;Solsonès
+1002;25287;251673;Pinós;35;Solsonès
+1003;25143;251689;Poal, el;27;Pla d'Urgell
+1004;25471;251692;Pobla de Cérvoles, la;18;Garrigues
+1005;25177;251706;Bellaguarda;18;Garrigues
+1006;25500;251713;Pobla de Segur, la;25;Pallars Jussà
+1007;25513;251713;Pobla de Segur, la;25;Pallars Jussà
+1008;25516;251713;Pobla de Segur, la;25;Pallars Jussà
+1009;25740;251728;Ponts;23;Noguera
+1010;25746;251728;Ponts;23;Noguera
+1011;25749;251728;Ponts;23;Noguera
+1012;25514;251734;Pont de Suert, el;5;Alta Ribagorça
+1013;25520;251734;Pont de Suert, el;5;Alta Ribagorça
+1014;25526;251734;Pont de Suert, el;5;Alta Ribagorça
+1015;25529;251734;Pont de Suert, el;5;Alta Ribagorça
+1016;25552;251734;Pont de Suert, el;5;Alta Ribagorça
+1017;25554;251734;Pont de Suert, el;5;Alta Ribagorça
+1018;25555;251734;Pont de Suert, el;5;Alta Ribagorça
+1019;25556;251734;Pont de Suert, el;5;Alta Ribagorça
+1020;25134;251749;Portella, la;33;Segrià
+1021;25721;251752;Prats i Sansor;15;Cerdanya
+1022;25263;251765;Preixana;38;Urgell
+1023;25316;251771;Preixens;23;Noguera
+1024;25727;251790;Prullans;15;Cerdanya
+1025;25420;251804;Puiggròs;18;Garrigues
+1026;25318;251811;Puigverd d'Agramunt;38;Urgell
+1027;25153;251826;Puigverd de Lleida;33;Segrià
+1028;25594;251832;Rialp;26;Pallars Sobirà
+1029;25713;251850;Ribera d'Urgellet;4;Alt Urgell
+1030;25714;251850;Ribera d'Urgellet;4;Alt Urgell
+1031;25795;251850;Ribera d'Urgellet;4;Alt Urgell
+1032;25796;251850;Ribera d'Urgellet;4;Alt Urgell
+1033;25797;251850;Ribera d'Urgellet;4;Alt Urgell
+1034;25287;251863;Riner;35;Solsonès
+1035;25290;251863;Riner;35;Solsonès
+1036;25124;251898;Rosselló;33;Segrià
+1037;25693;251902;Salàs de Pallars;25;Pallars Jussà
+1038;25753;251919;Sanaüja;32;Segarra
+1039;25270;251924;Sant Guim de Freixenet;32;Segarra
+1040;25271;251924;Sant Guim de Freixenet;32;Segarra
+1041;25282;251930;Sant Llorenç de Morunys;35;Solsonès
+1042;25215;251945;Sant Ramon;32;Segarra
+1043;25216;251945;Sant Ramon;32;Segarra
+1044;25632;251961;Sant Esteve de la Sarga;25;Pallars Jussà
+1045;25211;251977;Sant Guim de la Plana;32;Segarra
+1046;25175;252000;Sarroca de Lleida;33;Segrià
+1047;25555;252017;Sarroca de Bellera;25;Pallars Jussà
+1048;25514;252022;Senterada;25;Pallars Jussà
+1049;25555;252022;Senterada;25;Pallars Jussà
+1050;25700;252038;Seu d'Urgell, la;4;Alt Urgell
+1051;25710;252038;Seu d'Urgell, la;4;Alt Urgell
+1052;25183;252043;Seròs;33;Segrià
+1053;25222;252056;Sidamon;27;Pla d'Urgell
+1054;25163;252069;Soleràs, el;18;Garrigues
+1055;25280;252075;Solsona;35;Solsonès
+1056;25566;252081;Soriguera;26;Pallars Sobirà
+1057;25569;252081;Soriguera;26;Pallars Sobirà
+1058;25593;252081;Soriguera;26;Pallars Sobirà
+1059;25560;252094;Sort;26;Pallars Sobirà
+1060;25567;252094;Sort;26;Pallars Sobirà
+1061;25568;252094;Sort;26;Pallars Sobirà
+1062;25569;252094;Sort;26;Pallars Sobirà
+1063;25181;252108;Soses;33;Segrià
+1064;25173;252115;Sudanell;33;Segrià
+1065;25174;252120;Sunyer;33;Segrià
+1066;25630;252154;Talarn;25;Pallars Jussà
+1067;25640;252154;Talarn;25;Pallars Jussà
+1068;25213;252167;Talavera;32;Segarra
+1069;25300;252173;Tàrrega;38;Urgell
+1070;25350;252173;Tàrrega;38;Urgell
+1071;25351;252173;Tàrrega;38;Urgell
+1072;25352;252173;Tàrrega;38;Urgell
+1073;25353;252173;Tàrrega;38;Urgell
+1074;25354;252173;Tàrrega;38;Urgell
+1075;25360;252173;Tàrrega;38;Urgell
+1076;25480;252189;Tarrés;18;Garrigues
+1077;25211;252192;Tarroja de Segarra;32;Segarra
+1078;25670;252206;Térmens;23;Noguera
+1079;25595;252213;Tírvia;26;Pallars Sobirà
+1080;25791;252228;Tiurana;23;Noguera
+1081;25750;252234;Torà;35;Solsonès
+1082;25751;252234;Torà;35;Solsonès
+1083;25164;252249;Torms, els;18;Garrigues
+1084;25331;252252;Tornabous;38;Urgell
+1085;25176;252265;Torrebesses;33;Segrià
+1086;25510;252271;Torre de Cabdella, la;25;Pallars Jussà
+1087;25511;252271;Torre de Cabdella, la;25;Pallars Jussà
+1088;25512;252271;Torre de Cabdella, la;25;Pallars Jussà
+1089;25513;252271;Torre de Cabdella, la;25;Pallars Jussà
+1090;25515;252271;Torre de Cabdella, la;25;Pallars Jussà
+1091;25110;252287;Torrefarrera;33;Segrià
+1092;25123;252287;Torrefarrera;33;Segrià
+1093;25141;252304;Torregrossa;27;Pla d'Urgell
+1094;25138;252311;Torrelameu;23;Noguera
+1095;25170;252326;Torres de Segre;33;Segrià
+1096;25131;252332;Torre-serona;33;Segrià
+1097;22583;252347;Tremp;25;Pallars Jussà
+1098;22584;252347;Tremp;25;Pallars Jussà
+1099;25620;252347;Tremp;25;Pallars Jussà
+1100;25633;252347;Tremp;25;Pallars Jussà
+1101;25634;252347;Tremp;25;Pallars Jussà
+1102;25635;252347;Tremp;25;Pallars Jussà
+1103;25636;252347;Tremp;25;Pallars Jussà
+1104;25637;252347;Tremp;25;Pallars Jussà
+1105;25640;252347;Tremp;25;Pallars Jussà
+1106;25654;252347;Tremp;25;Pallars Jussà
+1107;25268;252385;Vallbona de les Monges;38;Urgell
+1108;25269;252385;Vallbona de les Monges;38;Urgell
+1109;25700;252398;Valls de Valira, les;4;Alt Urgell
+1110;25719;252398;Valls de Valira, les;4;Alt Urgell
+1111;25788;252398;Valls de Valira, les;4;Alt Urgell
+1112;25798;252398;Valls de Valira, les;4;Alt Urgell
+1113;25799;252398;Valls de Valira, les;4;Alt Urgell
+1114;25617;252402;Vallfogona de Balaguer;23;Noguera
+1115;25680;252402;Vallfogona de Balaguer;23;Noguera
+1116;25340;252424;Verdú;38;Urgell
+1117;25530;252430;Vielha e Mijaran;39;Aran
+1118;25537;252430;Vielha e Mijaran;39;Aran
+1119;25538;252430;Vielha e Mijaran;39;Aran
+1120;25539;252430;Vielha e Mijaran;39;Aran
+1121;25330;252445;Vilagrassa;38;Urgell
+1122;25552;252458;Vilaller;5;Alta Ribagorça
+1123;25553;252458;Vilaller;5;Alta Ribagorça
+1124;25551;252477;Vilamòs;39;Aran
+1125;25264;252483;Vilanova de Bellpuig;27;Pla d'Urgell
+1126;25748;252496;Vilanova de l'Aguda;23;Noguera
+1127;25749;252496;Vilanova de l'Aguda;23;Noguera
+1128;25735;252509;Vilanova de Meià;23;Noguera
+1129;25736;252509;Vilanova de Meià;23;Noguera
+1130;25738;252509;Vilanova de Meià;23;Noguera
+1131;25133;252516;Vilanova de Segrià;33;Segrià
+1132;25245;252521;Vila-sana;27;Pla d'Urgell
+1133;25457;252537;Vilosell, el;18;Garrigues
+1134;25690;252542;Vilanova de la Barca;33;Segrià
+1135;25440;252555;Vinaixa;18;Garrigues
+1136;25570;259010;Vall de Cardós;26;Pallars Sobirà
+1137;25571;259010;Vall de Cardós;26;Pallars Sobirà
+1138;25572;259010;Vall de Cardós;26;Pallars Sobirà
+1139;25576;259010;Vall de Cardós;26;Pallars Sobirà
+1140;25267;259025;Sant Martí de Riucorb;38;Urgell
+1141;25343;259025;Sant Martí de Riucorb;38;Urgell
+1142;25344;259025;Sant Martí de Riucorb;38;Urgell
+1143;25588;259031;Guingueta d'Àneu, la;26;Pallars Sobirà
+1144;25595;259031;Guingueta d'Àneu, la;26;Pallars Sobirà
+1145;25596;259031;Guingueta d'Àneu, la;26;Pallars Sobirà
+1146;25597;259031;Guingueta d'Àneu, la;26;Pallars Sobirà
+1147;25631;259046;Castell de Mur;25;Pallars Jussà
+1148;25632;259046;Castell de Mur;25;Pallars Jussà
+1149;25633;259046;Castell de Mur;25;Pallars Jussà
+1150;25634;259046;Castell de Mur;25;Pallars Jussà
+1151;25213;259059;Ribera d'Ondara;32;Segarra
+1152;25217;259059;Ribera d'Ondara;32;Segarra
+1153;25271;259059;Ribera d'Ondara;32;Segarra
+1154;25714;259062;Valls d'Aguilar, les;4;Alt Urgell
+1155;25795;259062;Valls d'Aguilar, les;4;Alt Urgell
+1156;25211;259078;Torrefeta i Florejacs;32;Segarra
+1157;25794;259084;Fígols i Alinyà;4;Alt Urgell
+1158;25717;259097;Vansa i Fórnols, la;4;Alt Urgell
+1159;25717;259101;Josa i Tuixén;4;Alt Urgell
+1160;25211;259118;Plans de Sió, els;32;Segarra
+1161;25212;259118;Plans de Sió, els;32;Segarra
+1162;25218;259118;Plans de Sió, els;32;Segarra
+1163;25112;259123;Gimenells i el Pla de la Font;33;Segrià
+1164;25114;259123;Gimenells i el Pla de la Font;33;Segrià
+1165;25721;259139;Riu de Cerdanya;15;Cerdanya
+1166;43714;430017;Aiguamúrcia;1;Alt Camp
+1167;43815;430017;Aiguamúrcia;1;Alt Camp
+1168;43716;430022;Albinyana;12;Baix Penedès
+1169;43479;430038;Albiol, l';8;Baix Camp
+1170;43530;430043;Alcanar;22;Montsià
+1171;43569;430043;Alcanar;22;Montsià
+1172;43460;430056;Alcover;1;Alt Camp
+1173;43461;430056;Alcover;1;Alt Camp
+1174;43591;430069;Aldover;9;Baix Ebre
+1175;43381;430075;Aleixar, l';8;Baix Camp
+1176;43528;430081;Alfara de Carles;9;Baix Ebre
+1177;43365;430094;Alforja;8;Baix Camp
+1178;43813;430108;Alió;1;Alt Camp
+1179;43393;430115;Almoster;8;Baix Camp
+1180;43893;430120;Altafulla;36;Tarragonès
+1181;43860;430136;Ametlla de Mar, l';9;Baix Ebre
+1182;43549;430141;Amposta;22;Montsià
+1183;43870;430141;Amposta;22;Montsià
+1184;43879;430141;Amposta;22;Montsià
+1185;43365;430154;Arbolí;8;Baix Camp
+1186;43720;430167;Arboç, l';12;Baix Penedès
+1187;43773;430173;Argentera, l';8;Baix Camp
+1188;43597;430189;Arnes;37;Terra Alta
+1189;43791;430192;Ascó;30;Ribera d'Ebre
+1190;43711;430206;Banyeres del Penedès;12;Baix Penedès
+1191;43422;430213;Barberà de la Conca;16;Conca de Barberà
+1192;43786;430228;Batea;37;Terra Alta
+1193;43738;430234;Bellmunt del Priorat;29;Priorat
+1194;43719;430249;Bellvei;12;Baix Penedès
+1195;43512;430252;Benifallet;9;Baix Ebre
+1196;43747;430265;Benissanet;30;Ribera d'Ebre
+1197;43372;430271;Bisbal de Falset, la;29;Priorat
+1198;43717;430287;Bisbal del Penedès, la;12;Baix Penedès
+1199;43411;430290;Blancafort;16;Conca de Barberà
+1200;43884;430304;Bonastre;12;Baix Penedès
+1201;43350;430311;Borges del Camp, les;8;Baix Camp
+1202;43785;430326;Bot;37;Terra Alta
+1203;43772;430332;Botarell;8;Baix Camp
+1204;43812;430347;Bràfim;1;Alt Camp
+1205;43373;430350;Cabacés;29;Priorat
+1206;43811;430363;Cabra del Camp;1;Alt Camp
+1207;43820;430379;Calafell;12;Baix Penedès
+1208;43882;430379;Calafell;12;Baix Penedès
+1209;43850;430385;Cambrils;8;Baix Camp
+1210;43364;430398;Capafonts;8;Baix Camp
+1211;43776;430402;Capçanes;29;Priorat
+1212;43787;430419;Caseres;37;Terra Alta
+1213;43392;430424;Castellvell del Camp;8;Baix Camp
+1214;43150;430430;Catllar, el;36;Tarragonès
+1215;43764;430430;Catllar, el;36;Tarragonès
+1216;43560;430445;Sénia, la;22;Montsià
+1217;43310;430458;Colldejou;8;Baix Camp
+1218;43427;430461;Conesa;16;Conca de Barberà
+1219;43120;430477;Constantí;36;Tarragonès
+1220;43784;430483;Corbera d'Ebre;37;Terra Alta
+1221;43360;430496;Cornudella de Montsant;29;Priorat
+1222;43362;430496;Cornudella de Montsant;29;Priorat
+1223;43839;430509;Creixell;36;Tarragonès
+1224;43881;430516;Cunit;12;Baix Penedès
+1225;43592;430521;Xerta;9;Baix Ebre
+1226;43773;430537;Duesaigües;8;Baix Camp
+1227;43440;430542;Espluga de Francolí, l';16;Conca de Barberà
+1228;43730;430555;Falset;29;Priorat
+1229;43781;430568;Fatarella, la;37;Terra Alta
+1230;43364;430574;Febró, la;8;Baix Camp
+1231;43736;430580;Figuera, la;29;Priorat
+1232;43811;430593;Figuerola del Camp;1;Alt Camp
+1233;43813;430593;Figuerola del Camp;1;Alt Camp
+1234;43750;430607;Flix;30;Ribera d'Ebre
+1235;43425;430614;Forès;16;Conca de Barberà
+1236;43558;430629;Freginals;22;Montsià
+1237;43515;430635;Galera, la;22;Montsià
+1238;43780;430640;Gandesa;37;Terra Alta
+1239;43749;430653;Garcia;30;Ribera d'Ebre
+1240;43153;430666;Garidells, els;1;Alt Camp
+1241;43748;430672;Ginestar;30;Ribera d'Ebre
+1242;43516;430688;Godall;22;Montsià
+1243;43737;430691;Gratallops;29;Priorat
+1244;43777;430705;Guiamets, els;29;Priorat
+1245;43596;430712;Horta de Sant Joan;37;Terra Alta
+1246;43737;430727;Lloar, el;29;Priorat
+1247;43427;430733;Llorac;16;Conca de Barberà
+1248;43711;430748;Llorenç del Penedès;12;Baix Penedès
+1249;43712;430748;Llorenç del Penedès;12;Baix Penedès
+1250;43371;430751;Margalef;29;Priorat
+1251;43775;430764;Marçà;29;Priorat
+1252;43514;430770;Mas de Barberans;22;Montsià
+1253;43878;430786;Masdenverge;22;Montsià
+1254;43718;430799;Masllorenç;12;Baix Penedès
+1255;43143;430803;Masó, la;1;Alt Camp
+1256;43382;430810;Maspujols;8;Baix Camp
+1257;43736;430825;Masroig, el;29;Priorat
+1258;43143;430831;Milà, el;1;Alt Camp
+1259;43747;430846;Miravet;30;Ribera d'Ebre
+1260;43736;430859;Molar, el;29;Priorat
+1261;43400;430862;Montblanc;16;Conca de Barberà
+1262;43410;430862;Montblanc;16;Conca de Barberà
+1263;43414;430862;Montblanc;16;Conca de Barberà
+1264;43415;430862;Montblanc;16;Conca de Barberà
+1265;43459;430862;Montblanc;16;Conca de Barberà
+1266;43340;430884;Montbrió del Camp;8;Baix Camp
+1267;43812;430897;Montferri;1;Alt Camp
+1268;43714;430901;Montmell, el;12;Baix Penedès
+1269;43718;430901;Montmell, el;12;Baix Penedès
+1270;43812;430901;Montmell, el;12;Baix Penedès
+1271;43364;430918;Mont-ral;1;Alt Camp
+1272;43459;430918;Mont-ral;1;Alt Camp
+1273;43300;430923;Mont-roig del Camp;8;Baix Camp
+1274;43892;430923;Mont-roig del Camp;8;Baix Camp
+1275;43740;430939;Móra d'Ebre;30;Ribera d'Ebre
+1276;43770;430944;Móra la Nova;30;Ribera d'Ebre
+1277;43760;430957;Morell, el;36;Tarragonès
+1278;43361;430960;Morera de Montsant, la;29;Priorat
+1279;43379;430960;Morera de Montsant, la;29;Priorat
+1280;43763;430976;Nou de Gaià, la;36;Tarragonès
+1281;43887;430982;Nulles;1;Alt Camp
+1282;43370;430995;Palma d'Ebre, la;30;Ribera d'Ebre
+1283;43151;431009;Pallaresos, els;36;Tarragonès
+1284;43413;431016;Passanant i Belltall;16;Conca de Barberà
+1285;43425;431016;Passanant i Belltall;16;Conca de Barberà
+1286;43593;431021;Paüls;9;Baix Ebre
+1287;43152;431037;Perafort;36;Tarragonès
+1288;43155;431037;Perafort;36;Tarragonès
+1289;43519;431042;Perelló, el;9;Baix Ebre
+1290;43428;431055;Piles, les;16;Conca de Barberà
+1291;43429;431055;Piles, les;16;Conca de Barberà
+1292;43594;431068;Pinell de Brai, el;37;Terra Alta
+1293;43423;431074;Pira;16;Conca de Barberà
+1294;43810;431080;Pla de Santa Maria, el;1;Alt Camp
+1295;43140;431093;Pobla de Mafumet, la;36;Tarragonès
+1296;43783;431107;Pobla de Massaluca, la;37;Terra Alta
+1297;43761;431114;Pobla de Montornès, la;36;Tarragonès
+1298;43376;431129;Poboleda;29;Priorat
+1299;43817;431135;Pont d'Armentera, el;1;Alt Camp
+1300;43739;431140;Porrera;29;Priorat
+1301;43774;431153;Pradell de la Teixeta;29;Priorat
+1302;43364;431166;Prades;8;Baix Camp
+1303;43595;431172;Prat de Comte;37;Terra Alta
+1304;43320;431188;Pratdip;8;Baix Camp
+1305;43321;431188;Pratdip;8;Baix Camp
+1306;43812;431191;Puigpelat;1;Alt Camp
+1307;43715;431205;Querol;1;Alt Camp
+1308;43816;431205;Querol;1;Alt Camp
+1309;43513;431212;Rasquera;30;Ribera d'Ebre
+1310;43886;431227;Renau;36;Tarragonès
+1311;43201;431233;Reus;8;Baix Camp
+1312;43202;431233;Reus;8;Baix Camp
+1313;43203;431233;Reus;8;Baix Camp
+1314;43204;431233;Reus;8;Baix Camp
+1315;43205;431233;Reus;8;Baix Camp
+1316;43206;431233;Reus;8;Baix Camp
+1317;43450;431248;Riba, la;1;Alt Camp
+1318;43790;431251;Riba-roja d'Ebre;30;Ribera d'Ebre
+1319;43762;431264;Riera de Gaià, la;36;Tarragonès
+1320;43771;431270;Riudecanyes;8;Baix Camp
+1321;43390;431286;Riudecols;8;Baix Camp
+1322;43330;431299;Riudoms;8;Baix Camp
+1323;43426;431303;Rocafort de Queralt;16;Conca de Barberà
+1324;43883;431310;Roda de Berà;36;Tarragonès
+1325;43812;431325;Rodonyà;1;Alt Camp
+1326;43520;431331;Roquetes;9;Baix Ebre
+1327;43529;431331;Roquetes;9;Baix Ebre
+1328;43142;431346;Rourell, el;1;Alt Camp
+1329;43885;431359;Salomó;36;Tarragonès
+1330;43540;431362;Ràpita, la;22;Montsià
+1331;43548;431362;Ràpita, la;22;Montsià
+1332;43713;431378;Sant Jaume dels Domenys;12;Baix Penedès
+1333;43570;431384;Santa Bàrbara;22;Montsià
+1334;43420;431397;Santa Coloma de Queralt;16;Conca de Barberà
+1335;43429;431397;Santa Coloma de Queralt;16;Conca de Barberà
+1336;43710;431401;Santa Oliva;12;Baix Penedès
+1337;43421;431418;Pontils;16;Conca de Barberà
+1338;43428;431418;Pontils;16;Conca de Barberà
+1339;43424;431423;Sarral;16;Conca de Barberà
+1340;43425;431423;Sarral;16;Conca de Barberà
+1341;43428;431423;Sarral;16;Conca de Barberà
+1342;43427;431439;Savallà del Comtat;16;Conca de Barberà
+1343;43154;431444;Secuita, la;36;Tarragonès
+1344;43765;431444;Secuita, la;36;Tarragonès
+1345;43470;431457;Selva del Camp, la;8;Baix Camp
+1346;43449;431460;Senan;16;Conca de Barberà
+1347;43412;431476;Solivella;16;Conca de Barberà
+1348;43001;431482;Tarragona;36;Tarragonès
+1349;43002;431482;Tarragona;36;Tarragonès
+1350;43003;431482;Tarragona;36;Tarragonès
+1351;43004;431482;Tarragona;36;Tarragonès
+1352;43005;431482;Tarragona;36;Tarragonès
+1353;43006;431482;Tarragona;36;Tarragonès
+1354;43007;431482;Tarragona;36;Tarragonès
+1355;43008;431482;Tarragona;36;Tarragonès
+1356;43100;431482;Tarragona;36;Tarragonès
+1357;43130;431482;Tarragona;36;Tarragonès
+1358;43511;431495;Tivenys;9;Baix Ebre
+1359;43320;431508;Tivissa;30;Ribera d'Ebre
+1360;43746;431508;Tivissa;30;Ribera d'Ebre
+1361;43774;431515;Torre de Fontaubella, la;29;Priorat
+1362;43792;431520;Torre de l'Espanyol, la;30;Ribera d'Ebre
+1363;43830;431536;Torredembarra;36;Tarragonès
+1364;43737;431541;Torroja del Priorat;29;Priorat
+1365;43500;431554;Tortosa;9;Baix Ebre
+1366;43510;431554;Tortosa;9;Baix Ebre
+1367;43517;431554;Tortosa;9;Baix Ebre
+1368;43527;431554;Tortosa;9;Baix Ebre
+1369;43590;431554;Tortosa;9;Baix Ebre
+1370;43897;431554;Tortosa;9;Baix Ebre
+1371;43550;431567;Ulldecona;22;Montsià
+1372;43558;431567;Ulldecona;22;Montsià
+1373;43559;431567;Ulldecona;22;Montsià
+1374;43363;431573;Ulldemolins;29;Priorat
+1375;43439;431589;Vallclara;16;Conca de Barberà
+1376;43427;431592;Vallfogona de Riucorb;16;Conca de Barberà
+1377;43144;431606;Vallmoll;1;Alt Camp
+1378;43491;431613;Valls;1;Alt Camp
+1379;43800;431613;Valls;1;Alt Camp
+1380;43813;431613;Valls;1;Alt Camp
+1381;43890;431628;Vandellòs i l'Hospitalet de l'Infant;8;Baix Camp
+1382;43891;431628;Vandellòs i l'Hospitalet de l'Infant;8;Baix Camp
+1383;43700;431634;Vendrell, el;12;Baix Penedès
+1384;43880;431634;Vendrell, el;12;Baix Penedès
+1385;43763;431649;Vespella de Gaià;36;Tarragonès
+1386;43886;431652;Vilabella;1;Alt Camp
+1387;43141;431665;Vilallonga del Camp;36;Tarragonès
+1388;43311;431671;Vilanova d'Escornalbou;8;Baix Camp
+1389;43312;431671;Vilanova d'Escornalbou;8;Baix Camp
+1390;43439;431687;Vilanova de Prades;16;Conca de Barberà
+1391;43380;431690;Vilaplana;8;Baix Camp
+1392;43814;431704;Vila-rodona;1;Alt Camp
+1393;43480;431711;Vila-seca;36;Tarragonès
+1394;43481;431711;Vila-seca;36;Tarragonès
+1395;43490;431726;Vilaverd;16;Conca de Barberà
+1396;43375;431732;Vilella Alta, la;29;Priorat
+1397;43374;431747;Vilella Baixa, la;29;Priorat
+1398;43782;431750;Vilalba dels Arcs;37;Terra Alta
+1399;43430;431763;Vimbodí i Poblet;16;Conca de Barberà
+1400;43448;431763;Vimbodí i Poblet;16;Conca de Barberà
+1401;43792;431779;Vinebre;30;Ribera d'Ebre
+1402;43391;431785;Vinyols i els Arcs;8;Baix Camp
+1403;43580;439018;Deltebre;9;Baix Ebre
+1404;43877;439023;Sant Jaume d'Enveja;22;Montsià
+1405;43879;439023;Sant Jaume d'Enveja;22;Montsià
+1406;43894;439039;Camarles;9;Baix Ebre
+1407;43896;439044;Aldea, l';9;Baix Ebre
+1408;43840;439057;Salou;36;Tarragonès
+1409;43895;439060;Ampolla, l';9;Baix Ebre
+1410;43006;439076;Canonja, la;36;Tarragonès
+1411;43100;439076;Canonja, la;36;Tarragonès
+1412;43110;439076;Canonja, la;36;Tarragonès
