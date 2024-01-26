@@ -121,7 +121,7 @@ class CentreProfessorAlumneLlistaAdmesosMigration extends Migration
                 'constraint' => '32',
                 'null'          => false,
             ],
-            'data_entrega'       => [
+            'data_entrada'       => [
                 'type'       => 'DATE',
                 'null'          => false,
             ],

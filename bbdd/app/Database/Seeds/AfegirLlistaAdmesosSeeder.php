@@ -15,7 +15,7 @@ class AfegirLlistaAdmesosSeeder extends Seeder
 
             $data = [
                 'correu_professor' => $fake->email(),
-                'data_entrega' => $fake->date('d-m-y h:i:s'),
+                'data_entrada' => $fake->date('d-m-y h:i:s'),
                 'codi_centre' => $fake->uuid(),
             ];
             

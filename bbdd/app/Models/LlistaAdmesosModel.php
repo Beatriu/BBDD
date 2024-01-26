@@ -12,7 +12,7 @@ class LlistaAdmesosModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['correu_professor','data_entrega','codi_centre'];
+    protected $allowedFields    = ['correu_professor','data_entrada','codi_centre'];
 
     // Dates
     protected $useTimestamps = false;
@@ -42,7 +42,7 @@ class LlistaAdmesosModel extends Model
     {
         $this->insert([
             "correu_professor" => $d1,
-            "data_entrega" => $d2,
+            "data_entrada" => $d2,
             "codi_centre" => $d3
         ]);
     }
