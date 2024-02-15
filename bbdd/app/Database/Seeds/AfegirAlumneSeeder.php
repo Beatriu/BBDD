@@ -9,7 +9,22 @@ class AfegirAlumneSeeder extends Seeder
 {
     public function run()
     {
-        $fake = Factory::create("es_ES");
+        $csvFile = fopen(WRITEPATH."uploads". DIRECTORY_SEPARATOR ."alumnes.csv", "r");
+
+        $firstline = true;
+
+        while (($data = fgetcsv($csvFile, 2000, ";")) !== FALSE) {
+            if (!$firstline) {
+                $model = new \App\Models\AlumneModel;
+                $model->addAlumne($data[0], $data[1]);
+            }
+            $firstline = false;
+        }
+
+        fclose($csvFile);
+
+        //SEEDER AMB FAKER
+        /*$fake = Factory::create("es_ES");
 
         for ($i = 1; $i < 11; $i++) {
 
@@ -19,6 +34,6 @@ class AfegirAlumneSeeder extends Seeder
             ];
             
             $this->db->table('alumne')->insert($data);
-        }
+        }*/
     }
 }

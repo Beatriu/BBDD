@@ -6,8 +6,14 @@ use CodeIgniter\Database\Migration;
 
 class CentreProfessorAlumneLlistaAdmesosMigration extends Migration
 {
+    /**
+     * Funció per arrencar la migració.
+     *
+     * @author Blai Burgués Vicente
+     */
     public function up()
     {
+        // Taula centre
         $this->forge->addField([
             'codi_centre'          => [
                 'type'           => 'VARCHAR',
@@ -66,6 +72,7 @@ class CentreProfessorAlumneLlistaAdmesosMigration extends Migration
         $this->forge->addKey('codi_centre', true);
         $this->forge->createTable('centre');
 
+        // Taula professor
         $this->forge->addField([
             'id_xtec'          => [
                 'type'           => 'VARCHAR',
@@ -98,6 +105,7 @@ class CentreProfessorAlumneLlistaAdmesosMigration extends Migration
         $this->forge->addKey('id_xtec', true);
         $this->forge->createTable('professor');
 
+        // Taula alumne
         $this->forge->addField([
             'correu_alumne'       => [
                 'type'       => 'VARCHAR',
@@ -115,6 +123,7 @@ class CentreProfessorAlumneLlistaAdmesosMigration extends Migration
         $this->forge->addKey('correu_alumne', true);
         $this->forge->createTable('alumne');
 
+        // Taula llista admesos
         $this->forge->addField([
             'correu_professor'       => [
                 'type'       => 'VARCHAR',
@@ -137,6 +146,11 @@ class CentreProfessorAlumneLlistaAdmesosMigration extends Migration
         $this->forge->createTable('llista_admesos');
     }
 
+    /**
+     * Funció per revertir la migració.
+     *
+     * @author Blai Burgués Vicente
+     */
     public function down()
     {
         $this->forge->dropTable('centre');

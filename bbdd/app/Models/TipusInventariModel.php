@@ -12,7 +12,7 @@ class TipusInventariModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['nom_tipus_inventari'];
+    protected $allowedFields    = ['id_tipus_inventari','nom_tipus_inventari'];
 
     // Dates
     protected $useTimestamps = false;

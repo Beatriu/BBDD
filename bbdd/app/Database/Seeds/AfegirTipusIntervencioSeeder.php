@@ -9,7 +9,21 @@ class AfegirTipusIntervencioSeeder extends Seeder
 {
     public function run()
     {
-        $fake = Factory::create("es_ES");
+        $csvFile = fopen(WRITEPATH."uploads". DIRECTORY_SEPARATOR ."tipus_intervencio.csv", "r"); // read file from /writable/uploads folder.
+
+        $firstline = true;
+
+        while (($data = fgetcsv($csvFile, 2000, ";")) !== FALSE) {
+            if (!$firstline) {
+                $model = new \App\Models\TipusIntervencioModel;
+                $model->addTipusIntervencio($data[1]);
+            }
+            $firstline = false;
+        }
+
+        fclose($csvFile);
+
+        /*$fake = Factory::create("es_ES");
 
         for ($i = 1; $i < 11; $i++) {
 
@@ -18,6 +32,6 @@ class AfegirTipusIntervencioSeeder extends Seeder
                 'nom_tipus_intervencio' => $fake -> word()
             ];
             $this->db->table('tipus_intervencio')->insert($data);
-        }
+        }*/
     }
 }

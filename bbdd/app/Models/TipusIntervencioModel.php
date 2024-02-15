@@ -12,7 +12,7 @@ class TipusIntervencioModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['nom_tipus_intervencio'];
+    protected $allowedFields    = ['id_tipus_intervencio','nom_tipus_intervencio'];
 
     // Dates
     protected $useTimestamps = false;

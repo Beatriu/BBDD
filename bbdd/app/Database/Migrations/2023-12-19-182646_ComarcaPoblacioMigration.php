@@ -6,8 +6,14 @@ use CodeIgniter\Database\Migration;
 
 class ComarcaPoblacioMigration extends Migration
 {
+    /**
+     * Funció per arrencar la migració.
+     *
+     * @author Blai Burgués Vicente
+     */
     public function up()
     {
+        // Taula comarca.
         $this->forge->addField([
             'id_comarca'          => [
                 'type'           => 'INT',
@@ -24,6 +30,7 @@ class ComarcaPoblacioMigration extends Migration
         $this->forge->addKey('id_comarca', true);
         $this->forge->createTable('comarca');
 
+        // Taula poblacio.
         $this->forge->addField([
             'id_poblacio'          => [
                 'type'           => 'INT',
@@ -55,6 +62,11 @@ class ComarcaPoblacioMigration extends Migration
         $this->forge->createTable('poblacio');
     }
 
+    /**
+     * Funció per revertir la migració.
+     *
+     * @author Blai Burgués Vicente
+     */
     public function down()
     {
         $this->forge->dropTable('comarca');

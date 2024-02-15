@@ -6,13 +6,20 @@ use CodeIgniter\Database\Migration;
 
 class TipusInventariInventariMigration extends Migration
 {
+    /**
+     * Funció per arrencar la migració.
+     *
+     * @author Beatriu Badia Sala
+     */
     public function up()
     {
+        // Taula tipus inventari
         $this->forge->addField([
             'id_tipus_inventari' =>[
                 'type' => 'INTEGER',
                 'constraint' => 2,
                 'null' => false,
+                'auto_increment' => TRUE
             ],
             'nom_tipus_inventari' =>[
                 'type' => 'VARCHAR',
@@ -23,11 +30,13 @@ class TipusInventariInventariMigration extends Migration
         $this->forge->addKey('id_tipus_inventari', true);
         $this->forge->createTable('tipus_inventari');
 
+        // Taula inventari
         $this->forge->addField([
             'id_inventari' =>[
                 'type' => 'VARCHAR',
                 'constraint' => '8',
                 'null' => false,
+                'auto_increment' => TRUE
             ],
             'descripcio_inventari' =>[
                 'type' => 'VARCHAR',
@@ -66,6 +75,11 @@ class TipusInventariInventariMigration extends Migration
         $this->forge->createTable('inventari');
     }
 
+    /**
+     * Funció per revertir la migració.
+     *
+     * @author Beatriu Badia Sala
+     */
     public function down()
     {
         $this->forge->dropTable('tipus_inventari');

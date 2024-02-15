@@ -6,13 +6,20 @@ use CodeIgniter\Database\Migration;
 
 class EstatTipusDispositiuTiquetMigration extends Migration
 {
+    /**
+     * Funció per arrencar la migració.
+     *
+     * @author Beatriu Badia Sala
+     */
     public function up()
     {
+        // Taula estat
         $this->forge->addField([
             'id_estat' =>[
                 'type' => 'INTEGER',
                 'constraint' => 8,
                 'null' => false,
+                'auto_increment' => TRUE
             ],
             'nom_estat' =>[
                 'type' => 'VARCHAR',
@@ -23,11 +30,13 @@ class EstatTipusDispositiuTiquetMigration extends Migration
         $this->forge->addKey('id_estat', true);
         $this->forge->createTable('estat');
 
+        // Taula tipus dispositiu
         $this->forge->addField([
             'id_tipus_dispositiu' =>[
                 'type' => 'INTEGER',
                 'constraint' => 8,
                 'null' => false,
+                'auto_increment' => TRUE
             ],
             'nom_tipus_dispositiu' =>[
                 'type' => 'VARCHAR',
@@ -37,6 +46,7 @@ class EstatTipusDispositiuTiquetMigration extends Migration
         $this->forge->addKey('id_tipus_dispositiu', true);
         $this->forge->createTable('tipus_dispositiu');
 
+        // Taula tiquet
         $this->forge->addField([
             'id_tiquet' =>[
                 'type' => 'INTEGER',
@@ -100,6 +110,11 @@ class EstatTipusDispositiuTiquetMigration extends Migration
         $this->forge->createTable('tiquet');
     }
 
+    /**
+     * Funció per revertir la migració.
+     *
+     * @author Beatriu Badia Sala
+     */
     public function down()
     {
         $this->forge->dropTable('estat');

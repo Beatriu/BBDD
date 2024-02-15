@@ -6,14 +6,21 @@ use CodeIgniter\Database\Migration;
 
 class TipusIntervencioCursIntervencioMigration extends Migration
 {
+    /**
+     * Funció per arrencar la migració.
+     *
+     * @author Blai Burgués Vicente
+     */
     public function up()
     {
+        // Taula tipus intervencio
         $this->forge->addField([
             'id_tipus_intervencio'          => [
                 'type'           => 'INT',
                 'constraint'     => 2,
                 'unsigned'       => true,
                 'null'          => false,
+                'auto_increment' => TRUE
             ],
             'nom_tipus_intervencio'       => [
                 'type'       => 'VARCHAR',
@@ -24,12 +31,14 @@ class TipusIntervencioCursIntervencioMigration extends Migration
         $this->forge->addKey('id_tipus_intervencio', true);
         $this->forge->createTable('tipus_intervencio');
 
+        // Taula curs
         $this->forge->addField([
             'id_curs'          => [
                 'type'           => 'INT',
                 'constraint'     => 5,
                 'unsigned'       => true,
                 'null'          => false,
+                'auto_increment' => TRUE
             ],
             'cicle'       => [
                 'type'       => 'VARCHAR',
@@ -52,11 +61,13 @@ class TipusIntervencioCursIntervencioMigration extends Migration
         $this->forge->addKey('id_curs', true);
         $this->forge->createTable('curs');
 
+        // Taula intervencio
         $this->forge->addField([
             'id_intervencio'          => [
                 'type'           => 'VARCHAR',
                 'constraint'     => '8',
                 'null'          => false,
+                'auto_increment' => TRUE
             ],
             'descripcio_intervencio'       => [
                 'type'       => 'VARCHAR',
@@ -105,6 +116,11 @@ class TipusIntervencioCursIntervencioMigration extends Migration
         $this->forge->createTable('intervencio');
     }
 
+    /**
+     * Funció per revertir la migració.
+     *
+     * @author Blai Burgués Vicente
+     */
     public function down()
     {
         $this->forge->dropTable('tipus_intervencio');

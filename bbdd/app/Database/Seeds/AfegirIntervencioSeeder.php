@@ -9,7 +9,20 @@ class AfegirIntervencioSeeder extends Seeder
 {
     public function run()
     {
-        $fake = Factory::create("es_ES");
+        $csvFile = fopen(WRITEPATH."uploads". DIRECTORY_SEPARATOR ."intervencio.csv", "r");
+
+        $firstline = true;
+
+        while (($data = fgetcsv($csvFile, 2000, ";")) !== FALSE) {
+            if (!$firstline) {
+                $model = new \App\Models\IntervencioModel;
+                $model->addIntervencio($data[0], $data[1], $data[2], $data[3], $data[4], $data[5], $data[6], $data[7]);
+            }
+            $firstline = false;
+        }
+
+        fclose($csvFile);
+        /*$fake = Factory::create("es_ES");
 
         for ($i = 1; $i < 11; $i++) {
 
@@ -24,6 +37,6 @@ class AfegirIntervencioSeeder extends Seeder
                 'id_xtec' => $fake -> $fake->uuid(),
             ];
             $this->db->table('intervencio')->insert($data);
-        }
+        }*/
     }
 }

@@ -6,8 +6,14 @@ use CodeIgniter\Database\Migration;
 
 class SsttMigration extends Migration
 {
+    /**
+     * Funció per arrencar la migració.
+     *
+     * @author Beatriu Badia Sala
+     */
     public function up()
     {
+        // Taula SSTT
         $this->forge->addField([
             'id_sstt' =>[
                 'type' => 'VARCHAR',
@@ -39,6 +45,11 @@ class SsttMigration extends Migration
         $this->forge->createTable('sstt');
     }
 
+    /**
+     * Funció per revertir la migració.
+     *
+     * @author Beatriu Badia Sala
+     */
     public function down()
     {
         $this->forge->dropTable('sstt');

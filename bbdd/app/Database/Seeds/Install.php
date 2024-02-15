@@ -12,5 +12,19 @@ class Install extends Seeder
         $this->call("AfegirPoblacioSeeder");
         $this->call("AfegirSSTTSeeder");
         $this->call("AfegirCentreSeeder");
+
+        $this->call("AfegirTipusDispositiuSeeder");
+        $this->call("AfegirEstatSeeder");
+        $this->call("AfegirTipusIntervencioSeeder");
+        $this->call("AfegirCursSeeder");
+        $this->call("AfegirLlistaAdmesosSeeder");
+        $this->call("AfegirTipusInventariSeeder");
+
+        $this->call("AfegirTiquetSeeder");
+        $this->call("AfegirProfessorSeeder");
+        $this->call("AfegirAlumneSeeder");
+
+        $this->call("AfegirIntervencioSeeder");
+        $this->call("AfegirInventariSeeder");
     }
 }

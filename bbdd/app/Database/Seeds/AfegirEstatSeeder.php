@@ -9,7 +9,21 @@ class AfegirEstatSeeder extends Seeder
 {
     public function run()
     {
-        $fake = Factory::create("es_ES");
+        $csvFile = fopen(WRITEPATH."uploads". DIRECTORY_SEPARATOR ."estat.csv", "r");
+
+        $firstline = true;
+
+        while (($data = fgetcsv($csvFile, 2000, ";")) !== FALSE) {
+            if (!$firstline) {
+                $model = new \App\Models\EstatModel;
+                $model->addEstat($data[1]);
+            }
+            $firstline = false;
+        }
+
+        fclose($csvFile);
+
+        /*$fake = Factory::create("es_ES");
 
         for ($i = 1; $i < 11; $i++) {
 
@@ -18,6 +32,6 @@ class AfegirEstatSeeder extends Seeder
                 'nom_estat' => $fake->word(2),
             ];
             $this->db->table('estat')->insert($data);
-        }
+        }*/
     }
 }

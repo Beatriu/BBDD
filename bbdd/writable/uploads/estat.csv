@@ -1,0 +1,10 @@
+ID ESTAT;NOM ESTAT
+1;Pendent de recollir
+2;Emmagatzemat a SSTT
+3;Pendent de reparar
+4;Reparant
+5;Reparat i pendent de recollir
+6;Pendent de retorn
+7;Retornat
+8;Rebutjat per SSTT
+9;Desguassat

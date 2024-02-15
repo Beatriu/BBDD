@@ -9,7 +9,20 @@ class AfegirInventariSeeder extends Seeder
 {
     public function run()
     {
-        $fake = Factory::create("es_ES");
+        $csvFile = fopen(WRITEPATH."uploads". DIRECTORY_SEPARATOR ."inventari.csv", "r");
+
+        $firstline = true;
+
+        while (($data = fgetcsv($csvFile, 2000, ";")) !== FALSE) {
+            if (!$firstline) {
+                $model = new \App\Models\InventariModel;
+                $model->addInventari($data[0], $data[1], $data[2], $data[3], $data[4], $data[5], $data[6]);
+            }
+            $firstline = false;
+        }
+
+        fclose($csvFile);
+        /*$fake = Factory::create("es_ES");
 
         for ($i = 0; $i < 10; $i++) {
 
@@ -23,6 +36,6 @@ class AfegirInventariSeeder extends Seeder
                 'id_intervencio' => $fake->randomDigit(8)
             ];
             $this->db->table('inventari')->insert($data);
-        }
+        }*/
     }
 }

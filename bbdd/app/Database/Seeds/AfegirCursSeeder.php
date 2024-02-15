@@ -9,7 +9,21 @@ class AfegirCursSeeder extends Seeder
 {
     public function run()
     {
-        $fake = Factory::create("es_ES");
+        $csvFile = fopen(WRITEPATH."uploads". DIRECTORY_SEPARATOR ."curs.csv", "r");
+
+        $firstline = true;
+
+        while (($data = fgetcsv($csvFile, 2000, ";")) !== FALSE) {
+            if (!$firstline) {
+                $model = new \App\Models\CursModel;
+                $model->addCurs($data[1], $data[2], $data[3]);
+            }
+            $firstline = false;
+        }
+
+        fclose($csvFile);
+
+        /*$fake = Factory::create("es_ES");
 
         for ($i = 1; $i < 11; $i++) {
 
@@ -20,6 +34,6 @@ class AfegirCursSeeder extends Seeder
                 'curs' => $fake -> $fake->randomElement([1, 2])
             ];
             $this->db->table('curs')->insert($data);
-        }
+        }*/
     }
 }

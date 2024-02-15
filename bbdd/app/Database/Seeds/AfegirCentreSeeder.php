@@ -16,7 +16,6 @@ class AfegirCentreSeeder extends Seeder
             if (!$firstline) {
                 $model = new \App\Models\CentreModel;
                 $model->addCentre($data[0], $data[1], 1, 0, $data[4], $data[2], '', '', $data[5], $data[11]);
-                echo $data[0].$data[5];
             }
             $firstline = false;
         }

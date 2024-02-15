@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class LlistaAdmesosModel extends Model
 {
-    protected $table            = 'llistaadmesos';
+    protected $table            = 'llista_admesos';
     protected $primaryKey       = 'correu_professor';
     protected $useAutoIncrement = false;
     protected $returnType       = 'array';
