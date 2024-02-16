@@ -5,4 +5,5 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('/', 'Home::index');
+$routes->get('{locale}/login', 'Home::login');
+$routes->get('{locale}/loginEleccio', 'Home::loginEleccio');

@@ -9,6 +9,7 @@ class AfegirCursSeeder extends Seeder
 {
     public function run()
     {
+<<<<<<< Updated upstream
         $csvFile = fopen(WRITEPATH."uploads". DIRECTORY_SEPARATOR ."curs.csv", "r");
 
         $firstline = true;
@@ -24,6 +25,10 @@ class AfegirCursSeeder extends Seeder
         fclose($csvFile);
 
         /*$fake = Factory::create("es_ES");
+=======
+    
+        $fake = Factory::create("es_ES");
+>>>>>>> Stashed changes
 
         for ($i = 1; $i < 11; $i++) {
 

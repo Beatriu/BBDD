@@ -4,8 +4,18 @@ namespace App\Controllers;
 
 class Home extends BaseController
 {
-    public function index(): string
+    public function login(): string
     {
-        return view('welcome_message');
+        $locale = $this->request->getLocale();
+        $data['title'] = "login";
+        $data['locale'] = $locale;
+        return view('logins\loginGeneral', $data);
+    }
+    public function loginEleccio(): string
+    {
+        $locale = $this->request->getLocale();
+        $data['title'] = "login";
+        $data['locale'] = $locale;
+        return view('logins\loginEleccio', $data);
     }
 }

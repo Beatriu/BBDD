@@ -7,6 +7,7 @@ use Faker\Factory;
 
 class AfegirIntervencioSeeder extends Seeder
 {
+    
     public function run()
     {
         $csvFile = fopen(WRITEPATH."uploads". DIRECTORY_SEPARATOR ."intervencio.csv", "r");

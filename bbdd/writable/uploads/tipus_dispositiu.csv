@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 ID TIPUS DISPOSITIU;NOM TIPUS DISPOSITIU;
 1;Pantalla;
 2;Ordenador;
@@ -9,3 +10,16 @@ ID TIPUS DISPOSITIU;NOM TIPUS DISPOSITIU;
 8;Altaveu;
 9;Dispositius multimèdia;
 10;Impresora;
+=======
+ID TIPUS DISPOSITIU	NOM TIPUS DISPOSITIU
+1	Pantalla
+2	Ordenador
+3	Projector
+4	Mòvil
+5	Tablet
+6	Portàtil
+7	Servidor
+8	Altaveu
+9	Dispositius multimèdia
+10	Impresora
+>>>>>>> Stashed changes
