@@ -28,3 +28,20 @@ form{
     outline: none;
     border-bottom: 5px solid #900000;
 }
+.contenidor{
+    padding: 30px;
+}
+.titol{
+    font-weight: 400;
+    text-align: center;
+}
+.selector{
+    width: 100%;
+    text-align: center;
+    height: 40px;
+    outline: none;
+    border-bottom: 5px solid #900000;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    padding-left: 10px;
+}
