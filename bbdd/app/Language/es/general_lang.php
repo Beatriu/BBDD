@@ -13,4 +13,7 @@ return [
         'update' => 'Actualitzar',
         'cancel' => 'Cancelar',
     ],
+    'banderilla'=>'img/Banderes/Flag_of_Catalonia.png',
+    'user' => 'Usuario',
+    'password' => 'Contraseña'
 ];
