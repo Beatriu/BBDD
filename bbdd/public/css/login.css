@@ -25,5 +25,6 @@ form{
     height: 40px;
 }
 .input:focus{
-    border-bottom: 4px solid #900000;
+    outline: none;
+    border-bottom: 5px solid #900000;
 }
