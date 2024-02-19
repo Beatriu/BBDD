@@ -11,11 +11,9 @@ class Home extends BaseController
         $data['locale'] = $locale;
         return view('logins\loginGeneral', $data);
     }
-    public function loginEleccio(): string
+    public function loginSelect(): string
     {
-        $locale = $this->request->getLocale();
         $data['title'] = "login";
-        $data['locale'] = $locale;
-        return view('logins\loginEleccio', $data);
+        return view('logins\loginSelect', $data);
     }
 }

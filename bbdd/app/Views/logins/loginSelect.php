@@ -18,12 +18,16 @@
 
 <form class="d-flex align-items-center justify-content-center">
     <div class="w-25 p-3" id="formulari">
-        <div class="form-group">
-            <h1>Institut</h1>
+        <div class="form-group d-flex flex-column">
+            <div class="d-flex justify-content-center">
+            <p class="h6">Institut</p>
+            </div>
+            <div class="d-flex justify-content-center">
             <select name="" id="">
                 <option>Caparrella</option>
                 <option>Lladonosa</option>
             </select>
+            </div>
         </div>
         <br />
         <div class="d-flex justify-content-center">

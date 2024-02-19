@@ -17,14 +17,14 @@ form{
 #formulari{
     box-shadow: 1px 1px 15px;
 }
-.input{
+.entrada{
     width: 100%;
     background-color: #f5f5f5;
     border-width: thin;
     border: 1px solid #333333;
     height: 40px;
 }
-.input:focus{
+.entrada:focus{
     outline: none;
     border-bottom: 5px solid #900000;
 }
