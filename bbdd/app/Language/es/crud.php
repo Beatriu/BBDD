@@ -14,6 +14,5 @@ return [
         'cancel' => 'Cancelar',
         'enter' => 'Entrar'
     ],
-    'user' => 'Usuario',
-    'password' => 'Contraseña'
+    
 ];
