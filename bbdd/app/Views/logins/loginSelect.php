@@ -1,7 +1,8 @@
 <?= $this->extend('layouts/general'); ?>
 
 <?= $this->section('css_pagina'); ?>
-<link rel="stylesheet" href="<?= base_url('css/login.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('css/login.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('css/header.css') ?>">
 <?= $this->endSection('css_pagina'); ?>
 
 <?= $this->section('header'); ?>

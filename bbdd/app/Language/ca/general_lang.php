@@ -15,5 +15,13 @@ return [
     ],
     'banderilla'=>'img/Banderes/Bandera_de_España.png',
     'user' => 'Usuari',
-    'password' => 'Contrasenya'
+    'password' => 'Contrasenya',
+    'tancar' => 'Tancar sessió',
+    'formulari_tiquet' => 'Crear Tiquet',
+    'name' => 'Nom',
+    'contact' => 'Contacte',
+    'create_tiquet' => 'Crear tiquet',
+    'equipment_code' => 'Codi equip',
+    'type' => 'Tipus',
+    'problem' => 'Problema'
 ];

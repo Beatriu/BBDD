@@ -16,4 +16,15 @@ class Home extends BaseController
         $data['title'] = "login";
         return view('logins\loginSelect', $data);
     }
+
+    /**
+     * Funció que ens dirigeix cap al formulari per crear un tiquet
+     *
+     * @author Blai Burgués Vicente
+     */
+    public function createTiquet(): string 
+    {
+        $data['title'] = lang('general_lang.formulari_tiquet');
+        return view('formularis\formulariTiquet', $data);
+    }
 }

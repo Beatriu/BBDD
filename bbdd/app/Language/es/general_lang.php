@@ -15,5 +15,8 @@ return [
     ],
     'banderilla'=>'img/Banderes/Flag_of_Catalonia.png',
     'user' => 'Usuario',
-    'password' => 'Contraseña'
+    'password' => 'Contraseña',
+    'tancar' => 'Cerrar sessión',
+    'formulari_tiquet' => 'Crear Tiquet',
+    'problem' => 'Problema',
 ];
