@@ -44,4 +44,8 @@ class TipusDispositiuModel extends Model
             "nom_tipus_dispositiu" => $d1
         ]);
     }
+
+    public function getTipusDispositius() {
+        return $this->findAll();
+    }
 }
