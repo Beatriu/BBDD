@@ -12,7 +12,7 @@
 
 <?= $this->section('contingut'); ?>
 
-    <form class="container">
+    <form class="container" method="POST" action="">
         <div class="row mt-5 justify-content-center">
             <h1><?= lang('general_lang.create_tiquet') ?></h1>
         </div>
@@ -28,14 +28,17 @@
         </div>
         <div class="row border mt-4">
             <div class="row form_header p-2">
-                <div class="col">
+                <div class="col d-flex align-items-center justify-content-center">
                     <?= lang('general_lang.equipment_code') ?>
                 </div>
-                <div class="col">
+                <div class="col d-flex align-items-center justify-content-center">
                     <?= lang('general_lang.type') ?>
                 </div>
-                <div class="col">
+                <div class="col d-flex align-items-center justify-content-center">
                     <?= lang('general_lang.problem') ?>
+                </div>
+                <div class="col d-flex align-items-center justify-content-end">
+                    <button type="button" class="btn btn-success rounded-pill">Afegir</button>
                 </div>
             </div>
         </div>
