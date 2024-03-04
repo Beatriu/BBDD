@@ -26,5 +26,7 @@ class Install extends Seeder
 
         $this->call("AfegirIntervencioSeeder");
         $this->call("AfegirInventariSeeder");
+
+        $this->call("AfegirBackTicketSeeder");
     }
 }
