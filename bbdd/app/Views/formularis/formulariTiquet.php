@@ -47,7 +47,7 @@
             </div>
             <div class="row" id = "div_files_formulari_tiquet">
 
-                <div class="row p-2">
+                <div class="row p-2" id = "fila_formulari_tiquet_0">
                     <div class="col d-flex align-items-center justify-content-center">
                         <input type="text" name="equipment_code_0"/>
                     </div>
@@ -60,7 +60,9 @@
                         <input type="text" name="problem_0"/>
                     </div>
                     <div class="col">
-
+                        <button type="button" class="btn btn-danger rounded-circle" onclick = "esborrarTiquet('fila_formulari_tiquet_0');">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
                     </div>
                 </div>
 

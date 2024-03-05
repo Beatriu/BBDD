@@ -12,6 +12,7 @@ function afegirTiquet() {
     let div_files_formulari_tiquet = document.getElementById("div_files_formulari_tiquet");
 
     let div_fila = document.createElement("div");
+    div_fila.id = "fila_formulari_tiquet_" + numero_tiquets_afegir;
     div_fila.classList.add("row","p-2");
 
     let div_col_codi_equip = document.createElement("div");
@@ -54,4 +55,9 @@ function afegirTiquet() {
 
     div_files_formulari_tiquet.appendChild(div_fila);
 
+}
+
+function esborrarTiquet(id_fila) {
+    let div_fila = document.getElementById(id_fila);
+    div_fila.remove();
 }
