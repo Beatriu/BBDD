@@ -82,6 +82,12 @@ class Home extends BaseController
         if ($this->validate($validationRules)) { 
             $nom_persona_contacte_centre = $this->request->getPost('nom_persona_contacte_centre');
             $correu_persona_contacte_centre = $this->request->getPost('correu_persona_contacte_centre');
+            $correu_persona_contacte_centre = $this->request->getPost('correu_persona_contacte_centre');
+
+            $data_alta = date("Y-m-d H:i:s");
+
+            for ($i = 0; $i < )
+
         }
     }
 

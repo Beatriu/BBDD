@@ -79,7 +79,7 @@ class EstatTipusDispositiuTiquetMigration extends Migration
             ],
             'data_ultima_modificacio' =>[
                 'type' => 'DATE',
-                'null' => false,
+                'null' => true,
             ],
             'id_tipus_dispositiu' =>[
                 'type' => 'INTEGER',

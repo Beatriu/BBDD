@@ -38,20 +38,20 @@ class TiquetModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function addTiquet($d1,$d2,$d3,$d4,$d5,$d6,$d7,$d8,$d9,$d10,$d11)
+    public function addTiquet($id_tiquet,$codi_equip,$descripcio_avaria,$nom_persona_contacte_centre,$correu_persona_contacte_centre,$data_alta,$data_ultima_modificacio,$id_tipus_dispositiu,$id_estat,$codi_centre_emissor,$codi_centre_reparador)
     {
         $this->insert([
-            "id_tiquet" => $d1,
-            "codi_equip" => $d2,
-            "descripcio_avaria" => $d3,
-            "nom_persona_contacte_centre" => $d4,
-            "correu_persona_contacte_centre" => $d5,
-            "data_alta" => $d6,
-            "data_ultima_modificacio" => $d7,
-            "id_tipus_dispositiu" => $d8,
-            "id_estat" => $d9,
-            "codi_centre_emissor" => $d10,
-            "codi_centre_reparador" => $d11
+            "id_tiquet" => $id_tiquet,
+            "codi_equip" => $codi_equip,
+            "descripcio_avaria" => $descripcio_avaria,
+            "nom_persona_contacte_centre" => $nom_persona_contacte_centre,
+            "correu_persona_contacte_centre" => $correu_persona_contacte_centre,
+            "data_alta" => $data_alta,
+            "data_ultima_modificacio" => $data_ultima_modificacio,
+            "id_tipus_dispositiu" => $id_tipus_dispositiu,
+            "id_estat" => $id_estat,
+            "codi_centre_emissor" => $codi_centre_emissor,
+            "codi_centre_reparador" => $codi_centre_reparador
         ]);
     }
 }
