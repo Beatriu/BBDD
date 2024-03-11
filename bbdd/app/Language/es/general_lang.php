@@ -19,4 +19,6 @@ return [
     'tancar' => 'Cerrar sessión',
     'formulari_tiquet' => 'Crear Tiquet',
     'problem' => 'Problema',
+    'cancell' => 'Cancelar',
+    'save' => 'Guardar',
 ];

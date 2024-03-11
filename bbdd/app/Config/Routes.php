@@ -10,3 +10,5 @@ $routes->get('{locale}/loginSelect', 'Home::loginSelect');
 $routes->get('{locale}/formulariTiquet', 'Home::createTiquet');
 
 $routes->match(['get','post'],'{locale}/crudadmin',"RegistresController::index");
+
+$routes->post('{locale}/formulariTiquet', 'Home::createTiquet_post');
