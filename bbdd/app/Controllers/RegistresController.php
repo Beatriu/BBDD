@@ -24,15 +24,16 @@ class RegistresController extends BaseController
             "removable" => true
         ]);   // set editable config parameter to false
         // set into config file
-        $crud->hideHeadLink([
+        /*$crud->hideHeadLink([
             'js-jquery', 
             'js-bootstrap',
             'js-datatables'  => 'https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js',
             'js-datatables-boot',
             'css-bootstrap', // => 'https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css',         
             'css-datatables-boot',
-            'css-fontawesome'
-        ]);
+            'css-fontawesome',
+            'css' => base_url("css/style.css")
+        ]);*/
         $crud->setTable('backticket');                        // set table name
         $crud->setPrimaryKey('id_back');                     // set primary key
         $crud->setColumns(['id_back', 'tipus_alerta', 'data_backticket', 'informacio']); // set columns/fields to show

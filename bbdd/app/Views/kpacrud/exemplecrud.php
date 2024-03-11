@@ -6,7 +6,6 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Hola</h1>
     <?= $output?>
 </body>
 </html>
