@@ -1,11 +1,11 @@
 id_intervencio;descripcio_intervencio;id_tiquet;data_intervencio;id_tipus_intervencio;id_curs;correu_alumne;id_xtec
-1;La placa base ha estat substitu�da.;1;08/02/2024;1;1;abcdef@inscaparrella.cat;1
+1;La placa base ha estat substituïda.;1;08/02/2024;1;1;abcdef@inscaparrella.cat;1
 2;La font s'ha canviat.;2;08/02/2024;2;2;fedcba@inscaparrella.cat;2
-3;El port HDMI s'ha instal�lat de nou.;3;08/02/2024;3;3;qwerty@inscaparrella.cat;3
+3;El port HDMI s'ha instal·lat de nou.;3;08/02/2024;3;3;qwerty@inscaparrella.cat;3
 4;S'ha afegit una RAM;4;08/02/2024;4;4;ytrewq@inscaparrella.cat;4
-5;La pantalla estava esquerdada i se n'ha instal�lat una de nova;5;08/02/2024;5;5;asdfg@inscaparrella.cat;5
-6;S'han col�locat les tecles que faltaven.;6;08/02/2024;6;6;gfdsa@instremp.cat;6
+5;La pantalla estava esquerdada i se n'ha instal·lat una de nova;5;08/02/2024;5;5;asdfg@inscaparrella.cat;5
+6;S'han col·locat les tecles que faltaven.;6;08/02/2024;6;6;gfdsa@instremp.cat;6
 7;S'ha canviat la CPU;7;08/02/2024;7;7;zxcvbn@instremp.cat;7
-8;S'ha renovat la tarjeta gr�fica;8;08/02/2024;8;8;nbvcxz@instremp.cat;8
+8;S'ha renovat la tarjeta gràfica;8;08/02/2024;8;8;nbvcxz@instremp.cat;8
 9;La pasta del CPU s'ha canviat.;9;08/02/2024;9;9;potuyt@instremp.cat;9
-10;S'ha substitu�t el disc dur;10;08/02/2024;14;10;qwerty@inscaparrella.cat;10
+10;S'ha substituït el disc dur;10;08/02/2024;14;10;qwerty@inscaparrella.cat;10

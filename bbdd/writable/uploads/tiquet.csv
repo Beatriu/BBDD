@@ -1,11 +1,11 @@
 id_tiquet;codi_equip;descripcio_avaria;nom_persona_contacte_centre;correu_persona_contacte_centre;data_alta;data_ultima_modificacio;id_tipus_dispositiu;id_estat;codi_centre_emissor;codi_centre_reparador
-1;QWERTYUIOP;Una part de la pantalla no mostra bÈ la imatge.;Diego Garcia;dgarcia@xtec.cat;06/02/2024;06/02/2024;1;1;25006513;25008443
-2;POIUYTREWQ;La carcassa est‡ trencada.;Diego Garcia;dgarcia@xtec.cat;06/02/2024;06/02/2024;2;2;25006513;25008443
+1;QWERTYUIOP;Una part de la pantalla no mostra b√© la imatge.;Diego Garcia;dgarcia@xtec.cat;06/02/2024;06/02/2024;1;1;25006513;25008443
+2;POIUYTREWQ;La carcassa est√† trencada.;Diego Garcia;dgarcia@xtec.cat;06/02/2024;06/02/2024;2;2;25006513;25008443
 3;ASDFGHJKL;La imatge surt sempre desenfocada.;Oscar Vidal;ovidal@xtec.cat;06/02/2024;06/02/2024;3;1;43007671;25008443
 4;LKJHGFDSA;La pantalla s'ha trencat.;Oscar Vidal;ovidal@xtec.cat;06/02/2024;06/02/2024;4;2;43007671;25008443
-5;ZXCVBNM;La c‡mera no funciona.;Ian Florensa;iflorensa@xtec.cat;06/02/2024;06/02/2024;5;3;25008741;25008443
-6;MNBVCXZ;El port usb est‡ trencat.;Brian Pachon;bpachon@xtec.cat;06/02/2024;06/02/2024;6;4;25007074;43009497
-7;QAZXSWEDC;El cablejat s'ha fet malbÈ.;Xavier Camara;xcamara@xtec.cat;06/02/2024;06/02/2024;7;8;25003688;43009497
-8;CDEXSWZAQ;El so Ès ensordidor i estrident.;Adri‡ Henares;ahenares@xtec.cat;06/02/2024;06/02/2024;8;6;25006288;43009497
-9;VFRTGBNHY;Li falten algunes tecles.;Blai BurguÈs;bburgues@xtec.cat;06/02/2024;06/02/2024;9;9;25004231;43009497
-10;YHNBGTRFV;La tinta mulla massa el paper.;Blai BurguÈs;bburgues@xtec.cat;06/02/2024;06/02/2024;10;7;25004231;43009497
+5;ZXCVBNM;La c√†mera no funciona.;Ian Florensa;iflorensa@xtec.cat;06/02/2024;06/02/2024;5;3;25008741;25008443
+6;MNBVCXZ;El port usb est√† trencat.;Brian Pachon;bpachon@xtec.cat;06/02/2024;06/02/2024;6;4;25007074;43009497
+7;QAZXSWEDC;El cablejat s'ha fet malb√©.;Xavier Camara;xcamara@xtec.cat;06/02/2024;06/02/2024;7;8;25003688;43009497
+8;CDEXSWZAQ;El so √©s ensordidor i estrident.;Adri√† Henares;ahenares@xtec.cat;06/02/2024;06/02/2024;8;6;25006288;43009497
+9;VFRTGBNHY;Li falten algunes tecles.;Blai Burgu√©s;bburgues@xtec.cat;06/02/2024;06/02/2024;9;9;25004231;43009497
+10;YHNBGTRFV;La tinta mulla massa el paper.;Blai Burgu√©s;bburgues@xtec.cat;06/02/2024;06/02/2024;10;7;25004231;43009497

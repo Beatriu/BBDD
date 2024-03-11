@@ -1,15 +1,15 @@
-ID TIPUS INTERVENCIÓ;NOM TIPUS INTERVENCIÓ
+ID TIPUS INTERVENCIÃ“;NOM TIPUS INTERVENCIÃ“
 1;Canvi de placa base
 2;Canvi de font
 3;Canvi de port
 4;Canvi de RAM
 5;Canvi de pantalla
-6;Reposició de tecles
+6;ReposiciÃ³ de tecles
 7;Canvi de CPU
-8;Canvi de tarjeta gràfica
+8;Canvi de tarjeta grÃ fica
 9;Canvi de pasta
 10;Canvi de ventilador
 11;Canvi de caixa
 12;Canvi de cablejat intern
-13;Reinstal·lar el sistema operatiu
+13;ReinstalÂ·lar el sistema operatiu
 14;BLOQUEJANT
