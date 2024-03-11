@@ -5,13 +5,16 @@
  * @author Blai Burgués Vicente
  */
 var numero_tiquets_afegir = 0;
+var numero_files = 1;
 
 function afegirTiquet() {
     numero_tiquets_afegir++;
+    numero_files++;
 
     let div_files_formulari_tiquet = document.getElementById("div_files_formulari_tiquet");
 
     let div_fila = document.createElement("div");
+    div_fila.id = "fila_formulari_tiquet_" + numero_tiquets_afegir;
     div_fila.classList.add("row","p-2");
 
     let div_col_codi_equip = document.createElement("div");
@@ -44,14 +47,32 @@ function afegirTiquet() {
     input_problem.name = "problem_" + numero_tiquets_afegir;
     div_col_problem.appendChild(input_problem);
 
-    let div_espai = document.createElement("div");
-    div_espai.classList.add("col");
+    let id_borrar = "fila_formulari_tiquet_" + numero_tiquets_afegir;
+
+    let div_borrar = document.createElement("div");
+    div_borrar.classList.add("col", "d-flex", "align-items-center", "justify-content-center");
+    let button_div_borrar = document.createElement("button");
+    button_div_borrar.type = "button";
+    button_div_borrar.classList.add("btn", "btn-danger", "rounded-circle");
+    button_div_borrar.addEventListener("click", () => esborrarTiquet(id_borrar));
+    let trash_icon = document.createElement("i");
+    trash_icon.classList.add("fa-solid", "fa-trash");
+    button_div_borrar.appendChild(trash_icon);
+    div_borrar.appendChild(button_div_borrar);
 
     div_fila.appendChild(div_col_codi_equip);
     div_fila.appendChild(div_col_type);
     div_fila.appendChild(div_col_problem);
-    div_fila.appendChild(div_espai);
+    div_fila.appendChild(div_borrar);
 
     div_files_formulari_tiquet.appendChild(div_fila);
 
+}
+
+function esborrarTiquet(id_fila) {
+    if (numero_files > 1) {
+        let div_fila = document.getElementById(id_fila);
+        div_fila.remove();
+        numero_files--;
+    }
 }

@@ -54,5 +54,14 @@ class CentreModel extends Model
         ]);
     }
 
+    public function obtenirNomResponsable($codi_centre) {
+        $centre = $this->where('codi_centre', $codi_centre)->first();
+        return $centre['nom_persona_contacte_centre'];
+    }
+
+    public function obtenirCorreuResponsable($codi_centre) {
+        $centre = $this->where('codi_centre', $codi_centre)->first();
+        return $centre['correu_persona_contacte_centre'];
+    }
 
 }

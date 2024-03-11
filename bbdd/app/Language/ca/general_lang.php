@@ -23,5 +23,11 @@ return [
     'create_tiquet' => 'Crear tiquet',
     'equipment_code' => 'Codi equip',
     'type' => 'Tipus',
-    'problem' => 'Problema'
+    'problem' => 'Problema',
+    'cancell' => 'Cancel·lar',
+    'save' => 'Desar',
+    'errors_validation' => [
+        'sNomContacteCentre_required' => 'El nom de contacte centre és obligatori!',
+        'sCorreuContacteCentre_required' => 'El correu de contacte de centre és obligatori!',
+    ],
 ];

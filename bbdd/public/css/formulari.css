@@ -11,3 +11,19 @@ input {
     background-color: #333333;
     color: white;
 }
+
+.btn_cancell, .btn_save, .btn_csv {
+    color: white;
+}
+
+.btn_cancell {
+    background-color: #FF5757;
+}
+
+.btn_save {
+    background-color: #38B6FF;
+}
+
+.btn_csv {
+    background-color: #333333;
+}
