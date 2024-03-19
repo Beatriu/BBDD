@@ -4,7 +4,7 @@
  * 
  * @author Blai Burgués Vicente
  */
-var numero_tiquets_afegir = 0;
+var numero_tiquets_afegir = 1;
 var numero_files = 1;
 
 function afegirTiquet() {
@@ -22,18 +22,22 @@ function afegirTiquet() {
     let input_codi_equip = document.createElement("input");
     input_codi_equip.type = "text";
     input_codi_equip.name = "equipment_code_" + numero_tiquets_afegir;
+    input_codi_equip.required = true;
     div_col_codi_equip.appendChild(input_codi_equip);
 
     let div_col_type = document.createElement("div");
     div_col_type.classList.add("col", "d-flex", "align-items-center", "justify-content-center");
     
+    let comptador_tipus_dispositius = 1;
     let select_col_type = document.createElement("select");
     select_col_type.name = "type_" + numero_tiquets_afegir;
     for (let i = 0; i < opcions_tipus_dispositius.length; i++) {
         let option_item = document.createElement("option");
+        option_item.value = comptador_tipus_dispositius;
         let text_option_item = document.createTextNode(opcions_tipus_dispositius[i]);
         option_item.appendChild(text_option_item);
         select_col_type.appendChild(option_item);
+        comptador_tipus_dispositius++;
     }
     div_col_type.appendChild(select_col_type);
 
@@ -45,6 +49,7 @@ function afegirTiquet() {
     let input_problem = document.createElement("input");
     input_problem.type = "text";
     input_problem.name = "problem_" + numero_tiquets_afegir;
+    input_problem.required = true;
     div_col_problem.appendChild(input_problem);
 
     let id_borrar = "fila_formulari_tiquet_" + numero_tiquets_afegir;
@@ -67,6 +72,7 @@ function afegirTiquet() {
 
     div_files_formulari_tiquet.appendChild(div_fila);
 
+    sumarNumTiquet();
 }
 
 function esborrarTiquet(id_fila) {
@@ -74,5 +80,22 @@ function esborrarTiquet(id_fila) {
         let div_fila = document.getElementById(id_fila);
         div_fila.remove();
         numero_files--;
+        restarNumTiquet();
     }
+}
+
+function sumarNumTiquet() {
+    let num = document.getElementById('num_tiquets').value;
+
+    num = parseInt(num) + 1;
+
+    document.getElementById('num_tiquets').value = num;
+}
+
+function restarNumTiquet() {
+    let num = document.getElementById('num_tiquets').value;
+
+    num = parseInt(num) - 1;
+
+    document.getElementById('num_tiquets').value = num;
 }

@@ -8,7 +8,7 @@ class TiquetModel extends Model
 {
     protected $table            = 'tiquet';
     protected $primaryKey       = 'id_tiquet';
-    protected $useAutoIncrement = false;
+    protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
@@ -38,10 +38,9 @@ class TiquetModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function addTiquet($id_tiquet,$codi_equip,$descripcio_avaria,$nom_persona_contacte_centre,$correu_persona_contacte_centre,$data_alta,$data_ultima_modificacio,$id_tipus_dispositiu,$id_estat,$codi_centre_emissor,$codi_centre_reparador)
+    public function addTiquet($codi_equip,$descripcio_avaria,$nom_persona_contacte_centre,$correu_persona_contacte_centre,$data_alta,$data_ultima_modificacio,$id_tipus_dispositiu,$id_estat,$codi_centre_emissor,$codi_centre_reparador)
     {
-        $this->insert([
-            "id_tiquet" => $id_tiquet,
+        $data = [
             "codi_equip" => $codi_equip,
             "descripcio_avaria" => $descripcio_avaria,
             "nom_persona_contacte_centre" => $nom_persona_contacte_centre,
@@ -52,6 +51,8 @@ class TiquetModel extends Model
             "id_estat" => $id_estat,
             "codi_centre_emissor" => $codi_centre_emissor,
             "codi_centre_reparador" => $codi_centre_reparador
-        ]);
+        ];
+
+        $this->insert($data);
     }
 }
