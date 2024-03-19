@@ -10,30 +10,26 @@ class RegistresController extends BaseController
 {
     public function index()
     {
+        $data['title'] = 'Kpacrud';
         $crud = new KpaCrud();                          // loads default configuration    
         $crud->setConfig('onlyView');                   // sets configuration to onlyView
         $crud->setConfig([
-            "numerate" => true,
-            "add_button" => true,
-            "show_button" => true,
-            "recycled_button" => true,
-            "useSoftDeletes" => true,
-            "multidelete" => true,
+            "numerate" => false,
+            "add_button" => false,
+            "show_button" => false,
+            "recycled_button" => false,
+            "useSoftDeletes" => false,
+            "multidelete" => false,
             "filterable" => false,
-            "editable" => true,
-            "removable" => true
+            "editable" => false,
+            "removable" => false,
+            "paging" => false,
+            "numerate" => false,
+            "sortable" => false,
+            "exportXLS" => false,
+            "print" => false
         ]);   // set editable config parameter to false
         // set into config file
-        /*$crud->hideHeadLink([
-            'js-jquery', 
-            'js-bootstrap',
-            'js-datatables'  => 'https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js',
-            'js-datatables-boot',
-            'css-bootstrap', // => 'https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css',         
-            'css-datatables-boot',
-            'css-fontawesome',
-            'css' => base_url("css/style.css")
-        ]);*/
         $crud->setTable('backticket');                        // set table name
         $crud->setPrimaryKey('id_back');                     // set primary key
         $crud->setColumns(['id_back', 'tipus_alerta', 'data_backticket', 'informacio']); // set columns/fields to show
@@ -52,5 +48,51 @@ class RegistresController extends BaseController
         //$crud->addWhere('blog.blog_id!="1"'); // show filtered data
         $data['output'] = $crud->render();          // renders view
         return view('kpacrud/exemplecrud', $data);
+    }
+
+    public function registreTiquets()
+    {
+        $data['locale'] = $this->request->getLocale();
+        $data['title'] = 'Tiquets SSTT';
+        $crud = new KpaCrud();                          // loads default configuration    
+        $crud->setConfig('onlyView');                   // sets configuration to onlyView
+        $crud->setConfig([
+            "numerate" => false,
+            "add_button" => false,
+            "show_button" => true,
+            "recycled_button" => false,
+            "useSoftDeletes" => false,
+            "multidelete" => false,
+            "filterable" => false,
+            "editable" => true,
+            "removable" => false,
+            "paging" => false,
+            "numerate" => false,
+            "sortable" => false,
+            "exportXLS" => false,
+            "print" => false
+        ]);   // set editable config parameter to false
+        // set into config file
+        $crud->setTable('tiquet');                        // set table name
+        $crud->setPrimaryKey('id_tiquet');
+        $crud->setRelation('id_tipus_dispositiu', 'tipus_dispositiu', 'id_tipus_dispositiu', 'nom_tipus_dispositiu');
+        $crud->setRelation('id_estat', 'estat', 'id_estat', 'nom_estat');                       // set primary key
+        $crud->setRelation('codi_centre_emissor', 'centre', 'codi_centre', 'nom_centre');   
+        $crud->setColumns(['codi_equip', 'tipus_dispositiu__nom_tipus_dispositiu','descripcio_avaria', 'estat__nom_estat', 'centre__nom_centre']); // set columns/fields to show
+        $crud->setColumnsInfo([                         // set columns/fields name
+            'codi_equip' => [
+                'name' => 'Codi del equip'
+            ],
+            'tipus_dispositiu__nom_tipus_dispositiu' => [
+                'name' => 'Tipus de dispositiu',
+            ],
+            'data_backticket' => [
+                'name' => 'Tipus de dispositiu',
+            ],
+        ]);
+
+        //$crud->addWhere('blog.blog_id!="1"'); // show filtered data
+        $data['output'] = $crud->render();          // renders view
+        return view('registres/registreTiquetSSTT', $data);
     }
 }

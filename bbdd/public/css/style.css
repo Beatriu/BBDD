@@ -1,3 +1,18 @@
-table{
-    border: 1px solid black;
+#data-list-backticket,#data-list-tiquet > thead > tr > th{
+    background-color: #333333;
+    color: white;
+}
+#data-list-backticket {
+    width: 60%;
+    margin-right: 50px;
+}
+.col-sm-12{
+    display: flex;
+    justify-content: end;
+}
+.dataTables_info{
+    display: none;
+}
+#title{
+    border-bottom: 1px solid #333333;
 }
