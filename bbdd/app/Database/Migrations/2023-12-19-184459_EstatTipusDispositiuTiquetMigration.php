@@ -51,6 +51,7 @@ class EstatTipusDispositiuTiquetMigration extends Migration
             'id_tiquet' =>[
                 'type' => 'INTEGER',
                 'constraint' => 12,
+                'auto_increment' => true,
                 'null' => false,
             ],
             'codi_equip' =>[
@@ -74,11 +75,11 @@ class EstatTipusDispositiuTiquetMigration extends Migration
                 'null' => false,
             ],
             'data_alta' =>[
-                'type' => 'DATE',
+                'type' => 'DATETIME',
                 'null' => false,
             ],
             'data_ultima_modificacio' =>[
-                'type' => 'DATE',
+                'type' => 'DATETIME',
                 'null' => true,
             ],
             'id_tipus_dispositiu' =>[
