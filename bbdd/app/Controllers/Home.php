@@ -58,7 +58,14 @@ class Home extends BaseController
                 // Obtenim la contrasenya del formulari
                 $contrasenya = $this->request->getPost('sPssw');
                 
-                if (password_verify($contrasenya[0], $login_obtingut['contrasenya'])) { // Verifiquem que la contrasenya coincideixi amb la de la base de dades
+
+                if (gettype($contrasenya) == "string") {
+                    $password = $contrasenya;
+                }
+
+                $hash =$login_obtingut['contrasenya'];
+
+                if (password_verify($password, $hash)) { // Verifiquem que la contrasenya coincideixi amb la de la base de dades
 
                     return redirect()->to(base_url($locale . '/formulariTiquet'));
                 }
