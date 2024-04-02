@@ -13,8 +13,8 @@
     <?= $this->renderSection('header') ?>
 
     <?= $this->renderSection('contingut') ?>
+    <script <?= base_url('bootstrap/js/bootstrap.bundle.min.js') ?>></script>
+    <script src="https://kit.fontawesome.com/7f13a820d7.js" crossorigin="anonymous"></script>
 </body>
-<script <?= base_url('bootstrap/js/bootstrap.bundle.min.js') ?>></script>
-<script src="https://kit.fontawesome.com/7f13a820d7.js" crossorigin="anonymous"></script>
 
 </html>

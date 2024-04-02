@@ -1,13 +1,26 @@
 <?= $this->section('header'); ?>
-    <header class="d-flex justify-content-between" style="background-color: #333333;">
+<header class="d-flex justify-content-between" style="background-color: #333333;">
 
-        <img class="logo" src="<?= base_url('img/Logotip/Logotip per aplicar a fons negres.png') ?>" />
-        <a><img class="ms-auto imatge" src="<?= base_url(lang('general_lang.banderilla')) ?>" /></a>
+    <img class="logo" src="<?= base_url('img/Logotip/Logotip per aplicar a fons negres.png') ?>" />
+    <a><img class="ms-auto imatge" src="<?= base_url(lang('general_lang.banderilla')) ?>" /></a>
 
-        <select class="form-select rounded-pill user_select me-3" aria-label="Default select example">
+    <div class="dropdown show">
+        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dropdown link
+        </a>
+
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+    </div>
+
+
+    <!--<select class="form-select rounded-pill user_select me-3" aria-label="Default select example">
             <option class="name_option" selected>NOM</option>
-            <option value="1"><?= lang('general_lang.tancar')?></option>
-        </select> 
+            <option value="1"><?= lang('general_lang.tancar') ?></option>
+        </select> -->
 
-    </header>
+</header>
 <?= $this->endSection('header'); ?>
