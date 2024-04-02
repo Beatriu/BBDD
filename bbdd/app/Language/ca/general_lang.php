@@ -30,4 +30,8 @@ return [
         'sNomContacteCentre_required' => 'El nom de contacte centre és obligatori!',
         'sCorreuContacteCentre_required' => 'El correu de contacte de centre és obligatori!',
     ],
+    'nom_usuari_required' => "Has d'introduir el nom d'usuari!",
+    'contrasenya_required' => "Has d'introduir la contrasenya!",
+    'contrasenya_min_length' => "La contrasenya ha de tenir mínim 6 caràcters!",
+    'nom_usuari_required_max_length' => "El nom d'usuari pot tenir com a màxim 32 caràcters!",
 ];

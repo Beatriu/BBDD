@@ -99,3 +99,21 @@ function restarNumTiquet() {
 
     document.getElementById('num_tiquets').value = num;
 }
+
+function afegirFitxer() {
+    document.getElementById('csv_tiquet').click();
+}
+
+function mostrarFitxers(input) {
+    document.getElementById("div_csv").classList.add("text-white");
+    if (input.files[0].type == "text/csv") {
+        let span = document.getElementById("mostrar_csv");
+        span.innerHTML = "";
+        let span_text = document.createTextNode(input.files[0].name);
+        span.appendChild(span_text);
+    } else {
+        input.value = null;
+        alert("No és un CSV!");
+    }
+
+}

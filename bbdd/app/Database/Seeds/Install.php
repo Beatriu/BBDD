@@ -28,5 +28,9 @@ class Install extends Seeder
         $this->call("AfegirInventariSeeder");
 
         $this->call("AfegirBackTicketSeeder");
+
+        $this->call("AfegirRolSeeder");
+        $this->call("AfegirLoginSeeder");
+        $this->call("AfegirLoginInRolSeeder");
     }
 }

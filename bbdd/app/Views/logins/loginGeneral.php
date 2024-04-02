@@ -16,16 +16,17 @@
 
 <?= $this->section('contingut'); ?>
 
-<form class="d-flex align-items-center justify-content-center">
+<?= validation_list_errors() ?>
+<form class="d-flex align-items-center justify-content-center" method="POST" action="<?= base_url($locale . '/login') ?>">
     <div class="w-25 p-3" id="formulari">
         <div class="form-group">
             <label class="d-flex justify-content-center" for="sUser"><?= lang('general_lang.user') ?>:</label>
-            <input class="entrada" type="text" id="sUser" placeholder="example@xtec.cat" />
+            <input class="entrada" type="text" id="sUser" name="sUser" placeholder="example@xtec.cat" />
         </div>
         <br />
         <div class="form-group">
             <label class="d-flex justify-content-center" for="sPssw"><?= lang('general_lang.password') ?>:</label>
-            <input class="entrada" type="text" id="sPssw" />
+            <input class="entrada" type="text" id="sPssw" name="sPssw" />
         </div>
         <br />
         <div class="d-flex justify-content-center">
