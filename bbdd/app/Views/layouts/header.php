@@ -7,7 +7,7 @@
         <select class="form-select rounded-pill user_select me-3" aria-label="Default select example">
             <option class="name_option" selected>NOM</option>
             <option value="1"><?= lang('general_lang.tancar')?></option>
-        </select>
+        </select> 
 
     </header>
 <?= $this->endSection('header'); ?>
