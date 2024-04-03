@@ -26,7 +26,7 @@
         <br />
         <div class="form-group">
             <label class="d-flex justify-content-center" for="sPssw"><?= lang('general_lang.password') ?>:</label>
-            <input class="entrada" type="text" id="sPssw" name="sPssw" />
+            <input class="entrada" type="password" id="sPssw" name="sPssw" />
         </div>
         <br />
         <div class="d-flex justify-content-center">
