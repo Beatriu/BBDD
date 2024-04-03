@@ -12,4 +12,15 @@ $routes->get('{locale}/formulariTiquet', 'Home::createTiquet');
 $routes->post('{locale}/formulariTiquet', 'Home::createTiquet_post');
 $routes->match(['get','post'],'{locale}/crudadmin',"RegistresController::index");
 
-$routes->get('{locale}/registreTiquetSSTT', 'RegistresController::registreTiquets');
+//Tiquets
+$routes->get('{locale}/registreTiquetProfessor', 'RegistresController::registreTiquetsProfessor');
+$routes->get('{locale}/registreTiquetSSTT', 'RegistresController::registreTiquetsSSTT');
+$routes->get('{locale}/registreTiquetEmissor', 'RegistresController::registreTiquetEmissor');
+
+//Inventari
+$routes->get('{locale}/registreTiquetProfessor', 'RegistresController::registreTiquetsProfessor');
+//Alumnes
+
+//Backtickets
+
+//Intervencions

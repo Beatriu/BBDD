@@ -1,18 +1,21 @@
 <?= $this->section('header'); ?>
-<header class="d-flex justify-content-between" style="background-color: #333333;">
+<header class="d-flex bd-highlight" style="background-color: #333333;">
+    <div class="p-2 flex-grow-1 bd-highlight">
+        <img class="logo" src="<?= base_url('img/Logotip/Logotip per aplicar a fons negres.png') ?>" />
+    </div>
+    <div class="p-2 bd-highlight d-flex">
+        <a><img class="ms-auto imatge" src="<?= base_url(lang('general_lang.banderilla')) ?>" /></a>
 
-    <img class="logo" src="<?= base_url('img/Logotip/Logotip per aplicar a fons negres.png') ?>" />
-    <a><img class="ms-auto imatge" src="<?= base_url(lang('general_lang.banderilla')) ?>" /></a>
+        <div class="dropdown show">
+            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dropdown link
+            </a>
 
-    <div class="dropdown show">
-        <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Dropdown link
-        </a>
-
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <a class="dropdown-item" href="#">Something else here</a>
+            </div>
         </div>
     </div>
 

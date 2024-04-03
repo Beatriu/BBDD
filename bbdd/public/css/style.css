@@ -1,18 +1,31 @@
-#data-list-backticket,#data-list-tiquet > thead > tr > th{
+#data-list-backticket,
+#data-list-tiquet>thead>tr>th {
     background-color: #333333;
     color: white;
+}
+
+#data-list-tiquet {
+    border-right: 3px solid #900000;
+    border-left: 3px solid #900000;
+    border-bottom: 3px solid #900000;
+}
+#data-list-tiquet>thead>tr>th {
+    border-right:0 !important;
 }
 #data-list-backticket {
     width: 60%;
     margin-right: 50px;
 }
-.col-sm-12{
+
+.col-sm-12 {
     display: flex;
     justify-content: end;
 }
-.dataTables_info{
+
+.dataTables_info {
     display: none;
 }
-#title{
+
+#title {
     border-bottom: 1px solid #333333;
 }

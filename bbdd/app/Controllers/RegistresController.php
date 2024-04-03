@@ -10,7 +10,7 @@ class RegistresController extends BaseController
 {
     public function index()
     {
-        $data['title'] = 'Kpacrud';
+        /*$data['title'] = 'Kpacrud';
         $crud = new KpaCrud();                          // loads default configuration    
         $crud->setConfig('onlyView');                   // sets configuration to onlyView
         $crud->setConfig([
@@ -47,10 +47,10 @@ class RegistresController extends BaseController
 
         //$crud->addWhere('blog.blog_id!="1"'); // show filtered data
         $data['output'] = $crud->render();          // renders view
-        return view('kpacrud/exemplecrud', $data);
+        return view('kpacrud/exemplecrud', $data);*/
     }
 
-    public function registreTiquets()
+    public function registreTiquetsProfessor()
     {
         $data['locale'] = $this->request->getLocale();
         $data['title'] = 'Tiquets SSTT';
@@ -86,8 +86,14 @@ class RegistresController extends BaseController
             'tipus_dispositiu__nom_tipus_dispositiu' => [
                 'name' => 'Tipus de dispositiu',
             ],
-            'data_backticket' => [
-                'name' => 'Tipus de dispositiu',
+            'descripcio_avaria' => [
+                'name' => 'Descripció',
+            ],     
+            'estat__nom_estat' => [
+                'name' => 'Estat',
+            ],
+            'centre__nom_centre' => [
+                'name' => 'Centre',
             ],
         ]);
 

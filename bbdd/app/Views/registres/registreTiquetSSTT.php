@@ -37,7 +37,9 @@
             
         </div>
         <div class="col-sm p-3 min-vh-100" id="zona_taula">
-            <h1>Registre de dispositius</h1>
+            <div class="d-flex justify-content-center">
+                <h1>Registre de dispositius</h1>
+            </div>
             <div >
                 <?= $output ?>
             </div>
