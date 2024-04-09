@@ -25,4 +25,6 @@ return [
     'contrasenya_required' => 'Tienes que introducir la contraseña!',
     'contrasenya_min_length' => "La contraseña tiene como mínimo 6 caracteres!",
     'nom_usuari_required_max_length' => "El nombre de usuario puede tener como máximo 32 caracteres!",
+    'config' => "Configuración",
+    'tancar' => "Cerrar sessión",
 ];
