@@ -60,7 +60,7 @@ class RegistresController extends BaseController
         $crud->setConfig('onlyView');                   // sets configuration to onlyView
         $crud->setConfig([
             "numerate" => false,
-            "add_button" => true,
+            "add_button" => false,
             "show_button" => true,
             "recycled_button" => false,
             "useSoftDeletes" => false,
