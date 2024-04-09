@@ -10,7 +10,7 @@ $routes->post('{locale}/login', 'Home::login_post');
 $routes->get('{locale}/loginSelect', 'Home::loginSelect');
 $routes->get('{locale}/formulariTiquet', 'Home::createTiquet');
 $routes->post('{locale}/formulariTiquet', 'Home::createTiquet_post');
-$routes->match(['get','post'],'{locale}/crudadmin',"RegistresController::index");
+$routes->match(['GET','POST'],'{locale}/crudadmin',"RegistresController::index");
 
 //Tiquets
 $routes->get('{locale}/registreTiquetProfessor', 'RegistresController::registreTiquetsProfessor');
@@ -19,8 +19,11 @@ $routes->get('{locale}/registreTiquetEmissor', 'RegistresController::registreTiq
 
 //Inventari
 $routes->get('{locale}/registreTiquetProfessor', 'RegistresController::registreTiquetsProfessor');
+//$routes->get('{locale}/tiquets', 'RegistresController::index');
 //Alumnes
+//$routes->get('{locale}/alumne', '')
 
 //Backtickets
+
 
 //Intervencions

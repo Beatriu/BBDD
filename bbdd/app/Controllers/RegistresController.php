@@ -10,6 +10,8 @@ class RegistresController extends BaseController
 {
     public function index()
     {
+
+        //TODO: Fer que aquest controllador miri quin rol té i redireccioni a la funció amb taula que li pertoca veure a l'usuari.
         /*$data['title'] = 'Kpacrud';
         $crud = new KpaCrud();                          // loads default configuration    
         $crud->setConfig('onlyView');                   // sets configuration to onlyView
@@ -100,5 +102,20 @@ class RegistresController extends BaseController
         //$crud->addWhere('blog.blog_id!="1"'); // show filtered data
         $data['output'] = $crud->render();          // renders view
         return view('registres/registreTiquetSSTT', $data);
+    }
+
+    public function registreTiquetsSSTT()
+    {
+
+    }
+
+    public function registreTiquetsEmissor()
+    {
+
+    }
+
+    public function registreTiquetsAdmin()
+    {
+
     }
 }
