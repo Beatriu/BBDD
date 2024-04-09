@@ -52,12 +52,19 @@ abstract class BaseController extends Controller
         parent::initController($request, $response, $logger);
 
         // Preload any models, libraries, etc, here.
+        
+          $session = \Config\Services::session();
 
-        // E.g.: $this->session = \Config\Services::session();
+         $this->$session = \Config\Services::session();
 
-        //Lang by User
+       //Lang by User
 
-        if (isset(session()->language)) {
+
+         // FER IF: SI HI HA UNA $SESSION CREADA DEL LANG,
+         // CANVIAR L'IDIOMA A L'ESPECIFICAT EN AQUELLA VARIABLE 
+         // -> SET LOCALE AMB EL VALOR QUE HI HAGI EN AQUELLA $SESSION
+
+         if (isset(session()->language)) {
             $this->request->setlocale(session()->language);
         } else {
             $this->request->setlocale('ca');
