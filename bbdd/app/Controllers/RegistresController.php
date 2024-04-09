@@ -54,7 +54,6 @@ class RegistresController extends BaseController
 
     public function registreTiquetsProfessor()
     {
-        $data['locale'] = session()->language;
         $data['title'] = 'Tiquets SSTT';
         $crud = new KpaCrud();                          // loads default configuration    
         $crud->setConfig('onlyView');                   // sets configuration to onlyView

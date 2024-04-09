@@ -38,8 +38,6 @@ class Home extends BaseController
 
     public function login_post()
     {
-        $locale = session()->language;
-        $data['locale'] = $locale;
         $data['title'] = "login";
 
         // Determinem les regles de validació
@@ -94,8 +92,6 @@ class Home extends BaseController
 
     public function login()
     {
-        $locale = session()->language;
-        $data['locale'] = $locale;
         $data['title'] = "login";
 
         $client = new \Google\Client();
@@ -173,8 +169,6 @@ class Home extends BaseController
      */
     public function createTiquet(): string 
     {
-        $locale = session()->language;
-        $data['locale'] = $locale;
         $tipus_dispositius = new TipusDispositiuModel;
         $array_tipus_dispositius = $tipus_dispositius->getTipusDispositius();
         $array_tipus_dispositius_nom = [];
@@ -206,8 +200,6 @@ class Home extends BaseController
 
     public function createTiquet_post()
     {
-        $locale = session()->language;
-        $data['locale'] = $locale;
         $data['title'] = "login";
 
         $csv = $this->request->getFiles();
