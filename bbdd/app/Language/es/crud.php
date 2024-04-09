@@ -12,7 +12,8 @@ return [
         'delete' => 'Eliminar',
         'update' => 'Actualitzar',
         'cancel' => 'Cancelar',
-        'enter' => 'Entrar'
+        'enter' => 'Iniciar sessión',
+        'enter_google' => 'Iniciar sessión con Google',
     ],
     
 ];

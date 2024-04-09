@@ -7,17 +7,17 @@
     <div class="p-2 flex-grow-1 bd-highlight">
         <img class="logo" src="<?= base_url('img/Logotip/Logotip per aplicar a fons negres.png') ?>" />
     </div>
-    <div class="p-2 bd-highlight d-flex pe-5 me-2">
+    <div class="p-2 bd-highlight d-flex pe-4">
 
         <a class="me-3"><img class="ms-auto imatge" src="<?= base_url(lang('general_lang.banderilla')) ?>" /></a>
 
         <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button class="btn btn-secondary dropdown-toggle rounded-pill" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 USUARI
             </button>
             <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left mt-3" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#"><?= lang('general_lang.config') ?></a>
-                <a class="dropdown-item" href="#"><?= lang('general_lang.tancar') ?></a>
+                <a class="dropdown-item" href="#"><i class="fa-solid fa-gear me-2"></i><?= lang('general_lang.config') ?></a>
+                <a class="dropdown-item" href="#"><i class="fa-solid fa-power-off me-2"></i><?= lang('general_lang.tancar') ?></a>
             </div>
         </div>
 

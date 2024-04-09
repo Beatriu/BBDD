@@ -1,8 +1,9 @@
 <?= $this->extend('layouts/general'); ?>
 
 <?= $this->section('css_pagina'); ?>
-    <link rel="stylesheet" href="<?= base_url('css/login.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('css/header.css') ?>">
+<link rel="stylesheet" href="<?= base_url('css/login.css') ?>">
+<link rel="stylesheet" href="<?= base_url('css/header.css') ?>">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <?= $this->endSection('css_pagina'); ?>
 
 <?= $this->section('header'); ?>
@@ -32,6 +33,19 @@
         <div class="d-flex justify-content-center">
             <button class="btn btn-outline-dark"><?= lang('crud.buttons.enter') ?></button>
         </div>
+        <br/>
+        <div>
+        <?php
+            if (!isset($login_button)) {
+
+                $user_data = session()->get('user_data');
+                print_r($user_data);
+            } else {
+                echo '<div align="center">' . $login_button . '</div>';
+            }
+            ?>
+        </div>
     </div>
 </form>
+
 <?= $this->endSection('contingut'); ?>
