@@ -12,13 +12,17 @@ class Home extends BaseController
 {
     protected $helpers = ['form', 'file', 'filesystem'];
 
-    public function login(): string
+    public function index($code) {
+        dd($code);
+    }
+
+    /*public function login(): string
     {
         $locale = $this->request->getLocale();
         $data['title'] = "login";
         $data['locale'] = $locale;
         return view('logins\loginGeneral', $data);
-    }
+    }*/
 
     public function login_post()
     {
@@ -67,7 +71,7 @@ class Home extends BaseController
 
                 if (password_verify($password, $hash)) { // Verifiquem que la contrasenya coincideixi amb la de la base de dades
 
-                    return redirect()->to(base_url($locale . '/formulariTiquet'));
+                    return redirect()->to(base_url($locale . '/registreTiquetProfessor'));
                 }
 
             }
@@ -75,6 +79,74 @@ class Home extends BaseController
 
         return view('logins\loginGeneral', $data);
     }
+
+    public function login()
+    {
+        $locale = $this->request->getLocale();
+        $data['locale'] = $locale;
+        $data['title'] = "login";
+
+        $client = new \Google\Client();
+
+
+        // INTRODUIR LINIES WHATSAPP
+
+        $client->setRedirectUri('http://localhost:8080/ca/registreTiquetProfessor'); //Define your Redirect Uri
+
+        // $client->addScope(\Google\Service\Drive::DRIVE_METADATA_READONLY);
+        $client->addScope(\Google\Service\Oauth2::USERINFO_EMAIL);
+        $client->addScope(\Google\Service\Oauth2::USERINFO_PROFILE);
+        $client->addScope(\Google\Service\Oauth2::OPENID);
+        // $client->addScope('profile');
+        $client->setAccessType('offline');
+
+        $data['titol']="GSuite login";
+        // $client->addScope('email');
+
+        if (isset($_GET["code"])) {
+
+            $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
+
+            if (!isset($token["error"])) {
+                $client->setAccessToken($token['access_token']);
+
+                session()->set('access_token', $token['access_token']);
+
+                $oauth2 =new \Google\Service\Oauth2($client);
+
+                $userInfo = $oauth2->userinfo->get();
+
+                // echo "getMail: " . $userInfo->getEmail(); // adreça xtec
+                // echo "<br>";
+                // echo "getGivenName: " . $userInfo->getGivenName(); // nom
+                // echo "<br>";
+                // echo "getFamilyName: " . $userInfo->getFamilyName(); //cognoms
+                // echo "<br>";
+                // echo "getName: " . $userInfo->getName(); //nom complet
+                // echo "<br>";
+                // echo "<img src='". $userInfo->getPicture()."'>";
+                // dd($userInfo);
+
+                $data['mail']=$userInfo->getEmail();
+                $data['nom']=$userInfo->getGivenName();
+                $data['cognoms']=$userInfo->getFamilyName();
+                $data['nomComplet']=$userInfo->getName();
+                $data['usrFoto']=$userInfo->getPicture();
+
+                session()->set('user_data', $data);
+            }
+        }
+        $login_button = '';
+       
+        if (!session()->get('access_token')) {
+            $login_button = '<a class = "btn btn-outline-dark" href="' . $client->createAuthUrl() . '"><i class="fa-brands fa-google me-2"></i>' . lang("crud.buttons.enter_google") . '</a>';
+            $data['login_button'] = $login_button;
+            return view('logins/loginGeneral', $data);
+        } else {
+            return view('logins/loginGeneral', $data);
+        }
+    }
+
 
     public function loginSelect(): string
     {
