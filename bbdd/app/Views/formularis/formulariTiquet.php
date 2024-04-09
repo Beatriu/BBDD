@@ -16,10 +16,10 @@
 
 
 <?= $this->section('contingut'); ?>
-    <form class="container" method="POST" action="<?= base_url($locale . '/formulariTiquet') ?>" enctype="multipart/form-data">
+    <form class="container" method="POST" action="<?= base_url('/formulariTiquet') ?>" enctype="multipart/form-data">
         <div class="row mt-5 justify-content-center">
             <div class="col-2 d-flex align-items-center">
-                <a class="btn btn-dark rounded-pill" href="<?= base_url($locale . '/registreTiquetProfessor') ?>">
+                <a class="btn btn-dark rounded-pill" href="<?= base_url('/registreTiquetProfessor') ?>">
                     <i class="fa-solid fa-arrow-left"></i> TORNAR
                 </a>
             </div>
@@ -81,7 +81,7 @@
         </div>
         <div class="row justify-content-center mt-4">
             <div class="d-flex justify-content-center align-items-center">
-                <a href="<?= base_url($locale . '/registreTiquetProfessor') ?>" class="btn btn_cancell rounded-pill"><i class="fa-solid fa-trash me-2"></i><?= lang('general_lang.cancell') ?></a>
+                <a href="<?= base_url('/registreTiquetProfessor') ?>" class="btn btn_cancell rounded-pill"><i class="fa-solid fa-trash me-2"></i><?= lang('general_lang.cancell') ?></a>
                 <button type="submit" class="btn btn_save rounded-pill ms-3 me-3"><i class="fa-solid fa-floppy-disk me-2"></i><?= lang('general_lang.save') ?></button>
                 <div class="btn btn_csv rounded-pill" onclick = "afegirFitxer();" id="div_csv"> <i class="fa-solid fa-file-csv me-2"></i>CSV </div>
                 <input type="file" id="csv_tiquet" name="csv_tiquet" class="btn btn_csv rounded-pill" hidden  onchange="mostrarFitxers(this);"> </input>

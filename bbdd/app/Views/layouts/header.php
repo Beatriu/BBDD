@@ -9,7 +9,7 @@
     </div>
     <div class="p-2 bd-highlight d-flex pe-4">
 
-        <a class="me-3"><img class="ms-auto imatge" src="<?= base_url(lang('general_lang.banderilla')) ?>" /></a>
+        <a class="me-3" href="<?= base_url('/canviLanguage') ?>"><img class="ms-auto imatge" src="<?= base_url(lang('general_lang.banderilla')) ?>" /></a>
 
         <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle rounded-pill" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

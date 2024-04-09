@@ -16,6 +16,18 @@ class Home extends BaseController
         dd($code);
     }
 
+    public function canviLanguage() {
+        if (session()->language == 'ca') {
+            $this->request->setlocale('es');
+            session()->language = 'es';
+        } else if (session()->language == 'es') {
+            $this->request->setlocale('ca');
+            session()->language = 'ca';
+        }
+
+        return redirect()->back()->withInput();
+    }
+
     /*public function login(): string
     {
         $locale = $this->request->getLocale();
@@ -26,7 +38,7 @@ class Home extends BaseController
 
     public function login_post()
     {
-        $locale = $this->request->getLocale();
+        $locale = session()->language;
         $data['locale'] = $locale;
         $data['title'] = "login";
 
@@ -71,7 +83,7 @@ class Home extends BaseController
 
                 if (password_verify($password, $hash)) { // Verifiquem que la contrasenya coincideixi amb la de la base de dades
 
-                    return redirect()->to(base_url($locale . '/registreTiquetProfessor'));
+                    return redirect()->to(base_url('/registreTiquetProfessor'));
                 }
 
             }
@@ -82,7 +94,7 @@ class Home extends BaseController
 
     public function login()
     {
-        $locale = $this->request->getLocale();
+        $locale = session()->language;
         $data['locale'] = $locale;
         $data['title'] = "login";
 
@@ -161,7 +173,7 @@ class Home extends BaseController
      */
     public function createTiquet(): string 
     {
-        $locale = $this->request->getLocale();
+        $locale = session()->language;
         $data['locale'] = $locale;
         $tipus_dispositius = new TipusDispositiuModel;
         $array_tipus_dispositius = $tipus_dispositius->getTipusDispositius();
@@ -194,7 +206,7 @@ class Home extends BaseController
 
     public function createTiquet_post()
     {
-        $locale = $this->request->getLocale();
+        $locale = session()->language;
         $data['locale'] = $locale;
         $data['title'] = "login";
 
