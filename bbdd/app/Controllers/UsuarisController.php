@@ -85,7 +85,7 @@ class UsuarisController extends BaseController
 
         $client = new \Google\Client();
 
-        // LÍNIES AMB CREDENCIALS
+        //LINIES CREDENCIALS
 
         $client->setRedirectUri('http://localhost:8080/login'); //Define your Redirect Uri
 
@@ -222,42 +222,6 @@ class UsuarisController extends BaseController
         $professor_model->addProfessor($id_xtec, $nom, $cognoms, $correu, $codi_centre);
 
         return redirect()->to(base_url('/registreTiquetProfessor'));
-    }
-
-    /**
-     * Funció que ens dirigeix cap al formulari per crear un tiquet
-     *
-     * @author Blai Burgués Vicente
-     */
-    public function createTiquet(): string 
-    {
-        $tipus_dispositius = new TipusDispositiuModel;
-        $array_tipus_dispositius = $tipus_dispositius->getTipusDispositius();
-        $array_tipus_dispositius_nom = [];
-
-        $options_tipus_dispositius = "";
-        for ($i = 0; $i < sizeof($array_tipus_dispositius); $i++) {
-            $options_tipus_dispositius .= "<option value=" . ($i+1) . ">";
-            $options_tipus_dispositius .= $array_tipus_dispositius[$i]['nom_tipus_dispositiu'];
-            $options_tipus_dispositius .= "</option>";
-            $array_tipus_dispositius_nom[$i] = $array_tipus_dispositius[$i]['nom_tipus_dispositiu'];
-        }
-
-        $data['tipus_dispositius'] = $options_tipus_dispositius;
-        $data['json_tipus_dispositius'] = json_encode($array_tipus_dispositius_nom);
-
-
-
-        // TREURE AIXÒ
-        session()->set(['codi_centre' => '25008443']);
-        $codi_centre = session()->get('codi_centre');
-
-        $centre = new CentreModel;
-        $data['nom_persona_contacte_centre'] = $centre->obtenirNomResponsable($codi_centre);
-        $data['correu_persona_contacte_centre'] = $centre->obtenirCorreuResponsable($codi_centre);
-
-        $data['title'] = lang('general_lang.formulari_tiquet');
-        return view('formularis\formulariTiquet', $data);
     }
 
     public function logout()
