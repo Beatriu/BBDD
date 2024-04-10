@@ -7,23 +7,28 @@ use CodeIgniter\Router\RouteCollection;
  */
 
 // Routes provisionals per primer accés per login amb google
-$routes->get('/', 'RegistresController::index');
-$routes->get('', 'RegistresController::index');
+$routes->get('/', 'Home::index');
+$routes->get('', 'Home::index');
 
-$routes->get('/login', 'Home::login');
-$routes->post('/login', 'Home::login_post');
-$routes->get('/loginSelect', 'Home::loginSelect');
-$routes->get('/formulariTiquet', 'Home::createTiquet');
-$routes->post('/formulariTiquet', 'Home::createTiquet_post');
+// Gestió de la sessió i usuaris
+$routes->get('/login', 'UsuarisController::login');
+$routes->post('/login', 'UsuarisController::login_post');
+$routes->get('/loginSelect', 'UsuarisController::loginSelect');
+$routes->post('/loginSelect', 'UsuarisController::loginSelect_post');
+$routes->get('/logout', 'UsuarisController::logout', ['filter'=>'Autentica']);
+
+// Registres
 $routes->match(['GET','POST'],'/crudadmin',"RegistresController::index");
 
 //Tiquets
-$routes->get('/registreTiquetProfessor', 'RegistresController::registreTiquetsProfessor');
-$routes->get('/registreTiquetSSTT', 'RegistresController::registreTiquetsSSTT');
-$routes->get('/registreTiquetEmissor', 'RegistresController::registreTiquetEmissor');
+$routes->get('/formulariTiquet', 'Home::createTiquet', ['filter'=>'Autentica']);
+$routes->post('/formulariTiquet', 'Home::createTiquet_post', ['filter'=>'Autentica']);
+$routes->get('/registreTiquetProfessor', 'RegistresController::registreTiquetsProfessor', ['filter'=>'Autentica']);
+$routes->get('/registreTiquetSSTT', 'RegistresController::registreTiquetsSSTT', ['filter'=>'Autentica']);
+$routes->get('/registreTiquetEmissor', 'RegistresController::registreTiquetEmissor', ['filter'=>'Autentica']);
 
 //Inventari
-$routes->get('/registreTiquetProfessor', 'RegistresController::registreTiquetsProfessor');
+$routes->get('/registreTiquetProfessor', 'RegistresController::registreTiquetsProfessor', ['filter'=>'Autentica']);
 //$routes->get('/tiquets', 'RegistresController::index');
 
 //Alumnes

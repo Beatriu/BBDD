@@ -13,21 +13,15 @@
 
         <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle rounded-pill" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                USUARI
+                <?= session()->get('user_data')['nom'] ?>
             </button>
             <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left mt-3" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item" href="#"><i class="fa-solid fa-gear me-2"></i><?= lang('general_lang.config') ?></a>
-                <a class="dropdown-item" href="#"><i class="fa-solid fa-power-off me-2"></i><?= lang('general_lang.tancar') ?></a>
+                <a class="dropdown-item" href="<?= base_url('/logout') ?>"><i class="fa-solid fa-power-off me-2"></i><?= lang('general_lang.tancar') ?></a>
             </div>
         </div>
 
     </div>
-
-
-    <!--<select class="form-select rounded-pill user_select me-3" aria-label="Default select example">
-            <option class="name_option" selected>NOM</option>
-            <option value="1"><?= lang('general_lang.tancar') ?></option>
-        </select> -->
 
 </header>
 <?= $this->endSection('header'); ?>

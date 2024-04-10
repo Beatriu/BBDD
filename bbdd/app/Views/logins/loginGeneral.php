@@ -10,7 +10,7 @@
 <header class="d-flex justify-content-between" style="background-color: #333333;">
     <img class="logo" src="<?= base_url('img/Logotip/Logotip per aplicar a fons negres.png') ?>" />
 
-    <a><img class="imatge" src="<?= base_url(lang('general_lang.banderilla')) ?>" /></a>
+    <a class="me-3" href="<?= base_url('/canviLanguage') ?>"><img class="ms-auto imatge" src="<?= base_url(lang('general_lang.banderilla')) ?>" /></a>
 
 </header>
 <?= $this->endSection('header'); ?>

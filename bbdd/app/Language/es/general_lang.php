@@ -36,4 +36,6 @@ return [
     'nom_usuari_required_max_length' => "El nombre de usuario puede tener como máximo 32 caracteres!",
     'config' => "Configuración",
     'tancar' => "Cerrar sessión",
+    'tornar' => "Volver",
+    'centres_datalist' => "Escribe para buscar...",
 ];
