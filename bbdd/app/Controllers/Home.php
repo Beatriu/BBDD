@@ -10,7 +10,7 @@ class Home extends BaseController
 {
     protected $helpers = ['form', 'file', 'filesystem'];
 
-    public function index($code) {
+    public function index() {
         return redirect()->to(base_url('/login'));
     }
 
