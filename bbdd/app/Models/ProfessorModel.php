@@ -48,4 +48,8 @@ class ProfessorModel extends Model
             "codi_centre" => $d5
         ]);
     }
+
+    public function obtenirProfessor($correu_professor) {
+        return $this->where('correu_professor', $correu_professor)->first();
+    }
 }

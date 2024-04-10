@@ -48,7 +48,17 @@ class LoginModel extends Model
         ]);
     }
 
+    public function obtenirId($nom_login) {
+        return $this->select('id_login')->where('login', $nom_login)->first();
+    }
+
     public function obtenirLogin($nom_login) {
         return $this->where('login', $nom_login)->first();
+    }
+
+    public function insertarLogin($nom_login) {
+        $this->insert([
+            "login" => $nom_login,
+        ]);
     }
 }

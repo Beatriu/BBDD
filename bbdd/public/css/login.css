@@ -32,3 +32,17 @@ form{
     margin-top: 20px;
     padding-left: 10px;
 }
+
+.selector:focus {
+    width: 100%;
+    text-align: center;
+    height: 40px;
+    outline: none;
+    border-bottom: 5px solid #900000;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    padding-left: 10px;
+    
+    outline: none;
+    box-shadow: none;
+}

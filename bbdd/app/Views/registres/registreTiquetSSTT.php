@@ -43,7 +43,7 @@
                 </div>
                 <div>
                     <a class="btn" id="btn-filter"><i class="fa-solid fa-filter"></i> <?= lang("registre.buttons.filter")?></a>
-                    <a href="<?= base_url("$locale/formulariTiquet") ?>" class="btn" id="btn-create"><i class="fa-solid fa-circle-plus"></i> <?= lang("registre.buttons.create")?></a>
+                    <a href="<?= base_url("/formulariTiquet") ?>" class="btn" id="btn-create"><i class="fa-solid fa-circle-plus"></i> <?= lang("registre.buttons.create")?></a>
                 </div>
             </div>
             <div >

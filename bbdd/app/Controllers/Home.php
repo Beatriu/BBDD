@@ -3,8 +3,6 @@
 namespace App\Controllers;
 
 use App\Models\CentreModel;
-use App\Models\LoginModel;
-use App\Models\ProfessorModel;
 use App\Models\TipusDispositiuModel;
 use App\Models\TiquetModel;
 
@@ -12,118 +10,24 @@ class Home extends BaseController
 {
     protected $helpers = ['form', 'file', 'filesystem'];
 
-    public function login(): string
-    {
-        $locale = $this->request->getLocale();
-        $data['title'] = "login";
-        $data['locale'] = $locale;
-        return view('logins\loginGeneral', $data);
+    public function index($code) {
+        return redirect()->to(base_url('/login'));
     }
 
-    public function login_post()
-    {
-        $locale = $this->request->getLocale();
-        $data['locale'] = $locale;
-        $data['title'] = "login";
-
-        // Determinem les regles de validació
-        $validationRules = [
-            'sUser' => [
-                'rules'  => 'required|max_length[32]',
-                'errors' => [
-                    'required' => lang('general_lang.nom_usuari_required'),
-                    'max_length' => lang('general_lang.nom_usuari_required_max_length'),
-                ],
-            ],
-            'sPssw' => [
-                'rules'  => 'required|min_length[6]',
-                'errors' => [
-                    'required' => lang('general_lang.contrasenya_required'),
-                    'min_length' => lang('general_lang.contrasenya_min_length'),
-                ],
-            ],
-        ];
-
-        if ($this->validate($validationRules)) { // En cas que es compleixin les regles de validació
-
-            // Obtenim del formualri el nom d'usuari
-            $nom_login = $this->request->getPost('sUser');
-            
-            // Obtenim l'usuari mitjançant aquest
-            $login_model = new LoginModel;
-            $login_obtingut = $login_model->obtenirLogin($nom_login);
-
-            if ($login_obtingut != null) { // En cas que existeixi
-
-                // Obtenim la contrasenya del formulari
-                $contrasenya = $this->request->getPost('sPssw');
-                
-
-                if (gettype($contrasenya) == "string") {
-                    $password = $contrasenya;
-                }
-
-                $hash =$login_obtingut['contrasenya'];
-
-                if (password_verify($password, $hash)) { // Verifiquem que la contrasenya coincideixi amb la de la base de dades
-
-                    return redirect()->to(base_url($locale . '/formulariTiquet'));
-                }
-
-            }
+    public function canviLanguage() {
+        if (session()->language == 'ca') {
+            $this->request->setlocale('es');
+            session()->language = 'es';
+        } else if (session()->language == 'es') {
+            $this->request->setlocale('ca');
+            session()->language = 'ca';
         }
 
-        return view('logins\loginGeneral', $data);
-    }
-
-    public function loginSelect(): string
-    {
-        $data['title'] = "login";
-        return view('logins\loginSelect', $data);
-    }
-
-    /**
-     * Funció que ens dirigeix cap al formulari per crear un tiquet
-     *
-     * @author Blai Burgués Vicente
-     */
-    public function createTiquet(): string 
-    {
-        $locale = $this->request->getLocale();
-        $data['locale'] = $locale;
-        $tipus_dispositius = new TipusDispositiuModel;
-        $array_tipus_dispositius = $tipus_dispositius->getTipusDispositius();
-        $array_tipus_dispositius_nom = [];
-
-        $options_tipus_dispositius = "";
-        for ($i = 0; $i < sizeof($array_tipus_dispositius); $i++) {
-            $options_tipus_dispositius .= "<option value=" . ($i+1) . ">";
-            $options_tipus_dispositius .= $array_tipus_dispositius[$i]['nom_tipus_dispositiu'];
-            $options_tipus_dispositius .= "</option>";
-            $array_tipus_dispositius_nom[$i] = $array_tipus_dispositius[$i]['nom_tipus_dispositiu'];
-        }
-
-        $data['tipus_dispositius'] = $options_tipus_dispositius;
-        $data['json_tipus_dispositius'] = json_encode($array_tipus_dispositius_nom);
-
-
-
-        // TREURE AIXÒ
-        session()->set(['codi_centre' => '25008443']);
-        $codi_centre = session()->get('codi_centre');
-
-        $centre = new CentreModel;
-        $data['nom_persona_contacte_centre'] = $centre->obtenirNomResponsable($codi_centre);
-        $data['correu_persona_contacte_centre'] = $centre->obtenirCorreuResponsable($codi_centre);
-
-        $data['title'] = lang('general_lang.formulari_tiquet');
-        return view('formularis\formulariTiquet', $data);
+        return redirect()->back()->withInput();
     }
 
     public function createTiquet_post()
     {
-        $locale = $this->request->getLocale();
-        $data['locale'] = $locale;
         $data['title'] = "login";
 
         $csv = $this->request->getFiles();

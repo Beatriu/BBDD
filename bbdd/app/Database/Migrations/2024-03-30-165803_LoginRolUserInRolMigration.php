@@ -25,7 +25,7 @@ class LoginRolUserInRolMigration extends Migration
             'contrasenya' => [
                 'type' => 'VARCHAR',
                 'constraint' => '255',
-                'null' => false,
+                'null' => true,
             ]
         ]);
         $this->forge->addKey('id_login', true);

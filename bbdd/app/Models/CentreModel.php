@@ -64,4 +64,8 @@ class CentreModel extends Model
         return $centre['correu_persona_contacte_centre'];
     }
 
+    public function obtenirCentres() {
+        return $this->findAll();
+    }
+
 }

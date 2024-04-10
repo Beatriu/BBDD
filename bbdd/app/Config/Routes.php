@@ -5,25 +5,41 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-$routes->get('{locale}/login', 'Home::login');
-$routes->post('{locale}/login', 'Home::login_post');
-$routes->get('{locale}/loginSelect', 'Home::loginSelect');
-$routes->get('{locale}/formulariTiquet', 'Home::createTiquet');
-$routes->post('{locale}/formulariTiquet', 'Home::createTiquet_post');
-$routes->match(['GET','POST'],'{locale}/crudadmin',"RegistresController::index");
+
+// Routes provisionals per primer accés per login amb google
+$routes->get('/', 'Home::index');
+$routes->get('', 'Home::index');
+
+// Gestió de la sessió i usuaris
+$routes->get('/login', 'UsuarisController::login');
+$routes->post('/login', 'UsuarisController::login_post');
+$routes->get('/loginSelect', 'UsuarisController::loginSelect');
+$routes->post('/loginSelect', 'UsuarisController::loginSelect_post');
+$routes->get('/logout', 'UsuarisController::logout', ['filter'=>'Autentica']);
+
+// Registres
+$routes->match(['GET','POST'],'/crudadmin',"RegistresController::index");
 
 //Tiquets
-$routes->get('{locale}/registreTiquetProfessor', 'RegistresController::registreTiquetsProfessor');
-$routes->get('{locale}/registreTiquetSSTT', 'RegistresController::registreTiquetsSSTT');
-$routes->get('{locale}/registreTiquetEmissor', 'RegistresController::registreTiquetEmissor');
+$routes->get('/formulariTiquet', 'Home::createTiquet', ['filter'=>'Autentica']);
+$routes->post('/formulariTiquet', 'Home::createTiquet_post', ['filter'=>'Autentica']);
+$routes->get('/registreTiquetProfessor', 'RegistresController::registreTiquetsProfessor', ['filter'=>'Autentica']);
+$routes->get('/registreTiquetSSTT', 'RegistresController::registreTiquetsSSTT', ['filter'=>'Autentica']);
+$routes->get('/registreTiquetEmissor', 'RegistresController::registreTiquetEmissor', ['filter'=>'Autentica']);
 
 //Inventari
-$routes->get('{locale}/registreTiquetProfessor', 'RegistresController::registreTiquetsProfessor');
-//$routes->get('{locale}/tiquets', 'RegistresController::index');
+$routes->get('/registreTiquetProfessor', 'RegistresController::registreTiquetsProfessor', ['filter'=>'Autentica']);
+//$routes->get('/tiquets', 'RegistresController::index');
+
 //Alumnes
-//$routes->get('{locale}/alumne', '')
+//$routes->get('/alumne', '');
 
 //Backtickets
 
 
 //Intervencions
+
+
+// Canvi de language
+$routes->get('/canviLanguage', 'Home::canviLanguage');
+
