@@ -61,4 +61,5 @@ class LoginModel extends Model
             "login" => $nom_login,
         ]);
     }
+
 }

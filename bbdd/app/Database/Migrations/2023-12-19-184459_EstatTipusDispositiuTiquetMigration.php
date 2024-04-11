@@ -95,7 +95,7 @@ class EstatTipusDispositiuTiquetMigration extends Migration
             'codi_centre_emissor' =>[
                 'type' => 'VARCHAR',
                 'constraint' => '8',
-                'null' => false,
+                'null' => true,
             ],
             'codi_centre_reparador' =>[
                 'type' => 'VARCHAR',

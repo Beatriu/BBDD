@@ -7,7 +7,6 @@ use App\Models\LoginInRolModel;
 use App\Models\LoginModel;
 use App\Models\ProfessorModel;
 use App\Models\CentreModel;
-use App\Models\TipusDispositiuModel;
 
 class UsuarisController extends BaseController
 {
@@ -49,14 +48,16 @@ class UsuarisController extends BaseController
                 // Obtenim la contrasenya del formulari
                 $contrasenya = $this->request->getPost('sPssw');
                 
-
                 if (gettype($contrasenya) == "string") {
                     $password = $contrasenya;
+                }
+                if (gettype($nom_login) == "string") {
+                    $correu = $nom_login;
                 }
 
                 $hash =$login_obtingut['contrasenya'];
 
-                if (password_verify($password, $hash) && $password != "" && $password != null) { // Verifiquem que la contrasenya coincideixi amb la de la base de dades
+                if (password_verify($password, $hash) && $password != "" && $password != null) { // Verifiquem que la contrasenya coincideixi amb la de la base de dades i que existeixi
 
                     $session_data['mail'] = $nom_login;
                     $session_data['nom'] = explode("@", (string) $nom_login)[0];
@@ -65,18 +66,15 @@ class UsuarisController extends BaseController
     
                     session()->set('user_data', $session_data);
 
-                    if ($session_data['domain'] == "xtec.cat") {
-                        return redirect()->to(base_url('/loginSelect'));
-                    } else {
-                        return redirect()->to(base_url('/registreTiquetProfessor'));
-                    }
+
+                    return redirect()->to(base_url('/registreTiquetProfessor'));
                     
                 }
 
             }
         }
 
-        return view('logins\loginGeneral', $data);
+        return redirect()->back()->withInput();
     }
 
     public function login()
@@ -117,25 +115,26 @@ class UsuarisController extends BaseController
             }
         }
         $login_button = '';
-       
+        
         if (!session()->get('access_token') && !session()->get('user_data')) {
             $login_button = '<a class = "btn btn-outline-dark" href="' . $client->createAuthUrl() . '"><i class="fa-brands fa-google me-2"></i>' . lang("crud.buttons.enter_google") . '</a>';
             $data['login_button'] = $login_button;
+            
             return view('logins/loginGeneral', $data);
         } else {
             $login_model = new LoginModel();
+            $login_in_rol_model = new LoginInRolModel();
             $mail = session()->get('user_data')['mail'];
 
             if ($login_model->obtenirLogin($mail) == null) {
-                $login_model->insertarLogin($mail);
 
-                $id_login = $login_model->obtenirId($mail);
-                $login_in_rol_model = new LoginInRolModel();
-
-                if (session()->get('user_data')['domain'] == "xtec.cat") {
+                if (session()->get('user_data')['domain'] == "xtec.cat") { // En cas que sigui professor es registra a la taula LOGIN i a la taula LOGIN_IN_ROL
+                    $login_model->insertarLogin($mail); // Es registra a la taula LOGIN
+                    $id_login = $login_model->obtenirId($mail); // S'obté l'id de la taula LOGIN
                     $login_in_rol_model->addLoginInRol($id_login, 2);
-                } else {
-                    $login_in_rol_model->addLoginInRol($id_login, 1);
+                } else { // En cas que sigui alumne es comprova que existeixi a la taula LOGIN i ALUMNE
+                    session()->destroy();
+                    return redirect()->back();
                 }
                 
             }
@@ -152,6 +151,7 @@ class UsuarisController extends BaseController
             }
             
         }
+
     }
 
 

@@ -14,6 +14,7 @@ return [
         'cancel' => 'Cancelar',
         'enter' => 'Iniciar sessión',
         'enter_google' => 'Iniciar sessión con Google',
+        'register' => 'Registrar',
     ],
     
 ];

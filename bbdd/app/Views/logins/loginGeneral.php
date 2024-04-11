@@ -17,18 +17,19 @@
 
 <?= $this->section('contingut'); ?>
 
-<?= validation_list_errors() ?>
 <form class="d-flex align-items-center justify-content-center" method="POST" action="<?= base_url('/login') ?>">
     <div class="w-25 p-3" id="formulari">
         <div class="form-group">
             <label class="d-flex justify-content-center" for="sUser"><?= lang('general_lang.user') ?>:</label>
-            <input class="entrada" type="text" id="sUser" name="sUser" placeholder="example@xtec.cat" />
+            <input class="entrada" type="text" id="sUser" name="sUser" placeholder="example@xtec.cat" value="<?= old('sUser') ?>"/>
         </div>
         <br />
         <div class="form-group">
             <label class="d-flex justify-content-center" for="sPssw"><?= lang('general_lang.password') ?>:</label>
             <input class="entrada" type="password" id="sPssw" name="sPssw" />
         </div>
+        <br/>
+        <?= validation_list_errors() ?>
         <br />
         <div class="d-flex justify-content-center">
             <button class="btn btn-outline-dark"><?= lang('crud.buttons.enter') ?></button>
@@ -37,7 +38,6 @@
         <div>
         <?php
             if (!isset($login_button)) {
-
                 $user_data = session()->get('user_data');
                 print_r($user_data);
             } else {
