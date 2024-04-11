@@ -79,6 +79,7 @@ class UsuarisController extends BaseController
 
     public function login()
     {
+
         $data['title'] = "login";
 
         $client = new \Google\Client();
@@ -106,8 +107,19 @@ class UsuarisController extends BaseController
 
                 $session_data['mail']=$userInfo->getEmail();
                 $session_data['nom']=$userInfo->getGivenName();
-                $data['cognoms']=$userInfo->getFamilyName();
-                $session_data['nomComplet']=$userInfo->getName();
+
+                if ($userInfo->getFamilyName() == null) {
+                    $nomComplet=$userInfo->getName();
+                    $pos = strpos($nomComplet, $session_data['nom']);
+                    
+                    if ($pos !== false) {
+                        $diferencia = substr($nomComplet, $pos + strlen($session_data['nom']));
+                        $session_data['cognoms'] = $diferencia; // Esto imprimirá " Burgués"
+                    }
+
+                } else {
+                    $session_data['cognoms']=$userInfo->getFamilyName();
+                }
 
                 $session_data['domain'] = explode('@', $session_data['mail'])[1];
 
@@ -174,7 +186,6 @@ class UsuarisController extends BaseController
                 if ($professor == null) {
                     $centre_model = new CentreModel();
                     $array_centres = $centre_model->obtenirCentres();
-                    $array_centres_noms = [];
             
                     $options_tipus_dispositius = "";
                     for ($i = 0; $i < sizeof($array_centres); $i++) {
@@ -213,7 +224,6 @@ class UsuarisController extends BaseController
 
         $professor_model = new ProfessorModel();
 
-        
         $nom = session()->get('user_data')['nom'];
         $cognoms = session()->get('user_data')['cognoms'];
         $correu = session()->get('user_data')['mail'];
