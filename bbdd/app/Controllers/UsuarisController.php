@@ -88,6 +88,7 @@ class UsuarisController extends BaseController
     public function login()
     {
 
+
         $data['title'] = "login";
         $login_model = new LoginModel();
         $login_in_rol_model = new LoginInRolModel();
@@ -129,6 +130,21 @@ class UsuarisController extends BaseController
 
                 } else {
                     $session_data['cognoms']=$userInfo->getFamilyName();
+                    
+                }
+
+                if ($userInfo->getFamilyName() == null) {
+                    $nomComplet=$userInfo->getName();
+                    $pos = strpos($nomComplet, $session_data['nom']);
+                    
+                    if ($pos !== false) {
+                        $diferencia = substr($nomComplet, $pos + strlen($session_data['nom']));
+                        $session_data['cognoms'] = $diferencia; // Esto imprimirá " Burgués"
+                    }
+
+                } else {
+                    $session_data['cognoms']=$userInfo->getFamilyName();
+                
                 }
                 $session_data['domain'] = explode('@', $session_data['mail'])[1];
 
