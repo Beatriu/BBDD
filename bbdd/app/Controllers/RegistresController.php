@@ -10,99 +10,35 @@ class RegistresController extends BaseController
 {
     public function index()
     {
-
         //TODO: Fer que aquest controllador miri quin rol té i redireccioni a la funció amb taula que li pertoca veure a l'usuari.
-
         $role = session()->get('user_data')['role'];
-        dd($role);
         switch ($role) {
             case "alumne":
-                echo "i equals 0";
+                //return view();
                 break;
             case "professor":
-                echo "i equals 1";
+                return view('registres/registreTiquetsProfessor', $this->registreTiquetsProfessor());
                 break;
-            case "SSTT":
-                echo "i equals 2";
+            case "centre_emissor":
                 break;
-            case "admin":
+            case "centre_reparador":
+                break;
+            case "sstt":
+                break;
+            case "admin_sstt":
+                break;
+            case "desenvolupador":
+                $this->registreTiquetsProfessor();
+                break;
+            default:
+                $this->registreTiquetsProfessor();
                 break;
         }
-        /*$data['title'] = 'Kpacrud';
-        $crud = new KpaCrud();                          // loads default configuration    
-        $crud->setConfig('onlyView');
-        $crud->setColumnsInfo([
-        'id' => ['name' => 'Code id'],
-        'email' => [
-            'name' => 'eMail', 
-            'html_atts' => [
-                'required',
-                'placeholder="Introduce email address"'
-            ], 
-            'type' => KpaCrud::EMAIL_FIELD_TYPE
-        ],
-        'username' => [
-            'name' => 'User name',
-            'type' => KpaCrud::TEXTAREA_FIELD_TYPE,
-            'html_atts' => [
-                "required", 
-                "placeholder=\"Introduce user name\""
-            ],
-        ],
-        // 'active' => [
-        //     'type' => KpaCrud::DROPDOWN_FIELD_TYPE,
-        //     'options' => ['' => "Select option", 'User disabled', 'User active'],
-        //     'html_atts' => [
-        //         "required",
-        //     ],
-        //     'default'=>'1'
-        // ],
-        'active' => [
-            'type' => KpaCrud::CHECKBOX_FIELD_TYPE,
-            'html_atts' => [
-                "required",
-            ],
-            'default'=>'1',
-            'check_value' => '1',
-            'uncheck_value' => '0'
-        ],
-
-        // 'force_pass_reset' => [
-        //     'name' => 'Force reset password',
-        //     'type' => KpaCrud::CHECKBOX_FIELD_TYPE,
-        //     'default'=>'1',
-        //     'check_value' => '1',
-        //     'uncheck_value' => '0'
-        // ],
-        'force_pass_reset' => [
-            'name' => 'Force reset password',
-            'type' => KpaCrud::DROPDOWN_FIELD_TYPE,
-            'options' => ['' => "Select option", 'Password doesn\'t change', 'Change password'],
-            'html_atts' => [
-                "required",
-            ],
-            'default'=>'0',
-        ],
-
-        'reset_expires' => [
-            'type' => KpaCrud::DATE_FIELD_TYPE,
-            'default'=> date('Y-m-d', strtotime(date("d-m-Y"). ' + 6 days'))
-            
-        ],
-        'activate_hash' => ['type' => KpaCrud::INVISIBLE_FIELD_TYPE],
-        'password_hash' => ['type' => KpaCrud::INVISIBLE_FIELD_TYPE],
-        'reset_hash' => ['type' => KpaCrud::INVISIBLE_FIELD_TYPE],
-        'reset_at' => ['type' => KpaCrud::INVISIBLE_FIELD_TYPE],
-        'status' => ['type' => KpaCrud::INVISIBLE_FIELD_TYPE],
-        'status_message' => ['type' => KpaCrud::INVISIBLE_FIELD_TYPE],
-
-    ]);
-    $data['output'] = $crud->render();
-        return view('kpacrud/exemplecrud', $data);*/
     }
 
     public function registreTiquetsProfessor()
     {
+
         $data['title'] = 'Tiquets SSTT';
         $crud = new KpaCrud();                          // loads default configuration    
         $crud->setConfig('onlyView');                   // sets configuration to onlyView
@@ -130,7 +66,7 @@ class RegistresController extends BaseController
         $crud->setRelation('codi_centre_emissor', 'centre', 'codi_centre', 'nom_centre');
         $crud->addItemFunction('mailing', 'fa-paper-plane', array($this, 'myCustomPage'), "Send mail");
         //$crud->addItemLink('view', 'fa-file-o', base_url('route/to/link'), 'Tooltip for icon button');   
-        $crud->setColumns(['codi_equip', 'tipus_dispositiu__nom_tipus_dispositiu', 'descripcio_avaria', 'estat__nom_estat', 'centre__nom_centre', 'id_tiquet']); // set columns/fields to show
+        $crud->setColumns(['codi_equip', 'tipus_dispositiu__nom_tipus_dispositiu', 'descripcio_avaria', 'estat__nom_estat', 'centre__nom_centre', 'data_alta']); // set columns/fields to show
         $crud->setColumnsInfo([                         // set columns/fields name
             'codi_equip' => [
                 'name' => 'Codi del equip'
@@ -147,20 +83,17 @@ class RegistresController extends BaseController
             'centre__nom_centre' => [
                 'name' => 'Centre',
             ],
-            'id_tiquet' => [
-                'name' => 'Demo text field',
-                'type' => KpaCrud::DROPDOWN_FIELD_TYPE,
-                'options' => ["" => "Select option", "Disabled", "Active"],
-                'html_atts' => [
-                    "required",
-                ]
+            'data_alta' => [
+                'name' => 'Data de creació',
+                'type' => KpaCrud::DATETIME_FIELD_TYPE,
+                'default' => '1-2-2022'
             ],
 
         ]);
 
         //$crud->addWhere('blog.blog_id!="1"'); // show filtered data
         $data['output'] = $crud->render();          // renders view
-        return view('registres/registreTiquetSSTT', $data);
+        return $data;
     }
 
 

@@ -67,11 +67,9 @@ class UsuarisController extends BaseController
                     $session_data['cognoms'] = "Cognom Exemple";
                     $session_data['domain'] = explode('@', $session_data['mail'])[1];
 
-                    $mail = $session_data['domain'];
-                    $id_login = $login_model->obtenirId($mail);
+                    $id_login = $login_model->obtenirId($nom_login);
                     $id_role = $login_in_rol_model->obtenirRol($id_login);
                     $role = $rol_model->obtenirRol($id_role);
-                    dd($role);
                     $session_data['role'] = $role;
 
                     session()->set('user_data', $session_data);

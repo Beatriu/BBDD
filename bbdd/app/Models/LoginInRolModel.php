@@ -49,6 +49,7 @@ class LoginInRolModel extends Model
     }
 
     public function obtenirRol($id_login) {
+        //return $this->select('id_login')->where('login', $nom_login)->first();
         return $this->select('id_rol_relacio')->where("id_login_relacio", $id_login)->first()['id_rol_relacio'];
     }
 }
