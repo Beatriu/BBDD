@@ -115,12 +115,6 @@ class UsuarisController extends BaseController
 
                 $userInfo = $oauth2->userinfo->get();
 
-<<<<<<< HEAD
-                $session_data['mail'] = $userInfo->getEmail();
-                $session_data['nom'] = $userInfo->getGivenName();
-                $data['cognoms'] = $userInfo->getFamilyName();
-                $session_data['nomComplet'] = $userInfo->getName();
-=======
                 $session_data['mail']=$userInfo->getEmail();
                 $session_data['nom']=$userInfo->getGivenName();
 
@@ -136,8 +130,6 @@ class UsuarisController extends BaseController
                 } else {
                     $session_data['cognoms']=$userInfo->getFamilyName();
                 }
->>>>>>> f98ab1b70f85c5a8e1946e6539b55289455546eb
-
                 $session_data['domain'] = explode('@', $session_data['mail'])[1];
 
 
@@ -199,12 +191,6 @@ class UsuarisController extends BaseController
                 if ($professor == null) {
                     $centre_model = new CentreModel();
                     $array_centres = $centre_model->obtenirCentres();
-<<<<<<< HEAD
-                    $array_centres_noms = [];
-
-=======
-            
->>>>>>> f98ab1b70f85c5a8e1946e6539b55289455546eb
                     $options_tipus_dispositius = "";
                     for ($i = 0; $i < sizeof($array_centres); $i++) {
                         $options_tipus_dispositius .= "<option value=" . ($i + 1) . ">";
@@ -238,11 +224,6 @@ class UsuarisController extends BaseController
         $codi_centre = $centre_seleccionat['codi_centre'];
 
         $professor_model = new ProfessorModel();
-
-<<<<<<< HEAD
-
-=======
->>>>>>> f98ab1b70f85c5a8e1946e6539b55289455546eb
         $nom = session()->get('user_data')['nom'];
         $cognoms = session()->get('user_data')['cognoms'];
         $correu = session()->get('user_data')['mail'];
