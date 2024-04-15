@@ -46,4 +46,8 @@ class RolModel extends Model
             "nom_rol" => $d1
         ]);
     }
+
+    public function obtenirRol($id_rol) {
+        return $this->select('nom_rol')->where("id_rol", $id_rol)->first()['id_rol'];
+    }
 }

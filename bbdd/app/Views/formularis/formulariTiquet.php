@@ -37,6 +37,24 @@
                 <input class="sCorreuContacteCentre" type="text" id="sCorreuContacteCentre" name="sCorreuContacteCentre" value="<?= $correu_persona_contacte_centre ?>" required/>
             </div>
         </div>
+
+        <?php if(session()->get('role') == "desenvolupador" || session()->get('role') == "admin_sstt" || session()->get('role') == "sstt"): ?>
+        <div class="row mt-3">
+            <div class="col">
+                <input class="form-control selector" name = "centre_seleccionat" list="datalistOptions" id="institutsDataList" placeholder="<?= lang('general_lang.centres_datalist') ?>">
+                <datalist id="datalistOptions">
+                    <?=$centres?>
+                </datalist>
+            </div>
+            <div class="col">
+                <input class="form-control selector" name = "centre_seleccionat" list="datalistOptions" id="institutsDataList" placeholder="<?= lang('general_lang.centres_datalist') ?>">
+                <datalist id="datalistOptions">
+                    <?=$centres?>
+                </datalist>
+            </div>
+        </div>
+        <?php endif; ?>
+
         <div class="row border mt-4 me-0 pe-0 ps-0">
             <div class="row form_header p-2 ms-0">
                 <div class="col d-flex align-items-center justify-content-center">

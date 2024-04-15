@@ -12,6 +12,22 @@ class RegistresController extends BaseController
     {
 
         //TODO: Fer que aquest controllador miri quin rol té i redireccioni a la funció amb taula que li pertoca veure a l'usuari.
+
+        $role = session()->get('user_data')['role'];
+        dd($role);
+        switch ($role) {
+            case "alumne":
+                echo "i equals 0";
+                break;
+            case "professor":
+                echo "i equals 1";
+                break;
+            case "SSTT":
+                echo "i equals 2";
+                break;
+            case "admin":
+                break;
+        }
         /*$data['title'] = 'Kpacrud';
         $crud = new KpaCrud();                          // loads default configuration    
         $crud->setConfig('onlyView');
@@ -97,7 +113,7 @@ class RegistresController extends BaseController
             "recycled_button" => false,
             "useSoftDeletes" => false,
             "multidelete" => false,
-            "filterable" => false,
+            "filterable" => true,
             "editable" => true,
             "removable" => false,
             "paging" => false,

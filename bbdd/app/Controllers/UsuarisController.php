@@ -7,6 +7,7 @@ use App\Models\LoginInRolModel;
 use App\Models\LoginModel;
 use App\Models\ProfessorModel;
 use App\Models\CentreModel;
+use App\Models\RolModel;
 
 class UsuarisController extends BaseController
 {
@@ -38,16 +39,18 @@ class UsuarisController extends BaseController
 
             // Obtenim del formualri el nom d'usuari
             $nom_login = $this->request->getPost('sUser');
-            
+
             // Obtenim l'usuari mitjançant aquest
             $login_model = new LoginModel;
+            $login_in_rol_model = new LoginInRolModel();
+            $rol_model = new RolModel();
             $login_obtingut = $login_model->obtenirLogin($nom_login);
 
             if ($login_obtingut != null) { // En cas que existeixi
 
                 // Obtenim la contrasenya del formulari
                 $contrasenya = $this->request->getPost('sPssw');
-                
+
                 if (gettype($contrasenya) == "string") {
                     $password = $contrasenya;
                 }
@@ -55,22 +58,27 @@ class UsuarisController extends BaseController
                     $correu = $nom_login;
                 }
 
-                $hash =$login_obtingut['contrasenya'];
+                $hash = $login_obtingut['contrasenya'];
 
                 if (password_verify($password, $hash) && $password != "" && $password != null) { // Verifiquem que la contrasenya coincideixi amb la de la base de dades i que existeixi
 
                     $session_data['mail'] = $nom_login;
                     $session_data['nom'] = explode("@", (string) $nom_login)[0];
-                    $session_data['cognoms']= "Cognom Exemple";
+                    $session_data['cognoms'] = "Cognom Exemple";
                     $session_data['domain'] = explode('@', $session_data['mail'])[1];
-    
+
+                    $mail = $session_data['domain'];
+                    $id_login = $login_model->obtenirId($mail);
+                    $id_role = $login_in_rol_model->obtenirRol($id_login);
+                    $role = $rol_model->obtenirRol($id_role);
+                    dd($role);
+                    $session_data['role'] = $role;
+
                     session()->set('user_data', $session_data);
 
 
                     return redirect()->to(base_url('/registreTiquetProfessor'));
-                    
                 }
-
             }
         }
 
@@ -79,7 +87,10 @@ class UsuarisController extends BaseController
 
     public function login()
     {
+
         $data['title'] = "login";
+        $login_model = new LoginModel();
+        $login_in_rol_model = new LoginInRolModel();
 
         $client = new \Google\Client();
 
@@ -100,30 +111,48 @@ class UsuarisController extends BaseController
 
                 session()->set('access_token', $token['access_token']);
 
-                $oauth2 =new \Google\Service\Oauth2($client);
+                $oauth2 = new \Google\Service\Oauth2($client);
 
                 $userInfo = $oauth2->userinfo->get();
 
+<<<<<<< HEAD
+                $session_data['mail'] = $userInfo->getEmail();
+                $session_data['nom'] = $userInfo->getGivenName();
+                $data['cognoms'] = $userInfo->getFamilyName();
+                $session_data['nomComplet'] = $userInfo->getName();
+=======
                 $session_data['mail']=$userInfo->getEmail();
                 $session_data['nom']=$userInfo->getGivenName();
-                $data['cognoms']=$userInfo->getFamilyName();
-                $session_data['nomComplet']=$userInfo->getName();
+
+                if ($userInfo->getFamilyName() == null) {
+                    $nomComplet=$userInfo->getName();
+                    $pos = strpos($nomComplet, $session_data['nom']);
+                    
+                    if ($pos !== false) {
+                        $diferencia = substr($nomComplet, $pos + strlen($session_data['nom']));
+                        $session_data['cognoms'] = $diferencia; // Esto imprimirá " Burgués"
+                    }
+
+                } else {
+                    $session_data['cognoms']=$userInfo->getFamilyName();
+                }
+>>>>>>> f98ab1b70f85c5a8e1946e6539b55289455546eb
 
                 $session_data['domain'] = explode('@', $session_data['mail'])[1];
+
 
                 session()->set('user_data', $session_data);
             }
         }
         $login_button = '';
-        
+
         if (!session()->get('access_token') && !session()->get('user_data')) {
             $login_button = '<a class = "btn btn-outline-dark" href="' . $client->createAuthUrl() . '"><i class="fa-brands fa-google me-2"></i>' . lang("crud.buttons.enter_google") . '</a>';
             $data['login_button'] = $login_button;
-            
+
             return view('logins/loginGeneral', $data);
         } else {
-            $login_model = new LoginModel();
-            $login_in_rol_model = new LoginInRolModel();
+
             $mail = session()->get('user_data')['mail'];
 
             if ($login_model->obtenirLogin($mail) == null) {
@@ -136,7 +165,6 @@ class UsuarisController extends BaseController
                     session()->destroy();
                     return redirect()->back();
                 }
-                
             }
 
             if (isset(session()->get('user_data')['domain'])) {
@@ -145,13 +173,10 @@ class UsuarisController extends BaseController
                 } else {
                     return redirect()->to(base_url('/registreTiquetProfessor'));
                 }
-
             } else {
                 return redirect()->to(base_url('/registreTiquetProfessor'));
             }
-            
         }
-
     }
 
 
@@ -161,7 +186,7 @@ class UsuarisController extends BaseController
         $mail = session()->get('user_data')['mail'];
 
         $login = $login_model->obtenirLogin($mail);
-        
+
         if ($login != null) {
 
             $login_in_rol_model = new LoginInRolModel();
@@ -174,18 +199,22 @@ class UsuarisController extends BaseController
                 if ($professor == null) {
                     $centre_model = new CentreModel();
                     $array_centres = $centre_model->obtenirCentres();
+<<<<<<< HEAD
                     $array_centres_noms = [];
+
+=======
             
+>>>>>>> f98ab1b70f85c5a8e1946e6539b55289455546eb
                     $options_tipus_dispositius = "";
                     for ($i = 0; $i < sizeof($array_centres); $i++) {
-                        $options_tipus_dispositius .= "<option value=" . ($i+1) . ">";
+                        $options_tipus_dispositius .= "<option value=" . ($i + 1) . ">";
                         $options_tipus_dispositius .= $array_centres[$i]['nom_centre'];
                         $options_tipus_dispositius .= "</option>";
                         $array_centres_tot[$i] = $array_centres[$i];
                     }
 
                     session()->setFlashdata('array_centres_tot', $array_centres_tot);
-            
+
                     $data['centres'] = $options_tipus_dispositius;
 
                     $data['title'] = "login";
@@ -193,15 +222,12 @@ class UsuarisController extends BaseController
                 } else {
                     return redirect()->to(base_url('/registreTiquetProfessor'));
                 }
-
             } else {
                 return redirect()->to(base_url('/registreTiquetProfessor'));
             }
-            
         } else {
             return redirect()->to(base_url('/login'));
         }
-
     }
 
     public function loginSelect_post()
@@ -213,7 +239,10 @@ class UsuarisController extends BaseController
 
         $professor_model = new ProfessorModel();
 
-        
+<<<<<<< HEAD
+
+=======
+>>>>>>> f98ab1b70f85c5a8e1946e6539b55289455546eb
         $nom = session()->get('user_data')['nom'];
         $cognoms = session()->get('user_data')['cognoms'];
         $correu = session()->get('user_data')['mail'];
