@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 use SIENSIS\KpaCrud\Libraries\KpaCrud;
+use App\Models\CentreModel;
 
 class RegistresController extends BaseController
 {
@@ -98,22 +99,29 @@ class RegistresController extends BaseController
 
     public function myCustomPage($obj)
     {
-        
+
         $this->request->getUri()->stripQuery('customf');
         $this->request->getUri()->addQuery('customf', 'mpost');
 
+        $centre_model = new CentreModel();
+        $array_centres = $centre_model->obtenirCentresReparadors();
+        $options_centre = "";
+        for ($i = 0; $i < sizeof($array_centres); $i++) {
+            $options_centre .= "<option value=" . $array_centres[$i]['codi_centre'] . ">";
+            $options_centre .= $array_centres[$i]['nom_centre'];
+            $options_centre .= "</option>";
+        }
+        $centres =  $options_centre;
         $html = "<div class=\"container-lg p-4\">";
         $html .= "<form method='post' action='" . base_url($this->request->getPath()) . "?" . $this->request->getUri()->getQuery() . "'>";
         $html .= csrf_field()  . "<input type='hidden' name='test' value='ToSend'>";
         $html .= "<div class=\"bg-secondary p-2 text-white\">";
-        $html .= "	<h1>View item</h1>";
+        $html .= "	<h1>Editar centre reparador</h1>";
         $html .= "</div>";
         $html .= "	<div style=\"margin-top:20px\" class=\"border bg-light\">";
-        $html .=    "<select>";
-        $html .=        "<option value='value1'>Value 1</option>";
-        $html .=        "<option value='value2' selected>Value 2</option>";
-        $html .= "<option value='value3'>Value 3</option>";
-        $html .= "</select>";
+        $html .=    "<select id='selectOptions'>";
+        $html .=    "$centres";
+        $html .= "   </select>";
         $html .= "	</div>";
         $html .= "<div class='pt-2'><input type='submit' value='Envia'></div></form>";
         $html .= "</div>";
@@ -160,7 +168,7 @@ class RegistresController extends BaseController
             'codi_centre_reparador',
             'estat__nom_estat',
             'data_alta'
-        ]); 
+        ]);
         $crud->setColumnsInfo([
             'codi_equip' => [
                 'name' => lang("registre.codi_equip")
@@ -171,7 +179,7 @@ class RegistresController extends BaseController
             'descripcio_avaria' => [
                 'name' => lang("registre.descripcio_avaria"),
             ],
-            
+
             'centre__nom_centre' => [
                 'name' => lang("registre.centre"),
             ],
