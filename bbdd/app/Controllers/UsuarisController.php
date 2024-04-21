@@ -7,6 +7,7 @@ use App\Models\LoginInRolModel;
 use App\Models\LoginModel;
 use App\Models\ProfessorModel;
 use App\Models\CentreModel;
+use App\Models\LlistaAdmesosModel;
 use App\Models\RolModel;
 
 class UsuarisController extends BaseController
@@ -72,8 +73,11 @@ class UsuarisController extends BaseController
                     $role = $rol_model->obtenirRol($id_role);
                     $session_data['role'] = $role;
 
+                    if ($role != "alumne" && $role != "professor") {
+                        $session_data['codi_centre'] = "no_codi";
+                    }
+                    
                     session()->set('user_data', $session_data);
-
 
                     return redirect()->to(base_url('/registreTiquetProfessor'));
                 }
@@ -85,8 +89,6 @@ class UsuarisController extends BaseController
 
     public function login()
     {
-
-
         $data['title'] = "login";
         $login_model = new LoginModel();
         $login_in_rol_model = new LoginInRolModel();
@@ -146,7 +148,6 @@ class UsuarisController extends BaseController
                 }
                 $session_data['domain'] = explode('@', $session_data['mail'])[1];
 
-
                 session()->set('user_data', $session_data);
             }
         }
@@ -167,16 +168,32 @@ class UsuarisController extends BaseController
                     $login_model->insertarLogin($mail); // Es registra a la taula LOGIN
                     $id_login = $login_model->obtenirId($mail); // S'obté l'id de la taula LOGIN
                     $login_in_rol_model->addLoginInRol($id_login, 2);
+
+                    $session_data = session()->get('user_data');
+                    $session_data['role'] = "professor";
+                    session()->set('user_data', $session_data);
+
                 } else { // En cas que sigui alumne es comprova que existeixi a la taula LOGIN i ALUMNE
+    
                     session()->destroy();
                     return redirect()->back();
                 }
             }
 
+            
+
             if (isset(session()->get('user_data')['domain'])) {
                 if (session()->get('user_data')['domain'] == "xtec.cat") {
+
+                    $session_data = session()->get('user_data');
+                    $session_data['role'] = "professor";
+                    session()->set('user_data', $session_data);
+
                     return redirect()->to(base_url('/loginSelect'));
                 } else {
+                    $session_data = session()->get('user_data');
+                    $session_data['role'] = "alumne";
+                    session()->set('user_data', $session_data);
                     return redirect()->to(base_url('/registreTiquetProfessor'));
                 }
             } else {
@@ -189,6 +206,8 @@ class UsuarisController extends BaseController
     public function loginSelect()
     {
         $login_model = new LoginModel();
+        $rol_model = new RolModel();
+
         $mail = session()->get('user_data')['mail'];
 
         $login = $login_model->obtenirLogin($mail);
@@ -207,22 +226,26 @@ class UsuarisController extends BaseController
                     $array_centres = $centre_model->obtenirCentres();
                     $options_tipus_dispositius = "";
                     for ($i = 0; $i < sizeof($array_centres); $i++) {
-                        $options_tipus_dispositius .= "<option value=" . ($i + 1) . ">";
+                        $options_tipus_dispositius .= "<option value=" . $array_centres[$i]['codi_centre'] . ">";
                         $options_tipus_dispositius .= $array_centres[$i]['nom_centre'];
                         $options_tipus_dispositius .= "</option>";
-                        $array_centres_tot[$i] = $array_centres[$i];
                     }
-
-                    session()->setFlashdata('array_centres_tot', $array_centres_tot);
 
                     $data['centres'] = $options_tipus_dispositius;
 
                     $data['title'] = "login";
                     return view('logins\loginSelect', $data);
                 } else {
+                    $session_data = session()->get('user_data');
+                    $session_data['codi_centre'] = $professor['codi_centre'];
+                    session()->set('user_data', $session_data);
                     return redirect()->to(base_url('/registreTiquetProfessor'));
                 }
             } else {
+                $session_data = session()->get('user_data');
+                $session_data['role'] = $rol_model->obtenirRol($id_rol);;
+                session()->set('user_data', $session_data);
+
                 return redirect()->to(base_url('/registreTiquetProfessor'));
             }
         } else {
@@ -232,10 +255,9 @@ class UsuarisController extends BaseController
 
     public function loginSelect_post()
     {
-        $array_centres_tot = session()->getFlashdata('array_centres_tot');
-        $centre_seleccionat_value = $this->request->getPost('centre_seleccionat');
-        $centre_seleccionat = $array_centres_tot[$centre_seleccionat_value - 1];
-        $codi_centre = $centre_seleccionat['codi_centre'];
+        $llista_admesos_model = new LlistaAdmesosModel();
+
+        $codi_centre = $this->request->getPost('centre_seleccionat');
 
         $professor_model = new ProfessorModel();
         $nom = session()->get('user_data')['nom'];
@@ -244,6 +266,12 @@ class UsuarisController extends BaseController
         $id_xtec = explode('@', $correu)[0];
 
         $professor_model->addProfessor($id_xtec, $nom, $cognoms, $correu, $codi_centre);
+
+        $llista_admesos_model->addLlistaAdmesos($correu, date("Y-m-d H:i:s"), $codi_centre);
+
+        $session_data = session()->get('user_data');
+        $session_data['codi_centre'] = $codi_centre;
+        session()->set('user_data', $session_data);
 
         return redirect()->to(base_url('/registreTiquetProfessor'));
     }

@@ -41,4 +41,6 @@ return [
     'tancar' => "Tancar sessió",
     'tornar' => "Tornar",
     'centres_datalist' => "Escriu per buscar...",
+    'centre_emissor' => "Escriu per buscar el CENTRE EMISSOR...",
+    'centre_reparador' => "Escriu per buscar el CENTRE REPARADOR...",
 ];

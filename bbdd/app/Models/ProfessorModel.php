@@ -52,4 +52,8 @@ class ProfessorModel extends Model
     public function obtenirProfessor($correu_professor) {
         return $this->where('correu_professor', $correu_professor)->first();
     }
+
+    public function obtenirCodiCentre($correu_professor) {
+        return $this->select('codi_centre')->where('correu_professor', $correu_professor)->first();
+    }
 }
