@@ -24,6 +24,7 @@ class RegistresController extends BaseController
             case "centre_reparador":
                 break;
             case "sstt":
+                return view('registres/registreTiquetSSTT', $this->registreTiquetsSSTT());
                 break;
             case "admin_sstt":
                 break;
@@ -38,8 +39,7 @@ class RegistresController extends BaseController
 
     public function registreTiquetsProfessor()
     {
-
-        $data['title'] = 'Tiquets SSTT';
+        $data['title'] = 'Tiquets Professor';
         $crud = new KpaCrud();                          // loads default configuration    
         $crud->setConfig('onlyView');                   // sets configuration to onlyView
         $crud->setConfig([
@@ -69,28 +69,27 @@ class RegistresController extends BaseController
         $crud->setColumns(['codi_equip', 'tipus_dispositiu__nom_tipus_dispositiu', 'descripcio_avaria', 'estat__nom_estat', 'centre__nom_centre', 'data_alta']); // set columns/fields to show
         $crud->setColumnsInfo([                         // set columns/fields name
             'codi_equip' => [
-                'name' => 'Codi del equip'
+                'name' => lang("registre.codi_equip")
             ],
             'tipus_dispositiu__nom_tipus_dispositiu' => [
-                'name' => 'Tipus de dispositiu',
+                'name' => lang("registre.tipus_dispositiu"),
             ],
             'descripcio_avaria' => [
-                'name' => 'Descripció',
+                'name' => lang("registre.descripcio_avaria"),
             ],
             'estat__nom_estat' => [
-                'name' => 'Estat',
+                'name' => lang("registre.estat"),
             ],
             'centre__nom_centre' => [
-                'name' => 'Centre',
+                'name' => lang("registre.centre"),
             ],
             'data_alta' => [
-                'name' => 'Data de creació',
+                'name' => lang("registre.data_alta"),
                 'type' => KpaCrud::DATETIME_FIELD_TYPE,
                 'default' => '1-2-2022'
             ],
 
         ]);
-
         //$crud->addWhere('blog.blog_id!="1"'); // show filtered data
         $data['output'] = $crud->render();          // renders view
         return $data;
@@ -99,6 +98,7 @@ class RegistresController extends BaseController
 
     public function myCustomPage($obj)
     {
+        
         $this->request->getUri()->stripQuery('customf');
         $this->request->getUri()->addQuery('customf', 'mpost');
 
@@ -126,6 +126,71 @@ class RegistresController extends BaseController
 
     public function registreTiquetsSSTT()
     {
+        $data['title'] = 'Tiquets SSTT';
+        $crud = new KpaCrud();
+        $crud->setConfig('onlyView');
+        $crud->setConfig([
+            "numerate" => false,
+            "add_button" => false,
+            "show_button" => true,
+            "recycled_button" => false,
+            "useSoftDeletes" => false,
+            "multidelete" => true,
+            "filterable" => false,
+            "editable" => true,
+            "removable" => false,
+            "paging" => false,
+            "numerate" => false,
+            "sortable" => false,
+            "exportXLS" => false,
+            "print" => false
+        ]);
+        $crud->setTable('tiquet');
+        $crud->setPrimaryKey('id_tiquet');
+        $crud->setRelation('id_tipus_dispositiu', 'tipus_dispositiu', 'id_tipus_dispositiu', 'nom_tipus_dispositiu'); //tipus dispositiu
+        $crud->setRelation('id_estat', 'estat', 'id_estat', 'nom_estat');  //estat                      
+        $crud->setRelation('codi_centre_emissor', 'centre', 'codi_centre', 'nom_centre'); //centre emissor
+        //$crud->setRelation('codi_centre_reparador', 'centre', 'codi_centre', 'nom_centre'); //centre reparador
+        //$crud->addItemFunction('mailing', 'fa-paper-plane', array($this, 'myCustomPage'), "Send mail"); 
+        $crud->setColumns([
+            'codi_equip',
+            'tipus_dispositiu__nom_tipus_dispositiu',
+            'descripcio_avaria',
+            'centre__nom_centre',
+            'codi_centre_reparador',
+            'estat__nom_estat',
+            'data_alta'
+        ]); 
+        $crud->setColumnsInfo([
+            'codi_equip' => [
+                'name' => lang("registre.codi_equip")
+            ],
+            'tipus_dispositiu__nom_tipus_dispositiu' => [
+                'name' => lang("registre.tipus_dispositiu"),
+            ],
+            'descripcio_avaria' => [
+                'name' => lang("registre.descripcio_avaria"),
+            ],
+            
+            'centre__nom_centre' => [
+                'name' => lang("registre.centre"),
+            ],
+            'codi_centre_reparador' => [
+                'name' => lang("registre.centre_reparador"),
+            ],
+            'estat__nom_estat' => [
+                'name' => lang("registre.estat"),
+            ],
+            'data_alta' => [
+                'name' => lang("registre.data_alta"),
+                'type' => KpaCrud::DATETIME_FIELD_TYPE,
+                'default' => '1-2-2022'
+            ],
+
+        ]);
+        //$crud->addWhere('blog.blog_id!="1"'); // show filtered data
+        $data['output'] = $crud->render();
+        return $data;
     }
 
     public function registreTiquetsEmissor()

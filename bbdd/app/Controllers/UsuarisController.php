@@ -75,7 +75,7 @@ class UsuarisController extends BaseController
                     session()->set('user_data', $session_data);
 
 
-                    return redirect()->to(base_url('/registreTiquetProfessor'));
+                    return redirect()->to(base_url('/registreTiquet'));
                 }
             }
         }
@@ -177,10 +177,10 @@ class UsuarisController extends BaseController
                 if (session()->get('user_data')['domain'] == "xtec.cat") {
                     return redirect()->to(base_url('/loginSelect'));
                 } else {
-                    return redirect()->to(base_url('/registreTiquetProfessor'));
+                    return redirect()->to(base_url('/registreTiquet'));
                 }
             } else {
-                return redirect()->to(base_url('/registreTiquetProfessor'));
+                return redirect()->to(base_url('/registreTiquet'));
             }
         }
     }
@@ -220,10 +220,10 @@ class UsuarisController extends BaseController
                     $data['title'] = "login";
                     return view('logins\loginSelect', $data);
                 } else {
-                    return redirect()->to(base_url('/registreTiquetProfessor'));
+                    return redirect()->to(base_url('/registreTiquet'));
                 }
             } else {
-                return redirect()->to(base_url('/registreTiquetProfessor'));
+                return redirect()->to(base_url('/registreTiquet'));
             }
         } else {
             return redirect()->to(base_url('/login'));
@@ -245,7 +245,7 @@ class UsuarisController extends BaseController
 
         $professor_model->addProfessor($id_xtec, $nom, $cognoms, $correu, $codi_centre);
 
-        return redirect()->to(base_url('/registreTiquetProfessor'));
+        return redirect()->to(base_url('/registreTiquet'));
     }
 
     public function logout()

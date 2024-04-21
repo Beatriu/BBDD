@@ -23,10 +23,10 @@ $routes->match(['GET','POST'],'/crudadmin',"RegistresController::index");
 //Tiquets
 $routes->get('/formulariTiquet', 'Home::createTiquet', ['filter'=>'Autentica']);
 $routes->post('/formulariTiquet', 'Home::createTiquet_post', ['filter'=>'Autentica']);
-$routes->get('/registreTiquetProfessor', 'RegistresController::index', ['filter'=>'Autentica']);
-$routes->get('/registreTiquetSSTT', 'RegistresController::index', ['filter'=>'Autentica']);
+$routes->get('/registreTiquet', 'RegistresController::index', ['filter'=>'Autentica']);
+/*$routes->get('/registreTiquetSSTT', 'RegistresController::index', ['filter'=>'Autentica']);
 $routes->get('/registreTiquetEmissor', 'RegistresController::index', ['filter'=>'Autentica']);
-
+*/
 //Inventari
 $routes->get('/registreTiquetProfessor', 'RegistresController::index', ['filter'=>'Autentica']);
 //$routes->get('/tiquets', 'RegistresController::index');
