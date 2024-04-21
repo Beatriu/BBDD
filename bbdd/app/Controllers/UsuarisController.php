@@ -79,7 +79,8 @@ class UsuarisController extends BaseController
                     
                     session()->set('user_data', $session_data);
 
-                    return redirect()->to(base_url('/registreTiquetProfessor'));
+
+                    return redirect()->to(base_url('/registreTiquet'));
                 }
             }
         }
@@ -194,10 +195,10 @@ class UsuarisController extends BaseController
                     $session_data = session()->get('user_data');
                     $session_data['role'] = "alumne";
                     session()->set('user_data', $session_data);
-                    return redirect()->to(base_url('/registreTiquetProfessor'));
+                    return redirect()->to(base_url('/registreTiquet'));
                 }
             } else {
-                return redirect()->to(base_url('/registreTiquetProfessor'));
+                return redirect()->to(base_url('/registreTiquet'));
             }
         }
     }
@@ -239,14 +240,14 @@ class UsuarisController extends BaseController
                     $session_data = session()->get('user_data');
                     $session_data['codi_centre'] = $professor['codi_centre'];
                     session()->set('user_data', $session_data);
-                    return redirect()->to(base_url('/registreTiquetProfessor'));
+                    return redirect()->to(base_url('/registreTiquet'));
                 }
             } else {
                 $session_data = session()->get('user_data');
                 $session_data['role'] = $rol_model->obtenirRol($id_rol);;
                 session()->set('user_data', $session_data);
 
-                return redirect()->to(base_url('/registreTiquetProfessor'));
+                return redirect()->to(base_url('/registreTiquet'));
             }
         } else {
             return redirect()->to(base_url('/login'));
@@ -273,7 +274,7 @@ class UsuarisController extends BaseController
         $session_data['codi_centre'] = $codi_centre;
         session()->set('user_data', $session_data);
 
-        return redirect()->to(base_url('/registreTiquetProfessor'));
+        return redirect()->to(base_url('/registreTiquet'));
     }
 
     public function logout()
