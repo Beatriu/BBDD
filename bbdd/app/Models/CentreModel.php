@@ -68,4 +68,8 @@ class CentreModel extends Model
         return $this->findAll();
     }
 
+    public function obtenirCentresReparadors(){
+        return $this->where('taller', 1)->findAll();
+    }
+
 }
