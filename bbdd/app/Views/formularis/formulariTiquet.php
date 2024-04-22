@@ -29,27 +29,25 @@
         </div>
         <div class="row mt-3">
             <div class="col">
-                <label class="" for="sNomContacteCentre"><?= lang('general_lang.name') ?></label>
-                <input class="sNomContacteCentre" type="text" id="sNomContacteCentre" name="sNomContacteCentre" value="<?= $nom_persona_contacte_centre ?>" required/>
+                <input class="sNomContacteCentre" type="text" id="sNomContacteCentre" name="sNomContacteCentre" placeholder="<?= lang('general_lang.name') ?>" value="<?= $nom_persona_contacte_centre ?>" required/>
             </div>
             <div class="col">
-                <label class="" for="sCorreuContacteCentre"><?= lang('general_lang.contact') ?></label>
-                <input class="sCorreuContacteCentre" type="text" id="sCorreuContacteCentre" name="sCorreuContacteCentre" value="<?= $correu_persona_contacte_centre ?>" required/>
+                <input class="sCorreuContacteCentre" type="text" id="sCorreuContacteCentre" name="sCorreuContacteCentre" placeholder="<?= lang('general_lang.contact') ?>" value="<?= $correu_persona_contacte_centre ?>" required/>
             </div>
         </div>
 
-        <?php if(session()->get('role') == "desenvolupador" || session()->get('role') == "admin_sstt" || session()->get('role') == "sstt"): ?>
+        <?php if(session()->get('user_data')['role'] == "desenvolupador" || session()->get('user_data')['role'] == "admin_sstt" || session()->get('user_data')['role'] == "sstt"): ?>
         <div class="row mt-3">
             <div class="col">
-                <input class="form-control selector" name = "centre_seleccionat" list="datalistOptions" id="institutsDataList" placeholder="<?= lang('general_lang.centres_datalist') ?>">
-                <datalist id="datalistOptions">
-                    <?=$centres?>
+                <input class="form-control selector" name = "centre_emissor" list="datalistOptionsEmissor" id="institutsDataListEmissor" placeholder="<?= lang('general_lang.centre_emissor') ?>">
+                <datalist id="datalistOptionsEmissor">
+                    <?=$centres_emissors?>
                 </datalist>
             </div>
             <div class="col">
-                <input class="form-control selector" name = "centre_seleccionat" list="datalistOptions" id="institutsDataList" placeholder="<?= lang('general_lang.centres_datalist') ?>">
-                <datalist id="datalistOptions">
-                    <?=$centres?>
+                <input class="form-control selector" name = "centre_reparador" list="datalistOptionsReparador" id="institutsDataListReparador" placeholder="<?= lang('general_lang.centre_reparador') ?>">
+                <datalist id="datalistOptionsReparador">
+                    <?=$centres_reparadors?>
                 </datalist>
             </div>
         </div>

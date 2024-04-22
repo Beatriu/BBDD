@@ -54,15 +54,14 @@ class Home extends BaseController
             $nom_persona_contacte_centre = $this->request->getPost('sNomContacteCentre');
             $correu_persona_contacte_centre = $this->request->getPost('sCorreuContacteCentre');
             $data_alta = date("Y-m-d H:i:s");
-            $codi_centre = session()->get('codi_centre');
-            
+            $centre_emissor = session()->get('user_data')['codi_centre'];
+            $role = session()->get('user_data')['role'];
             
             //$imagefile = $this->request->getFiles();    és el csv
            
             
             if ($csv['csv_tiquet'] != "") {
 
-                $codi_centre = session()->get('codi_centre');
                 $codi_professor = "1";
 
                 // Carreguem el fitxer a writable/uploads
@@ -73,12 +72,12 @@ class Home extends BaseController
 
                             $newName = $file->getClientName();
 
-                            $ruta = WRITEPATH . "uploads" . DIRECTORY_SEPARATOR . $codi_centre;
+                            $ruta = WRITEPATH . "uploads" . DIRECTORY_SEPARATOR . $centre_emissor;
                             if (!is_dir($ruta)) {
                                 mkdir($ruta, 0755);
                             }
 
-                            $ruta = WRITEPATH . "uploads" . DIRECTORY_SEPARATOR . $codi_centre . DIRECTORY_SEPARATOR . $codi_professor;
+                            $ruta = WRITEPATH . "uploads" . DIRECTORY_SEPARATOR . $centre_emissor . DIRECTORY_SEPARATOR . $codi_professor;
                             if (!is_dir($ruta)) {
                                 mkdir($ruta, 0755);
                             }
@@ -118,44 +117,39 @@ class Home extends BaseController
                     }
                 }
 
+                if ($centre_emissor == "no_codi"){
+                    if ($role != "professor" && $role != "centre_emissor") {                    
+                        $centre_emissor = $this->request->getPost('centre_emissor');
+                        $centre_reparador = $this->request->getPost('centre_reparador');
+                    } 
+    
+                    if ($centre_emissor == "") {
+                        $centre_emissor = null;
+                    }
+    
+                    if ($centre_reparador == "") {
+                        $centre_reparador = null;
+                    }
+                }
+
                 for ($i = 1; $i <= $num_tiquets; $i++) {
                     $codi_equip = $this->request->getPost('equipment_code_' . $i);
                     $tipus = $this->request->getPost('type_' . $i);
                     $problem = $this->request->getPost('problem_' . $i);
 
-                    $tiquet_model->addTiquet($codi_equip, $problem, $nom_persona_contacte_centre, $correu_persona_contacte_centre, $data_alta, null, $tipus, 1, $codi_centre, null);
+                    if ($role == "professor" || $role == "centre_emissor") {
+                        $tiquet_model->addTiquet($codi_equip, $problem, $nom_persona_contacte_centre, $correu_persona_contacte_centre, $data_alta, null, $tipus, 1, $centre_emissor, null);
+                    } else {
+                        $tiquet_model->addTiquet($codi_equip, $problem, $nom_persona_contacte_centre, $correu_persona_contacte_centre, $data_alta, null, $tipus, 1, $centre_emissor, $centre_reparador);
+                    }
+                    
                 }
             }
 
 
         }
-
-        $tipus_dispositius = new TipusDispositiuModel;
-        $array_tipus_dispositius = $tipus_dispositius->getTipusDispositius();
-        $array_tipus_dispositius_nom = [];
-
-        $options_tipus_dispositius = "";
-        for ($i = 0; $i < sizeof($array_tipus_dispositius); $i++) {
-            $options_tipus_dispositius .= "<option value=" . ($i+1) . ">";
-            $options_tipus_dispositius .= $array_tipus_dispositius[$i]['nom_tipus_dispositiu'];
-            $options_tipus_dispositius .= "</option>";
-            $array_tipus_dispositius_nom[$i] = $array_tipus_dispositius[$i]['nom_tipus_dispositiu'];
-        }
-
-        $data['tipus_dispositius'] = $options_tipus_dispositius;
-        $data['json_tipus_dispositius'] = json_encode($array_tipus_dispositius_nom);
-
-
-
-        // TREURE AIXÒ
-        session()->set(['codi_centre' => '25008443']);
-        $codi_centre = session()->get('codi_centre');
-
-        $centre = new CentreModel;
-        $data['nom_persona_contacte_centre'] = $centre->obtenirNomResponsable($codi_centre);
-        $data['correu_persona_contacte_centre'] = $centre->obtenirCorreuResponsable($codi_centre);
         
-        return view('formularis\formulariTiquet', $data);
+        return redirect()->to(base_url('/registreTiquetProfessor'));
     }
 
     /**
@@ -163,8 +157,13 @@ class Home extends BaseController
      *
      * @author Blai Burgués Vicente
      */
-    public function createTiquet(): string 
+    public function createTiquet() 
     {
+        $role = session()->get('user_data')['role'];
+        if ($role == "alumne") {
+            return redirect()->to(base_url('/registreTiquetProfessor'));
+        }
+
         $tipus_dispositius = new TipusDispositiuModel;
         $array_tipus_dispositius = $tipus_dispositius->getTipusDispositius();
         $array_tipus_dispositius_nom = [];
@@ -180,15 +179,36 @@ class Home extends BaseController
         $data['tipus_dispositius'] = $options_tipus_dispositius;
         $data['json_tipus_dispositius'] = json_encode($array_tipus_dispositius_nom);
 
+        $centre_model = new CentreModel();
+        $array_centres = $centre_model->obtenirCentres();
+        $options_tipus_dispositius_emissors = "";
+        $options_tipus_dispositius_reparadors = "";
+        for ($i = 0; $i < sizeof($array_centres); $i++) {
+            $options_tipus_dispositius_emissors .= "<option value=" . $array_centres[$i]['codi_centre'] . ">";
+            $options_tipus_dispositius_emissors .= $array_centres[$i]['nom_centre'];
+            $options_tipus_dispositius_emissors .= "</option>";
+
+            if ($array_centres[$i]['taller'] == 1) {
+                $options_tipus_dispositius_reparadors .= "<option value=" . $array_centres[$i]['codi_centre'] . ">";
+                $options_tipus_dispositius_reparadors .= $array_centres[$i]['nom_centre'];
+                $options_tipus_dispositius_reparadors .= "</option>";
+            }
+        }
+        $data['centres_emissors'] = $options_tipus_dispositius_emissors;
+        $data['centres_reparadors'] = $options_tipus_dispositius_reparadors;
 
 
         // TREURE AIXÒ
-        session()->set(['codi_centre' => '25008443']);
-        $codi_centre = session()->get('codi_centre');
+        $codi_centre = session()->get('user_data')['codi_centre'];
 
-        $centre = new CentreModel;
-        $data['nom_persona_contacte_centre'] = $centre->obtenirNomResponsable($codi_centre);
-        $data['correu_persona_contacte_centre'] = $centre->obtenirCorreuResponsable($codi_centre);
+        if ($codi_centre != "no_codi") {
+            $centre = new CentreModel;
+            $data['nom_persona_contacte_centre'] = $centre->obtenirNomResponsable($codi_centre);
+            $data['correu_persona_contacte_centre'] = $centre->obtenirCorreuResponsable($codi_centre);
+        } else {
+            $data['nom_persona_contacte_centre'] = null;
+            $data['correu_persona_contacte_centre'] = null;
+        }
 
         $data['title'] = lang('general_lang.formulari_tiquet');
         return view('formularis\formulariTiquet', $data);
