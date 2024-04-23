@@ -5,7 +5,7 @@
 
 <header class="d-flex bd-highlight" style="background-color: #333333;">
     <div class="p-2 flex-grow-1 bd-highlight">
-        <img class="logo" src="<?= base_url('img/Logotip/Logotip per aplicar a fons negres.png') ?>" />
+        <img class="logo" src="<?= base_url('img' . DIRECTORY_SEPARATOR . 'Logotip' . DIRECTORY_SEPARATOR . 'Logotip per aplicar a fons negres.png') ?>" />
     </div>
     <div class="p-2 bd-highlight d-flex pe-4">
 

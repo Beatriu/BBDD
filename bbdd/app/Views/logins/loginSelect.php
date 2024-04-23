@@ -18,6 +18,7 @@
 
 
 <form class="d-flex align-items-center justify-content-center" method="POST" action="<?= base_url('/loginSelect') ?>">
+    <?= csrf_field() ?>
     <div class="w-25 p-3" id="formulari">
         <div class="contenidor form-group d-flex flex-column">
             <div class="d-flex justify-content-center">

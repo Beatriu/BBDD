@@ -18,6 +18,7 @@
 <?= $this->section('contingut'); ?>
 
 <form class="d-flex align-items-center justify-content-center" method="POST" action="<?= base_url('/login') ?>">
+    <?= csrf_field() ?>
     <div class="w-25 p-3" id="formulari">
         <div class="form-group">
             <label class="d-flex justify-content-center" for="sUser"><?= lang('general_lang.user') ?>:</label>

@@ -13,7 +13,7 @@ return [
         'update' => 'Actualitzar',
         'cancel' => 'Cancelar',
     ],
-    'banderilla'=>'img/Banderes/Flag_of_Catalonia.png',
+    'banderilla'=>'img' . DIRECTORY_SEPARATOR . 'Banderes' . DIRECTORY_SEPARATOR . 'CA.png',
     'user' => 'Usuario',
     'password' => 'Contraseña',
     'password_confirmar' => 'Confirmar contraseña',

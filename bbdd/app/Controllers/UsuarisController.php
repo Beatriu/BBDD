@@ -158,7 +158,7 @@ class UsuarisController extends BaseController
             $login_button = '<a class = "btn btn-outline-dark" href="' . $client->createAuthUrl() . '"><i class="fa-brands fa-google me-2"></i>' . lang("crud.buttons.enter_google") . '</a>';
             $data['login_button'] = $login_button;
 
-            return view('logins/loginGeneral', $data);
+            return view('logins' . DIRECTORY_SEPARATOR . 'loginGeneral', $data);
         } else {
 
             $mail = session()->get('user_data')['mail'];
@@ -235,7 +235,7 @@ class UsuarisController extends BaseController
                     $data['centres'] = $options_tipus_dispositius;
 
                     $data['title'] = "login";
-                    return view('logins\loginSelect', $data);
+                    return view('logins' . DIRECTORY_SEPARATOR . 'loginSelect', $data);
                 } else {
                     $session_data = session()->get('user_data');
                     $session_data['codi_centre'] = $professor['codi_centre'];

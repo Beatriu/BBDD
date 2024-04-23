@@ -14,7 +14,7 @@ return [
         'cancel' => 'Cancelar',
 
     ],
-    'banderilla'=>'img/Banderes/Bandera_de_España.png',
+    'banderilla'=>'img' . DIRECTORY_SEPARATOR . 'Banderes' . DIRECTORY_SEPARATOR . 'ES.png',
     'user' => 'Usuari',
     'password' => 'Contrasenya',
     'password_confirmar' => 'Confirmar contrasenya',

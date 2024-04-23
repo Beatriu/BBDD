@@ -18,14 +18,14 @@ class RegistresController extends BaseController
                 //return view();
                 break;
             case "professor":
-                return view('registres/registreTiquetsProfessor', $this->registreTiquetsProfessor());
+                return view('registres' . DIRECTORY_SEPARATOR . 'registreTiquetsProfessor', $this->registreTiquetsProfessor());
                 break;
             case "centre_emissor":
                 break;
             case "centre_reparador":
                 break;
             case "sstt":
-                return view('registres/registreTiquetSSTT', $this->registreTiquetsSSTT());
+                return view('registres' . DIRECTORY_SEPARATOR . 'registreTiquetSSTT', $this->registreTiquetsSSTT());
                 break;
             case "admin_sstt":
                 break;
@@ -203,6 +203,7 @@ class RegistresController extends BaseController
 
     public function registreTiquetsEmissor()
     {
+        
     }
 
     public function registreTiquetsAdmin()
