@@ -38,12 +38,15 @@
             </ul>
         </div>
         <!--SideBar desplegable-->
-        <div  style="display:none" id="mySidebar">
-    <button onclick="w3_close()" class="w3-bar-item w3-large">Close &times;</button>
-    <a href="#" class="w3-bar-item w3-button">Link 1</a>
-    <a href="#" class="w3-bar-item w3-button">Link 2</a>
-    <a href="#" class="w3-bar-item w3-button">Link 3</a>
-  </div>
+        <div class="col-sm-auto px-0" style="display:none" id="mySidebar">
+            <ul class="nav flex-column">
+               <li> <a onclick="_close()"> <i class="fa-solid fa-xmark"></i></a></li>
+               <hr style="height:10px">
+               <li> <a href="#" class="w3-bar-item w3-button">Link 1</a></li>
+               <li> <a href="#" class="w3-bar-item w3-button">Link 2</a></li>
+               <li><a href="#" class="w3-bar-item w3-button">Link 3</a></li>
+            </ul>
+        </div>
         <!--Taula i títol-->
         <div class="col-sm p-3 min-vh-100" id="zona_taula">
             <div class="d-flex justify-content-between align-items-center">
@@ -51,7 +54,7 @@
                     <h1><?= lang("registre.table-dispositius") ?></h1>
                 </div>
                 <div>
-                    <button onclick="w3_open()" class="btn" id="btn-filter"><i class="fa-solid fa-filter"></i> <?= lang("registre.buttons.filter") ?></button>
+                    <button onclick="_open()" class="btn" id="btn-filter"><i class="fa-solid fa-filter"></i> <?= lang("registre.buttons.filter") ?></button>
                     <a href="<?= base_url("/formulariTiquet") ?>" class="btn" id="btn-create"><i class="fa-solid fa-circle-plus"></i> <?= lang("registre.buttons.create") ?></a>
                 </div>
             </div>
@@ -62,12 +65,15 @@
     </div>
 </div>
 <script>
-  function w3_open() {
-    document.getElementById("mySidebar").style.display = "block";
-  }
-  
-  function w3_close() {
-    document.getElementById("mySidebar").style.display = "none";
-  }
-  </script>
+    function _open() {
+        document.getElementById("mySidebar").style.display = "block";
+        document.getElementById("mySidebar").style.backgroundColor = "#900000";
+        document.getElementById("sidebar").style.display = "none";
+    }
+
+    function _close() {
+        document.getElementById("mySidebar").style.display = "none";
+        document.getElementById("sidebar").style.display = "block";
+    }
+</script>
 <?= $this->endSection('contingut'); ?>
