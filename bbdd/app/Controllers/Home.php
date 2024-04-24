@@ -121,6 +121,8 @@ class Home extends BaseController
                     if ($role != "professor" && $role != "centre_emissor") {                    
                         $centre_emissor = $this->request->getPost('centre_emissor');
                         $centre_reparador = $this->request->getPost('centre_reparador');
+                        $centre_emissor = trim(explode('-', (string) $centre_emissor)[0]);
+                        $centre_reparador = trim(explode('-', (string) $centre_reparador)[0]);
                     } 
     
                     if ($centre_emissor == "") {
@@ -149,7 +151,7 @@ class Home extends BaseController
 
         }
         
-        return redirect()->to(base_url('/registreTiquetProfessor'));
+        return redirect()->to(base_url('/registreTiquet'));
     }
 
     /**
@@ -160,8 +162,9 @@ class Home extends BaseController
     public function createTiquet() 
     {
         $role = session()->get('user_data')['role'];
+
         if ($role == "alumne") {
-            return redirect()->to(base_url('/registreTiquetProfessor'));
+            return redirect()->to(base_url('/registreTiquet'));
         }
 
         $tipus_dispositius = new TipusDispositiuModel;
@@ -184,12 +187,12 @@ class Home extends BaseController
         $options_tipus_dispositius_emissors = "";
         $options_tipus_dispositius_reparadors = "";
         for ($i = 0; $i < sizeof($array_centres); $i++) {
-            $options_tipus_dispositius_emissors .= "<option value=" . $array_centres[$i]['codi_centre'] . ">";
+            $options_tipus_dispositius_emissors .= "<option value='" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "'>";
             $options_tipus_dispositius_emissors .= $array_centres[$i]['nom_centre'];
             $options_tipus_dispositius_emissors .= "</option>";
 
             if ($array_centres[$i]['taller'] == 1) {
-                $options_tipus_dispositius_reparadors .= "<option value=" . $array_centres[$i]['codi_centre'] . ">";
+                $options_tipus_dispositius_reparadors .= "<option value='" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "'>";
                 $options_tipus_dispositius_reparadors .= $array_centres[$i]['nom_centre'];
                 $options_tipus_dispositius_reparadors .= "</option>";
             }

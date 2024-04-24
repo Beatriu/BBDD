@@ -46,7 +46,8 @@ function afegirTiquet() {
 
     let div_col_problem = document.createElement("div");
     div_col_problem.classList.add("col", "d-flex", "align-items-center", "justify-content-center");
-    let input_problem = document.createElement("input");
+    let input_problem = document.createElement("textarea");
+    input_problem.style.width = '100%';
     input_problem.type = "text";
     input_problem.name = "problem_" + numero_tiquets_afegir;
     input_problem.required = true;
@@ -73,6 +74,9 @@ function afegirTiquet() {
     div_files_formulari_tiquet.appendChild(div_fila);
 
     sumarNumTiquet();
+
+    let span = document.getElementById("span_nombre_tiquets");
+    span.innerHTML = numero_files;
 }
 
 function esborrarTiquet(id_fila) {
@@ -82,6 +86,9 @@ function esborrarTiquet(id_fila) {
         numero_files--;
         restarNumTiquet();
     }
+
+    let span = document.getElementById("span_nombre_tiquets");
+    span.innerHTML = numero_files;
 }
 
 function sumarNumTiquet() {
@@ -98,6 +105,7 @@ function restarNumTiquet() {
     num = parseInt(num) - 1;
 
     document.getElementById('num_tiquets').value = num;
+
 }
 
 function afegirFitxer() {

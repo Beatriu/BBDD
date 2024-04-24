@@ -192,9 +192,13 @@ class UsuarisController extends BaseController
 
                     return redirect()->to(base_url('/loginSelect'));
                 } else {
-                    $session_data = session()->get('user_data');
-                    $session_data['role'] = "alumne";
-                    session()->set('user_data', $session_data);
+
+                    if (!isset(session()->get('user_data')['role'])) {
+                        $session_data = session()->get('user_data');
+                        $session_data['role'] = "alumne";
+                        session()->set('user_data', $session_data);
+                    }
+
                     return redirect()->to(base_url('/registreTiquet'));
                 }
             } else {
@@ -227,7 +231,7 @@ class UsuarisController extends BaseController
                     $array_centres = $centre_model->obtenirCentres();
                     $options_tipus_dispositius = "";
                     for ($i = 0; $i < sizeof($array_centres); $i++) {
-                        $options_tipus_dispositius .= "<option value=" . $array_centres[$i]['codi_centre'] . ">";
+                        $options_tipus_dispositius .= "<option value='" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "'>";
                         $options_tipus_dispositius .= $array_centres[$i]['nom_centre'];
                         $options_tipus_dispositius .= "</option>";
                     }
@@ -259,6 +263,7 @@ class UsuarisController extends BaseController
         $llista_admesos_model = new LlistaAdmesosModel();
 
         $codi_centre = $this->request->getPost('centre_seleccionat');
+        $codi_centre = trim(explode('-', (string) $codi_centre)[0]);
 
         $professor_model = new ProfessorModel();
         $nom = session()->get('user_data')['nom'];

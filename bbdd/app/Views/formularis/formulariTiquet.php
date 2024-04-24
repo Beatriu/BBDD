@@ -20,7 +20,7 @@
         <?= csrf_field() ?>
         <div class="row mt-5 justify-content-center">
             <div class="col-2 d-flex align-items-center">
-                <a class="btn btn-dark rounded-pill" href="<?= base_url('/registreTiquetProfessor') ?>">
+                <a class="btn btn-dark rounded-pill" href="<?= base_url('/registreTiquet') ?>">
                     <i class="fa-solid fa-arrow-left"></i> <?= lang('general_lang.tornar') ?>
                 </a>
             </div>
@@ -28,24 +28,35 @@
                 <h1><?= lang('general_lang.create_tiquet') ?></h1>
             </div>
         </div>
+
+        <div class="row border mt-4 me-0 pe-0 ps-0">
+            <div class="row form_header p-3 ms-0">
+                <span><?= lang('general_lang.informacio_comuna') ?></span>
+            </div>
+        </div>
+
         <div class="row mt-3">
             <div class="col">
-                <input class="sNomContacteCentre" type="text" id="sNomContacteCentre" name="sNomContacteCentre" placeholder="<?= lang('general_lang.name') ?>" value="<?= $nom_persona_contacte_centre ?>" required/>
+                <label class="form-label" for="sNomContacteCentre"><?= lang('general_lang.name') ?> *</label>
+                <input class=" form-control sNomContacteCentre" type="text" id="sNomContacteCentre" name="sNomContacteCentre" placeholder="<?= lang('general_lang.name') ?>" value="<?= $nom_persona_contacte_centre ?>" required/>
             </div>
             <div class="col">
-                <input class="sCorreuContacteCentre" type="text" id="sCorreuContacteCentre" name="sCorreuContacteCentre" placeholder="<?= lang('general_lang.contact') ?>" value="<?= $correu_persona_contacte_centre ?>" required/>
+                <label class="form-label" for="sCorreuContacteCentre"><?= lang('general_lang.contact') ?> *</label>
+                <input class="form-control sCorreuContacteCentre" type="text" id="sCorreuContacteCentre" name="sCorreuContacteCentre" placeholder="<?= lang('general_lang.contact') ?>" value="<?= $correu_persona_contacte_centre ?>" required/>
             </div>
         </div>
 
         <?php if(session()->get('user_data')['role'] == "desenvolupador" || session()->get('user_data')['role'] == "admin_sstt" || session()->get('user_data')['role'] == "sstt"): ?>
         <div class="row mt-3">
             <div class="col">
+                <label class="form-label" for="institutsDataListEmissor"><?= lang('general_lang.centre_emissor_curt') ?></label>
                 <input class="form-control selector" name = "centre_emissor" list="datalistOptionsEmissor" id="institutsDataListEmissor" placeholder="<?= lang('general_lang.centre_emissor') ?>">
                 <datalist id="datalistOptionsEmissor">
                     <?=$centres_emissors?>
                 </datalist>
             </div>
             <div class="col">
+                <label class="form-label" for="institutsDataListReparador"><?= lang('general_lang.centre_reparador_curt') ?></label>
                 <input class="form-control selector" name = "centre_reparador" list="datalistOptionsReparador" id="institutsDataListReparador" placeholder="<?= lang('general_lang.centre_reparador') ?>">
                 <datalist id="datalistOptionsReparador">
                     <?=$centres_reparadors?>
@@ -54,19 +65,19 @@
         </div>
         <?php endif; ?>
 
-        <div class="row border mt-4 me-0 pe-0 ps-0">
+        <div class="row border mt-5 me-0 pe-0 ps-0">
             <div class="row form_header p-2 ms-0">
                 <div class="col d-flex align-items-center justify-content-center">
-                    <?= lang('general_lang.equipment_code') ?>
+                    <?= lang('general_lang.equipment_code') ?> *
                 </div>
                 <div class="col d-flex align-items-center justify-content-center">
-                    <?= lang('general_lang.type') ?>
+                    <?= lang('general_lang.type') ?> *
                 </div>
                 <div class="col d-flex align-items-center justify-content-center">
-                    <?= lang('general_lang.problem') ?>
+                    <?= lang('general_lang.problem') ?> *
                 </div>
                 <div class="col d-flex align-items-center justify-content-end">
-                    <button type="button" class="btn btn-success rounded-pill" onclick="afegirTiquet();"><i class="fa fa-plus"></i> Afegir</button>
+                    <button type="button" class="btn btn-success rounded-pill" onclick="afegirTiquet();"><i class="fa fa-plus"></i> <?= lang('general_lang.afegir_tiquet') ?></button>
                 </div>
             </div>
             <div class="row me-0 pe-0 ms-1" id = "div_files_formulari_tiquet">
@@ -81,7 +92,7 @@
                         </select>
                     </div>
                     <div class="col d-flex align-items-center justify-content-center">
-                        <input type="text" name="problem_1"/>
+                        <textarea type="text" name="problem_1" style="width: 100%;"></textarea>
                     </div>
                     <div class="col d-flex align-items-center justify-content-center">
                         <button type="button" class="btn btn-danger rounded-circle" onclick = "esborrarTiquet('fila_formulari_tiquet_1');">
@@ -97,6 +108,10 @@
 
         </div>
         <div class="row justify-content-center mt-4">
+            <div>
+                <?= lang('general_lang.nombre_tiquets') ?>
+                <span id="span_nombre_tiquets">1</span>
+            </div>
             <div class="d-flex justify-content-center align-items-center">
                 <a href="<?= base_url('/registreTiquetProfessor') ?>" class="btn btn_cancell rounded-pill"><i class="fa-solid fa-trash me-2"></i><?= lang('general_lang.cancell') ?></a>
                 <button type="submit" class="btn btn_save rounded-pill ms-3 me-3"><i class="fa-solid fa-floppy-disk me-2"></i><?= lang('general_lang.save') ?></button>

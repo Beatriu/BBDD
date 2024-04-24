@@ -21,6 +21,7 @@
                 </div>
                 <div>
                     <a class="btn" id="btn-filter"><i class="fa-solid fa-filter"></i> <?= lang("registre.buttons.filter")?></a>
+                    <a href="<?= base_url("/registreTiquet?export=xls") ?>" id = "btn-export" class="btn btn-info" title="<?= lang("registre.buttons.export_title")?>"><i class="fa-solid fa-file-excel"></i> <?= lang("registre.buttons.export")?></a>
                     <a href="<?= base_url("/formulariTiquet") ?>" class="btn" id="btn-create"><i class="fa-solid fa-circle-plus"></i> <?= lang("registre.buttons.create")?></a>
                 </div>
             </div>

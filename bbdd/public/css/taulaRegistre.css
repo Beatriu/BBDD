@@ -32,3 +32,11 @@ ul>li>a>i {
     color:  #FFFFFF; 
     border-radius: 20px;
 }
+#btn-export{
+    background-color: #31d2f2;
+    color:  #FFFFFF; 
+    border-radius: 20px;
+}
+#list-btn-exportxls{
+    display: none;
+}

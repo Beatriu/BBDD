@@ -8,14 +8,17 @@ class AfegirPoblacioSeeder extends Seeder
 {
     public function run()
     {
-        $csvFile = fopen(WRITEPATH."uploads". DIRECTORY_SEPARATOR ."poblacions.csv", "r"); // read file from /writable/uploads folder.
+        $csvFile = fopen(WRITEPATH."uploads". DIRECTORY_SEPARATOR ."centres_poblacions.csv", "r"); // read file from /writable/uploads folder.
 
         $firstline = true;
 
-        while (($data = fgetcsv($csvFile, 2000, ";")) !== FALSE) {
+        while (($data = fgetcsv($csvFile, 6000, ";")) !== FALSE) {
             if (!$firstline) {
                 $model = new \App\Models\PoblacioModel();
-                $model->addPoblacio($data[0], $data[1], $data[3], $data[4]);
+                if ($model->getPoblacio($data[9]) == null) {
+                    $model->addPoblacio($data[9], $data[3], $data[10], $data[7]);
+                }
+                
             }
             $firstline = false;
         }
