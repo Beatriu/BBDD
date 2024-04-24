@@ -17,6 +17,7 @@
 
 <?= $this->section('contingut'); ?>
     <form class="container" method="POST" action="<?= base_url('/formulariTiquet') ?>" enctype="multipart/form-data">
+        <?= csrf_field() ?>
         <div class="row mt-5 justify-content-center">
             <div class="col-2 d-flex align-items-center">
                 <a class="btn btn-dark rounded-pill" href="<?= base_url('/registreTiquetProfessor') ?>">

@@ -211,7 +211,7 @@ class Home extends BaseController
         }
 
         $data['title'] = lang('general_lang.formulari_tiquet');
-        return view('formularis\formulariTiquet', $data);
+        return view('formularis' . DIRECTORY_SEPARATOR .'formulariTiquet', $data);
     }
 
 }
