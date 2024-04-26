@@ -65,7 +65,7 @@ class RegistresController extends BaseController
         $crud->setRelation('id_tipus_dispositiu', 'tipus_dispositiu', 'id_tipus_dispositiu', 'nom_tipus_dispositiu');
         $crud->setRelation('id_estat', 'estat', 'id_estat', 'nom_estat');                       // set primary key
         $crud->setRelation('codi_centre_emissor', 'centre', 'codi_centre', 'nom_centre');
-        $crud->addItemFunction('mailing', 'fa-paper-plane', array($this, 'myCustomPage'), "Send mail");
+        //$crud->addItemFunction('changeState', 'fa-arrow-up-wide-short', array($this, 'myCustomPage'), "Canviar estat");
         //$crud->addItemLink('view', 'fa-file-o', base_url('route/to/link'), 'Tooltip for icon button');   
         $crud->setColumns(['codi_equip', 'tipus_dispositiu__nom_tipus_dispositiu', 'descripcio_avaria', 'estat__nom_estat', 'centre__nom_centre', 'data_alta']); // set columns/fields to show
         $crud->setColumnsInfo([                         // set columns/fields name
@@ -122,6 +122,9 @@ class RegistresController extends BaseController
         $html .=    "<select id='selectOptions'>";
         $html .=    "$centres";
         $html .= "   </select>";
+        $html .=    "<select id='selectOptions'>";
+        $html .=    "$centres";
+        $html .= "   </select>";
         $html .= "	</div>";
         $html .= "<div class='pt-2'><input type='submit' value='Envia'></div></form>";
         $html .= "</div>";
@@ -143,10 +146,10 @@ class RegistresController extends BaseController
             "show_button" => true,
             "recycled_button" => false,
             "useSoftDeletes" => false,
-            "multidelete" => true,
+            "multidelete" => false,
             "filterable" => false,
             "editable" => true,
-            "removable" => false,
+            "removable" => true,
             "paging" => false,
             "numerate" => false,
             "sortable" => false,
@@ -158,6 +161,7 @@ class RegistresController extends BaseController
         $crud->setRelation('id_tipus_dispositiu', 'tipus_dispositiu', 'id_tipus_dispositiu', 'nom_tipus_dispositiu'); //tipus dispositiu
         $crud->setRelation('id_estat', 'estat', 'id_estat', 'nom_estat');  //estat                      
         $crud->setRelation('codi_centre_emissor', 'centre', 'codi_centre', 'nom_centre'); //centre emissor
+        //$crud->addItemFunction('changeState', 'fa-arrow-up-wide-short', array($this, 'myCustomPage'), "Canviar estat");
         //$crud->setRelation('codi_centre_reparador', 'centre', 'codi_centre', 'nom_centre'); //centre reparador
         //$crud->addItemFunction('mailing', 'fa-paper-plane', array($this, 'myCustomPage'), "Send mail"); 
         $crud->setColumns([
