@@ -160,7 +160,7 @@ class UsuarisController extends BaseController
 
             return view('logins' . DIRECTORY_SEPARATOR . 'loginGeneral', $data);
         } else {
-
+            
             $mail = session()->get('user_data')['mail'];
 
             if ($login_model->obtenirLogin($mail) == null) {

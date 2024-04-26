@@ -159,7 +159,6 @@ class RegistresController extends BaseController
         ]);
         $crud->setTable('vista_tiquet');
         $crud->setPrimaryKey('id_tiquet');
-
         $crud->setColumns([
             'codi_equip',
             'nom_tipus_dispositiu',
