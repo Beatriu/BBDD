@@ -32,6 +32,9 @@ ul>li>a>i {
     color:  #FFFFFF; 
     border-radius: 20px;
 }
+.fa-arrow-up-wide-short{
+    color:#38B6FF;
+}
 #btn-export{
     background-color: #31d2f2;
     color:  #FFFFFF; 

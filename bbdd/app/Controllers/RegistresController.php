@@ -14,25 +14,12 @@ class RegistresController extends BaseController
 {
     public function index()
     {
-        $login_model = new LoginModel();
-        $login_in_rol_model = new LoginInRolModel();
-        $rol_model = new RolModel();
         //TODO: Fer que aquest controllador miri quin rol té i redireccioni a la funció amb taula que li pertoca veure a l'usuari.
-
-
-        /*$id_login = $login_model->obtenirId(session()->get('user_data')['mail']);
-        $id_role = $login_in_rol_model->obtenirRol($id_login);
-        $role = $rol_model->obtenirRol($id_role);
-
-        $session_data = session()->get('user_data');
-        $session_data['role'] = $role;
-        session()->set('user_data', $session_data);*/
 
         $role = session()->get('user_data')['role'];
 
         switch ($role) {
             case "alumne":
-                //
                 break;
             case "professor":
                 return view('registres' . DIRECTORY_SEPARATOR . 'registreTiquetsProfessor', $this->registreTiquetsProfessor());
@@ -82,7 +69,7 @@ class RegistresController extends BaseController
         $crud->setRelation('id_tipus_dispositiu', 'tipus_dispositiu', 'id_tipus_dispositiu', 'nom_tipus_dispositiu');
         $crud->setRelation('id_estat', 'estat', 'id_estat', 'nom_estat');                       // set primary key
         $crud->setRelation('codi_centre_emissor', 'centre', 'codi_centre', 'nom_centre');
-        $crud->addItemFunction('mailing', 'fa-paper-plane', array($this, 'myCustomPage'), "Send mail");
+        //$crud->addItemFunction('changeState', 'fa-arrow-up-wide-short', array($this, 'myCustomPage'), "Canviar estat");
         //$crud->addItemLink('view', 'fa-file-o', base_url('route/to/link'), 'Tooltip for icon button');   
         $crud->setColumns(['codi_equip', 'tipus_dispositiu__nom_tipus_dispositiu', 'descripcio_avaria', 'estat__nom_estat', 'centre__nom_centre', 'data_alta']); // set columns/fields to show
         $crud->setColumnsInfo([                         // set columns/fields name
@@ -139,6 +126,9 @@ class RegistresController extends BaseController
         $html .=    "<select id='selectOptions'>";
         $html .=    "$centres";
         $html .= "   </select>";
+        $html .=    "<select id='selectOptions'>";
+        $html .=    "$centres";
+        $html .= "   </select>";
         $html .= "	</div>";
         $html .= "<div class='pt-2'><input type='submit' value='Envia'></div></form>";
         $html .= "</div>";
@@ -160,10 +150,10 @@ class RegistresController extends BaseController
             "show_button" => true,
             "recycled_button" => false,
             "useSoftDeletes" => false,
-            "multidelete" => true,
+            "multidelete" => false,
             "filterable" => false,
             "editable" => true,
-            "removable" => false,
+            "removable" => true,
             "paging" => false,
             "numerate" => false,
             "sortable" => true,
@@ -172,7 +162,6 @@ class RegistresController extends BaseController
         ]);
         $crud->setTable('vista_tiquet');
         $crud->setPrimaryKey('id_tiquet');
-
         $crud->setColumns([
             'codi_equip',
             'nom_tipus_dispositiu',
@@ -189,11 +178,26 @@ class RegistresController extends BaseController
             ],
             'nom_tipus_dispositiu' => [
                 'name' => lang("registre.tipus_dispositiu"),
+                'type' => KpaCrud::DROPDOWN_FIELD_TYPE,
+                'options' => [
+                    "1"=>"Pantalla",
+                    "2"=>"Ordenador",
+                    "3"=>"Projector",
+                    "4"=>"Movil",
+                    "5"=>"Tablet",
+                    "6"=>"Portatil",
+                    "7"=>"Servidor",
+                    "8"=>"Altaveu",
+                    "9"=>"Dispositius multimedia",
+                    "10"=>"Impressora",
+                ],
+                'html_atts'=>[
+                    "required",
+                ]
             ],
             'descripcio_avaria_limitada' => [
                 'name' => lang("registre.descripcio_avaria"),
             ],
-
             'nom_centre_emissor' => [
                 'name' => lang("registre.centre"),
             ],
@@ -202,6 +206,21 @@ class RegistresController extends BaseController
             ],
             'nom_estat' => [
                 'name' => lang("registre.estat"),
+                'type' => KpaCrud::DROPDOWN_FIELD_TYPE,
+                'options' => [
+                    "1"=>"Pendent de recollir",
+                    "2"=>"Emmagatzemat a SSTT",
+                    "3"=>"Pendent de reparar",
+                    "4"=>"Reparant",
+                    "5"=>"Reparat i pendent de recollir",
+                    "6"=>"Pendent de retorn",
+                    "7"=>"Retornat",
+                    "8"=>"Rebutjat per SSTT",
+                    "9"=>"Desguassat",
+                ],
+                'html_atts'=>[
+                    "required",
+                ]
             ],
             'data_alta_format' => [
                 'name' => lang("registre.data_alta"),

@@ -118,6 +118,7 @@
                 <div class="btn btn_csv rounded-pill" onclick = "afegirFitxer();" id="div_csv"> <i class="fa-solid fa-file-csv me-2"></i>CSV </div>
                 <input type="file" id="csv_tiquet" name="csv_tiquet" class="btn btn_csv rounded-pill" hidden  onchange="mostrarFitxers(this);"> </input>
                 <span id = "mostrar_csv" class="ms-2"></span>
+                <div class="btn btn_csv rounded-pill" onclick = "descarregarCSV();" id="div_csv_descarregar"> <i class="fa-solid fa-file-csv me-2"></i>Descarregar CSV</div>
             </div>
         </div>
     </form>

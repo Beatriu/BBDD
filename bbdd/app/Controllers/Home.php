@@ -94,7 +94,13 @@ class Home extends BaseController
                             while (($csv_data = fgetcsv($csvFile, 2000, ";")) !== FALSE) {
                                 if (!$firstline) {
                                     $model = new \App\Models\TiquetModel;
-                                    $model->addTiquet($csv_data[1], $csv_data[2], $csv_data[3], $csv_data[4], $csv_data[5], $csv_data[6], $csv_data[7], $csv_data[8], $csv_data[9], $csv_data[10]);
+                                    $model->addTiquet($csv_data[1], $csv_data[2], $csv_data[3], $csv_data[4], $data_alta, null, $csv_data[7], $csv_data[8], $csv_data[9], $csv_data[10]);
+                                    
+                                    if ($role == "professor" || $role == "centre_emissor") {
+                                        $model->addTiquet($csv_data[1], $csv_data[2], $csv_data[3], $csv_data[4], $data_alta, null, $csv_data[7], $csv_data[8], $centre_emissor, null);
+                                    } else {
+                                        $model->addTiquet($csv_data[1], $csv_data[2], $csv_data[3], $csv_data[4], $data_alta, null, $csv_data[7], $csv_data[8], $csv_data[9], $csv_data[10]);
+                                    }
                                 }
                                 $firstline = false;
                             }
