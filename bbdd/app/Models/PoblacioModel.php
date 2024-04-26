@@ -47,4 +47,9 @@ class PoblacioModel extends Model
             "id_comarca" => $d4
         ]);
     }
+
+    public function getPoblacio($d1) {
+        return $this->where('id_poblacio', $d1)->first();
+    }
+
 }

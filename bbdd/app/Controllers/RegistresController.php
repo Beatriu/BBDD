@@ -6,16 +6,33 @@ use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 use SIENSIS\KpaCrud\Libraries\KpaCrud;
 use App\Models\CentreModel;
+use App\Models\LoginInRolModel;
+use App\Models\LoginModel;
+use App\Models\RolModel;
 
 class RegistresController extends BaseController
 {
     public function index()
     {
+        $login_model = new LoginModel();
+        $login_in_rol_model = new LoginInRolModel();
+        $rol_model = new RolModel();
         //TODO: Fer que aquest controllador miri quin rol té i redireccioni a la funció amb taula que li pertoca veure a l'usuari.
+
+
+        /*$id_login = $login_model->obtenirId(session()->get('user_data')['mail']);
+        $id_role = $login_in_rol_model->obtenirRol($id_login);
+        $role = $rol_model->obtenirRol($id_role);
+
+        $session_data = session()->get('user_data');
+        $session_data['role'] = $role;
+        session()->set('user_data', $session_data);*/
+
         $role = session()->get('user_data')['role'];
+
         switch ($role) {
             case "alumne":
-                //return view();
+                //
                 break;
             case "professor":
                 return view('registres' . DIRECTORY_SEPARATOR . 'registreTiquetsProfessor', $this->registreTiquetsProfessor());
@@ -152,11 +169,11 @@ class RegistresController extends BaseController
             "removable" => true,
             "paging" => false,
             "numerate" => false,
-            "sortable" => false,
-            "exportXLS" => false,
+            "sortable" => true,
+            "exportXLS" => true,
             "print" => false
         ]);
-        $crud->setTable('tiquet');
+        $crud->setTable('vista_tiquet');
         $crud->setPrimaryKey('id_tiquet');
         $crud->setRelation('id_tipus_dispositiu', 'tipus_dispositiu', 'id_tipus_dispositiu', 'nom_tipus_dispositiu'); //tipus dispositiu
         $crud->setRelation('id_estat', 'estat', 'id_estat', 'nom_estat');  //estat                      
@@ -166,41 +183,44 @@ class RegistresController extends BaseController
         //$crud->addItemFunction('mailing', 'fa-paper-plane', array($this, 'myCustomPage'), "Send mail"); 
         $crud->setColumns([
             'codi_equip',
-            'tipus_dispositiu__nom_tipus_dispositiu',
-            'descripcio_avaria',
-            'centre__nom_centre',
-            'codi_centre_reparador',
-            'estat__nom_estat',
-            'data_alta'
+            'nom_tipus_dispositiu',
+            'descripcio_avaria_limitada',
+            'nom_centre_emissor',
+            'nom_centre_reparador',
+            'nom_estat',
+            'data_alta_format',
+            'hora_alta_format'
         ]);
         $crud->setColumnsInfo([
             'codi_equip' => [
                 'name' => lang("registre.codi_equip")
             ],
-            'tipus_dispositiu__nom_tipus_dispositiu' => [
+            'nom_tipus_dispositiu' => [
                 'name' => lang("registre.tipus_dispositiu"),
             ],
-            'descripcio_avaria' => [
+            'descripcio_avaria_limitada' => [
                 'name' => lang("registre.descripcio_avaria"),
             ],
 
-            'centre__nom_centre' => [
+            'nom_centre_emissor' => [
                 'name' => lang("registre.centre"),
             ],
-            'codi_centre_reparador' => [
+            'nom_centre_reparador' => [
                 'name' => lang("registre.centre_reparador"),
             ],
-            'estat__nom_estat' => [
+            'nom_estat' => [
                 'name' => lang("registre.estat"),
             ],
-            'data_alta' => [
+            'data_alta_format' => [
                 'name' => lang("registre.data_alta"),
                 'type' => KpaCrud::DATETIME_FIELD_TYPE,
                 'default' => '1-2-2022'
             ],
-
+            'hora_alta_format' => [
+                'name' => lang("registre.hora_alta"),
+            ]
         ]);
-        //$crud->addWhere('blog.blog_id!="1"'); // show filtered data
+
         $data['output'] = $crud->render();
         return $data;
     }
