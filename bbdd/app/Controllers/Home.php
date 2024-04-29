@@ -235,22 +235,23 @@ class Home extends BaseController
         if ($arxiu == "exemple_afegir_tiquet") {
 
             if ($role == "professor" || $role == "centre_emissor" || $role == "centre_reparador") {
-                
-                $file = new \CodeIgniter\Files\File("exemple_afegir_tiquet_professorat.csv"); // Definim el nom de l'arxiu amb ruta
-    
-                // En cas que no es tracti d'un fitxer llencem que no s'ha trobat
-                if (!$file->isFile()){
-                    throw new \CodeIgniter\Exceptions\PageNotFoundException("exemple_afegir_tiquet_professorat.csv no found");
-                }
-    
-                // Llegim l'arxiu i donem resposta
-                $filedata = new \SplFileObject($file->getPathname(), "r");
-                $data1 = $filedata->fread($filedata->getSize());
-                return $this->response->setContentType($file->getMimeType())->setBody($data1);
-                
+                $file = new \CodeIgniter\Files\File(WRITEPATH . "uploads" . DIRECTORY_SEPARATOR . "csv" . DIRECTORY_SEPARATOR . "exemple_afegir_tiquet_professorat.csv"); // Definim el nom de l'arxiu amb ruta
+                $file_name = "exemple_afegir_tiquet_professorat.csv";
             } else if ($role == "sstt" || $role == "admin_sstt" || $role == "desenvolupador") {
-
+                $file = new \CodeIgniter\Files\File(WRITEPATH . "uploads" . DIRECTORY_SEPARATOR . "csv" . DIRECTORY_SEPARATOR . "exemple_afegir_tiquet_sstt.csv"); // Definim el nom de l'arxiu amb ruta
+                $file_name = "exemple_afegir_tiquet_sstt.csv";
             }
+            
+            // En cas que no es tracti d'un fitxer llencem que no s'ha trobat
+            if (!$file->isFile()){
+                throw new \CodeIgniter\Exceptions\PageNotFoundException("El fitxer CSV d'exemple per afegir tiquets no ha estat trobat!");
+            }
+
+            // Llegim l'arxiu i donem resposta
+            $filedata = new \SplFileObject($file->getPathname(), "r");
+            $data1 = $filedata->fread($filedata->getSize());
+            //return $this->response->setContentType($file->getMimeType())->setBody($data1);
+            return $this->response->download($file_name, "\xEF\xBB\xBF" . $data1, $file->getMimeType());
 
         }
     }

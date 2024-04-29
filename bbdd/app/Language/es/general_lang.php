@@ -47,4 +47,6 @@ return [
     'afegir_tiquet' => "Añadir tiquet",
     'nombre_tiquets' => 'El numero de tiquets que estas emitiendo es:',
     'informacio_comuna' => 'Información comuna tiquet/s',
+    'plantilla_csv' => 'Plantilla CSV',
+    'importar_csv' => 'Importar CSV',
 ];

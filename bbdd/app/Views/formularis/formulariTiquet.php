@@ -115,10 +115,10 @@
             <div class="d-flex justify-content-center align-items-center">
                 <a href="<?= base_url('/registreTiquetProfessor') ?>" class="btn btn_cancell rounded-pill"><i class="fa-solid fa-trash me-2"></i><?= lang('general_lang.cancell') ?></a>
                 <button type="submit" class="btn btn_save rounded-pill ms-3 me-3"><i class="fa-solid fa-floppy-disk me-2"></i><?= lang('general_lang.save') ?></button>
-                <div class="btn btn_csv rounded-pill" onclick = "afegirFitxer();" id="div_csv"> <i class="fa-solid fa-file-csv me-2"></i>CSV </div>
+                <div class="btn btn_csv rounded-pill" onclick = "afegirFitxer();" id="div_csv"> <i class="fa-solid fa-file-csv me-2"></i><?= lang('general_lang.importar_csv') ?></div>
                 <input type="file" id="csv_tiquet" name="csv_tiquet" class="btn btn_csv rounded-pill" hidden  onchange="mostrarFitxers(this);"> </input>
                 <span id = "mostrar_csv" class="ms-2"></span>
-                <a href="<?= base_url('/descarregar/exemple_afegir_tiquet') ?>" class="btn btn_csv rounded-pill" id="div_csv_descarregar"> <i class="fa-solid fa-file-csv me-2"></i>Descarregar CSV</a>
+                <a href="<?= base_url('/descarregar/exemple_afegir_tiquet') ?>" class="btn btn_csv rounded-pill" id="div_csv_descarregar"> <i class="fa-solid fa-file-csv me-2"></i><?= lang('general_lang.plantilla_csv') ?></a>
             </div>
         </div>
     </form>
