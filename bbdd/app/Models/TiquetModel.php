@@ -55,4 +55,12 @@ class TiquetModel extends Model
 
         $this->insert($data);
     }
+
+    public function getTiquetById($id_tiquet){
+        return $this->where('id_tiquet',$id_tiquet)->first();
+    }
+
+    public function deleteTiquetById($id_tiquet){
+        return $this->delete(['id_tiquet' => $id_tiquet]);
+    }
 }

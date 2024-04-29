@@ -1,19 +1,12 @@
-#zona_taula{
-    background-color: #F5F5F5;
-    display:flex;
-    flex-direction: column;
+#data-list-vista_tiquet > thead{
+    background-color: #333333;
+    color: #F5F5F5;
 }
-li {
-    padding-right: 7px;
-    padding-left: 7px;
+#data-list-vista_tiquet{
+    border-right: 2px solid #900000;
+    border-bottom: 2px solid #900000;
+    border-left: 2px solid #900000;
 }
-
-ul>li>a>i {
-    color: #333333;
-    font-size: 170%;
-    margin-top: 10px;
-}
-
 #actiu {
     border-right: 7px solid #900000;
 }
@@ -32,7 +25,10 @@ ul>li>a>i {
     color:  #FFFFFF; 
     border-radius: 20px;
 }
-.fa-arrow-up-wide-short{
+.fa-trash{
+    color:#FF5757;
+}
+.fa-eye{
     color:#38B6FF;
 }
 #btn-export{
