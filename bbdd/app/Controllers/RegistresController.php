@@ -64,35 +64,74 @@ class RegistresController extends BaseController
             "print" => false
         ]);   // set editable config parameter to false
         // set into config file
-        $crud->setTable('tiquet');                        // set table name
-        $crud->setPrimaryKey('id_tiquet');
-        //$crud->setRelation('id_tipus_dispositiu', 'tipus_dispositiu', 'id_tipus_dispositiu', 'nom_tipus_dispositiu');
-       // $crud->setRelation('id_estat', 'estat', 'id_estat', 'nom_estat');                       // set primary key
-        //$crud->setRelation('codi_centre_emissor', 'centre', 'codi_centre', 'nom_centre');
-       //$crud->addItemFunction('mailing', 'fa-paper-plane', array($this, 'myCustomPage'), "Send mail");
-        //$crud->addItemLink('view', 'fa-file-o', base_url('route/to/link'), 'Tooltip for icon button');   
-        $crud->setColumns(['codi_equip', 'tipus_dispositiu_nom_tipus_dispositiu', 'descripcio_avaria', 'estatnom_estat', 'centre_nom_centre', 'data_alta']); // set columns/fields to show
+        $crud->setTable('vista_tiquet');                        // set table name
+        $crud->setPrimaryKey('id_tiquet'); 
+        $crud->setColumns(['codi_equip', 'nom_tipus_dispositiu', 'descripcio_avaria_limitada', 'nom_estat', 'nom_centre_emissor', 'data_alta_format', 'hora_alta_format']); // set columns/fields to show
         $crud->setColumnsInfo([                         // set columns/fields name
+            'id_tiquet' => [
+                'type' => KpaCrud::INVISIBLE_FIELD_TYPE,
+            ],
             'codi_equip' => [
                 'name' => lang("registre.codi_equip")
             ],
-            'tipus_dispositiu__nom_tipus_dispositiu' => [
+            'nom_tipus_dispositiu' => [
                 'name' => lang("registre.tipus_dispositiu"),
+                'type' => KpaCrud::DROPDOWN_FIELD_TYPE,
+                'options' => [
+                    "1"=>"Pantalla",
+                    "2"=>"Ordenador",
+                    "3"=>"Projector",
+                    "4"=>"Movil",
+                    "5"=>"Tablet",
+                    "6"=>"Portatil",
+                    "7"=>"Servidor",
+                    "8"=>"Altaveu",
+                    "9"=>"Dispositius multimedia",
+                    "10"=>"Impressora",
+                ],
+                'html_atts'=>[
+                    "required",
+                ]
             ],
             'descripcio_avaria' => [
+                'type' => KpaCrud::INVISIBLE_FIELD_TYPE,
+            ],
+            'descripcio_avaria_limitada' => [
                 'name' => lang("registre.descripcio_avaria"),
             ],
-            'estat__nom_estat' => [
+            'nom_estat' => [
                 'name' => lang("registre.estat"),
+                'type' => KpaCrud::INVISIBLE_FIELD_TYPE
             ],
-            'centre__nom_centre' => [
+            'codi_centre_emissor' => [
+                'type' => KpaCrud::INVISIBLE_FIELD_TYPE,
+            ],
+            'nom_centre_emissor' => [
                 'name' => lang("registre.centre"),
+                'type' => KpaCrud::INVISIBLE_FIELD_TYPE,
             ],
-            'data_alta' => [
+            'data_alta_format' => [
                 'name' => lang("registre.data_alta"),
                 'type' => KpaCrud::DATETIME_FIELD_TYPE,
+                'type' => KpaCrud::INVISIBLE_FIELD_TYPE,
                 'default' => '1-2-2022'
             ],
+            'hora_alta_format' => [
+                'name' => lang("registre.hora_alta"),
+                'type' => KpaCrud::INVISIBLE_FIELD_TYPE,
+            ],
+            'data_ultima_modificacio_format' => [
+                'type' => KpaCrud::INVISIBLE_FIELD_TYPE,
+            ],
+            'hora_ultima_modificacio_format' => [
+                'type' => KpaCrud::INVISIBLE_FIELD_TYPE,
+            ],
+            'nom_centre_reparador' => [
+                'type' => KpaCrud::INVISIBLE_FIELD_TYPE
+            ],
+            'codi_centre_reparador' => [
+                'type' => KpaCrud::INVISIBLE_FIELD_TYPE
+            ]
 
         ]);
         //$crud->addWhere('blog.blog_id!="1"'); // show filtered data
@@ -150,7 +189,7 @@ class RegistresController extends BaseController
             "multidelete" => true,
             "filterable" => false,
             "editable" => true,
-            "removable" => false,
+            "removable" => true,
             "paging" => false,
             "numerate" => false,
             "sortable" => true,
@@ -170,6 +209,9 @@ class RegistresController extends BaseController
             'hora_alta_format'
         ]);
         $crud->setColumnsInfo([
+            'id_tiquet' => [
+                'type' => KpaCrud::INVISIBLE_FIELD_TYPE,
+            ],
             'codi_equip' => [
                 'name' => lang("registre.codi_equip")
             ],
@@ -226,7 +268,13 @@ class RegistresController extends BaseController
             ],
             'hora_alta_format' => [
                 'name' => lang("registre.hora_alta"),
-            ]
+            ],
+            'nom_centre_emissor' => [
+                'type' => KpaCrud::INVISIBLE_FIELD_TYPE,
+            ],
+            'nom_centre_reparador' => [
+                'type' => KpaCrud::INVISIBLE_FIELD_TYPE
+            ],
         ]);
 
         $data['output'] = $crud->render();
