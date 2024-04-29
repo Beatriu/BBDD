@@ -39,3 +39,7 @@
 #list-btn-exportxls{
     display: none;
 }
+.linia{
+    background-color: #FFFFFF;
+    height: 5px;
+}

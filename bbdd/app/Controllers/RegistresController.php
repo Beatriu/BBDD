@@ -265,7 +265,6 @@ class RegistresController extends BaseController
     }
 
     public function eliminarTiquet($tiquet){
-        
         $model_tiquet = new TiquetModel();
         $model_tiquet->deleteTiquetById($tiquet);
         return redirect()->to(base_url('/registreTiquet'));
