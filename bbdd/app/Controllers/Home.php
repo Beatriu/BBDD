@@ -223,4 +223,35 @@ class Home extends BaseController
         return view('formularis' . DIRECTORY_SEPARATOR .'formulariTiquet', $data);
     }
 
+        /**
+     * Funció que ens dirigeix cap al formulari per crear un tiquet
+     *
+     * @author Blai Burgués Vicente
+     */
+    public function descarregar($arxiu) 
+    {
+        $role = session()->get('user_data')['role'];
+
+        if ($arxiu == "exemple_afegir_tiquet") {
+
+            if ($role == "professor" || $role == "centre_emissor" || $role == "centre_reparador") {
+                
+                $file = new \CodeIgniter\Files\File("exemple_afegir_tiquet_professorat.csv"); // Definim el nom de l'arxiu amb ruta
+    
+                // En cas que no es tracti d'un fitxer llencem que no s'ha trobat
+                if (!$file->isFile()){
+                    throw new \CodeIgniter\Exceptions\PageNotFoundException("exemple_afegir_tiquet_professorat.csv no found");
+                }
+    
+                // Llegim l'arxiu i donem resposta
+                $filedata = new \SplFileObject($file->getPathname(), "r");
+                $data1 = $filedata->fread($filedata->getSize());
+                return $this->response->setContentType($file->getMimeType())->setBody($data1);
+                
+            } else if ($role == "sstt" || $role == "admin_sstt" || $role == "desenvolupador") {
+
+            }
+
+        }
+    }
 }

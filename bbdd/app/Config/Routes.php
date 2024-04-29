@@ -48,6 +48,7 @@ $routes->get('/registreTiquetProfessor', 'RegistresController::index', ['filter'
 //Intervencions
 
 
-// Canvi de language
+// Canvi de language, Descarregar
 $routes->get('/canviLanguage', 'Home::canviLanguage');
+$routes->get('/descarregar/(:segment)', 'Home::descarregar/$1', ['filter'=>'Autentica']);
 

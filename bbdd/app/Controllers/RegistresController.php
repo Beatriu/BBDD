@@ -170,7 +170,7 @@ class RegistresController extends BaseController
             "multidelete" => false,
             "filterable" => false,
             "editable" => true,
-            "removable" => true,
+            "removable" => false,
             "paging" => false,
             "numerate" => false,
             "sortable" => true,
@@ -180,7 +180,7 @@ class RegistresController extends BaseController
         $crud->setTable('vista_tiquet');
         $crud->setPrimaryKey('id_tiquet');
         $crud->addItemLink('delete', 'fa-trash', base_url('registreTiquet'), 'Eliminar Tiquet');
-        $crud->addItemLink('view', 'fa-eye', base_url('vistaTiquet'), 'Veure detalls');
+        //$crud->addItemLink('view', 'fa-eye', base_url('vistaTiquet'), 'Veure detalls');
         $crud->setColumns([
             'codi_equip',
             'nom_tipus_dispositiu',
