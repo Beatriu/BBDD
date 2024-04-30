@@ -31,7 +31,7 @@ class ValidaUsuarisFilter implements FilterInterface
 
         if ($arguments == null) {
 
-            if (!session()->get('access_token') && !session()->get('user_data')) {
+            if ((session()->get('access_token') == null && session()->get('user_data') == null) || !isset(session()->get('user_data')['role'])) {
                 return redirect()->to(base_url('login'));
             } else {
                 $login_model = new LoginModel();

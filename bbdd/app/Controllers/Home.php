@@ -388,7 +388,7 @@ class Home extends BaseController
         ];
 
         if ($this->validate($validationRules)) {
-            if ($role == "professor" || $role == "centre_emissor" || $role == "centre_reparador") {
+            if ($role == "professor" || $role == "centre_reparador") {
                 $nom_contacte_centre = $this->request->getPost('sNomContacteCentre');
                 $correu_contacte_centre = $this->request->getPost('sCorreuContacteCentre');
                 $codi_equip = $this->request->getPost('equipment_code');

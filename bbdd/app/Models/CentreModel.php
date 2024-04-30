@@ -12,7 +12,7 @@ class CentreModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['codi_centre','nom_centre','actiu','taller','telefon_centre','adreca_fisica_centre','nom_persona_contacte_centre','correu_persona_contacte_centre','id_sstt','id_poblacio'];
+    protected $allowedFields    = ['codi_centre','nom_centre','actiu','taller','telefon_centre','adreca_fisica_centre','nom_persona_contacte_centre','correu_persona_contacte_centre','id_sstt','id_poblacio','login'];
 
     // Dates
     protected $useTimestamps = false;
@@ -38,7 +38,7 @@ class CentreModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function addCentre($d1,$d2,$d3,$d4,$d5,$d6,$d7,$d8,$d9,$d10)
+    public function addCentre($d1,$d2,$d3,$d4,$d5,$d6,$d7,$d8,$d9,$d10,$d11)
     {
         $this->insert([
             "codi_centre" => $d1,
@@ -51,6 +51,7 @@ class CentreModel extends Model
             "correu_persona_contacte_centre" => $d8,
             "id_sstt" => $d9,
             "id_poblacio" => $d10,
+            "login" => $d11,
         ]);
     }
 
@@ -70,6 +71,14 @@ class CentreModel extends Model
 
     public function obtenirCentresReparadors(){
         return $this->where('taller', 1)->findAll();
+    }
+
+    public function obtenirCentre($codi_centre) {
+        return $this->where('codi_centre', $codi_centre)->first();
+    }
+
+    public function obtenirCentrePerCorreu($correu) {
+        return $this->where('login', $correu)->first();
     }
 
 }

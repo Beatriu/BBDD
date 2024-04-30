@@ -46,4 +46,8 @@ class LlistaAdmesosModel extends Model
             "codi_centre" => $d3
         ]);
     }
+
+    public function existeixProfessor($correu_professor) {
+        return $this->where('correu_professor', $correu_professor)->first();
+    }
 }
