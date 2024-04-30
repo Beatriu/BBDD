@@ -114,14 +114,43 @@ function afegirFitxer() {
 
 function mostrarFitxers(input) {
     document.getElementById("div_csv").classList.add("text-white");
+
     if (input.files[0].type == "text/csv") {
         let span = document.getElementById("mostrar_csv");
         span.innerHTML = "";
         let span_text = document.createTextNode(input.files[0].name);
         span.appendChild(span_text);
+
+        document.getElementById("sNomContacteCentre").required = false;
+        document.getElementById("sNomContacteCentre").disabled = true;
+        document.getElementById("sCorreuContacteCentre").required = false;
+        document.getElementById("sCorreuContacteCentre").disabled = true;
+        document.getElementById("button_afegir_fila_tiquet").disabled = true;
+        document.getElementById("equipment_code_1").disabled = true;
+        document.getElementById("type_1").disabled = true;
+        document.getElementById("problem_1").disabled = true;
+        document.getElementById("cancelar_importar_csv").style.display = "inline";
+        document.getElementById("div_csv").style.display = "none";
+
     } else {
         input.value = null;
         alert("No és un CSV!");
     }
 
+}
+
+function cancellFitxer() {
+    document.getElementById("sNomContacteCentre").required = true;
+    document.getElementById("sNomContacteCentre").disabled = false;
+    document.getElementById("sCorreuContacteCentre").required = true;
+    document.getElementById("sCorreuContacteCentre").disabled = false;
+    document.getElementById("button_afegir_fila_tiquet").disabled = false;
+    document.getElementById("equipment_code_1").disabled = false;
+    document.getElementById("type_1").disabled = false;
+    document.getElementById("problem_1").disabled = false;
+    document.getElementById("cancelar_importar_csv").style.display = "none";
+    document.getElementById("div_csv").style.display = "inline";
+
+    document.getElementById("csv_tiquet").value = null;
+    document.getElementById("mostrar_csv").innerHTML = "";
 }

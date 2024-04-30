@@ -16,6 +16,7 @@
 
 
 <?= $this->section('contingut'); ?>
+
     <form class="container" method="POST" action="<?= base_url('/formulariTiquet') ?>" enctype="multipart/form-data">
         <?= csrf_field() ?>
         <div class="row mt-5 justify-content-center">
@@ -77,22 +78,22 @@
                     <?= lang('general_lang.problem') ?> *
                 </div>
                 <div class="col d-flex align-items-center justify-content-end">
-                    <button type="button" class="btn btn-success rounded-pill" onclick="afegirTiquet();"><i class="fa fa-plus"></i> <?= lang('general_lang.afegir_tiquet') ?></button>
+                    <button id="button_afegir_fila_tiquet" type="button" class="btn btn-success rounded-pill" onclick="afegirTiquet();"><i class="fa fa-plus"></i> <?= lang('general_lang.afegir_tiquet') ?></button>
                 </div>
             </div>
             <div class="row me-0 pe-0 ms-1" id = "div_files_formulari_tiquet">
 
                 <div class="row p-2" id = "fila_formulari_tiquet_1">
                     <div class="col d-flex align-items-center justify-content-center">
-                        <input type="text" name="equipment_code_1" />
+                        <input id="equipment_code_1" type="text" name="equipment_code_1" />
                     </div>
                     <div class="col d-flex align-items-center justify-content-center">
-                        <select name="type_1">
+                        <select id="type_1" name="type_1">
                             <?=$tipus_dispositius?>
                         </select>
                     </div>
                     <div class="col d-flex align-items-center justify-content-center">
-                        <textarea type="text" name="problem_1" style="width: 100%;"></textarea>
+                        <textarea id="problem_1" type="text" name="problem_1" style="width: 100%;"></textarea>
                     </div>
                     <div class="col d-flex align-items-center justify-content-center">
                         <button type="button" class="btn btn-danger rounded-circle" onclick = "esborrarTiquet('fila_formulari_tiquet_1');">
@@ -113,14 +114,17 @@
                 <span id="span_nombre_tiquets">1</span>
             </div>
             <div class="d-flex justify-content-center align-items-center">
-                <a href="<?= base_url('/registreTiquetProfessor') ?>" class="btn btn_cancell rounded-pill"><i class="fa-solid fa-trash me-2"></i><?= lang('general_lang.cancell') ?></a>
-                <button type="submit" class="btn btn_save rounded-pill ms-3 me-3"><i class="fa-solid fa-floppy-disk me-2"></i><?= lang('general_lang.save') ?></button>
-                <div class="btn btn_csv rounded-pill" onclick = "afegirFitxer();" id="div_csv"> <i class="fa-solid fa-file-csv me-2"></i><?= lang('general_lang.importar_csv') ?></div>
+                <button id="submit_afegir" type="submit" class="btn btn_save rounded-pill ms-3 me-3"><i class="fa-solid fa-floppy-disk me-2"></i><?= lang('general_lang.save') ?></button>
+                <div id="div_csv" class="btn btn_csv rounded-pill" onclick = "afegirFitxer();"> <i class="fa-solid fa-file-csv me-2"></i><?= lang('general_lang.importar_csv') ?></div>
+                <div id="cancelar_importar_csv" class="btn btn_cancell rounded-pill" onclick="cancellFitxer();" style="display: none;"><i class="fa-solid fa-xmark me-2"></i><?= lang('general_lang.cancell') ?></div>
                 <input type="file" id="csv_tiquet" name="csv_tiquet" class="btn btn_csv rounded-pill" hidden  onchange="mostrarFitxers(this);"> </input>
+                <a id="div_csv_descarregar" href="<?= base_url('/descarregar/exemple_afegir_tiquet') ?>" class="btn btn_csv rounded-pill ms-3" > <i class="fa-solid fa-file-csv me-2"></i><?= lang('general_lang.plantilla_csv') ?></a>
+            </div>
+            <div class="d-flex justify-content-center mt-3">
                 <span id = "mostrar_csv" class="ms-2"></span>
-                <a href="<?= base_url('/descarregar/exemple_afegir_tiquet') ?>" class="btn btn_csv rounded-pill" id="div_csv_descarregar"> <i class="fa-solid fa-file-csv me-2"></i><?= lang('general_lang.plantilla_csv') ?></a>
             </div>
         </div>
+
     </form>
 
 <?= $this->endSection('contingut'); ?>

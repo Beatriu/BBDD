@@ -1,18 +1,18 @@
-<?= $this->extend('layouts/professors'); ?>
+<?= $this->extend('layouts' . DIRECTORY_SEPARATOR .'professors'); ?>
 
 <?= $this->section('css_pagina'); ?>
-<link rel="stylesheet" href="<?= base_url('css/taulaRegistre.css') ?>">
-<link rel="stylesheet" href="<?= base_url('css/header.css') ?>">
-<link rel="stylesheet" href="<?= base_url('css/style.css') ?>">
+<link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR .'taulaRegistre.css') ?>">
+<link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR .'header.css') ?>">
+<link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR .'style.css') ?>">
 <?= $this->endSection('css_pagina'); ?>
 
 <?= $this->section('header'); ?>
-<?= $this->include('layouts/header.php'); ?>
+<?= $this->include('layouts' . DIRECTORY_SEPARATOR .'header.php'); ?>
 <?= $this->endSection('header'); ?>
 
 <?= $this->section('contingut'); ?>
 <!--TODO: Arreglar language del modal-->
-<?php if ($checkPopUp !== null) : ?>
+<?php if ($id_tiquet !== null) : ?>
     <div class="modal" tabindex="-1" role="dialog" style="display:block">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -26,7 +26,7 @@
                     <p><?= lang('registre.model_text') ?><?php echo session()->getFlashdata('tiquet')["codi_equip"]; ?></p>
                 </div>
                 <div class="modal-footer">
-                    <a href="<?= base_url("/eliminarTiquet/" . $checkPopUp) ?>" type="button" class="btn btn-danger"><?= lang('registre.buttons.delete') ?></a>
+                    <a href="<?= base_url("/eliminarTiquet/" . $id_tiquet) ?>" type="button" class="btn btn-danger"><?= lang('registre.buttons.delete') ?></a>
                     <a href="<?= base_url("/registreTiquet") ?>" type="button" class="btn btn-secondary" data-dismiss="modal"><?= lang('registre.buttons.cancel') ?></a>
                 </div>
             </div>

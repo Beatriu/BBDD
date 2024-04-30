@@ -23,7 +23,7 @@ class RegistresController extends BaseController
             return view('registres' . DIRECTORY_SEPARATOR . 'registreTiquetSSTT', $this->registreTiquetsSSTT());
         }*/
     }
-    public function index($checkPopUp = null)
+    public function index($id_tiquet = null)
     {
         //TODO: Fer que aquest controllador miri quin rol té i redireccioni a la funció amb taula que li pertoca veure a l'usuari.
 
@@ -40,7 +40,7 @@ class RegistresController extends BaseController
             case "centre_reparador":
                 break;
             case "sstt":
-                return view('registres' . DIRECTORY_SEPARATOR . 'registreTiquetSSTT', $this->registreTiquetsSSTT($checkPopUp));
+                return view('registres' . DIRECTORY_SEPARATOR . 'registreTiquetSSTT', $this->registreTiquetsSSTT($id_tiquet));
                 break;
             case "admin_sstt":
                 break;
@@ -61,12 +61,12 @@ class RegistresController extends BaseController
         $crud->setConfig([
             "numerate" => false,
             "add_button" => false,
-            "show_button" => true,
+            "show_button" => false,
             "recycled_button" => false,
             "useSoftDeletes" => false,
             "multidelete" => false,
             "filterable" => true,
-            "editable" => true,
+            "editable" => false,
             "removable" => false,
             "paging" => false,
             "numerate" => false,
@@ -77,6 +77,8 @@ class RegistresController extends BaseController
         // set into config file
         $crud->setTable('vista_tiquet');                        // set table name
         $crud->setPrimaryKey('id_tiquet'); 
+        $crud->addItemLink('edit', 'fa-pencil', base_url('editarTiquet'), 'Editar Tiquet');
+
         $crud->setColumns(['codi_equip', 'nom_tipus_dispositiu', 'descripcio_avaria_limitada', 'nom_estat', 'nom_centre_emissor', 'data_alta_format', 'hora_alta_format']); // set columns/fields to show
         $crud->setColumnsInfo([                         // set columns/fields name
             'id_tiquet' => [
@@ -150,15 +152,18 @@ class RegistresController extends BaseController
         return $data;
     }
 
-    public function registreTiquetsSSTT($checkPopUp)
+    public function registreTiquetsSSTT($id_tiquet)
     {
         $tiquet_model = new TiquetModel();
         $data['title'] = 'Tiquets SSTT';
-        $data['checkPopUp'] = $checkPopUp;
-        if($checkPopUp !== null){
+        $data['id_tiquet'] = null;
+
+        if($id_tiquet != null){
             //Preguntar a la bbdd quin tiquet es i retornar l'array del tiquet.
-           session()->setFlashdata("tiquet",$tiquet_model->getTiquetById($checkPopUp));
+            $data['id_tiquet'] = $id_tiquet;
+           session()->setFlashdata("tiquet",$tiquet_model->getTiquetById($id_tiquet));
         } 
+
         $crud = new KpaCrud();
         $crud->setConfig('onlyView');
         $crud->setConfig([
@@ -169,7 +174,7 @@ class RegistresController extends BaseController
             "useSoftDeletes" => true,
             "multidelete" => false,
             "filterable" => false,
-            "editable" => true,
+            "editable" => false,
             "removable" => false,
             "paging" => false,
             "numerate" => false,
@@ -179,7 +184,8 @@ class RegistresController extends BaseController
         ]);
         $crud->setTable('vista_tiquet');
         $crud->setPrimaryKey('id_tiquet');
-        $crud->addItemLink('delete', 'fa-trash', base_url('registreTiquet'), 'Eliminar Tiquet');
+        $crud->addItemLink('edit', 'fa-pencil', base_url('editarTiquet'), 'Editar Tiquet');
+        $crud->addItemLink('delete', 'fa-trash', base_url('registreTiquet/esborrar'), 'Eliminar Tiquet');
         //$crud->addItemLink('view', 'fa-eye', base_url('vistaTiquet'), 'Veure detalls');
         $crud->setColumns([
             'codi_equip',
@@ -253,9 +259,11 @@ class RegistresController extends BaseController
                 'name' => lang("registre.hora_alta"),
             ],
             'nom_centre_emissor' => [
+                'name' => lang("registre.nom_centre_emissor"),
                 'type' => KpaCrud::INVISIBLE_FIELD_TYPE,
             ],
             'nom_centre_reparador' => [
+                'name' => lang("registre.nom_centre_reparador"),
                 'type' => KpaCrud::INVISIBLE_FIELD_TYPE
             ],
         ]);

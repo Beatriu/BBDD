@@ -63,4 +63,13 @@ class TiquetModel extends Model
     public function deleteTiquetById($id_tiquet){
         return $this->delete(['id_tiquet' => $id_tiquet]);
     }
+
+    public function updateTiquet($id_tiquet, $data) {
+        return $this->update($id_tiquet, $data);
+    }
+
+    public function editarPiulada($id_piulada, $text_iulada, $privada) {
+        // Funció per editar una piulada
+        return $this->update($id_piulada,["text_piulada" => $text_iulada, "privada" => $privada]);
+    }
 }

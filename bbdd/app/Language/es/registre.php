@@ -8,7 +8,8 @@ return [
         'export' => 'Exportar XLS',
         'export_title' => 'Exportar los datos a un archivo Excel',
         'cancel' => 'Cancelar',
-        'delete' => 'Eliminar'
+        'delete' => 'Eliminar',
+        'save_changes' => 'Guardar cambios',
     ],
     'codi_equip' => 'Código del equipo',
     'tipus_dispositiu' => 'Tipo de dispositivo',
@@ -16,8 +17,10 @@ return [
     'estat' => 'Estado',
     'centre' => 'Centro emisor',
     'centre_reparador' =>'Centro reparador',
-    'data_alta' => 'Data de creación',
+    'data_alta' => 'Fecha de creación',
     'hora_alta' => 'Hora de creación',
     'model_title' => '¿Quieres eliminar este tiquet?',
-    'model_text' => 'Lo que esta a punto de suceder es que eliminaras el tiquet seleccionado:'
+    'model_text' => 'Lo que esta a punto de suceder es que eliminaras el tiquet seleccionado:',
+    'nom_centre_emissor' => 'Nombre centro emisor',
+    'nom_centre_reparador' => 'Nombre centro reparador',
 ];

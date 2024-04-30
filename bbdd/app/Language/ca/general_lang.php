@@ -23,6 +23,7 @@ return [
     'name' => 'Nom persona de contacte centre',
     'contact' => 'Correu persona de contacte centre',
     'create_tiquet' => 'Crear tiquet/s',
+    'edit_tiquet' => 'Editar tiquet',
     'equipment_code' => 'Codi equip',
     'type' => 'Tipus',
     'problem' => 'Problema',
@@ -31,6 +32,12 @@ return [
     'errors_validation' => [
         'sNomContacteCentre_required' => 'El nom de contacte centre és obligatori!',
         'sCorreuContacteCentre_required' => 'El correu de contacte de centre és obligatori!',
+        'equipment_code_required' => "El codi de l'equip és obligatori!",
+        'equipment_code_max' => "El codi de l'equip pot tenir com a màxim 32 caràcters!",
+        'problem_required' => "La descripció de l'avaria és obligatoria!",
+        'problem_max' => "La descripció de l'avaria pot tenir com a màxim 512 caràcters!",
+        'sNomContacteCentre_max' => "El nom de contacte del centre pot tenir com a màxim 64 caràcters!",
+        'sCorreuContacteCentre_max' => "El correu de contacte del centre pot tenir com a màxim 32 caràcters!",
     ],
     'nom_usuari_required' => "Has d'introduir el nom d'usuari!",
     'contrasenya_required' => "Has d'introduir la contrasenya!",
@@ -48,6 +55,7 @@ return [
     'afegir_tiquet' => "Afegir tiquet",
     'nombre_tiquets' => 'El nombre de tiquets que estàs emetent és:',
     'informacio_comuna' => 'Informació comuna tiquet/s',
+    'informacio_tiquet' => 'Informació tiquet',
     'plantilla_csv' => 'Plantilla CSV',
     'importar_csv' => 'Importar CSV',
 ];

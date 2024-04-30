@@ -44,4 +44,8 @@ class EstatModel extends Model
             "nom_estat" => $d1
         ]);
     }
+
+    public function getEstats() {
+        return $this->findAll();
+    }
 }
