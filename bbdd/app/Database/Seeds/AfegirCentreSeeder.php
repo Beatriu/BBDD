@@ -15,7 +15,11 @@ class AfegirCentreSeeder extends Seeder
         while (($data = fgetcsv($csvFile, 6000, ";")) !== FALSE) {
             if (!$firstline) {
                 $model = new \App\Models\CentreModel;
-                $model->addCentre($data[0], $data[1], 1, 0, $data[4], $data[2], '', '', $data[5], $data[9], $data[11]);
+                $taller = 0;
+                if ($data[0] == 25002799 || $data[0] == 25006288) {
+                    $taller = 1;
+                }
+                $model->addCentre($data[0], $data[1], 1, $taller, $data[4], $data[2], '', '', $data[5], $data[9], $data[11]);
             }
             $firstline = false;
         }

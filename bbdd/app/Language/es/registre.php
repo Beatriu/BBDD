@@ -1,7 +1,10 @@
 <?php
 
 return [
-    'table-dispositius' => 'Registro de dispositivos',
+    'table-dispositius' => 'Registro de dispositivos emitidos',
+    'dispositius_rebuts' => 'Registro de dispositivos recibidos',
+    'inventari' => 'Inventario',
+    'alumnes' => 'Alumnos',
     'buttons' => [
         'create' => 'Añadir tiquet',
         'filter' => 'Filtrar',
@@ -23,4 +26,5 @@ return [
     'model_text' => 'Lo que esta a punto de suceder es que eliminaras el tiquet seleccionado:',
     'nom_centre_emissor' => 'Nombre centro emisor',
     'nom_centre_reparador' => 'Nombre centro reparador',
+    'no_permisos_eliminar' => 'No tienes permisos para eliminar este tiquet!',
 ];

@@ -11,27 +11,50 @@
 <?= $this->endSection('header'); ?>
 
 <?= $this->section('contingut'); ?>
+<!--TODO: Arreglar language del modal-->
+<?php if ($id_tiquet !== null) : ?>
+    <div class="modal" tabindex="-1" role="dialog" style="display:block">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><?= lang('registre.model_title') ?></h5>
+                    <a href="<?= base_url("/registreTiquet") ?>">
+                        <i class="fa-solid fa-xmark"></i>
+                    </a>
+                </div>
+                <div class="modal-body">
+                    <p><?= lang('registre.model_text') ?><?php echo session()->getFlashdata('tiquet')["codi_equip"]; ?></p>
+                </div>
+                <div class="modal-footer">
+                    <a href="<?= base_url("/eliminarTiquet/" . $id_tiquet) ?>" type="button" class="btn btn-danger"><?= lang('registre.buttons.delete') ?></a>
+                    <a href="<?= base_url("/registreTiquet") ?>" type="button" class="btn btn-secondary" data-dismiss="modal"><?= lang('registre.buttons.cancel') ?></a>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
 <div class="container-fluid">
     <div class="row">
         <!--Sidebar estàtic-->
         <div class="col-sm-auto px-0" id="sidebar">
             <ul class="nav flex-column">
-                <li class="nav-item" id="actiu">
-                    <!--TODO: fer la vista amb els if de depenent de el paràmetre que arribi per la ruta es vegui activada la classe de un a o un altre.-->
-                    <? //php if($type == "inventari"): 
-                    ?>
-                    <a href="#" class="nav-link py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
-
+                <li class="nav-item" id="actiu" title="<?= lang("registre.table-dispositius") ?>">
+                    <a href="/registreTiquet" class="nav-link py-3 px-2" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                         <i class="fa-solid fa-list-check"></i>
                     </a>
                 </li>
-                <li>
-                    <a href="#" class="nav-link py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
+                <li class="nav-item" title="<?= lang("registre.dispositius_rebuts") ?>">
+                    <a href="/registreTiquet/reparador" class="nav-link py-3 px-2" title="<?= lang("registre.dispositius_rebuts") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                        <i class="fa-solid fa-hammer"></i>
+                    </a>
+                </li>
+                <li class="nav-item" title="<?= lang("registre.inventari") ?>">
+                    <a href="#" class="nav-link py-3 px-2" title="<?= lang("registre.inventari") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
                         <i class="fa-solid fa-boxes-stacked"></i>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                <li class="nav-item" title="<?= lang("registre.alumnes") ?>">
+                    <a href="#" class="nav-link py-3 px-2" title="<?= lang("registre.alumnes") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                         <i class="fa-solid fa-users"></i>
                     </a>
                 </li>
@@ -59,6 +82,7 @@
                 </div>
             </div>
             <div>
+                <?php if($error != null) { echo lang( $error ); } ?>
                 <?= $output ?>
             </div>
         </div>

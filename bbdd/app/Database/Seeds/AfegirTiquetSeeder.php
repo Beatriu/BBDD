@@ -9,6 +9,7 @@ class AfegirTiquetSeeder extends Seeder
 {
     public function run()
     {
+        $uuid_library = new \App\Libraries\UUID;
         $csvFile = fopen(WRITEPATH."uploads". DIRECTORY_SEPARATOR ."tiquet.csv", "r"); // read file from /writable/uploads folder.
 
         $firstline = true;
@@ -16,7 +17,8 @@ class AfegirTiquetSeeder extends Seeder
         while (($data = fgetcsv($csvFile, 2000, ";")) !== FALSE) {
             if (!$firstline) {
                 $model = new \App\Models\TiquetModel;
-                $model->addTiquet($data[1], $data[2], $data[3], $data[4], $data[5], $data[6], $data[7], $data[8], $data[9], $data[10]);
+                $uuid = $uuid_library->v4();
+                $model->addTiquet($uuid, $data[1], $data[2], $data[3], $data[4], $data[5], $data[6], $data[7], $data[8], $data[9], $data[10]);
             }
             $firstline = false;
         }

@@ -24,10 +24,13 @@ $routes->match(['GET','POST'],'/crudadmin',"RegistresController::index");
 $routes->get('/formulariTiquet', 'Home::createTiquet', ['filter'=>'Autentica']);
 $routes->post('/formulariTiquet', 'Home::createTiquet_post', ['filter'=>'Autentica']);  
 $routes->get('/registreTiquet', 'RegistresController::index', ['filter'=>'Autentica']);
+$routes->get('/registreTiquet/reparador', 'RegistresController::index2', ['filter'=>'Autentica']);
 
 $routes->post('/editarTiquet', 'Home::editarTiquet_post', ['filter'=>'Autentica']);
 $routes->get('/editarTiquet/(:any)', 'Home::editarTiquet/$1', ['filter'=>'Autentica']);
-$routes->get('/registreTiquet/esborrar/(:any)', 'RegistresController::index/$1/$2', ['filter'=>'Autentica']);
+$routes->get('/registreTiquet/esborrar/(:any)', 'RegistresController::index/$1', ['filter'=>'Autentica']);
+$routes->get('/registreTiquet/reparador/esborrar/(:any)', 'RegistresController::index2/$1', ['filter'=>'Autentica']);
+
 
 $routes->post('/registreTiquet', 'RegistresController::opcions', ['filter'=>'Autentica']);
 $routes->get('/eliminarTiquet/(:any)', 'RegistresController::eliminarTiquet/$1', ['filter'=>'Autentica']);

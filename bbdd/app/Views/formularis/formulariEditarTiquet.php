@@ -35,11 +35,11 @@
         <div class="row mt-3">
             <div class="col">
                 <label class="form-label" for="sNomContacteCentre"><?= lang('general_lang.name') ?> *</label>
-                <input class=" form-control sNomContacteCentre" type="text" id="sNomContacteCentre" name="sNomContacteCentre" placeholder="<?= lang('general_lang.name') ?>" value="<?= $tiquet['nom_persona_contacte_centre'] ?>" maxlength="64" required/>
+                <input class=" form-control sNomContacteCentre" type="text" id="sNomContacteCentre" name="sNomContacteCentre" placeholder="<?= lang('general_lang.name') ?>" value="<?= $tiquet['nom_persona_contacte_centre'] ?>" maxlength="64" <?= $informacio_required ?> <?= $informacio_editable ?>/>
             </div>
             <div class="col">
                 <label class="form-label" for="sCorreuContacteCentre"><?= lang('general_lang.contact') ?> *</label>
-                <input class="form-control sCorreuContacteCentre" type="text" id="sCorreuContacteCentre" name="sCorreuContacteCentre" placeholder="<?= lang('general_lang.contact') ?>" value="<?= $tiquet['correu_persona_contacte_centre'] ?>" maxlength="32" required/>
+                <input class="form-control sCorreuContacteCentre" type="text" id="sCorreuContacteCentre" name="sCorreuContacteCentre" placeholder="<?= lang('general_lang.contact') ?>" value="<?= $tiquet['correu_persona_contacte_centre'] ?>" maxlength="32" <?= $informacio_required ?> <?= $informacio_editable ?>/>
             </div>
         </div>
 
@@ -65,17 +65,17 @@
         <div class="row mt-3">
             <div class="col">
                 <label class="form-label" for="equipment_code"><?= lang('registre.codi_equip') ?> *</label>
-                <input id="equipment_code" type="text" name="equipment_code" class="form-control selector" placeholder="<?= lang('general_lang.centre_reparador') ?>" value="<?= $tiquet['codi_equip'] ?>" maxlength="32" required/>
+                <input id="equipment_code" type="text" name="equipment_code" class="form-control selector" placeholder="<?= lang('general_lang.centre_reparador') ?>" value="<?= $tiquet['codi_equip'] ?>" maxlength="32" <?= $informacio_required ?> <?= $informacio_editable ?>/>
             </div>
             <div class="col">
                 <label class="form-label" for="type"><?= lang('registre.tipus_dispositiu') ?></label>
-                <select id="type" name="type" class="form-select" value="<?= $tiquet['id_tipus_dispositiu'] ?>">
+                <select id="type" name="type" class="form-select" value="<?= $tiquet['id_tipus_dispositiu'] ?>" <?= $informacio_editable ?>>
                     <?=$tipus_dispositius?>
                 </select>
             </div>
             <div class="col">
                 <label class="form-label" for="estat"><?= lang('registre.estat') ?></label>
-                <select id="estat" name="estat" class="form-select" value="<?= $tiquet['id_estat'] ?>">
+                <select id="estat" name="estat" class="form-select" value="<?= $tiquet['id_estat'] ?>" <?= $estat_ediatble ?>>
                     <?=$estats?>
                 </select>
             </div>
@@ -84,7 +84,7 @@
         <div class="row mt-3">
             <div class="col">
                 <label class="form-label" for="problem"><?= lang('registre.descripcio_avaria') ?> *</label>
-                <textarea id="problem" type="text" name="problem" style="width: 100%;" maxlength="512" required><?= $tiquet['descripcio_avaria'] ?></textarea>
+                <textarea id="problem" type="text" name="problem" style="width: 100%;" maxlength="512" <?= $informacio_required ?> <?= $informacio_editable ?>><?= $tiquet['descripcio_avaria'] ?></textarea>
             </div>
         </div>
 

@@ -49,9 +49,8 @@ class EstatTipusDispositiuTiquetMigration extends Migration
         // Taula tiquet
         $this->forge->addField([
             'id_tiquet' =>[
-                'type' => 'INTEGER',
-                'constraint' => 12,
-                'auto_increment' => true,
+                'type' => 'VARCHAR',
+                'constraint' => 36,
                 'null' => false,
             ],
             'codi_equip' =>[
