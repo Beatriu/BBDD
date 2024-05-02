@@ -75,9 +75,8 @@ class TipusIntervencioCursIntervencioMigration extends Migration
                 'null'          => true,
             ],
             'id_tiquet'       => [
-                'type'       => 'INT',
-                'constraint' => 12,
-                'unsigned'       => true,
+                'type'       => 'VARCHAR',
+                'constraint' => 36,
                 'null'          => false,
             ],
             'data_intervencio'       => [
@@ -108,6 +107,7 @@ class TipusIntervencioCursIntervencioMigration extends Migration
             ],
             
         ]);
+        //$this->forge->addForeignKey('id_tiquet', 'tiquet', 'id_tiquet');
         $this->forge->addForeignKey('id_tipus_intervencio', 'tipus_intervencio', 'id_tipus_intervencio');
         $this->forge->addForeignKey('id_curs', 'curs', 'id_curs');
         $this->forge->addForeignKey('correu_alumne', 'alumne', 'correu_alumne');
