@@ -80,7 +80,6 @@ class UsuarisController extends BaseController
                     
                     session()->set('user_data', $session_data);
 
-
                     return redirect()->to(base_url('/registreTiquet'));
                 }
             }
