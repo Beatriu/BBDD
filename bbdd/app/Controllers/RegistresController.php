@@ -15,15 +15,6 @@ use Google\Service\BigtableAdmin\Split;
 
 class RegistresController extends BaseController
 {
-    protected $uri;
-    public function __construct() {
-        $this->uri = current_url(true);
-        //Amb getQuery obtinc els parametres de la ruta.
-        /*if(str_starts_with($this->uri->getQuery(), 'del=')){
-            //dd($this->uri->getQuery());
-            return view('registres' . DIRECTORY_SEPARATOR . 'registreTiquetSSTT', $this->registreTiquetsSSTT());
-        }*/
-    }
     public function index($id_tiquet = null)
     {
         //TODO: Fer que aquest controllador miri quin rol té i redireccioni a la funció amb taula que li pertoca veure a l'usuari.

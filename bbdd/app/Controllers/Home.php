@@ -218,6 +218,7 @@ class Home extends BaseController
 
 
         // TREURE AIXÒ
+        dd(session()->get('user_data'));
         $codi_centre = session()->get('user_data')['codi_centre'];
 
         if ($codi_centre != "no_codi") {
