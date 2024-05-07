@@ -46,4 +46,8 @@ class CursModel extends Model
             "curs" => $d3
         ]);
     }
+
+    public function obtenirCursos() {
+        return $this->findAll();
+    }
 }

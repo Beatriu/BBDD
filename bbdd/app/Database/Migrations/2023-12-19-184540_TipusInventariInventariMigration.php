@@ -64,7 +64,7 @@ class TipusInventariInventariMigration extends Migration
             ],
             'id_intervencio' =>[
                 'type' => 'VARCHAR',
-                'constraint' => '8',
+                'constraint' => '36',
                 'null' => true,
             ]
         ]);

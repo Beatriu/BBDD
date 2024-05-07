@@ -44,4 +44,8 @@ class TipusIntervencioModel extends Model
             "nom_tipus_intervencio" => $d1
         ]);
     }
+
+    public function obtenirTipusIntervencio() {
+        return $this->findAll();
+    }
 }

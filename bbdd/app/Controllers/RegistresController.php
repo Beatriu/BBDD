@@ -28,7 +28,8 @@ class RegistresController extends BaseController
                 return view('registres' . DIRECTORY_SEPARATOR . 'registreTiquetsProfessor', $this->registreTiquetsProfessor('emissor', $id_tiquet));
                 break;
             case "centre_emissor":
-                return view('registres' . DIRECTORY_SEPARATOR . 'registreTiquetsCentreEmissor', $this->registreTiquetsCentreEmissor($id_tiquet));
+                return view('registres' . DIRECTORY_SEPARATOR . 'registreTiquetsProfessor', $this->registreTiquetsProfessor('emissor', $id_tiquet));
+                //$this->index2();
                 break;
             case "centre_reparador":
                 break;
@@ -38,6 +39,7 @@ class RegistresController extends BaseController
             case "admin_sstt":
                 break;
             case "desenvolupador":
+                return view('registres' . DIRECTORY_SEPARATOR . 'registreTiquetsProfessor', $this->registreTiquetsProfessor('reparador', $id_tiquet));
                 break;
             default:
                 break;
@@ -45,7 +47,12 @@ class RegistresController extends BaseController
     }
 
     public function index2($id_tiquet = null) {
-        return view('registres' . DIRECTORY_SEPARATOR . 'registreTiquetsProfessor', $this->registreTiquetsProfessor('reparador', $id_tiquet));
+        $role = session()->get('user_data')['role'];
+        if($role == 'professor' || $role == 'centre_emissor'){
+            return view('registres' . DIRECTORY_SEPARATOR . 'registreTiquetsProfessor', $this->registreTiquetsProfessor('emissor', $id_tiquet));
+        } else {
+            return redirect()->route('registreTiquet');
+        }
     }
 
     public function registreTiquetsCentreEmissor($id_tiquet)
@@ -172,11 +179,19 @@ class RegistresController extends BaseController
 
     public function registreTiquetsProfessor($repoemi, $id_tiquet)
     {
+        $uri = $this->request->getPath();
         $tiquet_model = new TiquetModel();
         $estat_model = new EstatModel();
         $data['title'] = 'Tiquets Professor';
         $data['id_tiquet'] = null;
         $data['error'] = '';
+        $data['repoemi'] = $repoemi;
+        $data['uri'] = $uri;
+        //session()->set('user_data')['codi_centre'] = 25002799;
+
+        $session_data = session()->get('user_data');
+        $session_data['codi_centre'] = 25006288;
+        session()->set('user_data', $session_data);
 
         if($id_tiquet != null){
 
@@ -220,7 +235,7 @@ class RegistresController extends BaseController
         
 
         if ($repoemi == "emissor") {
-            $crud->addItemLink('delete', 'fa-trash', base_url('registreTiquet/esborrar'), 'Eliminar Tiquet');
+            $crud->addItemLink('delete', 'fa-trash', base_url('registreTiquet/emissor/esborrar'), 'Eliminar Tiquet');
         }
 
         if ($repoemi == "reparador") {
@@ -437,6 +452,8 @@ class RegistresController extends BaseController
         return $data;
     }
 
+
+
     public function eliminarTiquet($id_tiquet){
 
         $tiquet_model = new TiquetModel();
@@ -454,7 +471,7 @@ class RegistresController extends BaseController
             $model_tiquet->deleteTiquetById($id_tiquet);
         }
 
-        return redirect()->to(base_url('/registreTiquet'));
+        return redirect()->to(base_url('/registreTiquet/emissor'));
     }
 
     public function editTiquet(){

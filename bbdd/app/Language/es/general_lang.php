@@ -57,4 +57,11 @@ return [
     'informacio_tiquet' => 'Información tiquet',
     'plantilla_csv' => 'Plantilla CSV',
     'importar_csv' => 'Importar CSV',
+    'dades_tiquet' => [
+        'dades_titol' => 'Datos',
+        'dades_codi' => 'Código',
+        'dades_tipus' => 'Tipo',
+        'dades_estat' => 'Estado informativo',
+        'dades_intervencions' => 'Intervenciones del tiquet',
+    ],
 ];

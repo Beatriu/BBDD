@@ -104,6 +104,8 @@ class UsuarisController extends BaseController
         $client = new \Google\Client(); //Generem un client de google
 
         //LINIES CREDENCIALS
+
+
         $client->setRedirectUri('http://localhost:8080/login'); //Redirect Uri
 
         // Permisos/informació que demanem a l'usuari
@@ -240,14 +242,14 @@ class UsuarisController extends BaseController
     
                         $centre_model = new CentreModel();
                         $array_centres = $centre_model->obtenirCentres();
-                        $options_tipus_dispositius = "";
+                        $options_centres = "";
                         for ($i = 0; $i < sizeof($array_centres); $i++) {
-                            $options_tipus_dispositius .= "<option value='" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "'>";
-                            $options_tipus_dispositius .= $array_centres[$i]['nom_centre'];
-                            $options_tipus_dispositius .= "</option>";
+                            $options_centres .= "<option value=\"" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "\">";
+                            $options_centres .= $array_centres[$i]['nom_centre'];
+                            $options_centres .= "</option>";
                         }
     
-                        $data['centres'] = $options_tipus_dispositius;
+                        $data['centres'] = $options_centres;
     
                         $data['title'] = "login";
                         return view('logins' . DIRECTORY_SEPARATOR . 'loginSelect', $data);

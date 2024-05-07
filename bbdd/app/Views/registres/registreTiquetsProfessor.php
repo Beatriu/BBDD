@@ -27,7 +27,7 @@
                 </div>
                 <div class="modal-footer">
                     <a href="<?= base_url("/eliminarTiquet/" . $id_tiquet) ?>" type="button" class="btn btn-danger"><?= lang('registre.buttons.delete') ?></a>
-                    <a href="<?= base_url("/registreTiquet") ?>" type="button" class="btn btn-secondary" data-dismiss="modal"><?= lang('registre.buttons.cancel') ?></a>
+                    <a href="<?= base_url("/registreTiquet/emissor") ?>" type="button" class="btn btn-secondary" data-dismiss="modal"><?= lang('registre.buttons.cancel') ?></a>
                 </div>
             </div>
         </div>
@@ -38,26 +38,39 @@
         <!--Sidebar estàtic-->
         <div class="col-sm-auto px-0" id="sidebar">
             <ul class="nav flex-column">
-                <li class="nav-item" id="actiu" title="<?= lang("registre.table-dispositius") ?>">
-                    <a href="/registreTiquet" class="nav-link py-3 px-2" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
-                        <i class="fa-solid fa-list-check"></i>
-                    </a>
-                </li>
-                <li class="nav-item" title="<?= lang("registre.dispositius_rebuts") ?>">
-                    <a href="/registreTiquet/reparador" class="nav-link py-3 px-2" title="<?= lang("registre.dispositius_rebuts") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
-                        <i class="fa-solid fa-hammer"></i>
-                    </a>
-                </li>
-                <li class="nav-item" title="<?= lang("registre.inventari") ?>">
-                    <a href="#" class="nav-link py-3 px-2" title="<?= lang("registre.inventari") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
-                        <i class="fa-solid fa-boxes-stacked"></i>
-                    </a>
-                </li>
-                <li class="nav-item" title="<?= lang("registre.alumnes") ?>">
-                    <a href="#" class="nav-link py-3 px-2" title="<?= lang("registre.alumnes") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
-                        <i class="fa-solid fa-users"></i>
-                    </a>
-                </li>
+                <?php if($uri == 'registreTiquet'):?>
+                    <li class="nav-item" id="actiu" title="<?= lang("registre.dispositius_rebuts") ?> ">
+                <?php else:?>
+                    <li class="nav-item" title="<?= lang("registre.dispositius_rebuts") ?> ">
+                <?php endif;?>
+                        <a href="/registreTiquet" class="nav-link py-3 px-2" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                            <i class="fa-solid fa-hammer"></i>
+                        </a>
+                    </li>
+                <?php if($uri == 'registreTiquet/emissor'):?>
+                    <li class="nav-item" id="actiu" title="<?= lang("registre.dispositius_rebuts") ?>">
+                <?php else:?>
+                    <li class="nav-item" title="<?= lang("registre.dispositius_rebuts") ?>">
+                <?php endif;?>
+                        <a href="/registreTiquet/emissor" class="nav-link py-3 px-2" title="<?= lang("registre.table-dispositius") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                            <i class="fa-solid fa-list-check"></i>
+                        </a>
+                    </li>
+                
+                    <li class="nav-item" title="<?= lang("registre.inventari") ?>">
+                        <a href="#" class="nav-link py-3 px-2" title="<?= lang("registre.inventari") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
+                            <i class="fa-solid fa-boxes-stacked"></i>
+                        </a>
+                    </li>
+                <?php if($uri == 'registreAlumnes'): ?>
+                    <li class="nav-item" id="actiu" title="<?= lang("registre.alumnes") ?>">
+                <?php else: ?>
+                    <li class="nav-item" title="<?= lang("registre.alumnes") ?>">
+                <?php endif; ?>
+                        <a href="/registreAlumnes" class="nav-link py-3 px-2" title="<?= lang("registre.alumnes") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                            <i class="fa-solid fa-users"></i>
+                        </a>
+                    </li>
             </ul>
         </div>
         <!--SideBar desplegable-->
@@ -74,7 +87,11 @@
         <div class="col-sm p-3 min-vh-100" id="zona_taula">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <h1><?= lang("registre.table-dispositius") ?></h1>
+                    <?php if($repoemi == 'emissor'):?>
+                        <h1><?= lang("registre.table-dispositius") ?></h1>
+                    <?php else:?>
+                        <h1><?= lang("registre.dispositius_rebuts") ?></h1>
+                    <?php endif;?>
                 </div>
                 <div>
                     <button onclick="_open()" class="btn" id="btn-filter"><i class="fa-solid fa-filter"></i> <?= lang("registre.buttons.filter") ?></button>

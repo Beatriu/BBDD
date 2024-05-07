@@ -52,4 +52,5 @@ class IntervencioModel extends Model
             "id_xtec" => $d8
         ]);
     }
+
 }

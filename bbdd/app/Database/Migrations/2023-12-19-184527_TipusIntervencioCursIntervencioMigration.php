@@ -47,7 +47,7 @@ class TipusIntervencioCursIntervencioMigration extends Migration
             ],
             'titol'       => [
                 'type'       => 'VARCHAR',
-                'constraint' => '32',
+                'constraint' => '64',
                 'null'          => false,
             ],
             'curs'       => [
@@ -65,9 +65,8 @@ class TipusIntervencioCursIntervencioMigration extends Migration
         $this->forge->addField([
             'id_intervencio'          => [
                 'type'           => 'VARCHAR',
-                'constraint'     => '8',
+                'constraint'     => '36',
                 'null'          => false,
-                'auto_increment' => TRUE
             ],
             'descripcio_intervencio'       => [
                 'type'       => 'VARCHAR',
@@ -98,12 +97,12 @@ class TipusIntervencioCursIntervencioMigration extends Migration
             'correu_alumne'       => [
                 'type'       => 'VARCHAR',
                 'constraint' => '32',
-                'null'          => false,
+                'null'          => true,
             ],
             'id_xtec'          => [
                 'type'           => 'VARCHAR',
                 'constraint'     => '16',
-                'null'          => false,
+                'null'          => true,
             ],
             
         ]);

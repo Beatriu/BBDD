@@ -23,6 +23,7 @@ return [
     'name' => 'Nom persona de contacte centre',
     'contact' => 'Correu persona de contacte centre',
     'create_tiquet' => 'Crear tiquet/s',
+    'tiquet' => 'Tiquet',
     'edit_tiquet' => 'Editar tiquet',
     'equipment_code' => 'Codi equip',
     'type' => 'Tipus',
@@ -58,4 +59,11 @@ return [
     'informacio_tiquet' => 'Informació tiquet',
     'plantilla_csv' => 'Plantilla CSV',
     'importar_csv' => 'Importar CSV',
+    'dades_tiquet' => [
+        'dades_titol' => 'Dades',
+        'dades_codi' => 'Codi',
+        'dades_tipus' => 'Tipus',
+        'dades_estat' => 'Estat informatiu',
+        'dades_intervencions' => 'Intervencions del tiquet',
+    ],
 ];
