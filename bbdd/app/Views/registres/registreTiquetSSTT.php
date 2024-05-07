@@ -11,7 +11,7 @@
 <?= $this->endSection('header'); ?>
 
 <?= $this->section('contingut'); ?>
-<!--TODO: Arreglar language del modal-->
+
 <?php if ($id_tiquet !== null) : ?>
     <div class="modal" tabindex="-1" role="dialog" style="display:block">
         <div class="modal-dialog" role="document">
@@ -36,7 +36,7 @@
 <div class="container-fluid">
     <div class="row">
         <!--SideBar desplegable-->
-        <!--<div class="col-sm-auto px-0" style="display:none" id="mySidebar">
+        <div class="col-sm-auto px-0" style="display:none" id="mySidebar">
             <div class="nav flex-column">
                 <div class="d-flex justify-content-end">
                     <a onclick="_close()"> <i class="fa-solid fa-xmark"></i></a>
@@ -44,7 +44,7 @@
                 <h1 style="color:#FFFFFF;">CERCA</h1>
                 <div class="linia"></div>
             </div>
-        </div>-->
+        </div>
 
         <div class="col-sm p-3 min-vh-100" id="zona_taula">
             <div class="d-flex justify-content-between align-items-center">
@@ -69,7 +69,7 @@
         document.getElementById("mySidebar").style.display = "block";
         document.getElementById("mySidebar").style.backgroundColor = "#900000";
         document.getElementById("sidebar").style.display = "none";
-    }
+    }   
 
     function _close() {
         document.getElementById("mySidebar").style.display = "none";
