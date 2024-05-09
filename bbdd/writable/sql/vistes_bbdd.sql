@@ -21,3 +21,9 @@ LEFT JOIN centre ce ON t.codi_centre_emissor = ce.codi_centre
 LEFT JOIN centre cr ON t.codi_centre_reparador = cr.codi_centre
 LEFT JOIN tipus_dispositiu td ON t.id_tipus_dispositiu = td.id_tipus_dispositiu
 LEFT JOIN estat e ON t.id_estat = e.id_estat;
+
+
+CREATE VIEW vista_alumne AS
+SELECT a.*, c.id_sstt, c.nom_centre
+FROM alumne a
+INNER JOIN centre c ON a.codi_centre = c.codi_centre;

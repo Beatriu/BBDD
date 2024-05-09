@@ -187,11 +187,6 @@ class RegistresController extends BaseController
         $data['error'] = '';
         $data['repoemi'] = $repoemi;
         $data['uri'] = $uri;
-        //session()->set('user_data')['codi_centre'] = 25002799;
-
-        $session_data = session()->get('user_data');
-        $session_data['codi_centre'] = 25006288;
-        session()->set('user_data', $session_data);
 
         if($id_tiquet != null){
 

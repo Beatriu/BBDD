@@ -76,6 +76,10 @@ class UsuarisController extends BaseController
 
                     if ($role != "alumne" && $role != "professor") {
                         $session_data['codi_centre'] = "no_codi";
+
+                        if ($role == "sstt" || $role == "admin_sstt") {
+                            $session_data['id_sstt'] = $login_model->obtenirIdSSTT($session_data['mail'])['id_sstt'];
+                        }
                     }
                     
                     session()->set('user_data', $session_data);
@@ -104,7 +108,6 @@ class UsuarisController extends BaseController
         $client = new \Google\Client(); //Generem un client de google
 
         //LINIES CREDENCIALS
-
 
         $client->setRedirectUri('http://localhost:8080/login'); //Redirect Uri
 

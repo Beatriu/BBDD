@@ -47,7 +47,13 @@ $routes->get('/registreTiquetProfessor', 'RegistresController::index', ['filter'
 //$routes->get('/tiquets', 'RegistresController::index');
 
 //Alumnes
-$routes->get('/registreAlumnes', 'AlumnesController::registreAlumnes', ['filter'=>'Autentica']);
+$routes->get('/alumnes', 'AlumnesController::registreAlumnes', ['filter'=>'Autentica']);
+$routes->get('/alumnes/afegir', 'AlumnesController::crearAlumne', ['filter'=>'Autentica']);
+$routes->post('/alumnes/afegir', 'AlumnesController::crearAlumne_post', ['filter'=>'Autentica']);
+$routes->get('/alumnes/editar/(:segment)', 'AlumnesController::editarAlumne/$1', ['filter'=>'Autentica']);
+$routes->post('/alumnes/editar', 'AlumnesController::editarAlumne_post', ['filter'=>'Autentica']);
+$routes->get('/alumnes/esborrar/(:segment)', 'AlumnesController::registreAlumnes/$1', ['filter'=>'Autentica']);
+$routes->get('/eliminarAlumne/(:segment)', 'AlumnesController::eliminarAlumne/$1', ['filter'=>'Autentica']);
 
 //Backtickets
 

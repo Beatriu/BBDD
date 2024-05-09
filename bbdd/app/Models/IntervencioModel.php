@@ -53,4 +53,14 @@ class IntervencioModel extends Model
         ]);
     }
 
+    public function obtenirIdIntervencioAlumne($correu_alumne)
+    {
+        return $this->where("correu_alumne", $correu_alumne)->findAll();
+    }
+
+    public function editarIntervencioCorreuNou($id_intervencio, $correu_nou) 
+    {
+        return $this->update($id_intervencio, ["correu_alumne" => $correu_nou]);
+    }
+
 }

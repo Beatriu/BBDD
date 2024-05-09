@@ -1,0 +1,76 @@
+<?= $this->extend('layouts/general'); ?>
+
+<?= $this->section('css_pagina'); ?>
+    <link rel="stylesheet" href="<?= base_url('css/formulari.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('css/header.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('fontawesome/css/fontawesome.css') ?>"/>
+    <script src="<?= base_url('js/main_formulari_tiquet.js') ?>"></script>
+<?= $this->endSection('css_pagina'); ?>
+
+<?= $this->section('header'); ?>
+    <?= $this->include('layouts/header.php'); ?>
+<?= $this->endSection('header'); ?>
+
+
+<?= $this->section('contingut'); ?>
+    <?php if ($editar_alumne_error != null): ?> 
+        <div class="modal" tabindex="-1" role="dialog" style="display:block">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title"><?= lang('alumne.alerta') ?></h5>
+                        <a href="<?= base_url("/alumnes/editar/" . $correu_editar) ?>">
+                            <i class="fa-solid fa-xmark"></i>
+                        </a>
+                    </div>
+                    <div class="modal-body text-warning">
+                        <p><?= lang($editar_alumne_error) ?></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
+    <form class="container" method="POST" action="<?= base_url('/alumnes/editar') ?>" enctype="multipart/form-data">
+        <?= csrf_field() ?>
+        <div class="row mt-5 justify-content-center">
+            <div class="col-2 d-flex align-items-center">
+                <a class="btn btn-dark rounded-pill" href="<?= base_url('/alumnes') ?>">
+                    <i class="fa-solid fa-arrow-left"></i> <?= lang('general_lang.tornar') ?>
+                </a>
+            </div>
+            <div class="col-10 justify-content-left">
+                <h1><?= lang('alumne.formulari_alumne') ?></h1>
+            </div>
+        </div>
+
+        <div class="row border mt-4 me-0 pe-0 ps-0">
+            <div class="row form_header p-3 ms-0">
+            </div>
+        </div>
+
+        <div class="row mt-3 mb-3">
+            <div class="col">
+                <label for="correu_alumne" class="form-label"><?= lang('alumne.correu_alumne') ?> *</label>
+                <input class="form-control" name = "correu_alumne" id="correu_alumne" placeholder="<?= lang('alumne.correu_alumne') ?>" value="<?= $correu_alumne ?>" required>
+                
+            </div>
+            <?php if($role == "admin_sstt" || $role == "desenvolupador"): ?>
+                <div class="col">
+                    <label for="centre" class="form-label"><?= lang('alumne.centre') ?> *</label>
+                    <input class="form-control selector" name = "centre" list="datalistOptionsCentres" id="centre" placeholder="<?= lang('alumne.centre') ?>" value="<?= $codi_centre ?>" required>
+                    <datalist id="datalistOptionsCentres">
+                        <?=$centres?>
+                    </datalist>
+                </div>
+            <?php endif; ?>
+        </div>
+
+        <div class="row justify-content-center mt-4">
+            <div class="d-flex justify-content-center align-items-center">
+                <button id="submit_afegir" type="submit" class="btn btn_save rounded-pill ms-3 me-3"><i class="fa-solid fa-floppy-disk me-2"></i><?= lang('alumne.editar_alumne') ?></button>
+            </div>
+        </div>
+
+    </form>
+
+<?= $this->endSection('contingut'); ?>

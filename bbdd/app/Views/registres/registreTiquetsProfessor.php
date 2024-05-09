@@ -23,7 +23,7 @@
                     </a>
                 </div>
                 <div class="modal-body">
-                    <p><?= lang('registre.model_text') ?><?php echo session()->getFlashdata('tiquet')["codi_equip"]; ?></p>
+                    <p><?= lang('registre.model_text') ?><?php echo session()->getFlashdata('tiquet')["id_tiquet"]; ?></p>
                 </div>
                 <div class="modal-footer">
                     <a href="<?= base_url("/eliminarTiquet/" . $id_tiquet) ?>" type="button" class="btn btn-danger"><?= lang('registre.buttons.delete') ?></a>
@@ -62,12 +62,12 @@
                             <i class="fa-solid fa-boxes-stacked"></i>
                         </a>
                     </li>
-                <?php if($uri == 'registreAlumnes'): ?>
+                <?php if($uri == 'alumnes'): ?>
                     <li class="nav-item" id="actiu" title="<?= lang("registre.alumnes") ?>">
                 <?php else: ?>
                     <li class="nav-item" title="<?= lang("registre.alumnes") ?>">
                 <?php endif; ?>
-                        <a href="/registreAlumnes" class="nav-link py-3 px-2" title="<?= lang("registre.alumnes") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                        <a href="/alumnes" class="nav-link py-3 px-2" title="<?= lang("registre.alumnes") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                             <i class="fa-solid fa-users"></i>
                         </a>
                     </li>
