@@ -40,6 +40,7 @@ $routes->get('/registreTiquetEmissor', 'RegistresController::index', ['filter'=>
 */
 
 //Vista Tiquets
+$routes->post('/vistaTiquet/cercar', 'TiquetController::viewTiquet_post', ['filter'=>'Autentica']);
 $routes->get('/vistaTiquet/(:any)', 'TiquetController::viewTiquet/$1', ['filter'=>'Autentica']);
 
 //Inventari
@@ -59,7 +60,7 @@ $routes->get('/eliminarAlumne/(:segment)', 'AlumnesController::eliminarAlumne/$1
 
 
 //Intervencions
-$routes->get('/afegir/intervencio', 'IntervencionsController::createIntervencio', ['filter'=>'Autentica']);
+$routes->get('/afegir/intervencio/(:segment)', 'IntervencionsController::createIntervencio', ['filter'=>'Autentica']);
 $routes->post('/afegir/intervencio', 'IntervencionsController::createIntervencio_post', ['filter'=>'Autentica']);  
 $routes->get('/editar/intervencio', 'IntervencionsController::editarIntervencio', ['filter'=>'Autentica']);
 $routes->get('/editar/intervencio', 'IntervencionsController::editarIntervencio_post', ['filter'=>'Autentica']);

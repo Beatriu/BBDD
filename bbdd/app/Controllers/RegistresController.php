@@ -226,6 +226,7 @@ class RegistresController extends BaseController
         // set into config file
         $crud->setTable('vista_tiquet');                        // set table name
         $crud->setPrimaryKey('id_tiquet'); 
+        $crud->addItemLink('view', 'fa-eye', base_url('vistaTiquet'), 'Veure Tiquet');
         $crud->addItemLink('edit', 'fa-pencil', base_url('editarTiquet'), 'Editar Tiquet');
         
 
@@ -359,6 +360,7 @@ class RegistresController extends BaseController
         ]);
         $crud->setTable('vista_tiquet');
         $crud->setPrimaryKey('id_tiquet');
+        $crud->addItemLink('view', 'fa-eye', base_url('vistaTiquet'), 'Veure Tiquet');
         $crud->addItemLink('edit', 'fa-pencil', base_url('editarTiquet'), 'Editar Tiquet');
         $crud->addItemLink('delete', 'fa-trash', base_url('registreTiquet/esborrar'), 'Eliminar Tiquet');
         //$crud->addItemLink('view', 'fa-eye', base_url('vistaTiquet'), 'Veure detalls');
