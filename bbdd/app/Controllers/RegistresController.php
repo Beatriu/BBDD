@@ -187,11 +187,6 @@ class RegistresController extends BaseController
         $data['error'] = '';
         $data['repoemi'] = $repoemi;
         $data['uri'] = $uri;
-        //session()->set('user_data')['codi_centre'] = 25002799;
-
-        $session_data = session()->get('user_data');
-        $session_data['codi_centre'] = 25006288;
-        session()->set('user_data', $session_data);
 
         if($id_tiquet != null){
 
@@ -231,6 +226,7 @@ class RegistresController extends BaseController
         // set into config file
         $crud->setTable('vista_tiquet');                        // set table name
         $crud->setPrimaryKey('id_tiquet'); 
+        $crud->addItemLink('view', 'fa-eye', base_url('vistaTiquet'), 'Veure Tiquet');
         $crud->addItemLink('edit', 'fa-pencil', base_url('editarTiquet'), 'Editar Tiquet');
         
 
@@ -364,6 +360,7 @@ class RegistresController extends BaseController
         ]);
         $crud->setTable('vista_tiquet');
         $crud->setPrimaryKey('id_tiquet');
+        $crud->addItemLink('view', 'fa-eye', base_url('vistaTiquet'), 'Veure Tiquet');
         $crud->addItemLink('edit', 'fa-pencil', base_url('editarTiquet'), 'Editar Tiquet');
         $crud->addItemLink('delete', 'fa-trash', base_url('registreTiquet/esborrar'), 'Eliminar Tiquet');
         //$crud->addItemLink('view', 'fa-eye', base_url('vistaTiquet'), 'Veure detalls');

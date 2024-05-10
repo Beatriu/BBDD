@@ -23,7 +23,7 @@ return [
     'data_alta' => 'Fecha de creación',
     'hora_alta' => 'Hora de creación',
     'model_title' => '¿Quieres eliminar este tiquet?',
-    'model_text' => 'Lo que esta a punto de suceder es que eliminaras el tiquet seleccionado:',
+    'model_text' => 'Estás seguro que quieres eliminar el siguiente tiquet?',
     'nom_centre_emissor' => 'Nombre centro emisor',
     'nom_centre_reparador' => 'Nombre centro reparador',
     'no_permisos_eliminar' => 'No tienes permisos para eliminar este tiquet!',

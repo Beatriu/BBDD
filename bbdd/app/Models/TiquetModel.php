@@ -57,8 +57,18 @@ class TiquetModel extends Model
         $this->insert($data);
     }
 
+    public function getTiquets()
+    {
+        return $this->findAll();
+    }
+
     public function getTiquetById($id_tiquet){
         return $this->where('id_tiquet',$id_tiquet)->first();
+    }
+
+    public function getTiquetByCodiCentreReparador($codi_centre_reparador) 
+    {
+        return $this->where('codi_centre_reparador', $codi_centre_reparador)->findAll();
     }
 
     public function deleteTiquetById($id_tiquet){

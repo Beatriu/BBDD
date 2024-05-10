@@ -12,7 +12,7 @@ return [
         'delete' => 'Eliminar',
         'update' => 'Actualitzar',
         'cancel' => 'Cancelar',
-
+        'buscar_button' => 'Cercar',
     ],
     'banderilla'=>'img' . DIRECTORY_SEPARATOR . 'Banderes' . DIRECTORY_SEPARATOR . 'ES.png',
     'user' => 'Usuari',
@@ -59,11 +59,4 @@ return [
     'informacio_tiquet' => 'Informació tiquet',
     'plantilla_csv' => 'Plantilla CSV',
     'importar_csv' => 'Importar CSV',
-    'dades_tiquet' => [
-        'dades_titol' => 'Dades',
-        'dades_codi' => 'Codi',
-        'dades_tipus' => 'Tipus',
-        'dades_estat' => 'Estat informatiu',
-        'dades_intervencions' => 'Intervencions del tiquet',
-    ],
 ];
