@@ -23,7 +23,7 @@ class TiquetController extends BaseController
         $tiquet_existent = $tiquet_model->getTiquetById($id_tiquet);
 
         if ($tiquet_existent != null) {
-            
+
             if ($role == "centre_emissor" || $role == "centre_reparador") {
 
                 return redirect()->to(base_url('/registreTiquet'));
@@ -93,16 +93,19 @@ class TiquetController extends BaseController
                         $id_sstt_tiquet =  $centre_model->obtenirCentre($tiquets[$i]['codi_centre_reparador'])['id_sstt'];
                         
                         if ($id_sstt_tiquet == $actor['id_sstt']) {
-                            $nom_tipus_dispositiu = $tipus_dispositiu_model->getNomTipusDispositiu($tiquets[$i]['id_tipus_dispositiu'])['nom_tipus_dispositiu'];
-                            $tiquets[$i]['nom_tipus_dispositiu'] = $nom_tipus_dispositiu;
                             array_push($tiquets_resultat, $tiquets[$i]);
                         }
                     }
+                } else if ($role == "desenvolupador") {
+                    $tiquets = $tiquet_model->getTiquets();
                 }
     
                 
                 $options_tiquets = "";
                 for ($i = 0; $i < sizeof($tiquets_resultat); $i++) {
+                    $nom_tipus_dispositiu = $tipus_dispositiu_model->getNomTipusDispositiu($tiquets_resultat[$i]['id_tipus_dispositiu'])['nom_tipus_dispositiu'];
+                    $tiquets_resultat[$i]['nom_tipus_dispositiu'] = $nom_tipus_dispositiu;
+
                     $options_tiquets .= "<option value=\"" . $tiquets_resultat[$i]['id_tiquet'] . " // " . $tiquets_resultat[$i]['nom_tipus_dispositiu'] . " // "  . $tiquets_resultat[$i]['codi_equip'] . "\">";
                     $options_tiquets .= $tiquets_resultat[$i]['codi_equip'] . " // " . $tiquets_resultat[$i]['nom_tipus_dispositiu'];
                     $options_tiquets .= "</option>";

@@ -108,7 +108,7 @@ class UsuarisController extends BaseController
         $client = new \Google\Client(); //Generem un client de google
 
         //LINIES CREDENCIALS
-        
+
         $client->setRedirectUri('http://localhost:8080/login'); //Redirect Uri
 
         // Permisos/informació que demanem a l'usuari
