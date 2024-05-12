@@ -3,22 +3,56 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\CentreModel;
 use App\Models\CursModel;
+use App\Models\EstatModel;
 use App\Models\IntervencioModel;
 use App\Models\TipusIntervencioModel;
+use App\Models\TiquetModel;
 
 class IntervencionsController extends BaseController
 {
 
-    public function createIntervencio()
+    public function createIntervencio($id_tiquet)
     {
-        $role = session()->get('user_data')['role'];
+        $tiquet_model = new TiquetModel();
+        $estat_model = new EstatModel();
+        $centre_model = new CentreModel();
+        $tipus_intervencio_model = new TipusIntervencioModel();
+        $curs_model = new CursModel();
 
-        if ($role == "centre_emissor" || $role == "centre_reparador") {
+        $actor = session()->get('user_data');
+        $role = $actor['role'];
+        $data['id_tiquet'] = $id_tiquet;
+
+
+        if ($role == "centre_emissor" || $role == "centre_reparador" || $role == "sstt") {
             return redirect()->to(base_url('/registreTiquet'));
         } else {
-            $tipus_intervencio_model = new TipusIntervencioModel();
-            $curs_model = new CursModel();
+
+            $tiquet = $tiquet_model->getTiquetById($id_tiquet);
+
+            if ($role == "professor" || $role == "alumne") {
+                $estats_professor = $estat_model->getProfessorEstats();
+
+                for ($i = 0; $i < sizeof($estats_professor); $i++) {
+                    $estats_consulta[$i] = $estats_professor[$i]['id_estat'];
+                }
+
+                if (!in_array($tiquet['id_estat'], $estats_consulta) || $actor['codi_centre'] != $tiquet['codi_centre_reparador']) {
+                    return redirect()->to(base_url('/registreTiquet'));
+                }
+
+            } else if ($role == "admin_sstt") {
+                $id_sstt_tiquet = $centre_model->obtenirCentre($tiquet['codi_centre_emissor'])['id_sstt'];
+
+                if ($id_sstt_tiquet != $actor['id_sstt']) {
+                    return redirect()->to(base_url('/registreTiquet'));
+                }
+
+            }
+
+            session()->setFlashdata("id_tiquet_afegir_intervencio", $id_tiquet);
     
             $array_tipus_intervencio = $tipus_intervencio_model->obtenirTipusIntervencio();
             $options_tipus_intervencio = "";
@@ -50,6 +84,9 @@ class IntervencionsController extends BaseController
     public function createIntervencio_post()
     {
         $intervencio_model = new IntervencioModel();
+        $tiquet_model = new TiquetModel();
+        $estat_model = new EstatModel();
+        $centre_model = new CentreModel();
 
         $validationRules = [
             'tipus_intervencio' => [
@@ -74,11 +111,36 @@ class IntervencionsController extends BaseController
 
         if ($this->validate($validationRules)) {
 
-            $role = session()->get('user_data')['role'];
+            $actor = session()->get('user_data');
+            $role = $actor['role'];
 
-            if ($role == "centre_emissor" || $role == "centre_reparador") {
+            if ($role == "centre_emissor" || $role == "centre_reparador" || $role == "sstt") {
                 return redirect()->to(base_url('/registreTiquet'));
             } else {
+
+                $id_tiquet = session()->getFlashdata("id_tiquet_afegir_intervencio");
+                $tiquet = $tiquet_model->getTiquetById($id_tiquet);
+
+                if ($role == "professor" || $role == "alumne") {
+                    $estats_professor = $estat_model->getProfessorEstats();
+    
+                    for ($i = 0; $i < sizeof($estats_professor); $i++) {
+                        $estats_consulta[$i] = $estats_professor[$i]['id_estat'];
+                    }
+    
+                    if (!in_array($tiquet['id_estat'], $estats_consulta) || $actor['codi_centre'] != $tiquet['codi_centre_reparador']) {
+                        return redirect()->to(base_url('/registreTiquet'));
+                    }
+    
+                } else if ($role == "admin_sstt") {
+                    $id_sstt_tiquet = $centre_model->obtenirCentre($tiquet['codi_centre_emissor'])['id_sstt'];
+    
+                    if ($id_sstt_tiquet != $actor['id_sstt']) {
+                        return redirect()->to(base_url('/registreTiquet'));
+                    }
+    
+                }
+
                 $uuid_library = new \App\Libraries\UUID;
                 $uuid = $uuid_library->v4();
                 $tipus_intervencio = $this->request->getPost('tipus_intervencio');
@@ -98,7 +160,9 @@ class IntervencionsController extends BaseController
                     $correu_alumne = session()->get('user_data')['mail'];
                 }
     
-                $intervencio_model->addIntervencioAlumne($uuid, $descripcio_intervencio, "c8a96b5f-e9ce-46a9-bcde-551d95077574", $data_intervencio, $id_tipus_intervencio, $id_curs, $correu_alumne, $id_xtec);
+                $intervencio_model->addIntervencio($uuid, $descripcio_intervencio, $id_tiquet, $data_intervencio, $id_tipus_intervencio, $id_curs, $correu_alumne, $id_xtec);
+            
+                return redirect()->to('vistaTiquet/' . $id_tiquet);
             }
 
         }
@@ -121,7 +185,6 @@ class IntervencionsController extends BaseController
                 $options_tipus_intervencio .= $array_tipus_intervencio[$i]['nom_tipus_intervencio'];
                 $options_tipus_intervencio .= "</option>";
             }
-    
     
             $array_curs = $curs_model->obtenirCursos();
             $options_curs = "";

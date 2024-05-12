@@ -66,7 +66,7 @@ class TiquetModel extends Model
         return $this->where('id_tiquet',$id_tiquet)->first();
     }
 
-    public function getTiquetByCodiCentreReparador($codi_centre_reparador) 
+    public function getTiquetByCodiCentreReparadorEstat($codi_centre_reparador) 
     {
         return $this->where('codi_centre_reparador', $codi_centre_reparador)->findAll();
     }

@@ -18,7 +18,7 @@
         <?= csrf_field() ?>
         <div class="row mt-5 justify-content-center">
             <div class="col-2 d-flex align-items-center">
-                <a class="btn btn-dark rounded-pill" href="<?= base_url('/registreTiquet') ?>">
+                <a class="btn btn-dark rounded-pill" href="<?= base_url('/vistaTiquet/' . $id_tiquet) ?>">
                     <i class="fa-solid fa-arrow-left"></i> <?= lang('general_lang.tornar') ?>
                 </a>
             </div>
@@ -44,7 +44,7 @@
             </div>
             <div class="col">
             <label for="curs" class="form-label"><?= lang('intervencio.curs') ?> *</label>
-                <input class="form-control selector" name = "curs" list="datalistOptionsCursos" id="curs" placeholder="<?= lang('intervencio.tipus_intervencio') ?>" required>
+                <input class="form-control selector" name = "curs" list="datalistOptionsCursos" id="curs" placeholder="<?= lang('intervencio.curs') ?>" required>
                 <datalist id="datalistOptionsCursos">
                     <?=$cursos?>
                 </datalist>

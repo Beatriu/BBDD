@@ -48,7 +48,9 @@
                         <button id="submit_cercar_tiquet" type="submit" class="btn btn-primary rounded-pill ms-3 me-3"><i class="fa-solid fa-magnifying-glass me-2"></i><?= lang('general_lang.buttons.buscar_button') ?></button>
                     </div>
                     <div class="col-3 d-flex justify-content-end">
-                        <a href="<?= base_url("/afegir/intervencio/" . $id_tiquet) ?>" type="button" class="btn btn-success rounded-pill"><i class="fa-solid fa-plus me-2"></i><?= lang('intervencio.button_afegir_intervencio') ?></a>
+                        <?php if( $role != "sstt"): ?>
+                            <a href="<?= base_url("/afegir/intervencio/" . $id_tiquet) ?>" type="button" class="btn btn-success rounded-pill"><i class="fa-solid fa-plus me-2"></i><?= lang('intervencio.button_afegir_intervencio') ?></a>
+                        <?php endif; ?>
                     </div>
 
                 </div> 
