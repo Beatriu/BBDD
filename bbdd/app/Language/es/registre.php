@@ -14,6 +14,7 @@ return [
         'delete' => 'Eliminar',
         'save_changes' => 'Guardar cambios',
     ],
+    'id_tiquet' => 'Identificador tiquet',
     'codi_equip' => 'Código del equipo',
     'tipus_dispositiu' => 'Tipo de dispositivo',
     'descripcio_avaria' => 'Descripción',

@@ -87,7 +87,7 @@
         <div class="col-sm p-3 min-vh-100" id="zona_taula">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <?php if($repoemi == 'emissor'):?>
+                    <?php if($uri == 'registreTiquet/emissor'):?>
                         <h1><?= lang("registre.table-dispositius") ?></h1>
                     <?php else:?>
                         <h1><?= lang("registre.dispositius_rebuts") ?></h1>

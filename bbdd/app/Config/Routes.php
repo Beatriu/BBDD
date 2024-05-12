@@ -21,14 +21,14 @@ $routes->get('/logout', 'UsuarisController::logout', ['filter'=>'Autentica']);
 $routes->match(['GET','POST'],'/crudadmin',"RegistresController::index");
 
 //Tiquets
-$routes->get('/formulariTiquet', 'Home::createTiquet', ['filter'=>'Autentica']);
-$routes->post('/formulariTiquet', 'Home::createTiquet_post', ['filter'=>'Autentica']);  
+$routes->get('/formulariTiquet', 'TiquetController::createTiquet', ['filter'=>'Autentica']);
+$routes->post('/formulariTiquet', 'TiquetController::createTiquet_post', ['filter'=>'Autentica']);  
 $routes->get('/registreTiquet', 'RegistresController::index', ['filter'=>'Autentica']);
 $routes->get('/registreTiquet/emissor', 'RegistresController::index2', ['filter'=>'Autentica']);
 
-$routes->post('/editarTiquet', 'Home::editarTiquet_post', ['filter'=>'Autentica']);
-$routes->get('/editarTiquet/(:any)', 'Home::editarTiquet/$1', ['filter'=>'Autentica']);
-//$routes->get('/registreTiquet/esborrar/(:any)', 'RegistresController::index/$1', ['filter'=>'Autentica']);
+$routes->post('/editarTiquet', 'TiquetController::editarTiquet_post', ['filter'=>'Autentica']);
+$routes->get('/editarTiquet/(:any)', 'TiquetController::editarTiquet/$1', ['filter'=>'Autentica']);
+$routes->get('/registreTiquet/esborrar/(:any)', 'RegistresController::index/$1', ['filter'=>'Autentica']);
 $routes->get('/registreTiquet/emissor/esborrar/(:any)', 'RegistresController::index2/$1', ['filter'=>'Autentica']);
 
 
@@ -60,12 +60,12 @@ $routes->get('/eliminarAlumne/(:segment)', 'AlumnesController::eliminarAlumne/$1
 
 
 //Intervencions
-$routes->get('/afegir/intervencio/(:segment)', 'IntervencionsController::createIntervencio', ['filter'=>'Autentica']);
+$routes->get('/afegir/intervencio/(:segment)', 'IntervencionsController::createIntervencio/$1', ['filter'=>'Autentica']);
 $routes->post('/afegir/intervencio', 'IntervencionsController::createIntervencio_post', ['filter'=>'Autentica']);  
 $routes->get('/editar/intervencio', 'IntervencionsController::editarIntervencio', ['filter'=>'Autentica']);
 $routes->get('/editar/intervencio', 'IntervencionsController::editarIntervencio_post', ['filter'=>'Autentica']);
 
 // Canvi de language, Descarregar
 $routes->get('/canviLanguage', 'Home::canviLanguage');
-$routes->get('/descarregar/(:segment)', 'Home::descarregar/$1', ['filter'=>'Autentica']);
+$routes->get('/descarregar/(:segment)', 'TiquetController::descarregar/$1', ['filter'=>'Autentica']);
 
