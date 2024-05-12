@@ -28,7 +28,8 @@ $routes->get('/registreTiquet/emissor', 'RegistresController::index2', ['filter'
 
 $routes->post('/editarTiquet', 'Home::editarTiquet_post', ['filter'=>'Autentica']);
 $routes->get('/editarTiquet/(:any)', 'Home::editarTiquet/$1', ['filter'=>'Autentica']);
-//$routes->get('/registreTiquet/esborrar/(:any)', 'RegistresController::index/$1', ['filter'=>'Autentica']);
+//TODO: Cuidado amb aquesta ruta perque funciona per a SSTT pero a veure si donarà problemes amb professor
+$routes->get('/registreTiquet/esborrar/(:any)', 'RegistresController::index/$1', ['filter'=>'Autentica']);
 $routes->get('/registreTiquet/emissor/esborrar/(:any)', 'RegistresController::index2/$1', ['filter'=>'Autentica']);
 
 

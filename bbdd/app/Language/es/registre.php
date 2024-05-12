@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'titol_dispositius_sstt' => 'Registr dispositivos',
     'table-dispositius' => 'Registro de dispositivos emitidos',
     'dispositius_rebuts' => 'Registro de dispositivos recibidos',
     'inventari' => 'Inventario',

@@ -39,7 +39,7 @@ class RegistresController extends BaseController
             case "admin_sstt":
                 break;
             case "desenvolupador":
-                return view('registres' . DIRECTORY_SEPARATOR . 'registreTiquetsProfessor', $this->registreTiquetsProfessor('reparador', $id_tiquet));
+                return view('registres' . DIRECTORY_SEPARATOR . 'registreTiquetSSTT', $this->registreTiquetsSSTT($id_tiquet));
                 break;
             default:
                 break;

@@ -49,7 +49,7 @@
         <div class="col-sm p-3 min-vh-100" id="zona_taula">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <h1><?= lang("registre.table-dispositius") ?></h1>
+                    <h1><?= lang("registre.titol_dispositius_sstt") ?></h1>
                 </div>
                 <div>
                     <button onclick="_open()" class="btn" id="btn-filter"><i class="fa-solid fa-filter"></i> <?= lang("registre.buttons.filter") ?></button>

@@ -1,6 +1,8 @@
 <?php
 
 return [
+    //Blai no toquis, que la de table-dispositius era la general, quan ho parlem ho canvio
+    'titol_dispositius_sstt' => 'Registre dispositius',
     'table-dispositius' => 'Registre de dispositius emesos',
     'dispositius_rebuts' => 'Registre de dispositius rebuts',
     'inventari' => 'Inventari',
