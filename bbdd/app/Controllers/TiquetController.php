@@ -30,17 +30,22 @@ class TiquetController extends BaseController
 
             if ($role == "centre_emissor" || $role == "centre_reparador") {
 
-                return redirect()->to(base_url('/registreTiquet'));
+                return redirect()->to(base_url('/tiquets'));
     
             } else if ($role == "professor" && $estat != "Pendent de reparar" && $estat != "Reparant" && $estat != "Reparat i pendent de recollir") {
 
-                return redirect()->to(base_url('/registreTiquet'));
+                return redirect()->to(base_url('/tiquets'));
 
             } else {
     
                 $data['title'] = "Veure Tiquet";
                 $data['id_tiquet'] = $id_tiquet;
+                $data['id_intervencio'] = session()->getFlashdata('id_intervencio');
         
+                if ($data['id_intervencio'] != null) {
+                    $data['id_intervencio'] = $data['id_intervencio']['id_intervencio'];
+                }
+
                 $crud = new KpaCrud();
                 $crud->setConfig('onlyView');
                 $crud->setConfig([
@@ -104,7 +109,7 @@ class TiquetController extends BaseController
                         }
                     }
 
-                    $crud->addItemLink('delete', 'fa-trash', base_url('vistaTiquet/esborrar'), 'Eliminar Tiquet');
+                    $crud->addItemLink('delete', 'fa-trash', base_url('tiquets/' . $id_tiquet . '/esborrar'), 'Eliminar Tiquet');
 
                     $crud->addWhere('id_tiquet', $id_tiquet);
                     $crud->addWhere ("estat_tiquet","Pendent de reparar", true);
@@ -118,7 +123,7 @@ class TiquetController extends BaseController
                 } else if ($role == "sstt" || $role == "admin_sstt") {
 
                     if ($role == "admin_sstt") {
-                        $crud->addItemLink('delete', 'fa-trash', base_url('vistaTiquet/esborrar'), 'Eliminar Tiquet');
+                        $crud->addItemLink('delete', 'fa-trash', base_url('tiquets/esborrar'), 'Eliminar Tiquet');
                     }
     
                     $crud->addWhere('id_tiquet', $id_tiquet);
@@ -138,7 +143,7 @@ class TiquetController extends BaseController
 
                     $tiquets = $tiquet_model->getTiquets();
 
-                    $crud->addItemLink('delete', 'fa-trash', base_url('vistaTiquet/esborrar'), 'Eliminar Tiquet');
+                    $crud->addItemLink('delete', 'fa-trash', base_url('tiquets/esborrar'), 'Eliminar Tiquet');
                 }
     
                 
@@ -161,7 +166,7 @@ class TiquetController extends BaseController
 
         } else {
 
-            return redirect()->to('registreTiquet');
+            return redirect()->to('tiquets');
 
         }
 
@@ -173,7 +178,7 @@ class TiquetController extends BaseController
 
         $id_tiquet = trim(explode('//', (string) $input)[0]);
 
-        return redirect()->to(base_url('/vistaTiquet/' . $id_tiquet));
+        return redirect()->to(base_url('/tiquets/' . $id_tiquet));
     }
 
     public function createTiquet_post()
@@ -314,9 +319,9 @@ class TiquetController extends BaseController
         }
         
         if ($role == "professor") {
-            return redirect()->to(base_url('/registreTiquet/emissor'));
+            return redirect()->to(base_url('/tiquets/emissor'));
         } else {
-            return redirect()->to(base_url('/registreTiquet'));
+            return redirect()->to(base_url('/tiquets'));
         }
     }
 
@@ -331,7 +336,7 @@ class TiquetController extends BaseController
         $data['role'] = $role;
 
         if ($role == "alumne") {
-            return redirect()->to(base_url('/registreTiquet'));
+            return redirect()->to(base_url('/tiquets'));
         }
 
         $tipus_dispositius = new TipusDispositiuModel;
@@ -440,7 +445,7 @@ class TiquetController extends BaseController
         $data['role'] = $role;
 
         if ($role == "alumne") {
-            return redirect()->to(base_url('/registreTiquet'));
+            return redirect()->to(base_url('/tiquets'));
         }
 
         $data['tiquet'] = $tiquet_model->getTiquetById($id_tiquet);
@@ -780,9 +785,9 @@ class TiquetController extends BaseController
             return redirect()->to(base_url('/editarTiquet/' . session()->getFlashdata('id_tiquet')));
         } else {
             if ($role == "professor") {
-                return redirect()->to(base_url('/registreTiquet/emissor'));
+                return redirect()->to(base_url('/tiquets/emissor'));
             } else {
-                return redirect()->to(base_url('/registreTiquet'));
+                return redirect()->to(base_url('/tiquets'));
             }
         }
         

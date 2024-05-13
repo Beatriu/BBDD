@@ -27,7 +27,7 @@ class IntervencionsController extends BaseController
 
 
         if ($role == "centre_emissor" || $role == "centre_reparador" || $role == "sstt") {
-            return redirect()->to(base_url('/registreTiquet'));
+            return redirect()->to(base_url('/tiquets'));
         } else {
 
             $tiquet = $tiquet_model->getTiquetById($id_tiquet);
@@ -40,14 +40,14 @@ class IntervencionsController extends BaseController
                 }
 
                 if (!in_array($tiquet['id_estat'], $estats_consulta) || $actor['codi_centre'] != $tiquet['codi_centre_reparador']) {
-                    return redirect()->to(base_url('/registreTiquet'));
+                    return redirect()->to(base_url('/tiquets'));
                 }
 
             } else if ($role == "admin_sstt") {
                 $id_sstt_tiquet = $centre_model->obtenirCentre($tiquet['codi_centre_emissor'])['id_sstt'];
 
                 if ($id_sstt_tiquet != $actor['id_sstt']) {
-                    return redirect()->to(base_url('/registreTiquet'));
+                    return redirect()->to(base_url('/tiquets'));
                 }
 
             }
@@ -115,7 +115,7 @@ class IntervencionsController extends BaseController
             $role = $actor['role'];
 
             if ($role == "centre_emissor" || $role == "centre_reparador" || $role == "sstt") {
-                return redirect()->to(base_url('/registreTiquet'));
+                return redirect()->to(base_url('/tiquets'));
             } else {
 
                 $id_tiquet = session()->getFlashdata("id_tiquet_afegir_intervencio");
@@ -129,14 +129,14 @@ class IntervencionsController extends BaseController
                     }
     
                     if (!in_array($tiquet['id_estat'], $estats_consulta) || $actor['codi_centre'] != $tiquet['codi_centre_reparador']) {
-                        return redirect()->to(base_url('/registreTiquet'));
+                        return redirect()->to(base_url('/tiquets'));
                     }
     
                 } else if ($role == "admin_sstt") {
                     $id_sstt_tiquet = $centre_model->obtenirCentre($tiquet['codi_centre_emissor'])['id_sstt'];
     
                     if ($id_sstt_tiquet != $actor['id_sstt']) {
-                        return redirect()->to(base_url('/registreTiquet'));
+                        return redirect()->to(base_url('/tiquets'));
                     }
     
                 }
@@ -162,7 +162,7 @@ class IntervencionsController extends BaseController
     
                 $intervencio_model->addIntervencio($uuid, $descripcio_intervencio, $id_tiquet, $data_intervencio, $id_tipus_intervencio, $id_curs, $correu_alumne, $id_xtec);
             
-                return redirect()->to('vistaTiquet/' . $id_tiquet);
+                return redirect()->to('tiquets/' . $id_tiquet);
             }
 
         }
@@ -173,7 +173,7 @@ class IntervencionsController extends BaseController
         $role = session()->get('user_data')['role'];
 
         if ($role == "centre_emissor" || $role == "centre_reparador") {
-            return redirect()->to(base_url('/registreTiquet'));
+            return redirect()->to(base_url('/tiquets'));
         } else {
             $tipus_intervencio_model = new TipusIntervencioModel();
             $curs_model = new CursModel();
@@ -207,5 +207,129 @@ class IntervencionsController extends BaseController
 
     public function editarIntervencio_post() {
         
+    }
+
+    public function eliminarIntervencio_vista($id_tiquet, $id_intervencio)
+    {
+        $tiquet_model = new TiquetModel();
+        $intervencio_model = new IntervencioModel();
+        $estat_model = new EstatModel();
+        $centre_model = new CentreModel();
+
+        $actor = session()->get('user_data');
+        $role = $actor['role'];
+
+        $tiquet = $tiquet_model->getTiquetById($id_tiquet);
+
+        if ($tiquet != null) {
+
+            $intervencio = $intervencio_model->obtenirIntervencioPerId($id_intervencio);
+
+            if ($intervencio != null) {
+
+                if ($role == "centre_emissor" || $role == "centre_reparador" || $role == "sstt") {
+                    return redirect()->to(base_url('/tiquets'));
+                } else {
+    
+                    if ($role == "professor" || $role == "alumne") {
+                        $estats_professor = $estat_model->getProfessorEstats();
+        
+                        for ($i = 0; $i < sizeof($estats_professor); $i++) {
+                            $estats_consulta[$i] = $estats_professor[$i]['id_estat'];
+                        }
+
+                        if (!in_array($tiquet['id_estat'], $estats_consulta) || $actor['codi_centre'] != $tiquet['codi_centre_reparador']) {
+                            return redirect()->to(base_url('/tiquets'));
+                        }
+
+                        if ($role == "alumne" && $intervencio['id_xtec'] != null) {
+                            return redirect()->to(base_url('/tiquets/' . $id_tiquet));
+                        }
+        
+                    } else if ($role == "admin_sstt") {
+                        $id_sstt_tiquet = $centre_model->obtenirCentre($tiquet['codi_centre_emissor'])['id_sstt'];
+        
+                        if ($id_sstt_tiquet != $actor['id_sstt']) {
+                            return redirect()->to(base_url('/tiquets'));
+                        }
+        
+                    }
+                    
+                    $data['id_intervencio'] = $id_tiquet;
+                    session()->setFlashdata("id_intervencio",$intervencio);
+                    return redirect()->to(base_url('/tiquets/' . $id_tiquet));
+
+                }
+
+            } else {
+                return redirect()->to(base_url('/tiquets'));
+            }
+
+        } else {
+            return redirect()->to(base_url('/tiquets'));
+        }
+
+    }
+
+    public function eliminarIntervencio($id_tiquet, $id_intervencio)
+    {
+
+        $tiquet_model = new TiquetModel();
+        $intervencio_model = new IntervencioModel();
+        $estat_model = new EstatModel();
+        $centre_model = new CentreModel();
+
+        $actor = session()->get('user_data');
+        $role = $actor['role'];
+
+        $tiquet = $tiquet_model->getTiquetById($id_tiquet);
+        $intervencio = $intervencio_model->obtenirIntervencioPerId($id_intervencio);
+
+        if ($tiquet != null) {
+            
+            if ($intervencio != null) {
+                
+                if ($role == "centre_emissor" || $role == "centre_reparador" || $role == "sstt") {
+                    return redirect()->to(base_url('/tiquets'));
+                } else {
+    
+                    if ($role == "professor" || $role == "alumne") {
+
+                        $estats_professor = $estat_model->getProfessorEstats();
+        
+                        for ($i = 0; $i < sizeof($estats_professor); $i++) {
+                            $estats_consulta[$i] = $estats_professor[$i]['id_estat'];
+                        }
+    
+                        if (!in_array($tiquet['id_estat'], $estats_consulta) || $actor['codi_centre'] != $tiquet['codi_centre_reparador']) {
+                            return redirect()->to(base_url('/tiquets'));
+                        }
+
+                        if ($role == "alumne" && $intervencio['id_xtec'] != null) {
+                            return redirect()->to(base_url('/tiquets/' . $id_tiquet));
+                        }
+        
+                    } else if ($role == "admin_sstt") {
+                        $id_sstt_tiquet = $centre_model->obtenirCentre($tiquet['codi_centre_emissor'])['id_sstt'];
+        
+                        if ($id_sstt_tiquet != $actor['id_sstt']) {
+                            return redirect()->to(base_url('/tiquets'));
+                        }
+        
+                    }
+
+                    $intervencio_model->deleteIntervencio($id_intervencio);
+                    return redirect()->to(base_url('/tiquets/' . $id_tiquet));
+
+                }
+    
+            } else {
+                return redirect()->to(base_url('/tiquets'));
+            }
+
+        } else {
+            return redirect()->to(base_url('/tiquets'));
+        }
+
     }
 }

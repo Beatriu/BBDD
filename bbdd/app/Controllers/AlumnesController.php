@@ -53,7 +53,7 @@ class AlumnesController extends BaseController
 
         if ($role == "alumne" || $role == "centre_emissor" || $role == "centre_reparador" || $role == "sstt") {
 
-            return redirect()->to(base_url('/registreTiquet'));
+            return redirect()->to(base_url('/tiquets'));
 
         } else {
             $codi_centre = session()->get('user_data')['codi_centre'];
@@ -171,7 +171,7 @@ class AlumnesController extends BaseController
 
             return view('formularis' . DIRECTORY_SEPARATOR . 'formulariAfegirAlumne', $data);
         } else {
-            return redirect()->to(base_url('/registreTiquet'));
+            return redirect()->to(base_url('/tiquets'));
         }
 
     }

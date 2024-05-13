@@ -25,4 +25,7 @@ return [
     ],
     'button_afegir_intervencio' => 'Afegir intervenció',
     'tiquets_datalist' => 'Escriu per cercar el tiquet...',
+    'no_permisos_eliminar' => 'No tens permisos per a eliminar aquesta intervenció!',
+    'modal_title' => 'Vols eliminar aquesta intervenció?',
+    'modal_text' => 'Estàs segur que vols eliminar la següent intervenció?',
 ];
