@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\AlumneModel;
 use App\Models\LoginInRolModel;
 use App\Models\LoginModel;
 use App\Models\ProfessorModel;
@@ -103,6 +104,7 @@ class UsuarisController extends BaseController
         $rol_model = new RolModel();
         $llista_admesos_model = new LlistaAdmesosModel();
         $centre_model = new CentreModel();
+        $alumne_model = new AlumneModel();
 
 
         $client = new \Google\Client(); //Generem un client de google
@@ -192,7 +194,7 @@ class UsuarisController extends BaseController
                 }
 
             } else { // En cas que el login existeixi
-
+                
                 $session_data = session()->get('user_data'); //Carreguem la informació de l'usuari
                 
                 // Obtenim el rol de l'usuari
@@ -201,12 +203,14 @@ class UsuarisController extends BaseController
                 $rol = $rol_model->obtenirRol($id_rol);
                 $session_data['role'] = $rol;
 
-                if (session()->get('user_data')['domain'] == "xtec.cat") {
+                if (session()->get('user_data')['domain'] == "xtec.cat") { // En cas que sigui professor
                     $codi_centre = $llista_admesos_model->existeixProfessor($mail)['codi_centre'];
                     if ($codi_centre == null) {
                         $codi_centre = $centre_model->obtenirCentrePerCorreu($mail)['codi_centre'];
                     }
                     $session_data['codi_centre'] = $codi_centre;
+                } else { // En cas que sigui alumne
+                    $session_data['codi_centre'] = $alumne_model->getAlumneByCorreu($session_data['mail']);
                 }
 
                 session()->set('user_data', $session_data); //Guardem la informació de l'usuari

@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class LoginInRolModel extends Model
 {
     protected $table            = 'login_in_rol';
-    protected $primaryKey       = 'id';
+    protected $primaryKey       = 'id_login_relacio';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
@@ -51,5 +51,10 @@ class LoginInRolModel extends Model
     public function obtenirRol($id_login) {
         //return $this->select('id_login')->where('login', $nom_login)->first();
         return $this->select('id_rol_relacio')->where("id_login_relacio", $id_login)->first()['id_rol_relacio'];
+    }
+
+    public function deleteLoginInRol($id_login_relacio) 
+    {
+        return $this->delete(['id_login_relacio' => $id_login_relacio]);
     }
 }
