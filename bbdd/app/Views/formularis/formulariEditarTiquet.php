@@ -18,9 +18,9 @@
         <div class="row mt-5 justify-content-center">
             <div class="col-2 d-flex align-items-center">
             <?php if($role != "professor"): ?>
-                    <a class="btn btn-dark rounded-pill" href="<?= base_url('/registreTiquet') ?>">
+                    <a class="btn btn-dark rounded-pill" href="<?= base_url('/tiquets') ?>">
                 <?php else: ?>
-                    <a class="btn btn-dark rounded-pill" href="<?= base_url('/registreTiquet/emissor') ?>">
+                    <a class="btn btn-dark rounded-pill" href="<?= base_url('/tiquets/emissor') ?>">
                 <?php endif; ?>
                         <i class="fa-solid fa-arrow-left"></i> <?= lang('general_lang.tornar') ?>
                     </a>

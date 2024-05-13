@@ -18,7 +18,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title"><?= lang('registre.model_title') ?></h5>
-                    <a href="<?= base_url("/registreTiquet") ?>">
+                    <a href="<?= base_url("/tiquets") ?>">
                         <i class="fa-solid fa-xmark"></i>
                     </a>
                 </div>
@@ -27,7 +27,7 @@
                 </div>
                 <div class="modal-footer">
                     <a href="<?= base_url("/eliminarTiquet/" . $id_tiquet) ?>" type="button" class="btn btn-danger"><?= lang('registre.buttons.delete') ?></a>
-                    <a href="<?= base_url("/registreTiquet") ?>" type="button" class="btn btn-secondary" data-dismiss="modal"><?= lang('registre.buttons.cancel') ?></a>
+                    <a href="<?= base_url("/tiquets") ?>" type="button" class="btn btn-secondary" data-dismiss="modal"><?= lang('registre.buttons.cancel') ?></a>
                 </div>
             </div>
         </div>

@@ -55,21 +55,21 @@
         <!--Sidebar estàtic-->
         <div class="col-sm-auto px-0" id="sidebar">
         <ul class="nav flex-column">
-                <?php if($uri == 'registreTiquet'):?>
+                <?php if($uri == 'tiquets'):?>
                     <li class="nav-item" id="actiu" title="<?= lang("registre.dispositius_rebuts") ?> ">
                 <?php else:?>
                     <li class="nav-item" title="<?= lang("registre.dispositius_rebuts") ?> ">
                 <?php endif;?>
-                        <a href="/registreTiquet" class="nav-link py-3 px-2" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                        <a href="/tiquets" class="nav-link py-3 px-2" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                             <i class="fa-solid fa-hammer"></i>
                         </a>
                     </li>
-                <?php if($uri == 'registreTiquet/emissor'):?>
+                <?php if($uri == 'tiquets/emissor'):?>
                     <li class="nav-item" id="actiu" title="<?= lang("registre.dispositius_rebuts") ?>">
                 <?php else:?>
                     <li class="nav-item" title="<?= lang("registre.dispositius_rebuts") ?>">
                 <?php endif;?>
-                        <a href="/registreTiquet/emissor" class="nav-link py-3 px-2" title="<?= lang("registre.table-dispositius") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                        <a href="/tiquets/emissor" class="nav-link py-3 px-2" title="<?= lang("registre.table-dispositius") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                             <i class="fa-solid fa-list-check"></i>
                         </a>
                     </li>

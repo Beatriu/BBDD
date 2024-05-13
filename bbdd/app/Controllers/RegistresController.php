@@ -53,7 +53,7 @@ class RegistresController extends BaseController
         if($role == 'professor' || $role == 'centre_emissor'){
             return view('registres' . DIRECTORY_SEPARATOR . 'registreTiquetsProfessor', $this->registreTiquetsProfessor('emissor', $id_tiquet));
         } else {
-            return redirect()->route('registreTiquet');
+            return redirect()->route('tiquets');
         }
     }
 
@@ -104,7 +104,7 @@ class RegistresController extends BaseController
         $crud->setTable('vista_tiquet');                        // set table name
         $crud->setPrimaryKey('id_tiquet'); 
         $crud->addItemLink('edit', 'fa-pencil', base_url('editarTiquet'), 'Editar Tiquet');
-        $crud->addItemLink('delete', 'fa-trash', base_url('registreTiquet/esborrar'), 'Eliminar Tiquet');
+        $crud->addItemLink('delete', 'fa-trash', base_url('tiquets/esborrar'), 'Eliminar Tiquet');
 
         $crud->setColumns(['codi_equip', 'nom_tipus_dispositiu', 'descripcio_avaria_limitada', 'nom_estat', 'nom_centre_emissor', 'data_alta_format', 'hora_alta_format']); // set columns/fields to show
         $crud->setColumnsInfo([                         // set columns/fields name
@@ -232,13 +232,13 @@ class RegistresController extends BaseController
         if ($repoemi == "emissor") {
             
             $crud->addItemLink('edit', 'fa-pencil', base_url('editarTiquet'), 'Editar Tiquet');
-            $crud->addItemLink('delete', 'fa-trash', base_url('registreTiquet/emissor/esborrar'), 'Eliminar Tiquet');
+            $crud->addItemLink('delete', 'fa-trash', base_url('tiquets/emissor/esborrar'), 'Eliminar Tiquet');
 
             $crud->addWhere('codi_centre_emissor', session()->get('user_data')['codi_centre']);
         }
         
         if ($repoemi == "reparador") {
-            $crud->addItemLink('view', 'fa-eye', base_url('vistaTiquet'), 'Veure Tiquet');
+            $crud->addItemLink('view', 'fa-eye', base_url('tiquets'), 'Veure Tiquet');
             $crud->addItemLink('edit', 'fa-pencil', base_url('editarTiquet'), 'Editar Tiquet');
 
             //Pendent de reparar AND codi centre reparador
@@ -377,9 +377,9 @@ class RegistresController extends BaseController
         ]);
         $crud->setTable('vista_tiquet');
         $crud->setPrimaryKey('id_tiquet');
-        $crud->addItemLink('view', 'fa-eye', base_url('vistaTiquet'), 'Veure Tiquet');
+        $crud->addItemLink('view', 'fa-eye', base_url('tiquets'), 'Veure Tiquet');
         $crud->addItemLink('edit', 'fa-pencil', base_url('editarTiquet'), 'Editar Tiquet');
-        $crud->addItemLink('delete', 'fa-trash', base_url('registreTiquet/esborrar'), 'Eliminar Tiquet');
+        $crud->addItemLink('delete', 'fa-trash', base_url('tiquets/esborrar'), 'Eliminar Tiquet');
         $crud->setColumns([
             'codi_equip',
             'nom_tipus_dispositiu',
@@ -487,9 +487,9 @@ class RegistresController extends BaseController
         }
 
         if ($role == "professor") {
-            return redirect()->to(base_url('/registreTiquet/emissor'));
+            return redirect()->to(base_url('/tiquets/emissor'));
         } else {
-            return redirect()->to(base_url('/registreTiquet'));
+            return redirect()->to(base_url('/tiquets'));
         }
     }
 
