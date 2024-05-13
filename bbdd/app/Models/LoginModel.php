@@ -66,4 +66,9 @@ class LoginModel extends Model
         return $this->where('login', $nom_login)->first();
     }
 
+    public function deleteLogin($id_login) 
+    {
+        return $this->delete(['id_login' => $id_login]);
+    }
+
 }

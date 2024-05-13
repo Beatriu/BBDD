@@ -9,6 +9,9 @@ use SIENSIS\KpaCrud\Libraries\KpaCrud;
 use App\Models\TiquetModel;
 use App\Models\EstatModel;
 use App\Models\IntervencioModel;
+use App\Models\LoginInRolModel;
+use App\Models\LoginModel;
+use App\Models\RolModel;
 
 class AlumnesController extends BaseController
 {
@@ -180,6 +183,9 @@ class AlumnesController extends BaseController
 
         $alumne_model = new AlumneModel();
         $centre_model = new CentreModel();
+        $login_model = new LoginModel();
+        $login_in_rol = new LoginInRolModel();
+        $rol_model = new RolModel();
 
         $role = session()->get('user_data')['role'];
 
@@ -222,6 +228,8 @@ class AlumnesController extends BaseController
 
                     $codi_centre = session()->get('user_data')['codi_centre'];
                     $alumne_model->addAlumne($correu_alumne, $codi_centre);
+                    $login_model->addLogin($correu_alumne, null);
+                    $login_in_rol->addLoginInRol($login_model->obtenirId($correu_alumne), $rol_model->obtenirIdRol("alumne"));
     
                 } else if ($role == "admin_sstt" || $role == "desenvolupador") {
     
@@ -232,6 +240,8 @@ class AlumnesController extends BaseController
 
                     if (session()->get('user_data')['id_sstt'] == $id_sstt_post) {
                         $alumne_model->addAlumne($correu_alumne, $codi_centre);
+                        $login_model->addLogin($correu_alumne, null);
+                        $login_in_rol->addLoginInRol($login_model->obtenirId($correu_alumne), $rol_model->obtenirIdRol("alumne"));
                     } else {
                         session()->setFlashdata('afegir_alumne_error', 'alumne.codi_no_sstt');
                         return redirect()->back()->withInput();
@@ -356,6 +366,9 @@ class AlumnesController extends BaseController
         $alumne_model = new AlumneModel();
         $centre_model = new CentreModel();
         $intervencio_model = new IntervencioModel();
+        $login_model = new LoginModel();
+        $login_in_rol = new LoginInRolModel();
+        $rol_model = new RolModel();
 
         $correu_alumne_editar = session()->get('correu_alumne_editar');
 
@@ -374,10 +387,15 @@ class AlumnesController extends BaseController
                 $id_sstt_alumne = $centre_model->obtenirCentre($codi_centre_alumne)['id_sstt'];
 
                 if ($role == "professor" && $codi_centre_alumne == $actor['codi_centre']) {
-
+                    
                     $alumne_model->addAlumne($correu_alumne_post, $alumne_editar['codi_centre']);
+                    $login_model->addLogin($correu_alumne_post, null);
+                    $login_in_rol->addLoginInRol($login_model->obtenirId($correu_alumne_post), $rol_model->obtenirIdRol("alumne"));
                     $intervencio_model->editarIntervencioCorreuNou($correu_alumne_editar, $correu_alumne_post);
                     $alumne_model->deleteAlumneByCorreu($correu_alumne_editar);
+                    $id_login = $login_model->obtenirId($correu_alumne_editar);
+                    $login_in_rol->deleteLoginInRol($id_login);
+                    $login_model->deleteLogin($id_login);
                     return redirect()->to(base_url('/alumnes'));
                     
                 } else if (($role == "admin_sstt" && $id_sstt_alumne == $actor['id_sstt']) || ($role == "desenvolupador")) {
@@ -392,6 +410,8 @@ class AlumnesController extends BaseController
                         if ($correu_alumne_editar != $correu_alumne_post) { // En cas que el correu original i el nou siguin diferents
                             
                             $alumne_model->addAlumne($correu_alumne_post, $codi_centre_post); // Creem un alumne nou
+                            $login_model->addLogin($correu_alumne_post, null);
+                            $login_in_rol->addLoginInRol($login_model->obtenirId($correu_alumne_post), $rol_model->obtenirIdRol("alumne"));
 
                             $intervencions = $intervencio_model->obtenirIdIntervencioAlumne($correu_alumne_editar); // Obtenim els id de les intervencions de l'alumne
                             for ($i = 0; $i < sizeof($intervencions); $i++){
@@ -399,6 +419,9 @@ class AlumnesController extends BaseController
                             }
                 
                             $alumne_model->deleteAlumneByCorreu($correu_alumne_editar); // Eliminem l'alumne antic
+                            $id_login = $login_model->obtenirId($correu_alumne_editar);
+                            $login_in_rol->deleteLoginInRol($id_login);
+                            $login_model->deleteLogin($id_login);
 
                         } else { // En cas que els correu original i el nou siguin iguals, només cal editar el codi centre
                      
