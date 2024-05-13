@@ -47,16 +47,6 @@
                         <i class="fa-solid fa-list-check"></i>
                     </a>
                 </li>
-                <li>
-                    <a href="#" class="nav-link py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
-                        <i class="fa-solid fa-boxes-stacked"></i>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
-                        <i class="fa-solid fa-users"></i>
-                    </a>
-                </li>
             </ul>
         </div>
         <!--SideBar desplegable-->

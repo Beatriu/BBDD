@@ -20,18 +20,18 @@ class RegistresController extends BaseController
 {
     public function index($id_tiquet = null)
     {
-    
+
         $role = session()->get('user_data')['role'];
 
         switch ($role) {
             case "alumne":
-            return view('registres' . DIRECTORY_SEPARATOR . 'registreTiquetsAlumnes', $this->registreTiquetsAlumnes($id_tiquet));
+                return view('registres' . DIRECTORY_SEPARATOR . 'registreTiquetsAlumnes', $this->registreTiquetsAlumnes($id_tiquet));
                 break;
             case "professor":
                 return view('registres' . DIRECTORY_SEPARATOR . 'registreTiquetsProfessor', $this->registreTiquetsProfessor('reparador', $id_tiquet));
                 break;
             case "centre_emissor":
-                return view('registres' . DIRECTORY_SEPARATOR . 'registreTiquetsProfessor', $this->registreTiquetsProfessor('emissor', $id_tiquet));
+                return view('registres' . DIRECTORY_SEPARATOR . 'registreTiquetsCentreEmissor', $this->registreTiquetsCentreEmissor($id_tiquet));
                 break;
             case "centre_reparador":
                 break;
@@ -48,9 +48,10 @@ class RegistresController extends BaseController
         }
     }
 
-    public function index2($id_tiquet = null) {
+    public function index2($id_tiquet = null)
+    {
         $role = session()->get('user_data')['role'];
-        if($role == 'professor' || $role == 'centre_emissor'){
+        if ($role == 'professor' || $role == 'centre_emissor') {
             return view('registres' . DIRECTORY_SEPARATOR . 'registreTiquetsProfessor', $this->registreTiquetsProfessor('emissor', $id_tiquet));
         } else {
             return redirect()->route('tiquets');
@@ -64,24 +65,24 @@ class RegistresController extends BaseController
         $data['title'] = 'Tiquets Professor';
         $data['id_tiquet'] = null;
         $data['error'] = '';
-
-        if($id_tiquet != null){
+        //dd(session()->get('user_data')['role']);
+        if ($id_tiquet != null) {
 
             // Dades per a la gestió de rols
             $tiquet = $tiquet_model->getTiquetById($id_tiquet);
             $role = session()->get('user_data')['role'];
+            
             $codi_centre = session()->get('user_data')['codi_centre'];
             $estat = $estat_model->obtenirEstatPerId($tiquet['id_estat']);
 
             if ((($role == "centre_emissor" || $role == "professor" || $role == "centre_reparador") && $estat == "Pendent de recollir" && $codi_centre == $tiquet['codi_centre_emissor']) || ($role == "sstt" && $estat == "Pendent de recollir") || $role == "admin_sstt" || $role == "desenvolupador") {
                 //Preguntar a la bbdd quin tiquet es i retornar l'array del tiquet.
                 $data['id_tiquet'] = $id_tiquet;
-                session()->setFlashdata("tiquet",$tiquet_model->getTiquetById($id_tiquet));
+                session()->setFlashdata("tiquet", $tiquet_model->getTiquetById($id_tiquet));
             } else {
                 $data['error'] = 'registre.no_permisos_eliminar';
             }
-
-        } 
+        }
         $crud = new KpaCrud();                          // loads default configuration    
         $crud->setConfig('onlyView');                   // sets configuration to onlyView
         $crud->setConfig([
@@ -102,7 +103,7 @@ class RegistresController extends BaseController
         ]);   // set editable config parameter to false
         // set into config file
         $crud->setTable('vista_tiquet');                        // set table name
-        $crud->setPrimaryKey('id_tiquet'); 
+        $crud->setPrimaryKey('id_tiquet');
         $crud->addItemLink('edit', 'fa-pencil', base_url('editarTiquet'), 'Editar Tiquet');
         $crud->addItemLink('delete', 'fa-trash', base_url('tiquets/esborrar'), 'Eliminar Tiquet');
 
@@ -118,18 +119,18 @@ class RegistresController extends BaseController
                 'name' => lang("registre.tipus_dispositiu"),
                 'type' => KpaCrud::DROPDOWN_FIELD_TYPE,
                 'options' => [
-                    "1"=>"Pantalla",
-                    "2"=>"Ordenador",
-                    "3"=>"Projector",
-                    "4"=>"Movil",
-                    "5"=>"Tablet",
-                    "6"=>"Portatil",
-                    "7"=>"Servidor",
-                    "8"=>"Altaveu",
-                    "9"=>"Dispositius multimedia",
-                    "10"=>"Impressora",
+                    "1" => "Pantalla",
+                    "2" => "Ordenador",
+                    "3" => "Projector",
+                    "4" => "Movil",
+                    "5" => "Tablet",
+                    "6" => "Portatil",
+                    "7" => "Servidor",
+                    "8" => "Altaveu",
+                    "9" => "Dispositius multimedia",
+                    "10" => "Impressora",
                 ],
-                'html_atts'=>[
+                'html_atts' => [
                     "required",
                 ]
             ],
@@ -190,7 +191,7 @@ class RegistresController extends BaseController
         $data['repoemi'] = $repoemi;
         $data['uri'] = $uri;
 
-        if($id_tiquet != null){
+        if ($id_tiquet != null) {
 
             // Dades per a la gestió de rols
             $tiquet = $tiquet_model->getTiquetById($id_tiquet);
@@ -201,12 +202,11 @@ class RegistresController extends BaseController
             if ((($role == "centre_emissor" || $role == "professor" || $role == "centre_reparador") && $estat == "Pendent de recollir" && $codi_centre == $tiquet['codi_centre_emissor']) || ($role == "sstt" && $estat == "Pendent de recollir") || $role == "admin_sstt" || $role == "desenvolupador") {
                 //Preguntar a la bbdd quin tiquet es i retornar l'array del tiquet.
                 $data['id_tiquet'] = $id_tiquet;
-                session()->setFlashdata("tiquet",$tiquet_model->getTiquetById($id_tiquet));
+                session()->setFlashdata("tiquet", $tiquet_model->getTiquetById($id_tiquet));
             } else {
                 $data['error'] = 'registre.no_permisos_eliminar';
             }
-
-        } 
+        }
         $crud = new KpaCrud();                          // loads default configuration    
         $crud->setConfig('onlyView');                   // sets configuration to onlyView
         $crud->setConfig([
@@ -227,36 +227,35 @@ class RegistresController extends BaseController
         ]);   // set editable config parameter to false
         // set into config file
         $crud->setTable('vista_tiquet');                        // set table name
-        $crud->setPrimaryKey('id_tiquet'); 
+        $crud->setPrimaryKey('id_tiquet');
 
         if ($repoemi == "emissor") {
-            
+
             $crud->addItemLink('edit', 'fa-pencil', base_url('editarTiquet'), 'Editar Tiquet');
             $crud->addItemLink('delete', 'fa-trash', base_url('tiquets/emissor/esborrar'), 'Eliminar Tiquet');
 
             $crud->addWhere('codi_centre_emissor', session()->get('user_data')['codi_centre']);
         }
-        
+
         if ($repoemi == "reparador") {
             $crud->addItemLink('view', 'fa-eye', base_url('tiquets'), 'Veure Tiquet');
             $crud->addItemLink('edit', 'fa-pencil', base_url('editarTiquet'), 'Editar Tiquet');
 
             //Pendent de reparar AND codi centre reparador
-            $crud->addWhere ("nom_estat","Pendent de reparar");
+            $crud->addWhere("nom_estat", "Pendent de reparar");
             $crud->addWhere('codi_centre_reparador', session()->get('user_data')['codi_centre'], true);
 
             // OR Reparant AND codi centre reparador
-            $crud->addWhere ("nom_estat","Reparant", false);
+            $crud->addWhere("nom_estat", "Reparant", false);
             $crud->addWhere('codi_centre_reparador', session()->get('user_data')['codi_centre'], true);
 
             // OR Reparat i pendent de recollir AND codi centre reparador
-            $crud->addWhere ("nom_estat","Reparat i pendent de recollir", false);
+            $crud->addWhere("nom_estat", "Reparat i pendent de recollir", false);
             $crud->addWhere('codi_centre_reparador', session()->get('user_data')['codi_centre'], true);
-
         }
-        
 
-        $crud->setColumns(['id_tiquet','codi_equip', 'nom_tipus_dispositiu', 'descripcio_avaria_limitada', 'nom_estat', 'nom_centre_emissor', 'data_alta_format', 'hora_alta_format']); // set columns/fields to show
+
+        $crud->setColumns(['id_tiquet', 'codi_equip', 'nom_tipus_dispositiu', 'descripcio_avaria_limitada', 'nom_estat', 'nom_centre_emissor', 'data_alta_format', 'hora_alta_format']); // set columns/fields to show
         $crud->setColumnsInfo([                         // set columns/fields name
             'id_tiquet' => [
                 'name' => lang("registre.id_tiquet"),
@@ -269,18 +268,18 @@ class RegistresController extends BaseController
                 'name' => lang("registre.tipus_dispositiu"),
                 'type' => KpaCrud::DROPDOWN_FIELD_TYPE,
                 'options' => [
-                    "1"=>"Pantalla",
-                    "2"=>"Ordenador",
-                    "3"=>"Projector",
-                    "4"=>"Movil",
-                    "5"=>"Tablet",
-                    "6"=>"Portatil",
-                    "7"=>"Servidor",
-                    "8"=>"Altaveu",
-                    "9"=>"Dispositius multimedia",
-                    "10"=>"Impressora",
+                    "1" => "Pantalla",
+                    "2" => "Ordenador",
+                    "3" => "Projector",
+                    "4" => "Movil",
+                    "5" => "Tablet",
+                    "6" => "Portatil",
+                    "7" => "Servidor",
+                    "8" => "Altaveu",
+                    "9" => "Dispositius multimedia",
+                    "10" => "Impressora",
                 ],
-                'html_atts'=>[
+                'html_atts' => [
                     "required",
                 ]
             ],
@@ -325,7 +324,7 @@ class RegistresController extends BaseController
             ]
 
         ]);
-        $data['output'] = $crud->render();         
+        $data['output'] = $crud->render();
         return $data;
     }
 
@@ -340,7 +339,7 @@ class RegistresController extends BaseController
         $actor = session()->get('user_data');
         $role = $actor['role'];
 
-        if($id_tiquet != null){
+        if ($id_tiquet != null) {
 
             // Dades per a la gestió de rols
             $tiquet = $tiquet_model->getTiquetById($id_tiquet);
@@ -350,12 +349,11 @@ class RegistresController extends BaseController
             if ((($role == "centre_emissor" || $role == "professor" || $role == "centre_reparador") && $estat == "Pendent de recollir" && $codi_centre == $tiquet['codi_centre_emissor']) || ($role == "sstt" && $estat == "Pendent de recollir") || $role == "admin_sstt" || $role == "desenvolupador") {
                 //Preguntar a la bbdd quin tiquet es i retornar l'array del tiquet.
                 $data['id_tiquet'] = $id_tiquet;
-                session()->setFlashdata("tiquet",$tiquet_model->getTiquetById($id_tiquet));
+                session()->setFlashdata("tiquet", $tiquet_model->getTiquetById($id_tiquet));
             } else {
                 $data['error'] = 'registre.no_permisos_eliminar';
             }
-
-        } 
+        }
 
         $crud = new KpaCrud();
         $crud->setConfig('onlyView');
@@ -397,22 +395,22 @@ class RegistresController extends BaseController
             'codi_equip' => [
                 'name' => lang("registre.codi_equip")
             ],
-           'nom_tipus_dispositiu' => [
+            'nom_tipus_dispositiu' => [
                 'name' => lang("registre.tipus_dispositiu"),
                 'type' => KpaCrud::DROPDOWN_FIELD_TYPE,
                 'options' => [
-                    "1"=>"Pantalla",
-                    "2"=>"Ordenador",
-                    "3"=>"Projector",
-                    "4"=>"Movil",
-                    "5"=>"Tablet",
-                    "6"=>"Portatil",
-                    "7"=>"Servidor",
-                    "8"=>"Altaveu",
-                    "9"=>"Dispositius multimedia",
-                    "10"=>"Impressora",
+                    "1" => "Pantalla",
+                    "2" => "Ordenador",
+                    "3" => "Projector",
+                    "4" => "Movil",
+                    "5" => "Tablet",
+                    "6" => "Portatil",
+                    "7" => "Servidor",
+                    "8" => "Altaveu",
+                    "9" => "Dispositius multimedia",
+                    "10" => "Impressora",
                 ],
-                'html_atts'=>[
+                'html_atts' => [
                     "required",
                 ]
             ],
@@ -429,17 +427,17 @@ class RegistresController extends BaseController
                 'name' => lang("registre.estat"),
                 'type' => KpaCrud::DROPDOWN_FIELD_TYPE,
                 'options' => [
-                    "1"=>"Pendent de recollir",
-                    "2"=>"Emmagatzemat a SSTT",
-                    "3"=>"Pendent de reparar",
-                    "4"=>"Reparant",
-                    "5"=>"Reparat i pendent de recollir",
-                    "6"=>"Pendent de retorn",
-                    "7"=>"Retornat",
-                    "8"=>"Rebutjat per SSTT",
-                    "9"=>"Desguassat",
+                    "1" => "Pendent de recollir",
+                    "2" => "Emmagatzemat a SSTT",
+                    "3" => "Pendent de reparar",
+                    "4" => "Reparant",
+                    "5" => "Reparat i pendent de recollir",
+                    "6" => "Pendent de retorn",
+                    "7" => "Retornat",
+                    "8" => "Rebutjat per SSTT",
+                    "9" => "Desguassat",
                 ],
-                'html_atts'=>[
+                'html_atts' => [
                     "required",
                 ]
             ],
@@ -469,7 +467,8 @@ class RegistresController extends BaseController
 
 
 
-    public function eliminarTiquet($id_tiquet){
+    public function eliminarTiquet($id_tiquet)
+    {
 
         $tiquet_model = new TiquetModel();
         $estat_model = new EstatModel();
@@ -493,8 +492,8 @@ class RegistresController extends BaseController
         }
     }
 
-    public function editTiquet(){
-
+    public function editTiquet()
+    {
     }
 
     public function registreTiquetsAlumnes($id_tiquet)
@@ -522,7 +521,20 @@ class RegistresController extends BaseController
         ]);
         $crud->setTable('vista_tiquet');
         $crud->setPrimaryKey('id_tiquet');
-        $crud->addItemLink('view', 'fa-eye', base_url('vistaTiquet'), 'Veure Tiquet');
+        $crud->addItemLink('view', 'fa-eye', base_url('tiquets'), 'Veure Tiquet');
+
+        //Pendent de reparar AND codi centre reparador
+        /*$crud->addWhere("nom_estat", "Pendent de reparar");
+        //dd(session()->get('user_data'));
+        $crud->addWhere('codi_centre_reparador', session()->get('user_data')['codi_centre'], true);
+
+        // OR Reparant AND codi centre reparador
+        $crud->addWhere("nom_estat", "Reparant", false);
+        $crud->addWhere('codi_centre_reparador', session()->get('user_data')['codi_centre'], true);
+
+        // OR Reparat i pendent de recollir AND codi centre reparador
+        $crud->addWhere("nom_estat", "Reparat i pendent de recollir", false);
+        $crud->addWhere('codi_centre_reparador', session()->get('user_data')['codi_centre'], true);*/
         $crud->setColumns([
             'codi_equip',
             'nom_tipus_dispositiu',
@@ -538,7 +550,7 @@ class RegistresController extends BaseController
             'codi_equip' => [
                 'name' => lang("registre.codi_equip")
             ],
-           'nom_tipus_dispositiu' => [
+            'nom_tipus_dispositiu' => [
                 'name' => lang("registre.tipus_dispositiu"),
             ],
             'descripcio_avaria_limitada' => [
@@ -564,7 +576,6 @@ class RegistresController extends BaseController
 
     public function registreTiquetsEmissor()
     {
-        
     }
 
     public function registreTiquetsAdmin()
