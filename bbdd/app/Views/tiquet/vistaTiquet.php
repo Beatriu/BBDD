@@ -40,6 +40,12 @@
         <div class="row">
 
             <div class="col-3">
+                <div class="row mb-5 ps-2">
+                    <a id = "tornar_button_vista_tiquet" class="btn btn-dark rounded-pill" href="<?= base_url('/tiquets') ?>">
+                        <i class="fa-solid fa-arrow-left"></i> <?= lang('general_lang.tornar') ?>
+                    </a>
+                </div>
+
                 <img src="<?= base_url('/img/ordinador_defecte.png') ?>" alt="" width="200px" class="mb-3">
 
                 <div class="w-17 border-right-1">

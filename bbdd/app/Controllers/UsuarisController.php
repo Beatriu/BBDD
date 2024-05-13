@@ -210,7 +210,13 @@ class UsuarisController extends BaseController
                     }
                     $session_data['codi_centre'] = $codi_centre;
                 } else { // En cas que sigui alumne
-                    $session_data['codi_centre'] = $alumne_model->getAlumneByCorreu($session_data['mail']);
+
+                    $alumne = $alumne_model->getAlumneByCorreu($session_data['mail']);
+                    if ($alumne['actiu'] == 0) {
+                        session()->destroy();
+                        return redirect()->back();
+                    }
+                    $session_data['codi_centre'] = $alumne['codi_centre'];
                 }
 
                 session()->set('user_data', $session_data); //Guardem la informació de l'usuari
