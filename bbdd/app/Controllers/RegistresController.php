@@ -11,6 +11,8 @@ use App\Models\LoginInRolModel;
 use App\Models\LoginModel;
 use App\Models\RolModel;
 use App\Models\TiquetModel;
+use App\Models\ProfessorModel;
+use App\Models\LlistaAdmesosModel;
 use Google\Service\BigtableAdmin\Split;
 use SebastianBergmann\Type\TrueType;
 
@@ -18,19 +20,18 @@ class RegistresController extends BaseController
 {
     public function index($id_tiquet = null)
     {
-        //TODO: Fer que aquest controllador miri quin rol té i redireccioni a la funció amb taula que li pertoca veure a l'usuari.
-
+    
         $role = session()->get('user_data')['role'];
 
         switch ($role) {
             case "alumne":
+            return view('registres' . DIRECTORY_SEPARATOR . 'registreTiquetsAlumnes', $this->registreTiquetsAlumnes($id_tiquet));
                 break;
             case "professor":
                 return view('registres' . DIRECTORY_SEPARATOR . 'registreTiquetsProfessor', $this->registreTiquetsProfessor('reparador', $id_tiquet));
                 break;
             case "centre_emissor":
                 return view('registres' . DIRECTORY_SEPARATOR . 'registreTiquetsProfessor', $this->registreTiquetsProfessor('emissor', $id_tiquet));
-                //$this->index2();
                 break;
             case "centre_reparador":
                 break;
@@ -324,8 +325,7 @@ class RegistresController extends BaseController
             ]
 
         ]);
-        //$crud->addWhere('blog.blog_id!="1"'); // show filtered data
-        $data['output'] = $crud->render();          // renders view
+        $data['output'] = $crud->render();         
         return $data;
     }
 
@@ -491,11 +491,74 @@ class RegistresController extends BaseController
         } else {
             return redirect()->to(base_url('/registreTiquet'));
         }
-        
     }
 
     public function editTiquet(){
 
+    }
+
+    public function registreTiquetsAlumnes($id_tiquet)
+    {
+        $data['title'] = 'Tiquets alumnes';
+        $data['id_tiquet'] = null;
+        $data['error'] = '';
+        $crud = new KpaCrud();
+        $crud->setConfig('onlyView');
+        $crud->setConfig([
+            "numerate" => false,
+            "add_button" => false,
+            "show_button" => false,
+            "recycled_button" => false,
+            "useSoftDeletes" => true,
+            "multidelete" => false,
+            "filterable" => false,
+            "editable" => false,
+            "removable" => false,
+            "paging" => false,
+            "numerate" => false,
+            "sortable" => true,
+            "exportXLS" => false,
+            "print" => false
+        ]);
+        $crud->setTable('vista_tiquet');
+        $crud->setPrimaryKey('id_tiquet');
+        $crud->addItemLink('view', 'fa-eye', base_url('vistaTiquet'), 'Veure Tiquet');
+        $crud->setColumns([
+            'codi_equip',
+            'nom_tipus_dispositiu',
+            'descripcio_avaria_limitada',
+            'nom_estat',
+            'data_alta_format',
+            'hora_alta_format'
+        ]);
+        $crud->setColumnsInfo([
+            'id_tiquet' => [
+                'type' => KpaCrud::INVISIBLE_FIELD_TYPE,
+            ],
+            'codi_equip' => [
+                'name' => lang("registre.codi_equip")
+            ],
+           'nom_tipus_dispositiu' => [
+                'name' => lang("registre.tipus_dispositiu"),
+            ],
+            'descripcio_avaria_limitada' => [
+                'name' => lang("registre.descripcio_avaria"),
+            ],
+            'nom_estat' => [
+                'name' => lang("registre.estat"),
+            ],
+            'data_alta_format' => [
+                'name' => lang("registre.data_alta"),
+                'type' => KpaCrud::DATETIME_FIELD_TYPE,
+                'default' => '1-2-2022'
+            ],
+            'hora_alta_format' => [
+                'name' => lang("registre.hora_alta"),
+            ],
+        ]);
+
+        $data['output'] = $crud->render();
+        return $data;
     }
 
 
