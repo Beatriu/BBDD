@@ -7,8 +7,10 @@ use CodeIgniter\HTTP\ResponseInterface;
 
 class TiquetController extends BaseController
 {
+
     public function viewTiquet($id)
     {
-        return view('tiquet' . DIRECTORY_SEPARATOR . 'vistaTiquet');
+        $data['title'] = "hola";
+        return view('tiquet' . DIRECTORY_SEPARATOR . 'vistaTiquet', $data);
     }
 }

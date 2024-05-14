@@ -13,23 +13,27 @@
 
 <?= $this->section('contingut'); ?>
 
-    <div class="w-25 border">25%
+    <div class="col-2">
 
         <img src="" alt="">
 
-        <div class="w-17 border-right-1">
-            <h2><?= lang('general_lang.dades_tiquet.dades_titol') ?></h2>
-            <ul class="w-17 border-danger ">
+        <div class="card m-md-4">
+            <div class="bg-dark text-white p-1">
+                <h2><?= lang('general_lang.dades_tiquet.dades_titol') ?></h2>
+            </div>
+            <ul class="w-17 list-inline border-danger fs-5 p-1">
                 <li><?= lang('general_lang.dades_tiquet.dades_codi') ?> </li>
                 <li><?= lang('general_lang.dades_tiquet.dades_tipus') ?> </li>
                 <li><?= lang('general_lang.dades_tiquet.dades_estat') ?> </li>
             </ul>
         </div>
 
-        
-
     </div>
         
-    <div class="w-75 border">75%</div>
+    <div class="border col-2 m-4">
+        
+        <div class="card m-md-4">TITOL TIQUET I LLISTAT INTERVENCIONS</div>
+
+    </div>
 
 <?= $this->endSection('contingut'); ?>

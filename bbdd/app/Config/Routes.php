@@ -42,6 +42,8 @@ $routes->get('/registreTiquetEmissor', 'RegistresController::index', ['filter'=>
 //Vista Tiquets
 $routes->get('/vistaTiquet/(:any)', 'TiquetController::viewTiquet/$1', ['filter'=>'Autentica']);
 
+//$routes->get('/vistaTiquet1', 'TiquetController::viewTiquet1', ['filter'=>'Autentica']);
+
 //Inventari
 $routes->get('/registreTiquetProfessor', 'RegistresController::index', ['filter'=>'Autentica']);
 //$routes->get('/tiquets', 'RegistresController::index');

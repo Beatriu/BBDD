@@ -61,9 +61,9 @@ return [
     'importar_csv' => 'Importar CSV',
     'dades_tiquet' => [
         'dades_titol' => 'Dades',
-        'dades_codi' => 'Codi',
-        'dades_tipus' => 'Tipus',
-        'dades_estat' => 'Estat informatiu',
-        'dades_intervencions' => 'Intervencions del tiquet',
+        'dades_codi' => 'Codi:',
+        'dades_tipus' => 'Tipus:',
+        'dades_estat' => 'Estat informatiu:',
+        'dades_intervencions' => 'Intervencions del tiquet:',
     ],
 ];
