@@ -20,7 +20,6 @@ class RegistresController extends BaseController
 {
     public function index($id_tiquet = null)
     {
-
         $role = session()->get('user_data')['role'];
 
         switch ($role) {
@@ -524,7 +523,7 @@ class RegistresController extends BaseController
         $crud->addItemLink('view', 'fa-eye', base_url('tiquets'), 'Veure Tiquet');
 
         //Pendent de reparar AND codi centre reparador
-        /*$crud->addWhere("nom_estat", "Pendent de reparar");
+        $crud->addWhere("nom_estat", "Pendent de reparar");
         //dd(session()->get('user_data'));
         $crud->addWhere('codi_centre_reparador', session()->get('user_data')['codi_centre'], true);
 
@@ -534,7 +533,7 @@ class RegistresController extends BaseController
 
         // OR Reparat i pendent de recollir AND codi centre reparador
         $crud->addWhere("nom_estat", "Reparat i pendent de recollir", false);
-        $crud->addWhere('codi_centre_reparador', session()->get('user_data')['codi_centre'], true);*/
+        $crud->addWhere('codi_centre_reparador', session()->get('user_data')['codi_centre'], true);
         $crud->setColumns([
             'codi_equip',
             'nom_tipus_dispositiu',
