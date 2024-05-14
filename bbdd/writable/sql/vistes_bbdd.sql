@@ -47,3 +47,30 @@ FROM intervencio i
 LEFT JOIN tiquet t ON i.id_tiquet = t.id_tiquet
 LEFT JOIN estat e ON t.id_estat = e.id_estat
 LEFT JOIN tipus_intervencio ti ON i.id_tipus_intervencio = ti.id_tipus_intervencio;
+
+
+CREATE VIEW vista_inventari AS
+SELECT 
+    i.id_inventari,
+    LEFT(i.descripcio_inventari, 50) AS descripcio_inventari_limitada,
+    IF(CHAR_LENGTH(i.descripcio_inventari) > 50, CONCAT(LEFT(i.descripcio_inventari, 47), '...'), i.descripcio_inventari) AS descripcio_inventari,
+    i.data_compra,
+    i.preu,
+    i.id_tipus_inventari,
+    ti.nom_tipus_inventari,
+    i.id_intervencio,
+    i.codi_centre,
+    c.nom_centre,
+    c.id_sstt,
+    s.nom_sstt
+FROM 
+    inventari i
+JOIN 
+    centre c ON i.codi_centre = c.codi_centre
+JOIN 
+    tipus_inventari ti ON i.id_tipus_inventari = ti.id_tipus_inventari
+JOIN
+    sstt s ON c.id_sstt = s.id_sstt;
+
+
+

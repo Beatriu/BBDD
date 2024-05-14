@@ -73,4 +73,8 @@ class IntervencioModel extends Model
         return $this->delete(['id_intervencio' => $id_intervencio]);
     }
 
+    public function editarIntervencio($id_intervencio, $id_tipus_intervencio, $id_curs, $descripcio_intervencio, $correu_alumne, $id_xtec) {
+        return $this->update($id_intervencio,["id_tipus_intervencio" => $id_tipus_intervencio, "id_curs" => $id_curs, "descripcio_intervencio" => $descripcio_intervencio, "correu_alumne" => $correu_alumne, "id_xtec" => $id_xtec]);
+    }
+
 }

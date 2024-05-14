@@ -104,7 +104,7 @@ class RegistresController extends BaseController
         // set into config file
         $crud->setTable('vista_tiquet');                        // set table name
         $crud->setPrimaryKey('id_tiquet');
-        $crud->addItemLink('edit', 'fa-pencil', base_url('editarTiquet'), 'Editar Tiquet');
+        $crud->addItemLink('edit', 'fa-pencil', base_url('/tiquets/editar'), 'Editar Tiquet');
         $crud->addItemLink('delete', 'fa-trash', base_url('tiquets/esborrar'), 'Eliminar Tiquet');
 
         $crud->setColumns(['codi_equip', 'nom_tipus_dispositiu', 'descripcio_avaria_limitada', 'nom_estat', 'nom_centre_emissor', 'data_alta_format', 'hora_alta_format']); // set columns/fields to show
@@ -231,7 +231,7 @@ class RegistresController extends BaseController
 
         if ($repoemi == "emissor") {
 
-            $crud->addItemLink('edit', 'fa-pencil', base_url('editarTiquet'), 'Editar Tiquet');
+            $crud->addItemLink('edit', 'fa-pencil', base_url('/tiquets/editar'), 'Editar Tiquet');
             $crud->addItemLink('delete', 'fa-trash', base_url('tiquets/emissor/esborrar'), 'Eliminar Tiquet');
 
             $crud->addWhere('codi_centre_emissor', session()->get('user_data')['codi_centre']);
@@ -239,7 +239,7 @@ class RegistresController extends BaseController
 
         if ($repoemi == "reparador") {
             $crud->addItemLink('view', 'fa-eye', base_url('tiquets'), 'Veure Tiquet');
-            $crud->addItemLink('edit', 'fa-pencil', base_url('editarTiquet'), 'Editar Tiquet');
+            $crud->addItemLink('edit', 'fa-pencil', base_url('/tiquets/editar'), 'Editar Tiquet');
 
             //Pendent de reparar AND codi centre reparador
             $crud->addWhere("nom_estat", "Pendent de reparar");
@@ -376,7 +376,7 @@ class RegistresController extends BaseController
         $crud->setTable('vista_tiquet');
         $crud->setPrimaryKey('id_tiquet');
         $crud->addItemLink('view', 'fa-eye', base_url('tiquets'), 'Veure Tiquet');
-        $crud->addItemLink('edit', 'fa-pencil', base_url('editarTiquet'), 'Editar Tiquet');
+        $crud->addItemLink('edit', 'fa-pencil', base_url('/tiquets/editar'), 'Editar Tiquet');
         $crud->addItemLink('delete', 'fa-trash', base_url('tiquets/esborrar'), 'Eliminar Tiquet');
         $crud->setColumns([
             'codi_equip',

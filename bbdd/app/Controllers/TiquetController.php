@@ -9,8 +9,12 @@ use App\Models\TipusDispositiuModel;
 use App\Models\TiquetModel;
 use SIENSIS\KpaCrud\Libraries\KpaCrud;
 
+
 class TiquetController extends BaseController
 {
+
+    protected $helpers = ['form'];
+
     public function viewTiquet($id_tiquet)
     {
         $tiquet_model = new TiquetModel();
@@ -109,7 +113,8 @@ class TiquetController extends BaseController
                         }
                     }
 
-                    $crud->addItemLink('delete', 'fa-trash', base_url('tiquets/' . $id_tiquet . '/esborrar'), 'Eliminar Tiquet');
+                    $crud->addItemLink('edit', 'fa-pencil', base_url('editar/intervencio/' . $id_tiquet ), 'Editar Intervenció');
+                    $crud->addItemLink('delete', 'fa-trash', base_url('tiquets/' . $id_tiquet . '/esborrar'), 'Eliminar Intervenció');
 
                     $crud->addWhere('id_tiquet', $id_tiquet);
                     $crud->addWhere ("estat_tiquet","Pendent de reparar", true);
@@ -123,6 +128,7 @@ class TiquetController extends BaseController
                 } else if ($role == "sstt" || $role == "admin_sstt") {
 
                     if ($role == "admin_sstt") {
+                        $crud->addItemLink('edit', 'fa-pencil', base_url('editar/intervencio/' . $id_tiquet ), 'Editar Intervenció');
                         $crud->addItemLink('delete', 'fa-trash', base_url('tiquets/esborrar'), 'Eliminar Tiquet');
                     }
     
@@ -434,6 +440,7 @@ class TiquetController extends BaseController
      */
     public function editarTiquet($id_tiquet) 
     {
+        
         $data['title'] = "Editar Tiquet";
 
         $tiquet_model = new TiquetModel();
@@ -782,7 +789,7 @@ class TiquetController extends BaseController
         }
 
         if ($error) {
-            return redirect()->to(base_url('/editarTiquet/' . session()->getFlashdata('id_tiquet')));
+            return redirect()->to(base_url('/tiquets/editar/' . session()->getFlashdata('id_tiquet')));
         } else {
             if ($role == "professor") {
                 return redirect()->to(base_url('/tiquets/emissor'));

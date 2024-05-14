@@ -15,6 +15,8 @@ use App\Models\RolModel;
 
 class AlumnesController extends BaseController
 {
+    protected $helpers = ['form'];
+    
     public function registreAlumnes($correu_alumne_eliminar = null)
     {
 

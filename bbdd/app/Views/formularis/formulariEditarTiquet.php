@@ -13,17 +13,13 @@
 
 <?= $this->section('contingut'); ?>
 
-    <form class="container" method="POST" action="<?= base_url('/editarTiquet') ?>">
+    <form class="container" method="POST" action="<?= base_url('/tiquets/editar') ?>">
         <?= csrf_field() ?>
         <div class="row mt-5 justify-content-center">
             <div class="col-2 d-flex align-items-center">
-            <?php if($role != "professor"): ?>
-                    <a class="btn btn-dark rounded-pill" href="<?= base_url('/tiquets') ?>">
-                <?php else: ?>
-                    <a class="btn btn-dark rounded-pill" href="<?= base_url('/tiquets/emissor') ?>">
-                <?php endif; ?>
-                        <i class="fa-solid fa-arrow-left"></i> <?= lang('general_lang.tornar') ?>
-                    </a>
+                <a class="btn btn-dark rounded-pill" href="<?= base_url('/tiquets') ?>">
+                    <i class="fa-solid fa-arrow-left"></i> <?= lang('general_lang.tornar') ?>
+                </a>
             </div>
             <div class="col-10 justify-content-left">
                 <h1><?= lang('general_lang.edit_tiquet') ?></h1>

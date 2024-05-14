@@ -163,6 +163,10 @@ class UsuarisController extends BaseController
             return view('logins' . DIRECTORY_SEPARATOR . 'loginGeneral', $data); // Es retorna la vista bàsica d'inici de sessió
         } else { // En cas que estigui creada la sessió de token i la sessió de la infromació de l'usuari
             
+            if (isset(session()->get('user_data')['codi_centre'])) {
+                return redirect()->to(base_url('/tiquets'));
+            }
+
             $mail = session()->get('user_data')['mail']; // Obtenim el correu guardat en sessió
 
             if ($login_model->obtenirLogin($mail) == null) { // En cas que el login no existeixi

@@ -27,8 +27,8 @@ $routes->post('/formulariTiquet', 'TiquetController::createTiquet_post', ['filte
 $routes->get('/tiquets', 'RegistresController::index', ['filter'=>'Autentica']);
 $routes->get('/tiquets/emissor', 'RegistresController::index2', ['filter'=>'Autentica']);
 
-$routes->post('/editarTiquet', 'Home::editarTiquet_post', ['filter'=>'Autentica']);
-$routes->get('/editarTiquet/(:any)', 'Home::editarTiquet/$1', ['filter'=>'Autentica']);
+$routes->post('/tiquets/editar', 'TiquetController::editarTiquet_post', ['filter'=>'Autentica']);
+$routes->get('/tiquets/editar/(:any)', 'TiquetController::editarTiquet/$1', ['filter'=>'Autentica']);
 $routes->get('/tiquets/esborrar/(:any)', 'RegistresController::index/$1', ['filter'=>'Autentica']);
 $routes->get('/tiquets/emissor/esborrar/(:any)', 'RegistresController::index2/$1', ['filter'=>'Autentica']);
 
@@ -38,8 +38,11 @@ $routes->get('/eliminarTiquet/(:any)', 'RegistresController::eliminarTiquet/$1',
 
 
 //Inventari
-$routes->get('/registreTiquetProfessor', 'RegistresController::index', ['filter'=>'Autentica']);
-//$routes->get('/tiquets', 'RegistresController::index');
+$routes->get('/inventari', 'InventarisController::registreInventari', ['filter'=>'Autentica']);
+$routes->get('/inventari/afegir', 'InventarisController::crearInventari', ['filter'=>'Autentica']);
+$routes->post('/inventari/afegir', 'InventarisController::crearInventari_post', ['filter'=>'Autentica']);
+$routes->get('/inventari/esborrar/(:segment)', 'InventarisController::registreInventari/$1', ['filter'=>'Autentica']);
+$routes->get('/eliminarInventari/(:segment)', 'InventarisController::eliminarInventari/$1', ['filter'=>'Autentica']);
 
 //Alumnes
 $routes->get('/alumnes', 'AlumnesController::registreAlumnes', ['filter'=>'Autentica']);
@@ -57,8 +60,8 @@ $routes->get('/eliminarAlumne/(:segment)', 'AlumnesController::eliminarAlumne/$1
 //Intervencions
 $routes->get('/afegir/intervencio/(:segment)', 'IntervencionsController::createIntervencio/$1', ['filter'=>'Autentica']);
 $routes->post('/afegir/intervencio', 'IntervencionsController::createIntervencio_post', ['filter'=>'Autentica']);  
-$routes->get('/editar/intervencio', 'IntervencionsController::editarIntervencio', ['filter'=>'Autentica']);
-$routes->get('/editar/intervencio', 'IntervencionsController::editarIntervencio_post', ['filter'=>'Autentica']);
+$routes->get('/editar/intervencio/(:segment)/(:segment)', 'IntervencionsController::editarIntervencio/$1/$2', ['filter'=>'Autentica']);
+$routes->post('/editar/intervencio', 'IntervencionsController::editarIntervencio_post', ['filter'=>'Autentica']);
 $routes->get('/tiquets/(:segment)/esborrar/(:segment)', 'IntervencionsController::eliminarIntervencio_vista/$1/$2', ['filter'=>'Autentica']);
 $routes->get('/eliminarIntervencio/(:segment)/(:segment)', 'IntervencionsController::eliminarIntervencio/$1/$2', ['filter'=>'Autentica']);
 

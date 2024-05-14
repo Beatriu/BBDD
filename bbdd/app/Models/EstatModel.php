@@ -60,4 +60,8 @@ class EstatModel extends Model
     public function obtenirEstatPerId($id_estat) {
         return $this->select('nom_estat')->where('id_estat', $id_estat)->first()['nom_estat'];
     }
+
+    public function obtenirIdPerEstat($nom_estat) {
+        return $this->select('id_estat')->where('nom_estat', $nom_estat)->first()['id_estat'];
+    }
 }

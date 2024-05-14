@@ -36,11 +36,11 @@
         <div class="row mt-3 mb-3">
             <div class="col">
                 <label for="id_intervencio" class="form-label"><?= lang('intervencio.id_intervencio') ?> *</label>
-                <input class="form-control" name = "id_intervencio" id="id_intervencio" value="1234" disabled>
+                <input class="form-control" name = "id_intervencio" id="id_intervencio" value="<?= $intervencio['id_intervencio'] ?>" disabled>
             </div>
             <div class="col">
                 <label for="tipus_intervencio" class="form-label"><?= lang('intervencio.tipus_intervencio') ?> *</label>
-                <input class="form-control selector" name = "tipus_intervencio" list="datalistOptionsTipusIntervencio" id="tipus_intervencio" placeholder="<?= lang('intervencio.tipus_intervencio') ?>" required>
+                <input class="form-control selector" name = "tipus_intervencio" list="datalistOptionsTipusIntervencio" id="tipus_intervencio" placeholder="<?= lang('intervencio.tipus_intervencio') ?>" value="<?= $selected_intervencio ?>" required>
                 <datalist id="datalistOptionsTipusIntervencio">
                     <?=$tipus_intervencio?>
                 </datalist>
@@ -48,7 +48,7 @@
             </div>
             <div class="col">
             <label for="curs" class="form-label"><?= lang('intervencio.curs') ?> *</label>
-                <input class="form-control selector" name = "curs" list="datalistOptionsCursos" id="curs" placeholder="<?= lang('intervencio.tipus_intervencio') ?>" required>
+                <input class="form-control selector" name = "curs" list="datalistOptionsCursos" id="curs" placeholder="<?= lang('intervencio.curs') ?>" value="<?= $selected_curs ?>" required>
                 <datalist id="datalistOptionsCursos">
                     <?=$cursos?>
                 </datalist>
@@ -57,7 +57,7 @@
 
         <div class="mb-3">
             <label for="descripcio_intervencio" class="form-label"><?= lang('intervencio.descripcio_intervencio') ?></label>
-            <textarea maxlength="512" class="form-control" id="descripcio_intervencio" name="descripcio_intervencio" rows="3"></textarea>
+            <textarea maxlength="512" class="form-control" id="descripcio_intervencio" name="descripcio_intervencio" rows="3"><?= $intervencio['descripcio_intervencio'] ?></textarea>
         </div>
 
         <div class="row justify-content-center mt-4">
