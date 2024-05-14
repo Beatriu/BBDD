@@ -62,4 +62,13 @@ class LoginModel extends Model
         ]);
     }
 
+    public function obtenirIdSSTT($nom_login) {
+        return $this->where('login', $nom_login)->first();
+    }
+
+    public function deleteLogin($id_login) 
+    {
+        return $this->delete(['id_login' => $id_login]);
+    }
+
 }

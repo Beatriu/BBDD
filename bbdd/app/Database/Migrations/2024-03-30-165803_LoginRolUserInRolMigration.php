@@ -26,7 +26,12 @@ class LoginRolUserInRolMigration extends Migration
                 'type' => 'VARCHAR',
                 'constraint' => '255',
                 'null' => true,
-            ]
+            ],
+            'id_sstt' => [
+                'type' => 'VARCHAR',
+                'constraint' => '4',
+                'null' => true,
+            ],
         ]);
         $this->forge->addKey('id_login', true);
         $this->forge->createTable('login'); 

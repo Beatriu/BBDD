@@ -51,7 +51,7 @@ class EstatModel extends Model
 
     public function getProfessorEstats() {
         return $this->select(['id_estat', 'nom_estat'])
-        ->where('nom_estat', 'Assignat i pendent de reparar')
+        ->where('nom_estat', 'Pendent de reparar')
         ->orWhere('nom_estat', 'Reparant')
         ->orWhere('nom_estat', 'Reparat i pendent de recollir')
         ->findAll();
@@ -59,5 +59,9 @@ class EstatModel extends Model
 
     public function obtenirEstatPerId($id_estat) {
         return $this->select('nom_estat')->where('id_estat', $id_estat)->first()['nom_estat'];
+    }
+
+    public function obtenirIdPerEstat($nom_estat) {
+        return $this->select('id_estat')->where('nom_estat', $nom_estat)->first()['id_estat'];
     }
 }

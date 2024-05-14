@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\AlumneModel;
 use App\Models\LoginInRolModel;
 use App\Models\LoginModel;
 use App\Models\ProfessorModel;
@@ -76,11 +77,15 @@ class UsuarisController extends BaseController
 
                     if ($role != "alumne" && $role != "professor") {
                         $session_data['codi_centre'] = "no_codi";
+
+                        if ($role == "sstt" || $role == "admin_sstt") {
+                            $session_data['id_sstt'] = $login_model->obtenirIdSSTT($session_data['mail'])['id_sstt'];
+                        }
                     }
                     
                     session()->set('user_data', $session_data);
 
-                    return redirect()->to(base_url('/registreTiquet'));
+                    return redirect()->to(base_url('/tiquets'));
                 }
             }
         }
@@ -99,12 +104,12 @@ class UsuarisController extends BaseController
         $rol_model = new RolModel();
         $llista_admesos_model = new LlistaAdmesosModel();
         $centre_model = new CentreModel();
+        $alumne_model = new AlumneModel();
 
 
         $client = new \Google\Client(); //Generem un client de google
 
         //LINIES CREDENCIALS
-
 
         $client->setRedirectUri('http://localhost:8080/login'); //Redirect Uri
 
@@ -159,6 +164,10 @@ class UsuarisController extends BaseController
             return view('logins' . DIRECTORY_SEPARATOR . 'loginGeneral', $data); // Es retorna la vista bàsica d'inici de sessió
         } else { // En cas que estigui creada la sessió de token i la sessió de la infromació de l'usuari
             
+            if (isset(session()->get('user_data')['codi_centre'])) {
+                return redirect()->to(base_url('/tiquets'));
+            }
+
             $mail = session()->get('user_data')['mail']; // Obtenim el correu guardat en sessió
 
             if ($login_model->obtenirLogin($mail) == null) { // En cas que el login no existeixi
@@ -178,7 +187,7 @@ class UsuarisController extends BaseController
                         }
                         session()->set('user_data', $session_data);
 
-                        return redirect()->to(base_url('/registreTiquet'));
+                        return redirect()->to(base_url('/tiquets'));
                     } else {
                         return redirect()->to(base_url('/loginSelect'));
                     }
@@ -190,7 +199,7 @@ class UsuarisController extends BaseController
                 }
 
             } else { // En cas que el login existeixi
-
+                
                 $session_data = session()->get('user_data'); //Carreguem la informació de l'usuari
                 
                 // Obtenim el rol de l'usuari
@@ -199,17 +208,25 @@ class UsuarisController extends BaseController
                 $rol = $rol_model->obtenirRol($id_rol);
                 $session_data['role'] = $rol;
 
-                if (session()->get('user_data')['domain'] == "xtec.cat") {
+                if (session()->get('user_data')['domain'] == "xtec.cat") { // En cas que sigui professor
                     $codi_centre = $llista_admesos_model->existeixProfessor($mail)['codi_centre'];
                     if ($codi_centre == null) {
                         $codi_centre = $centre_model->obtenirCentrePerCorreu($mail)['codi_centre'];
                     }
                     $session_data['codi_centre'] = $codi_centre;
+                } else { // En cas que sigui alumne
+
+                    $alumne = $alumne_model->getAlumneByCorreu($session_data['mail']);
+                    if ($alumne['actiu'] == 0) {
+                        session()->destroy();
+                        return redirect()->back();
+                    }
+                    $session_data['codi_centre'] = $alumne['codi_centre'];
                 }
 
                 session()->set('user_data', $session_data); //Guardem la informació de l'usuari
 
-                return redirect()->to(base_url('/registreTiquet'));
+                return redirect()->to(base_url('/tiquets'));
             }
 
         }
@@ -272,7 +289,7 @@ class UsuarisController extends BaseController
                         $session_data['codi_centre'] = $professor['codi_centre'];
                         session()->set('user_data', $session_data);
     
-                        return redirect()->to(base_url('/registreTiquet'));
+                        return redirect()->to(base_url('/tiquets'));
                     }
     
                 } else {
@@ -284,7 +301,7 @@ class UsuarisController extends BaseController
                     $session_data['role'] = $rol_model->obtenirRol($id_rol);;
                     session()->set('user_data', $session_data);
     
-                    return redirect()->to(base_url('/registreTiquet'));
+                    return redirect()->to(base_url('/tiquets'));
                 }
     
             } else {
@@ -347,7 +364,7 @@ class UsuarisController extends BaseController
         $session_data['codi_centre'] = $codi_centre;
         session()->set('user_data', $session_data);
 
-        return redirect()->to(base_url('/registreTiquet'));
+        return redirect()->to(base_url('/tiquets'));
     }
 
     public function logout()

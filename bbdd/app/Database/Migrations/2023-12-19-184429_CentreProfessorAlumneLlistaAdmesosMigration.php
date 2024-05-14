@@ -117,6 +117,12 @@ class CentreProfessorAlumneLlistaAdmesosMigration extends Migration
                 'constraint'     => '8',
                 'null'          => false,
             ],
+            'actiu'          => [
+                'type'           => 'TINYINT',
+                'constraint'     => '2',
+                'null'          => false,
+                'default' => 1,
+            ],
             
         ]);
         $this->forge->addForeignKey('codi_centre', 'centre', 'codi_centre');

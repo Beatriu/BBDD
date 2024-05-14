@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'titol_dispositius_sstt' => 'Registr dispositivos',
     'table-dispositius' => 'Registro de dispositivos emitidos',
     'dispositius_rebuts' => 'Registro de dispositivos recibidos',
     'inventari' => 'Inventario',
@@ -14,6 +15,7 @@ return [
         'delete' => 'Eliminar',
         'save_changes' => 'Guardar cambios',
     ],
+    'id_tiquet' => 'Identificador tiquet',
     'codi_equip' => 'Código del equipo',
     'tipus_dispositiu' => 'Tipo de dispositivo',
     'descripcio_avaria' => 'Descripción',
@@ -23,7 +25,7 @@ return [
     'data_alta' => 'Fecha de creación',
     'hora_alta' => 'Hora de creación',
     'model_title' => '¿Quieres eliminar este tiquet?',
-    'model_text' => 'Lo que esta a punto de suceder es que eliminaras el tiquet seleccionado:',
+    'model_text' => 'Estás seguro que quieres eliminar el siguiente tiquet?',
     'nom_centre_emissor' => 'Nombre centro emisor',
     'nom_centre_reparador' => 'Nombre centro reparador',
     'no_permisos_eliminar' => 'No tienes permisos para eliminar este tiquet!',

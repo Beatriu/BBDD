@@ -18,7 +18,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title"><?= lang('registre.model_title') ?></h5>
-                    <a href="<?= base_url("/registreTiquet") ?>">
+                    <a href="<?= base_url("/tiquets") ?>">
                         <i class="fa-solid fa-xmark"></i>
                     </a>
                 </div>
@@ -27,7 +27,7 @@
                 </div>
                 <div class="modal-footer">
                     <a href="<?= base_url("/eliminarTiquet/" . $id_tiquet) ?>" type="button" class="btn btn-danger"><?= lang('registre.buttons.delete') ?></a>
-                    <a href="<?= base_url("/registreTiquet") ?>" type="button" class="btn btn-secondary" data-dismiss="modal"><?= lang('registre.buttons.cancel') ?></a>
+                    <a href="<?= base_url("/tiquets") ?>" type="button" class="btn btn-secondary" data-dismiss="modal"><?= lang('registre.buttons.cancel') ?></a>
                 </div>
             </div>
         </div>
@@ -49,11 +49,11 @@
         <div class="col-sm p-3 min-vh-100" id="zona_taula">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <h1><?= lang("registre.table-dispositius") ?></h1>
+                    <h1><?= lang("registre.titol_dispositius_sstt") ?></h1>
                 </div>
                 <div>
                     <button onclick="_open()" class="btn" id="btn-filter"><i class="fa-solid fa-filter"></i> <?= lang("registre.buttons.filter") ?></button>
-                    <a href="<?= base_url("/registreTiquet?export=xls") ?>" id="btn-export" class="btn btn-info" title="<?= lang("registre.buttons.export_title") ?>"><i class="fa-solid fa-file-excel"></i> <?= lang("registre.buttons.export") ?></a>
+                    <a href="<?= base_url("/tiquets?export=xls") ?>" id="btn-export" class="btn btn-info" title="<?= lang("registre.buttons.export_title") ?>"><i class="fa-solid fa-file-excel"></i> <?= lang("registre.buttons.export") ?></a>
                     <a href="<?= base_url("/formulariTiquet") ?>" class="btn" id="btn-create"><i class="fa-solid fa-circle-plus"></i> <?= lang("registre.buttons.create") ?></a>
                 </div>
             </div>

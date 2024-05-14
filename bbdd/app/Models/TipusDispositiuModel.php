@@ -48,4 +48,9 @@ class TipusDispositiuModel extends Model
     public function getTipusDispositius() {
         return $this->findAll();
     }
+
+    public function getNomTipusDispositiu($id_tipus_dispositiu)
+    {
+        return $this->where('id_tipus_dispositiu', $id_tipus_dispositiu)->first();
+    }
 }

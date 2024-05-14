@@ -13,11 +13,11 @@
 
 <?= $this->section('contingut'); ?>
 
-    <form class="container" method="POST" action="<?= base_url('/editarTiquet') ?>">
+    <form class="container" method="POST" action="<?= base_url('/tiquets/editar') ?>">
         <?= csrf_field() ?>
         <div class="row mt-5 justify-content-center">
             <div class="col-2 d-flex align-items-center">
-                <a class="btn btn-dark rounded-pill" href="<?= base_url('/registreTiquet') ?>">
+                <a class="btn btn-dark rounded-pill" href="<?= base_url('/tiquets') ?>">
                     <i class="fa-solid fa-arrow-left"></i> <?= lang('general_lang.tornar') ?>
                 </a>
             </div>

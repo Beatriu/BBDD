@@ -18,7 +18,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title"><?= lang('registre.model_title') ?></h5>
-                    <a href="<?= base_url("/registreTiquet") ?>">
+                    <a href="<?= base_url("/tiquets") ?>">
                         <i class="fa-solid fa-xmark"></i>
                     </a>
                 </div>
@@ -27,7 +27,7 @@
                 </div>
                 <div class="modal-footer">
                     <a href="<?= base_url("/eliminarTiquet/" . $id_tiquet) ?>" type="button" class="btn btn-danger"><?= lang('registre.buttons.delete') ?></a>
-                    <a href="<?= base_url("/registreTiquet") ?>" type="button" class="btn btn-secondary" data-dismiss="modal"><?= lang('registre.buttons.cancel') ?></a>
+                    <a href="<?= base_url("/tiquets") ?>" type="button" class="btn btn-secondary" data-dismiss="modal"><?= lang('registre.buttons.cancel') ?></a>
                 </div>
             </div>
         </div>
@@ -36,29 +36,6 @@
 <div class="container-fluid">
     <div class="row">
         <!--Sidebar estàtic-->
-        <div class="col-sm-auto px-0" id="sidebar">
-            <ul class="nav flex-column">
-                <li class="nav-item" id="actiu">
-                    <!--TODO: fer la vista amb els if de depenent de el paràmetre que arribi per la ruta es vegui activada la classe de un a o un altre.-->
-                    <? //php if($type == "inventari"): 
-                    ?>
-                    <a href="#" class="nav-link py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
-
-                        <i class="fa-solid fa-list-check"></i>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="nav-link py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
-                        <i class="fa-solid fa-boxes-stacked"></i>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
-                        <i class="fa-solid fa-users"></i>
-                    </a>
-                </li>
-            </ul>
-        </div>
         <!--SideBar desplegable-->
         <div class="col-sm-auto px-0" style="display:none" id="mySidebar">
             <ul class="nav flex-column">

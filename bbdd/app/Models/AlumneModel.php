@@ -12,7 +12,7 @@ class AlumneModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['correu_alumne','nom_alumne', 'codi_centre'];
+    protected $allowedFields    = ['correu_alumne', 'codi_centre', 'actiu'];
 
     // Dates
     protected $useTimestamps = false;
@@ -44,5 +44,32 @@ class AlumneModel extends Model
             "correu_alumne" => $d1,
             "codi_centre" => $d2
         ]);
+    }
+
+    public function getAlumneByCorreu($correu_alumne) 
+    {
+        return $this->where('correu_alumne', $correu_alumne)->first();
+    }
+
+    public function deleteAlumneByCorreu($correu_alumne) 
+    {
+        return $this->delete(['correu_alumne' => $correu_alumne]);
+    }
+
+    public function editarAlumneCorreu($correu_alumne_original, $correu_alumne_nova) {
+        return $this->update($correu_alumne_original,["correu_alumne" => $correu_alumne_nova]);
+    }
+
+    public function editarAlumneCorreuCentre($correu_alumne_original, $correu_alumne_nova, $codi_centre_nou) {
+        return $this->update($correu_alumne_original,["correu_alumne" => $correu_alumne_nova, "codi_centre" => $codi_centre_nou]);
+    }
+
+    public function editarAlumneCodiCentre($correu_alumne_original, $codi_centre_nou) {
+        return $this->update($correu_alumne_original,["codi_centre" => $codi_centre_nou]);
+    }
+
+    public function editarAlumneActiu($correu_alumne, $actiu)
+    {
+        return $this->update($correu_alumne, ["actiu" => $actiu]);
     }
 }

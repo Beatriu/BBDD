@@ -50,4 +50,9 @@ class InventariModel extends Model
             "id_intervencio" => $d7
         ]);
     }
+
+    public function obtenirInventariPerId($id_inventari)
+    {
+        return $this->where('id_inventari', $id_inventari)->first();
+    }
 }

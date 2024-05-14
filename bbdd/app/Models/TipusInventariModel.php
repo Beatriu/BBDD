@@ -44,4 +44,8 @@ class TipusInventariModel extends Model
             "nom_tipus_inventari" => $d1
         ]);
     }
+
+    public function obtenirTipusInventari() {
+        return $this->findAll();
+    }
 }
