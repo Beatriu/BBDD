@@ -18,7 +18,7 @@ class UsuarisController extends BaseController
     public function login_post()
     {
         $data['title'] = "login";
-
+        
         // Determinem les regles de validació
         $validationRules = [
             'sUser' => [
@@ -41,7 +41,7 @@ class UsuarisController extends BaseController
 
             // Obtenim del formualri el nom d'usuari
             $nom_login = $this->request->getPost('sUser');
-
+            
             // Obtenim l'usuari mitjançant aquest
             $login_model = new LoginModel;
             $login_in_rol_model = new LoginInRolModel();
@@ -72,6 +72,7 @@ class UsuarisController extends BaseController
                     $id_login = $login_model->obtenirId($nom_login);
                     $id_role = $login_in_rol_model->obtenirRol($id_login);
                     $role = $rol_model->obtenirRol($id_role);
+                    //dd($role);
                     $session_data['role'] = $role;
 
 
@@ -96,7 +97,7 @@ class UsuarisController extends BaseController
     public function login()
     {
         // Funció principal d'inici de sessió. Aquesta és la primera, la que carrega la vista inicial
-
+        
         // Definim el títol de la pàgina i carreguem els models a utilitzar 
         $data['title'] = "login";
         $login_model = new LoginModel();
@@ -105,7 +106,7 @@ class UsuarisController extends BaseController
         $llista_admesos_model = new LlistaAdmesosModel();
         $centre_model = new CentreModel();
         $alumne_model = new AlumneModel();
-
+        
 
         $client = new \Google\Client(); //Generem un client de google
 
@@ -119,7 +120,7 @@ class UsuarisController extends BaseController
         $client->setAccessType('offline');
 
         if (isset($_GET["code"])) { // En cas que el paràmetre code estigui definit
-
+            
             $token = $client->fetchAccessTokenWithAuthCode($_GET['code']); // Es canvia el codi per un token autoritzat
 
             if (!isset($token["error"])) { //En cas que no hi hagi error en canviar el codi per un token autoritzat

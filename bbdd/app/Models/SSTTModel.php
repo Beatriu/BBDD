@@ -48,4 +48,8 @@ class SSTTModel extends Model
             "correu_sstt" => $d5
         ]);
     }
+
+    public function obtenirSSTTPerCorreu($correu) {
+        return $this->where('correu_sstt', $correu)->first();
+    }
 }

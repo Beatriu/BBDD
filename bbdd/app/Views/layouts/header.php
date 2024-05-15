@@ -5,11 +5,11 @@
 
 <header class="d-flex bd-highlight" style="background-color: #333333;">
     <div class="p-2 flex-grow-1 bd-highlight">
-        <img class="logo" src="<?= base_url('img' . DIRECTORY_SEPARATOR . 'Logotip' . DIRECTORY_SEPARATOR . 'Logotip per aplicar a fons negres.png') ?>" />
+        <img class="logo" src="<?= base_url('img' . DIRECTORY_SEPARATOR . 'Logotip' . DIRECTORY_SEPARATOR . 'Logotip per aplicar a fons negres.png') ?>" alt="Imatge del log de l'empresa. Es mostra un ordinador amb una imatge de clau anglesa i base de dades a l'interior."/>
     </div>
     <div class="p-2 bd-highlight d-flex pe-4">
 
-        <a class="me-3" href="<?= base_url('/canviLanguage') ?>"><img class="ms-auto imatge" src="<?= base_url(lang('general_lang.banderilla')) ?>" /></a>
+        <a class="me-3" href="<?= base_url('/canviLanguage') ?>"><img class="ms-auto imatge" src="<?= base_url(lang('general_lang.banderilla')) ?>" alt="Imatge de l'idioma al que es canvia si es pitja l'enllaç."/></a>
 
         <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle rounded-pill" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

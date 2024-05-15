@@ -58,7 +58,14 @@
                 </div>
 
                 <?php if($role == "alumne"): ?>
-
+                    <form method="POST" action="<?= base_url('/tiquets/editar') ?>" enctype="multipart/form-data">
+                        <?= csrf_field() ?>
+                        <label class="form-label" for="estat"><?= lang('registre.estat') ?></label>
+                        <select id="estat" name="estat" class="form-select" value="<?= $tiquet['id_estat'] ?>">
+                            <?=$estats?>
+                        </select>
+                        <button type="submit"></button>
+                    </form>
                 <?php endif; ?>
             </div>
 

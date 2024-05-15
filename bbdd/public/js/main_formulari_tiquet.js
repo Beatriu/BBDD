@@ -22,6 +22,7 @@ function afegirTiquet() {
     let input_codi_equip = document.createElement("input");
     input_codi_equip.type = "text";
     input_codi_equip.name = "equipment_code_" + numero_tiquets_afegir;
+    input_codi_equip.title = "Codi equip línea " + numero_tiquets_afegir;
     input_codi_equip.required = true;
     div_col_codi_equip.appendChild(input_codi_equip);
 
@@ -31,6 +32,7 @@ function afegirTiquet() {
     let comptador_tipus_dispositius = 1;
     let select_col_type = document.createElement("select");
     select_col_type.name = "type_" + numero_tiquets_afegir;
+    select_col_type.title = "Tipus dispositiu línea " + numero_tiquets_afegir;
     for (let i = 0; i < opcions_tipus_dispositius.length; i++) {
         let option_item = document.createElement("option");
         option_item.value = comptador_tipus_dispositius;
@@ -50,6 +52,7 @@ function afegirTiquet() {
     input_problem.style.width = '100%';
     input_problem.type = "text";
     input_problem.name = "problem_" + numero_tiquets_afegir;
+    input_problem.title = "Problema línea " + numero_tiquets_afegir;
     input_problem.required = true;
     div_col_problem.appendChild(input_problem);
 
@@ -59,6 +62,7 @@ function afegirTiquet() {
     div_borrar.classList.add("col", "d-flex", "align-items-center", "justify-content-center");
     let button_div_borrar = document.createElement("button");
     button_div_borrar.type = "button";
+    button_div_borrar.title = "Botó esborrar línea " + numero_tiquets_afegir;
     button_div_borrar.classList.add("btn", "btn-danger", "rounded-circle");
     button_div_borrar.addEventListener("click", () => esborrarTiquet(id_borrar));
     let trash_icon = document.createElement("i");

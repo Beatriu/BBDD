@@ -15,7 +15,7 @@ class AfegirLoginSeeder extends Seeder
         while (($data = fgetcsv($csvFile, 2000, ";")) !== FALSE) {
             if (!$firstline) {
                 $model = new \App\Models\LoginModel();
-                $model->addLogin($data[0],$data[1]);
+                $model->addLoginCSV($data[0],$data[1],$data[2]);
             }
             $firstline = false;
         }

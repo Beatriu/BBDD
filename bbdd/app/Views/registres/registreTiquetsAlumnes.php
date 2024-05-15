@@ -16,16 +16,16 @@
         <!--Sidebar estàtic-->
         <div class="col-sm-auto px-0" id="sidebar">
             <ul class="nav flex-column">
-                <li class="nav-item" id="actiu" title="<?= lang("registre.dispositius_rebuts") ?> ">
+                    <li class="nav-item" id="actiu" title="<?= lang("registre.dispositius_rebuts") ?> ">
                     <a href="/tiquets" class="nav-link py-3 px-2" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                         <i class="fa-solid fa-hammer"></i>
                     </a>
-                </li>
-                <li class="nav-item" title="<?= lang("registre.inventari") ?>">
-                    <a href="#" class="nav-link py-3 px-2" title="<?= lang("registre.inventari") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
-                        <i class="fa-solid fa-boxes-stacked"></i>
-                    </a>
-                </li>
+                    </li>
+                    <li class="nav-item" title="<?= lang("registre.inventari") ?>">
+                        <a href="<?= base_url("/inventari") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.inventari") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
+                            <i class="fa-solid fa-boxes-stacked"></i>
+                        </a>
+                    </li>
             </ul>
         </div>
         <!--Taula i títol-->

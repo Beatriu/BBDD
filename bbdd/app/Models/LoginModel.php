@@ -48,6 +48,15 @@ class LoginModel extends Model
         ]);
     }
 
+    public function addLoginCSV($d1,$d2,$d3)
+    {
+        $this->insert([
+            "login" => $d1,
+            "contrasenya" => $d2,
+            "id_sstt" => $d3
+        ]);
+    }
+
     public function obtenirId($nom_login) {
         return $this->select('id_login')->where('login', $nom_login)->first()['id_login'];
     }

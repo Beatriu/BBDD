@@ -164,6 +164,35 @@ class TiquetController extends BaseController
                 }
     
                 $data['options_tiquets'] = $options_tiquets;
+
+
+                if ($role == "alumne") {
+
+                    $id_pendent_recollir = $estat_model->obtenirIdPerEstat("Pendent de recollir");
+                    $id_assignat_pendent_recollir = $estat_model->obtenirIdPerEstat("Assignat i pendent de recollir");
+                    $id_emmagatzemat_sstt = $estat_model->obtenirIdPerEstat("Emmagatzemat a SSTT");
+                    $id_assignat_emmagatzemat_sstt = $estat_model->obtenirIdPerEstat("Assignat i emmagatzemat a SSTT");
+                    $id_pendent_reparar = $estat_model->obtenirIdPerEstat("Pendent de reparar");
+                    $id_reparant = $estat_model->obtenirIdPerEstat("Reparant");
+                    $id_reparat_pendent_recollir = $estat_model->obtenirIdPerEstat("Reparat i pendent de recollir");
+                    $id_pendent_retorn  = $estat_model->obtenirIdPerEstat("Pendent de retorn");
+                    $id_retornat = $estat_model->obtenirIdPerEstat("Retornat");
+                    $id_rebutjat_per_sstt = $estat_model->obtenirIdPerEstat("Rebutjat per SSTT");
+                    $id_desguassat  = $estat_model->obtenirIdPerEstat("Desguassat");
+
+                    $estat_tiquet = $estat_model->obtenirEstatPerId($tiquet_existent['id_estat']);
+
+                    $data['estat_ediatble'] = "";
+                    if ($estat_tiquet == "Pendent de reparar") {
+                        
+                            $options_estat = "<option value='" . $id_pendent_reparar . "' selected>Pendent de reparar</option>
+                                            <option value='" . $id_reparant . "'>Reparant</option>";
+    
+                    }
+
+                    $data['estats'] = $options_estat;
+                }
+
     
                 $data['output'] = $crud->render();
                 return view('tiquet' . DIRECTORY_SEPARATOR . 'vistaTiquet', $data);

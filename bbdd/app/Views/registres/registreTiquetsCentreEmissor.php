@@ -11,7 +11,6 @@
 <?= $this->endSection('header'); ?>
 
 <?= $this->section('contingut'); ?>
-<!--TODO: Arreglar language del modal-->
 <?php if ($id_tiquet !== null) : ?>
     <div class="modal" tabindex="-1" role="dialog" style="display:block">
         <div class="modal-dialog" role="document">
