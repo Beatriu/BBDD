@@ -71,7 +71,7 @@ class TipusIntervencioCursIntervencioMigration extends Migration
             'descripcio_intervencio'       => [
                 'type'       => 'VARCHAR',
                 'constraint' => '512',
-                'null'          => true,
+                'null'          => false,
             ],
             'id_tiquet'       => [
                 'type'       => 'VARCHAR',

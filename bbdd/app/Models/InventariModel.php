@@ -55,4 +55,9 @@ class InventariModel extends Model
     {
         return $this->where('id_inventari', $id_inventari)->first();
     }
+
+    public function deleteInventari($id_inventari) 
+    {
+        return $this->delete(['id_inventari' => $id_inventari]);
+    }
 }

@@ -43,7 +43,7 @@
             </div>
         </div>
 
-        <?php if(session()->get('user_data')['role'] == "desenvolupador" || session()->get('user_data')['role'] == "admin_sstt" || session()->get('user_data')['role'] == "sstt"): ?>
+        <?php if($role == "desenvolupador" || $role == "admin_sstt" || $role == "sstt"): ?>
         <div class="row mt-3">
             <div class="col">
                 <label class="form-label" for="institutsDataListEmissor"><?= lang('general_lang.centre_emissor_curt') ?></label>
@@ -52,13 +52,19 @@
                     <?=$centres_emissors?>
                 </datalist>
             </div>
+
             <div class="col">
                 <label class="form-label" for="institutsDataListReparador"><?= lang('general_lang.centre_reparador_curt') ?></label>
-                <input class="form-control selector" name = "centre_reparador" list="datalistOptionsReparador" id="institutsDataListReparador" placeholder="<?= lang('general_lang.centre_reparador') ?>" value="<?= $centre_reparador_selected ?>">
+                <?php if($role == "desenvolupador" || $role == "admin_sstt" || ($role == "sstt" && ($estat_tiquet == "Pendent de recollir" || $estat_tiquet == "Assignat i pendent de recollir" || $estat_tiquet == "Emmagatzemat a SSTT" || $estat_tiquet == "Assignat i emmagatzemat a SSTT"))): ?>
+                    <input class="form-control selector" name = "centre_reparador" list="datalistOptionsReparador" id="institutsDataListReparador" placeholder="<?= lang('general_lang.centre_reparador') ?>" value="<?= $centre_reparador_selected ?>">
+                <?php elseif($role == "sstt"): ?>
+                    <input class="form-control selector" name = "centre_reparador" list="datalistOptionsReparador" id="institutsDataListReparador" placeholder="<?= lang('general_lang.centre_reparador') ?>" value="<?= $centre_reparador_selected ?>" disabled>
+                <?php endif; ?>
                 <datalist id="datalistOptionsReparador">
                     <?=$centres_reparadors?>
                 </datalist>
             </div>
+            
         </div>
         <?php endif; ?>
 

@@ -53,7 +53,6 @@ class EstatModel extends Model
         return $this->select(['id_estat', 'nom_estat'])
         ->where('nom_estat', 'Pendent de reparar')
         ->orWhere('nom_estat', 'Reparant')
-        ->orWhere('nom_estat', 'Reparat i pendent de recollir')
         ->findAll();
     }
 

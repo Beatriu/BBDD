@@ -227,7 +227,7 @@ class RegistresController extends BaseController
             "removable" => false,
             "paging" => false,
             "numerate" => false,
-            "sortable" => false,
+            "sortable" => true,
             "exportXLS" => false,
             "print" => false
         ]);   // set editable config parameter to false
@@ -258,6 +258,7 @@ class RegistresController extends BaseController
             // OR Reparat i pendent de recollir AND codi centre reparador
             $crud->addWhere("nom_estat", "Reparat i pendent de recollir", false);
             $crud->addWhere('codi_centre_reparador', session()->get('user_data')['codi_centre'], true);
+
         }
 
 
@@ -330,6 +331,7 @@ class RegistresController extends BaseController
             ]
 
         ]);
+
         $data['output'] = $crud->render();
         return $data;
     }
@@ -503,7 +505,8 @@ class RegistresController extends BaseController
     {
         $uri = $this->request->getPath();
         $data['uri'] = $uri;
-        //dd($uri);
+        $actor = session()->get('user_data');
+
         $data['title'] = 'Tiquets alumnes';
         $data['id_tiquet'] = null;
         $data['error'] = '';
@@ -531,16 +534,16 @@ class RegistresController extends BaseController
 
         //Pendent de reparar AND codi centre reparador
         $crud->addWhere("nom_estat", "Pendent de reparar");
-        $crud->addWhere('codi_centre_reparador', session()->get('user_data')['codi_centre'], true);
+        $crud->addWhere('codi_centre_reparador', $actor['codi_centre'], true);
 
         // OR Reparant AND codi centre reparador
         $crud->addWhere("nom_estat", "Reparant", false);
-        $crud->addWhere('codi_centre_reparador', session()->get('user_data')['codi_centre'], true);
+        $crud->addWhere('codi_centre_reparador', $actor['codi_centre'], true);
 
         // OR Reparat i pendent de recollir AND codi centre reparador
         $crud->addWhere("nom_estat", "Reparat i pendent de recollir", false);
-        $crud->addWhere('codi_centre_reparador', session()->get('user_data')['codi_centre'], true);
-
+        $crud->addWhere('codi_centre_reparador', $actor['codi_centre'], true);
+        
         $crud->setColumns([
             'codi_equip',
             'nom_tipus_dispositiu',

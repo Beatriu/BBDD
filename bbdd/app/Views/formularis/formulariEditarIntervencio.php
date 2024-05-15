@@ -18,7 +18,7 @@
         <?= csrf_field() ?>
         <div class="row mt-5 justify-content-center">
             <div class="col-2 d-flex align-items-center">
-                <a class="btn btn-dark rounded-pill" href="<?= base_url('/tiquets') ?>">
+                <a class="btn btn-dark rounded-pill" href="<?= base_url('/tiquets/' . $id_tiquet) ?>">
                     <i class="fa-solid fa-arrow-left"></i> <?= lang('general_lang.tornar') ?>
                 </a>
             </div>

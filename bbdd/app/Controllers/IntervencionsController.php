@@ -215,10 +215,15 @@ class IntervencionsController extends BaseController
                             return redirect()->to(base_url('/tiquets'));
                         }
 
-                        if ($role == "alumne" && ($intervencio['id_xtec'] != null || $intervencio['id_estat'] == $estat_model->obtenirIdPerEstat("Reparat i pendent de recollir"))) {
+                        $estat_intervencio = $tiquet['id_estat'];
+
+                        $estat_pendent_reparar = $estat_model->obtenirIdPerEstat("Pendent de reparar");
+                        $estat_reparant = $estat_model->obtenirIdPerEstat("Reparant");
+    
+                        if ($role == "alumne" && ($intervencio['correu_alumne'] != $actor['mail'] || ( $estat_intervencio != $estat_pendent_reparar && $estat_intervencio != $estat_reparant ))) {
                             return redirect()->to(base_url('/tiquets/' . $id_tiquet));
                         }
-        
+
                     } else if ($role == "admin_sstt") {
                         $id_sstt_tiquet = $centre_model->obtenirCentre($tiquet['codi_centre_emissor'])['id_sstt'];
         
@@ -349,7 +354,12 @@ class IntervencionsController extends BaseController
                         return redirect()->to(base_url('/tiquets'));
                     }
 
-                    if ($role == "alumne" && ($intervencio_editar['id_xtec'] != null || $intervencio_editar['id_estat'] == $estat_model->obtenirIdPerEstat("Reparat i pendent de recollir"))) {
+                    $estat_intervencio = $tiquet_intervencio_editar['id_estat'];
+
+                    $estat_pendent_reparar = $estat_model->obtenirIdPerEstat("Pendent de reparar");
+                    $estat_reparant = $estat_model->obtenirIdPerEstat("Reparant");
+
+                    if ($role == "alumne" && ($intervencio_editar['correu_alumne'] != $actor['mail'] || ( $estat_intervencio != $estat_pendent_reparar && $estat_intervencio != $estat_reparant ))) {
                         return redirect()->to(base_url('/tiquets/' . $id_tiquet_intervencio_editar));
                     }
     
@@ -372,11 +382,11 @@ class IntervencionsController extends BaseController
                 $id_xtec = $intervencio_editar['id_xtec'];
                 $correu_alumne = $intervencio_editar['correu_alumne'];
     
-                if ($role == "professor") {
+                /*if ($role == "professor") {
                     $id_xtec = explode("@", session()->get('user_data')['mail'])[0];
                 } else if ($role == "alumne") {
                     $correu_alumne = session()->get('user_data')['mail'];
-                }
+                }*/
     
                 $intervencio_model->editarIntervencio($id_intervencio_editar, $id_tipus_intervencio, $id_curs, $descripcio_intervencio, $correu_alumne, $id_xtec);
             
@@ -423,7 +433,12 @@ class IntervencionsController extends BaseController
                             return redirect()->to(base_url('/tiquets'));
                         }
 
-                        if ($role == "alumne" && ($intervencio['id_xtec'] != null || $intervencio['id_estat'] == $estat_model->obtenirIdPerEstat("Reparat i pendent de recollir"))) {
+                        $estat_intervencio = $tiquet['id_estat'];
+
+                        $estat_pendent_reparar = $estat_model->obtenirIdPerEstat("Pendent de reparar");
+                        $estat_reparant = $estat_model->obtenirIdPerEstat("Reparant");
+    
+                        if ($role == "alumne" && ($intervencio['correu_alumne'] != $actor['mail'] || ( $estat_intervencio != $estat_pendent_reparar && $estat_intervencio != $estat_reparant ))) {
                             return redirect()->to(base_url('/tiquets/' . $id_tiquet));
                         }
         
@@ -486,7 +501,12 @@ class IntervencionsController extends BaseController
                             return redirect()->to(base_url('/tiquets'));
                         }
 
-                        if ($role == "alumne" && ($intervencio['id_xtec'] != null || $intervencio['id_estat'] == $estat_model->obtenirIdPerEstat("Reparat i pendent de recollir"))) {
+                        $estat_intervencio = $tiquet['id_estat'];
+
+                        $estat_pendent_reparar = $estat_model->obtenirIdPerEstat("Pendent de reparar");
+                        $estat_reparant = $estat_model->obtenirIdPerEstat("Reparant");
+    
+                        if ($role == "alumne" && ($intervencio['correu_alumne'] != $actor['mail'] || ( $estat_intervencio != $estat_pendent_reparar && $estat_intervencio != $estat_reparant ))) {
                             return redirect()->to(base_url('/tiquets/' . $id_tiquet));
                         }
         
