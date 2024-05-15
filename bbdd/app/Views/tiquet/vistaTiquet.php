@@ -56,6 +56,10 @@
                         <li><?= lang('intervencio.dades_tiquet.dades_estat') ?> </li>
                     </ul>
                 </div>
+
+                <?php if($role == "alumne"): ?>
+
+                <?php endif; ?>
             </div>
 
             <div class="col-9">

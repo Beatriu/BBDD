@@ -208,11 +208,26 @@ class UsuarisController extends BaseController
                 $session_data['role'] = $rol;
 
                 if (session()->get('user_data')['domain'] == "xtec.cat") { // En cas que sigui professor
-                    $codi_centre = $llista_admesos_model->existeixProfessor($mail)['codi_centre'];
-                    if ($codi_centre == null) {
-                        $codi_centre = $centre_model->obtenirCentrePerCorreu($mail)['codi_centre'];
+
+                    $centre = $centre_model->obtenirCentrePerCorreu($mail);
+                    if ($centre != null) {
+                        $session_data = session()->get('user_data');
+                        if ($centre['taller'] == 0) {
+                            $session_data['role'] = "centre_emissor";
+                            $session_data['codi_centre'] = $centre['codi_centre'];
+                        } else if ($centre['taller'] == 1) {
+                            $session_data['role'] = "centre_reparador";
+                            $session_data['codi_centre'] = $centre['codi_centre'];
+                        }
+                        session()->set('user_data', $session_data);
+
+                    } else {
+                        $codi_centre = $llista_admesos_model->existeixProfessor($mail)['codi_centre'];
+                        if ($codi_centre == null) {
+                            $codi_centre = $centre_model->obtenirCentrePerCorreu($mail)['codi_centre'];
+                        }
+                        $session_data['codi_centre'] = $codi_centre;
                     }
-                    $session_data['codi_centre'] = $codi_centre;
                 } else { // En cas que sigui alumne
 
                     $alumne = $alumne_model->getAlumneByCorreu($session_data['mail']);

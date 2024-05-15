@@ -253,8 +253,13 @@ class AlumnesController extends BaseController
 
             } else {
 
-                session()->setFlashdata('afegir_alumne_error', 'alumne.alumne_existeix');
-                return redirect()->back()->withInput();
+                if ($alumne['actiu'] == 0) {
+                    $alumne_model->editarAlumneActiu($alumne['correu_alumne'], 1);
+                } else {
+                    session()->setFlashdata('afegir_alumne_error', 'alumne.alumne_existeix');
+                    return redirect()->back()->withInput();
+                }
+
             }
 
             return redirect()->to(base_url('/alumnes'));
