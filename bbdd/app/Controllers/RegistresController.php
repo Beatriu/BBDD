@@ -13,6 +13,7 @@ use App\Models\RolModel;
 use App\Models\TiquetModel;
 use App\Models\ProfessorModel;
 use App\Models\LlistaAdmesosModel;
+use App\Models\SSTTModel;
 use Google\Service\BigtableAdmin\Split;
 use SebastianBergmann\Type\TrueType;
 
@@ -30,17 +31,19 @@ class RegistresController extends BaseController
                 return view('registres' . DIRECTORY_SEPARATOR . 'registreTiquetsProfessor', $this->registreTiquetsProfessor('reparador', $id_tiquet));
                 break;
             case "centre_emissor":
-                return view('registres' . DIRECTORY_SEPARATOR . 'registreTiquetsCentreEmissor', $this->registreTiquetsCentreEmissor($id_tiquet));
+                return view('registres' . DIRECTORY_SEPARATOR . 'registreTiquetsCentreEmissor', $this->registreTiquetsCentre($id_tiquet, 'emissor'));
                 break;
             case "centre_reparador":
+                return view('registres' . DIRECTORY_SEPARATOR . 'registreTiquetsCentreEmissor', $this->registreTiquetsCentre($id_tiquet, 'reparador'));
                 break;
             case "sstt":
-                return view('registres' . DIRECTORY_SEPARATOR . 'registreTiquetSSTT', $this->registreTiquetsSSTT($id_tiquet));
+                return view('registres' . DIRECTORY_SEPARATOR . 'registreTiquetSSTT', $this->registreTiquetsSSTT($id_tiquet, 'sstt'));
                 break;
             case "admin_sstt":
+                return view('registres' . DIRECTORY_SEPARATOR . 'registreTiquetSSTT', $this->registreTiquetsSSTT($id_tiquet , 'admin'));
                 break;
             case "desenvolupador":
-                return view('registres' . DIRECTORY_SEPARATOR . 'registreTiquetSSTT', $this->registreTiquetsSSTT($id_tiquet));
+                //return view('registres' . DIRECTORY_SEPARATOR . 'registreTiquetSSTT', $this->registreTiquetsSSTT($id_tiquet));
                 break;
             default:
                 break;
@@ -57,14 +60,15 @@ class RegistresController extends BaseController
         }
     }
 
-    public function registreTiquetsCentreEmissor($id_tiquet)
+    public function registreTiquetsCentre($id_tiquet, $tipus_centre)
     {
         $tiquet_model = new TiquetModel();
         $estat_model = new EstatModel();
         $data['title'] = 'Tiquets Professor';
         $data['id_tiquet'] = null;
         $data['error'] = '';
-        //dd(session()->get('user_data')['role']);
+        //TODO: quan estigui fet el formulari de canviar les dades de centre que el botó només el pugui veure el centre_reparador
+        $data['tipus_centre'] = $tipus_centre;
         if ($id_tiquet != null) {
 
             // Dades per a la gestió de rols
@@ -106,6 +110,8 @@ class RegistresController extends BaseController
         $crud->addItemLink('edit', 'fa-pencil', base_url('/tiquets/editar'), 'Editar Tiquet');
         $crud->addItemLink('delete', 'fa-trash', base_url('tiquets/esborrar'), 'Eliminar Tiquet');
 
+        $crud->addWhere('codi_centre_emissor', session()->get('user_data')['codi_centre'], true);
+//TODO: treure la columna de centre emissor, ja que no fa falta que ho eguin que son ells mateixos 
         $crud->setColumns(['codi_equip', 'nom_tipus_dispositiu', 'descripcio_avaria_limitada', 'nom_estat', 'nom_centre_emissor', 'data_alta_format', 'hora_alta_format']); // set columns/fields to show
         $crud->setColumnsInfo([                         // set columns/fields name
             'id_tiquet' => [
@@ -189,6 +195,7 @@ class RegistresController extends BaseController
         $data['error'] = '';
         $data['repoemi'] = $repoemi;
         $data['uri'] = $uri;
+        
 
         if ($id_tiquet != null) {
 
@@ -327,15 +334,15 @@ class RegistresController extends BaseController
         return $data;
     }
 
-    public function registreTiquetsSSTT($id_tiquet)
+    public function registreTiquetsSSTT($id_tiquet, $tipus_sstt)
     {
         $tiquet_model = new TiquetModel();
         $estat_model = new EstatModel();
         $data['title'] = 'Tiquets SSTT';
         $data['id_tiquet'] = null;
         $data['error'] = '';
-
         $actor = session()->get('user_data');
+        $data['tipus_sstt'] = $tipus_sstt;
         $role = $actor['role'];
 
         if ($id_tiquet != null) {
@@ -375,7 +382,7 @@ class RegistresController extends BaseController
         $crud->setTable('vista_tiquet');
         $crud->setPrimaryKey('id_tiquet');
         $crud->addItemLink('view', 'fa-eye', base_url('tiquets'), 'Veure Tiquet');
-        $crud->addItemLink('edit', 'fa-pencil', base_url('/tiquets/editar'), 'Editar Tiquet');
+        
         $crud->addItemLink('delete', 'fa-trash', base_url('tiquets/esborrar'), 'Eliminar Tiquet');
         $crud->setColumns([
             'codi_equip',
@@ -457,10 +464,12 @@ class RegistresController extends BaseController
                 'type' => KpaCrud::INVISIBLE_FIELD_TYPE
             ],
         ]);
-
-        $crud->addWhere('id_sstt_emissor', $actor['id_sstt']);
-
+        $crud->addWhere('id_sstt_emissor', $actor['id_sstt'], true);
+        $crud->addItemLink('edit', 'fa-pencil', base_url('/tiquets/editar'), 'Editar Tiquet', true);
+        //$dataColumns = $crud;
+        //TODO: el que volia fer era un if en el additem per a que solament aparegués al que tinguin cert estat, però ja ho modificarem en el editar directament
         $data['output'] = $crud->render();
+        //dd($crud);
         return $data;
     }
 
@@ -468,7 +477,6 @@ class RegistresController extends BaseController
 
     public function eliminarTiquet($id_tiquet)
     {
-
         $tiquet_model = new TiquetModel();
         $estat_model = new EstatModel();
 
@@ -491,12 +499,11 @@ class RegistresController extends BaseController
         }
     }
 
-    public function editTiquet()
-    {
-    }
-
     public function registreTiquetsAlumnes($id_tiquet)
     {
+        $uri = $this->request->getPath();
+        $data['uri'] = $uri;
+        //dd($uri);
         $data['title'] = 'Tiquets alumnes';
         $data['id_tiquet'] = null;
         $data['error'] = '';
@@ -524,7 +531,6 @@ class RegistresController extends BaseController
 
         //Pendent de reparar AND codi centre reparador
         $crud->addWhere("nom_estat", "Pendent de reparar");
-        //dd(session()->get('user_data'));
         $crud->addWhere('codi_centre_reparador', session()->get('user_data')['codi_centre'], true);
 
         // OR Reparant AND codi centre reparador
@@ -534,6 +540,7 @@ class RegistresController extends BaseController
         // OR Reparat i pendent de recollir AND codi centre reparador
         $crud->addWhere("nom_estat", "Reparat i pendent de recollir", false);
         $crud->addWhere('codi_centre_reparador', session()->get('user_data')['codi_centre'], true);
+
         $crud->setColumns([
             'codi_equip',
             'nom_tipus_dispositiu',
@@ -573,11 +580,9 @@ class RegistresController extends BaseController
     }
 
 
-    public function registreTiquetsEmissor()
+    public function registreTiquetsAdminSSTT()
     {
+
     }
 
-    public function registreTiquetsAdmin()
-    {
-    }
 }

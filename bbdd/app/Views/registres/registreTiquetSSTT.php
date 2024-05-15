@@ -1,13 +1,13 @@
-<?= $this->extend('layouts' . DIRECTORY_SEPARATOR .'professors'); ?>
+<?= $this->extend('layouts' . DIRECTORY_SEPARATOR . 'professors'); ?>
 
 <?= $this->section('css_pagina'); ?>
-<link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR .'taulaRegistre.css') ?>">
-<link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR .'header.css') ?>">
-<link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR .'style.css') ?>">
+<link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR . 'taulaRegistre.css') ?>">
+<link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR . 'header.css') ?>">
+<link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR . 'style.css') ?>">
 <?= $this->endSection('css_pagina'); ?>
 
 <?= $this->section('header'); ?>
-<?= $this->include('layouts' . DIRECTORY_SEPARATOR .'header.php'); ?>
+<?= $this->include('layouts' . DIRECTORY_SEPARATOR . 'header.php'); ?>
 <?= $this->endSection('header'); ?>
 
 <?= $this->section('contingut'); ?>
@@ -35,6 +35,21 @@
 <?php endif; ?>
 <div class="container-fluid">
     <div class="row">
+        <!--Sidebar estàtic-->
+        <div class="col-sm-auto px-0" id="sidebar">
+            <ul class="nav flex-column">
+                <li class="nav-item" id="actiu" title="<?= lang("registre.dispositius_rebuts") ?>">
+                    <a href="<?= base_url("/tiquets/emissor") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.table-dispositius") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                        <i class="fa-solid fa-list-check"></i>
+                    </a>
+                </li>
+                <li class="nav-item" title="<?= lang("registre.inventari") ?>">
+                    <a href="<?= base_url("/inventari") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.inventari") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
+                        <i class="fa-solid fa-boxes-stacked"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
         <!--SideBar desplegable-->
         <div class="col-sm-auto px-0" style="display:none" id="mySidebar">
             <div class="nav flex-column">
@@ -58,18 +73,23 @@
                 </div>
             </div>
             <div>
-                <?php if($error != null) { echo lang( $error ); } ?>
+                <?php if ($error != null) {
+                    echo lang($error);
+                } ?>
                 <?= $output ?>
             </div>
         </div>
     </div>
 </div>
 <script>
+    var taula = document.getElementById('data-list-vista_tiquet');
+    var childitems = taule.children.item(1);
+    //console.log(hola.children.item(1));
     function _open() {
         document.getElementById("mySidebar").style.display = "block";
         document.getElementById("mySidebar").style.backgroundColor = "#900000";
         document.getElementById("sidebar").style.display = "none";
-    }   
+    }
 
     function _close() {
         document.getElementById("mySidebar").style.display = "none";

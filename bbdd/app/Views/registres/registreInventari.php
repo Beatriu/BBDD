@@ -55,6 +55,7 @@
     <div class="row">
         <!--Sidebar estàtic-->
         <div class="col-sm-auto px-0" id="sidebar">
+        <?php if($role == 'professor'):?>
         <ul class="nav flex-column">
                 <?php if($uri == 'tiquets'):?>
                     <li class="nav-item" id="actiu" title="<?= lang("registre.dispositius_rebuts") ?> ">
@@ -95,6 +96,35 @@
                         </a>
                     </li>
             </ul>
+            <?php endif;?>
+            <?php if($role == 'alumne'):?>
+                <ul class="nav flex-column">
+                <li class="nav-item" title="<?= lang("registre.dispositius_rebuts") ?> ">
+                    <a href="/tiquets" class="nav-link py-3 px-2" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                        <i class="fa-solid fa-hammer"></i>
+                    </a>
+                </li>
+                <li class="nav-item" id="actiu" title="<?= lang("registre.inventari") ?>">
+                    <a href="<?= base_url("/inventari") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.inventari") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
+                        <i class="fa-solid fa-boxes-stacked"></i>
+                    </a>
+                </li>
+            </ul>
+            <?php endif;?>
+            <?php if($role == 'sstt'):?>
+            <ul class="nav flex-column">
+                <li class="nav-item" title="<?= lang("registre.dispositius_rebuts") ?>">
+                    <a href="<?= base_url("/tiquets/emissor") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.table-dispositius") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                        <i class="fa-solid fa-list-check"></i>
+                    </a>
+                </li>
+                <li class="nav-item"  id="actiu" title="<?= lang("registre.inventari") ?>">
+                    <a href="<?= base_url("/inventari") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.inventari") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
+                        <i class="fa-solid fa-boxes-stacked"></i>
+                    </a>
+                </li>
+            </ul>
+            <?php endif;?>
         </div>
 
         <!--Taula i títol-->
@@ -103,9 +133,11 @@
                 <div>
                     <h1><?= lang("inventari.registre_inventari") ?></h1>
                 </div>
+                <?php if($role !== 'alumne'):?>
                 <div>
                     <a href="<?= base_url("/inventari/afegir") ?>" class="btn" id="btn-create"><i class="fa-solid fa-circle-plus"></i> <?= lang("inventari.button_afegir_inventari") ?></a>
                 </div>
+                <?php endif;?>
             </div>
             <div>
                 <?= $output ?>

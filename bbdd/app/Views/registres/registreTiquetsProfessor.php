@@ -11,7 +11,6 @@
 <?= $this->endSection('header'); ?>
 
 <?= $this->section('contingut'); ?>
-<!--TODO: Arreglar language del modal-->
 <?php if ($id_tiquet !== null) : ?>
     <div class="modal" tabindex="-1" role="dialog" style="display:block">
         <div class="modal-dialog" role="document">
@@ -43,7 +42,7 @@
                 <?php else:?>
                     <li class="nav-item" title="<?= lang("registre.dispositius_rebuts") ?> ">
                 <?php endif;?>
-                        <a href="/tiquets" class="nav-link py-3 px-2" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                        <a href="<?= base_url("/tiquets") ?>" class="nav-link py-3 px-2" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                             <i class="fa-solid fa-hammer"></i>
                         </a>
                     </li>
@@ -52,7 +51,7 @@
                 <?php else:?>
                     <li class="nav-item" title="<?= lang("registre.dispositius_rebuts") ?>">
                 <?php endif;?>
-                        <a href="/tiquets/emissor" class="nav-link py-3 px-2" title="<?= lang("registre.table-dispositius") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                        <a href="<?= base_url("/tiquets/emissor") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.table-dispositius") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                             <i class="fa-solid fa-list-check"></i>
                         </a>
                     </li>
@@ -62,7 +61,7 @@
                 <?php else:?>
                     <li class="nav-item" title="<?= lang("registre.inventari") ?>">
                 <?php endif;?>
-                        <a href="/inventari" class="nav-link py-3 px-2" title="<?= lang("registre.inventari") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
+                        <a href="<?= base_url("/inventari") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.inventari") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
                             <i class="fa-solid fa-boxes-stacked"></i>
                         </a>
                     </li>
@@ -72,7 +71,7 @@
                 <?php else: ?>
                     <li class="nav-item" title="<?= lang("registre.alumnes") ?>">
                 <?php endif; ?>
-                        <a href="/alumnes" class="nav-link py-3 px-2" title="<?= lang("registre.alumnes") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                        <a href="<?= base_url("/alumnes") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.alumnes") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                             <i class="fa-solid fa-users"></i>
                         </a>
                     </li>

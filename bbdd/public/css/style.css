@@ -3,7 +3,7 @@ body {
     font-family: "Open Sans", sans-serif !important;
 }
 
-#data-list-backticket,
+
 #data-list-tiquet>thead>tr>th {
     background-color: #333333;
     color: white;
@@ -17,10 +17,28 @@ body {
 #data-list-tiquet>thead>tr>th {
     border-right:0 !important;
 }
-#data-list-backticket {
-    width: 60%;
-    margin-right: 50px;
+#data-list-vista_inventari>thead>tr>th {
+    background-color: #333333;
+    color: white;
 }
+
+#data-list-vista_inventari {
+    border-right: 3px solid #900000;
+    border-left: 3px solid #900000;
+    border-bottom: 3px solid #900000;
+}
+
+#data-list-vista_alumne>thead>tr>th {
+    background-color: #333333;
+    color: white;
+}
+
+#data-list-vista_alumne {
+    border-right: 3px solid #900000;
+    border-left: 3px solid #900000;
+    border-bottom: 3px solid #900000;
+}
+
 
 .col-sm-12 {
     display: flex;
