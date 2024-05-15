@@ -221,9 +221,7 @@ class TiquetController extends BaseController
             $data_alta = date("Y-m-d H:i:s");
             $centre_emissor = session()->get('user_data')['codi_centre'];
             $role = session()->get('user_data')['role'];
-            
-            //$imagefile = $this->request->getFiles();    és el csv
-           
+
             
             if ($csv['csv_tiquet'] != "") {
 
@@ -448,146 +446,378 @@ class TiquetController extends BaseController
         $tipus_dispositius = new TipusDispositiuModel;
         $estat_model = new EstatModel();
 
-        $role = session()->get('user_data')['role'];
+        $actor = session()->get('user_data');
+        $role = $actor['role'];
         $data['role'] = $role;
 
         if ($role == "alumne") {
             return redirect()->to(base_url('/tiquets'));
         }
 
-        $data['tiquet'] = $tiquet_model->getTiquetById($id_tiquet);
-
-        $array_tipus_dispositius = $tipus_dispositius->getTipusDispositius();
-        $array_tipus_dispositius_nom = [];
-
-        $options_tipus_dispositius = "";
-        for ($i = 0; $i < sizeof($array_tipus_dispositius); $i++) {
-            if (($i+1) != $data['tiquet']['id_tipus_dispositiu']) {
-                $options_tipus_dispositius .= "<option value=" . ($i+1) . ">";
-            } else {
-                $options_tipus_dispositius .= "<option value=" . ($i+1) . " selected>";
-            }
-            $options_tipus_dispositius .= $array_tipus_dispositius[$i]['nom_tipus_dispositiu'];
-            $options_tipus_dispositius .= "</option>";
-            $array_tipus_dispositius_nom[$i] = $array_tipus_dispositius[$i]['nom_tipus_dispositiu'];
-        }
-
-        $data['tipus_dispositius'] = $options_tipus_dispositius;
-        $data['json_tipus_dispositius'] = json_encode($array_tipus_dispositius_nom);
-
-        $array_centres = $centre_model->obtenirCentres();
-        $options_tipus_dispositius_emissors = "";
-        $options_tipus_dispositius_reparadors = "";
-        $data['centre_emissor_selected'] = null;
-        $data['centre_reparador_selected'] = null;
-        for ($i = 0; $i < sizeof($array_centres); $i++) {
-
-            if ($data['tiquet']['codi_centre_emissor'] != null && $data['tiquet']['codi_centre_emissor'] == $array_centres[$i]['codi_centre']) {
-                $data['centre_emissor_selected'] = $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'];
-                $options_tipus_dispositius_emissors .= "<option value='" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "' selected>";
-            } else {
-                $options_tipus_dispositius_emissors .= "<option value='" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "'>";
-            }
-
-            $options_tipus_dispositius_emissors .= $array_centres[$i]['nom_centre'];
-            $options_tipus_dispositius_emissors .= "</option>";
-
-            if ($array_centres[$i]['taller'] == 1) {
-                if ($data['tiquet']['codi_centre_reparador'] != null && $data['tiquet']['codi_centre_reparador'] == $array_centres[$i]['codi_centre']) {
-                    $data['centre_reparador_selected'] = $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'];
-                    $options_tipus_dispositius_reparadors .= "<option value='" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "' selected>";
-                } else {
-                    $options_tipus_dispositius_reparadors .= "<option value='" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "'>";
-                }
-
-                $options_tipus_dispositius_reparadors .= $array_centres[$i]['nom_centre'];
-                $options_tipus_dispositius_reparadors .= "</option>";
-            }
-        }
-        $data['centres_emissors'] = $options_tipus_dispositius_emissors;
-        $data['centres_reparadors'] = $options_tipus_dispositius_reparadors;
-
-        session()->setFlashdata('id_tiquet', $id_tiquet);
-
-        $estat = $estat_model->obtenirEstatPerId($data['tiquet']['id_estat']);
-        $codi_centre = session()->get('user_data')['codi_centre'];
-        $codi_centre_emissor = $data['tiquet']['codi_centre_emissor'];
-        $codi_centre_reparador = $data['tiquet']['codi_centre_reparador'];
-        
-        // Controlem si la informació pot ser editable
-        $data['informacio_editable'] = "";
-        $data['informacio_required'] = "required";
-        session()->setFlashdata('required', true);
-        if (($role == "centre_emissor" || $role == "professor" || $role == "centre_reparador") && ($estat != "Pendent de recollir" || $codi_centre != $codi_centre_emissor)) {
-            $data['informacio_editable'] = "disabled";
-            $data['informacio_required'] = "";
-            session()->setFlashdata('required', false);
-        }
-        if ($role == "sstt" && $estat != "Pendent de recollir" && $estat != "Emmagatzemat a SSTT" && $estat != "Assignat i pendent de reparar") {
-            $data['informacio_editable'] = "disabled";
-            $data['informacio_required'] = "";
-            session()->setFlashdata('required', false);
-        }
+        $tiquet = $tiquet_model->getTiquetById($id_tiquet);
+        $data['tiquet'] = $tiquet;
 
 
-        // Dades per controlar l'estat en cas del professor es pugui editar i els estats que es poden editar
-        $array_estat_professor = $estat_model->getProfessorEstats();+
-        $estat_reparacio = false;
-        for ($j = 0; $j < sizeof($array_estat_professor); $j++) {
-            if ($data['tiquet']['id_estat'] == $array_estat_professor[$j]['id_estat']) {
-                $estat_reparacio = true;
-            }
-        }
+        if ($tiquet != null) {
 
-        // Controlem si l'estat és editable
-        $data['estat_ediatble'] = "";
-        if ($role == "centre_emissor" || $role == "centre_reparador" || ($role == "professor" && $codi_centre != $codi_centre_reparador) || ($role == "professor" && !$estat_reparacio && $codi_centre == $codi_centre_reparador)) {
-            $data['estat_ediatble'] = "disabled";
-        }
-
-
-        if ($role == "professor" && $estat_reparacio && $codi_centre == $codi_centre_reparador) {
-
-            $array_estat = $estat_model->getEstats();
-            $options_estat = "";
-            for ($i = 0; $i < sizeof($array_estat_professor); $i++) {
-                
-                if ($array_estat_professor[$i]['id_estat'] != $data['tiquet']['id_estat']) {
-                    $options_estat .= "<option value='" . $array_estat_professor[$i]['id_estat'] . "'>";
-                } else {
-                    $options_estat .= "<option value='" . $array_estat_professor[$i]['id_estat'] . "' selected>";
-                }
+            $array_tipus_dispositius = $tipus_dispositius->getTipusDispositius();
+            $array_tipus_dispositius_nom = [];
     
-                $options_estat .= $array_estat_professor[$i]['nom_estat'];
-                $options_estat .= "</option>";
-
+            $options_tipus_dispositius = "";
+            for ($i = 0; $i < sizeof($array_tipus_dispositius); $i++) {
+                if (($i+1) != $data['tiquet']['id_tipus_dispositiu']) {
+                    $options_tipus_dispositius .= "<option value=" . ($i+1) . ">";
+                } else {
+                    $options_tipus_dispositius .= "<option value=" . ($i+1) . " selected>";
+                }
+                $options_tipus_dispositius .= $array_tipus_dispositius[$i]['nom_tipus_dispositiu'];
+                $options_tipus_dispositius .= "</option>";
+                $array_tipus_dispositius_nom[$i] = $array_tipus_dispositius[$i]['nom_tipus_dispositiu'];
             }
-
-            $data['estats'] = $options_estat;
-            
-        } else {
-            
-            if ($role == "professor" && $estat == "Pendent de recollir") {
-                $data['estat_ediatble'] = "";
-                $options_estat = "<option value='" . 1 . "' selected>Pendent de recollir</option>";
-            } else {
-                $array_estat = $estat_model->getEstats();
-                $options_estat = "";
-                for ($i = 0; $i < sizeof($array_estat); $i++) {
-                    
-                    if (($i+1) != $data['tiquet']['id_estat']) {
-                        $options_estat .= "<option value='" . ($i+1) . "'>";
+    
+            $data['tipus_dispositius'] = $options_tipus_dispositius;
+            $data['json_tipus_dispositius'] = json_encode($array_tipus_dispositius_nom);
+    
+            $array_centres = $centre_model->obtenirCentres();
+            $options_tipus_dispositius_emissors = "";
+            $options_tipus_dispositius_reparadors = "";
+            $data['centre_emissor_selected'] = null;
+            $data['centre_reparador_selected'] = null;
+            for ($i = 0; $i < sizeof($array_centres); $i++) {
+    
+                if ($role == "desenvolupador" || (($role == "admin_sstt" || $role == "sstt") && $array_centres[$i]['id_sstt'] == $actor['id_sstt'])) {
+                    if ($tiquet['codi_centre_emissor'] != null && $tiquet['codi_centre_emissor'] == $array_centres[$i]['codi_centre']) {
+                        $data['centre_emissor_selected'] = $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'];
+                        $options_tipus_dispositius_emissors .= "<option value='" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "' selected>";
                     } else {
-                        $options_estat .= "<option value='" . ($i+1) . "' selected>";
+                        $options_tipus_dispositius_emissors .= "<option value='" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "'>";
                     }
         
-                    $options_estat .= $array_estat[$i]['nom_estat'];
-                    $options_estat .= "</option>";
+                    $options_tipus_dispositius_emissors .= $array_centres[$i]['nom_centre'];
+                    $options_tipus_dispositius_emissors .= "</option>";
                 }
+
+    
+                if ($array_centres[$i]['taller'] == 1 && ($role == "desenvolupador" || (($role == "admin_sstt" || $role == "sstt") && $array_centres[$i]['id_sstt'] == $actor['id_sstt']))) {
+                    if ($data['tiquet']['codi_centre_reparador'] != null && $data['tiquet']['codi_centre_reparador'] == $array_centres[$i]['codi_centre']) {
+                        $data['centre_reparador_selected'] = $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'];
+                        $options_tipus_dispositius_reparadors .= "<option value='" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "' selected>";
+                    } else {
+                        $options_tipus_dispositius_reparadors .= "<option value='" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "'>";
+                    }
+    
+                    $options_tipus_dispositius_reparadors .= $array_centres[$i]['nom_centre'];
+                    $options_tipus_dispositius_reparadors .= "</option>";
+                }
+            }
+            $data['centres_emissors'] = $options_tipus_dispositius_emissors;
+            $data['centres_reparadors'] = $options_tipus_dispositius_reparadors;
+    
+            session()->setFlashdata('id_tiquet', $id_tiquet);
+    
+            $estat = $estat_model->obtenirEstatPerId($data['tiquet']['id_estat']);
+            $codi_centre = session()->get('user_data')['codi_centre'];
+            $codi_centre_emissor = $data['tiquet']['codi_centre_emissor'];
+            $codi_centre_reparador = $data['tiquet']['codi_centre_reparador'];
+            
+            // Controlem si la informació pot ser editable
+            $data['informacio_editable'] = "";
+            $data['informacio_required'] = "required";
+            session()->setFlashdata('required', true);
+            if (($role == "centre_emissor" || $role == "professor" || $role == "centre_reparador") && ($estat != "Pendent de recollir" || $codi_centre != $codi_centre_emissor)) {
+                $data['informacio_editable'] = "disabled";
+                $data['informacio_required'] = "";
+                session()->setFlashdata('required', false);
+            }
+            if ($role == "sstt" && $estat != "Pendent de recollir" && $estat != "Emmagatzemat a SSTT" && $estat != "Assignat i pendent de recollir" && $estat != "Assignat i emmagatzemat a SSTT") {
+                $data['informacio_editable'] = "disabled";
+                $data['informacio_required'] = "";
+                session()->setFlashdata('required', false);
+            }
+    
+    
+            $id_pendent_recollir = $estat_model->obtenirIdPerEstat("Pendent de recollir");
+            $id_assignat_pendent_recollir = $estat_model->obtenirIdPerEstat("Assignat i pendent de recollir");
+            $id_emmagatzemat_sstt = $estat_model->obtenirIdPerEstat("Emmagatzemat a SSTT");
+            $id_assignat_emmagatzemat_sstt = $estat_model->obtenirIdPerEstat("Assignat i emmagatzemat a SSTT");
+            $id_pendent_reparar = $estat_model->obtenirIdPerEstat("Pendent de reparar");
+            $id_reparant = $estat_model->obtenirIdPerEstat("Reparant");
+            $id_reparat_pendent_recollir = $estat_model->obtenirIdPerEstat("Reparat i pendent de recollir");
+            $id_pendent_retorn  = $estat_model->obtenirIdPerEstat("Pendent de retorn");
+            $id_retornat = $estat_model->obtenirIdPerEstat("Retornat");
+            $id_rebutjat_per_sstt = $estat_model->obtenirIdPerEstat("Rebutjat per SSTT");
+            $id_desguassat  = $estat_model->obtenirIdPerEstat("Desguassat");
+
+
+            $estat_tiquet = $estat_model->obtenirEstatPerId($tiquet['id_estat']);
+            $data['estat_tiquet'] = $estat_tiquet;
+            if ($role == "sstt" || $role == "admin_sstt") {
+                $centre_emissor_tiquet = $centre_model->obtenirCentre($tiquet['codi_centre_emissor']);
+                $centre_reparador_tiquet =  $centre_model->obtenirCentre($tiquet['codi_centre_reparador']);
+                $estat_editable = false;
+                if ($centre_emissor_tiquet != null) {
+                    if ($centre_emissor_tiquet['id_sstt'] == $actor['id_sstt']) {
+                        $estat_editable = true;
+                    }
+                } else if ($centre_reparador_tiquet != null) {
+                    if ($centre_reparador_tiquet['id_sstt'] == $actor['id_sstt']) {
+                        $estat_editable = true;
+                    }
+                }
+            }   
+
+            $data['estat_ediatble'] = "";
+            if ($estat_tiquet == "Pendent de recollir") {
+                
+                if ($role == "sstt" && $estat_editable) {
+
+                    $options_estat = "<option value='" . $id_pendent_recollir . "' selected>Pendent de recollir</option>
+                                    <option value='" . $id_emmagatzemat_sstt . "'>Emmagatzemat a SSTT (no reversible)</option>
+                                    <option value='" . $id_rebutjat_per_sstt . "'>Rebutjat per SSTT (no reversible)</option>";
+
+                } else if ( ($role == "admin_sstt" && $estat_editable) || $role == "desenvolupador") {
+
+                    $array_estat = $estat_model->getEstats();
+                    $options_estat = "";
+                    for ($i = 0; $i < sizeof($array_estat); $i++) {
+                        
+                        if (($i+1) != $data['tiquet']['id_estat']) {
+                            $options_estat .= "<option value='" . ($i+1) . "'>";
+                        } else {
+                            $options_estat .= "<option value='" . ($i+1) . "' selected>";
+                        }
+            
+                        $options_estat .= $array_estat[$i]['nom_estat'];
+                        $options_estat .= "</option>";
+                    }
+
+                } else {
+                    $options_estat = "<option value='" . $id_pendent_recollir . "' selected>Pendent de recollir</option>";
+                    $data['estat_ediatble'] = "disabled";
+                }
+
+            } else if ($estat_tiquet == "Rebutjat per SSTT") {
+
+                $options_estat = "<option value='" . $id_rebutjat_per_sstt . "' selected>Rebutjat per SSTT</option>";
+                $data['estat_ediatble'] = "disabled";
+
+            } else if ($estat_tiquet == "Assignat i pendent de recollir") {
+
+                if ($role == "sstt" && $estat_editable) {
+
+                    $options_estat = "<option value='" . $id_assignat_pendent_recollir . "' selected>Assignat i pendent de recollir</option>
+                    <option value='" . $id_assignat_emmagatzemat_sstt . "'>Assignat i emmagatzemat a SSTT (no reversible)</option>";
+
+                } else if ( ($role == "admin_sstt" && $estat_editable) || $role == "desenvolupador") {
+
+                    $array_estat = $estat_model->getEstats();
+                    $options_estat = "";
+                    for ($i = 0; $i < sizeof($array_estat); $i++) {
+                        
+                        if (($i+1) != $data['tiquet']['id_estat']) {
+                            $options_estat .= "<option value='" . ($i+1) . "'>";
+                        } else {
+                            $options_estat .= "<option value='" . ($i+1) . "' selected>";
+                        }
+            
+                        $options_estat .= $array_estat[$i]['nom_estat'];
+                        $options_estat .= "</option>";
+                    }
+
+                } else {
+                    $options_estat = "<option value='" . $id_assignat_pendent_recollir . "' selected>Assignat i pendent de recollir</option>";
+                    $data['estat_ediatble'] = "disabled";
+                }
+                
+            } else if ($estat_tiquet == "Emmagatzemat a SSTT") {
+
+                if ($role == "sstt" && $estat_editable) {
+
+                    $options_estat = "<option value='" . $id_emmagatzemat_sstt . "' selected>Emmagatzemat a SSTT</option>
+                                    <option value='" . $id_desguassat . "'>Desguassat (no reversible)</option>";
+
+                } else if ( ($role == "admin_sstt" && $estat_editable) || $role == "desenvolupador") {
+
+                    $array_estat = $estat_model->getEstats();
+                    $options_estat = "";
+                    for ($i = 0; $i < sizeof($array_estat); $i++) {
+                        
+                        if (($i+1) != $data['tiquet']['id_estat']) {
+                            $options_estat .= "<option value='" . ($i+1) . "'>";
+                        } else {
+                            $options_estat .= "<option value='" . ($i+1) . "' selected>";
+                        }
+            
+                        $options_estat .= $array_estat[$i]['nom_estat'];
+                        $options_estat .= "</option>";
+                    }
+
+                } else {
+                    $options_estat = "<option value='" . $id_emmagatzemat_sstt . "' selected>Emmagatzemat a SSTT</option>";
+                    $data['estat_ediatble'] = "disabled";
+                }
+
+            } else if ($estat_tiquet == "Assignat i emmagatzemat a SSTT") {
+
+                if ($role == "sstt" && $estat_editable) {
+
+                    $options_estat = "<option value='" . $id_assignat_emmagatzemat_sstt . "' selected>Assignat i emmagatzemat a SSTT</option>
+                                    <option value='" . $id_pendent_reparar . "'>Pendent de reparar (no reversible)</option>";
+
+                } else if ( ($role == "admin_sstt" && $estat_editable) || $role == "desenvolupador") {
+
+                    $array_estat = $estat_model->getEstats();
+                    $options_estat = "";
+                    for ($i = 0; $i < sizeof($array_estat); $i++) {
+                        
+                        if (($i+1) != $data['tiquet']['id_estat']) {
+                            $options_estat .= "<option value='" . ($i+1) . "'>";
+                        } else {
+                            $options_estat .= "<option value='" . ($i+1) . "' selected>";
+                        }
+            
+                        $options_estat .= $array_estat[$i]['nom_estat'];
+                        $options_estat .= "</option>";
+                    }
+
+                } else {
+                    $options_estat = "<option value='" . $id_assignat_emmagatzemat_sstt . "' selected>Assignat i emmagatzemat a SSTT</option>";
+                    $data['estat_ediatble'] = "disabled";
+                }
+
+            } else if ($estat_tiquet == "Pendent de reparar") {
+
+                if ($role == "professor" && $tiquet['codi_centre_reparador'] == $actor['codi_centre']) {
+
+                    $options_estat = "<option value='" . $id_pendent_reparar . "' selected>Pendent de reparar</option>
+                                    <option value='" . $id_reparant . "'>Reparant</option>";
+
+                } else if ( ($role == "admin_sstt" && $estat_editable) || $role == "desenvolupador") {
+
+                    $array_estat = $estat_model->getEstats();
+                    $options_estat = "";
+                    for ($i = 0; $i < sizeof($array_estat); $i++) {
+                        
+                        if (($i+1) != $data['tiquet']['id_estat']) {
+                            $options_estat .= "<option value='" . ($i+1) . "'>";
+                        } else {
+                            $options_estat .= "<option value='" . ($i+1) . "' selected>";
+                        }
+            
+                        $options_estat .= $array_estat[$i]['nom_estat'];
+                        $options_estat .= "</option>";
+                    }
+
+                } else {
+                    $options_estat = "<option value='" . $id_pendent_reparar . "' selected>Pendent de reparar</option>";
+                    $data['estat_ediatble'] = "disabled";
+                }
+
+            } else if ($estat_tiquet == "Reparant") {
+
+                if ($role == "professor" && $tiquet['codi_centre_reparador'] == $actor['codi_centre']) {
+
+                    $options_estat = "<option value='" . $id_reparant . "' selected>Reparant</option>
+                    <option value='" . $id_pendent_reparar . "'>Pendent de reparar</option>
+                    <option value='" . $id_reparat_pendent_recollir . "'>Reparat i pendent de recollir (no reversible)</option>";
+
+                } else if ( ($role == "admin_sstt" && $estat_editable) || $role == "desenvolupador") {
+
+                    $array_estat = $estat_model->getEstats();
+                    $options_estat = "";
+                    for ($i = 0; $i < sizeof($array_estat); $i++) {
+                        
+                        if (($i+1) != $data['tiquet']['id_estat']) {
+                            $options_estat .= "<option value='" . ($i+1) . "'>";
+                        } else {
+                            $options_estat .= "<option value='" . ($i+1) . "' selected>";
+                        }
+            
+                        $options_estat .= $array_estat[$i]['nom_estat'];
+                        $options_estat .= "</option>";
+                    }
+
+                } else {
+                    $options_estat = "<option value='" . $id_reparant . "' selected>Reparant</option>";
+                    $data['estat_ediatble'] = "disabled";
+                }
+
+            } else if ($estat_tiquet == "Reparat i pendent de recollir") {
+
+                if ($role == "sstt" && $estat_editable) {
+
+                    $options_estat = "<option value='" . $id_reparat_pendent_recollir . "' selected>Reparat i pendent de recollir</option>
+                    <option value='" . $id_pendent_retorn . "'>Pendent de retorn (no reversible)</option>";
+
+                } else if ( ($role == "admin_sstt" && $estat_editable) || $role == "desenvolupador") {
+
+                    $array_estat = $estat_model->getEstats();
+                    $options_estat = "";
+                    for ($i = 0; $i < sizeof($array_estat); $i++) {
+                        
+                        if (($i+1) != $data['tiquet']['id_estat']) {
+                            $options_estat .= "<option value='" . ($i+1) . "'>";
+                        } else {
+                            $options_estat .= "<option value='" . ($i+1) . "' selected>";
+                        }
+            
+                        $options_estat .= $array_estat[$i]['nom_estat'];
+                        $options_estat .= "</option>";
+                    }
+
+                } else {
+                    $options_estat = "<option value='" . $id_reparat_pendent_recollir . "' selected>Reparat i pendent de recollir</option>";
+                    $data['estat_ediatble'] = "disabled";
+                }
+
+            } else if ($estat_tiquet == "Pendent de retorn") {
+
+                if ($role == "sstt" && $estat_editable) {
+
+                    $options_estat = "<option value='" . $id_pendent_retorn . "' selected>Pendent de retorn</option>
+                    <option value='" . $id_retornat . "'>Retornat (no reversible)</option>
+                    <option value='" . $id_desguassat . "'>Desguassat (no reversible)</option>";
+
+                } else if ( ($role == "admin_sstt" && $estat_editable) || $role == "desenvolupador") {
+
+                    $array_estat = $estat_model->getEstats();
+                    $options_estat = "";
+                    for ($i = 0; $i < sizeof($array_estat); $i++) {
+                        
+                        if (($i+1) != $data['tiquet']['id_estat']) {
+                            $options_estat .= "<option value='" . ($i+1) . "'>";
+                        } else {
+                            $options_estat .= "<option value='" . ($i+1) . "' selected>";
+                        }
+            
+                        $options_estat .= $array_estat[$i]['nom_estat'];
+                        $options_estat .= "</option>";
+                    }
+
+                } else {
+                    $options_estat = "<option value='" . $id_pendent_retorn . "' selected>Pendent de retorn</option>";
+                    $data['estat_ediatble'] = "disabled";
+                }
+
+            } else if ($estat_tiquet == "Retornat") {
+
+                $options_estat = "<option value='" . $id_retornat . "' selected>Retornat</option>";
+                $data['estat_ediatble'] = "disabled";
+
+            } else if ($estat_tiquet == "Desguassat") {
+
+                $options_estat = "<option value='" . $id_desguassat . "' selected>Desguassat</option>";
+                $data['estat_ediatble'] = "disabled";
+
             }
 
             $data['estats'] = $options_estat;
+
+        } else {
+            return redirect()->to(base_url('/tiquets'));
         }
+
+
 
 
         
@@ -603,7 +833,10 @@ class TiquetController extends BaseController
     {
         $tiquet_model = new TiquetModel();
         $estat_model = new EstatModel();
-        $role = session()->get('user_data')['role'];
+        $centre_model = new CentreModel();
+
+        $actor = session()->get('user_data');
+        $role = $actor['role'];
 
         $required = session()->getFlashdata('required');
 
@@ -741,6 +974,7 @@ class TiquetController extends BaseController
                 $codi_equip = $this->request->getPost('equipment_code');
                 $tipus_dispositiu = $this->request->getPost('type');
                 $estat_desti = $this->request->getPost('estat');
+                $estat_desti_nom = $estat_model->obtenirEstatPerId($estat_desti);
                 $descripcio_avaria = $this->request->getPost('problem');
     
                 $centre_emissor = trim(explode('-', (string) $centre_emissor)[0]);
@@ -763,21 +997,103 @@ class TiquetController extends BaseController
                     $data['codi_centre_reparador'] = $centre_reparador;
                 }
 
-                // Controlem que es puguin modificar les dades
-                if ($role == "sstt" && ($estat_origen == "Pendent de recollir" || $estat_origen == "Emmagatzemat a SSTT" || $estat_origen == "Assignat i pendent de reparar")) {
-                    $tiquet_model->updateTiquet(session()->getFlashdata('id_tiquet'), $data);
-                    $error = false;
-                } else if ($role == "sstt") { // Controlem el cas en què sstt no pot editar infromació, però sempre estat
-                    $data = [
-                        "id_estat" => $estat_desti,
-                    ];
-                    $tiquet_model->updateTiquet(session()->getFlashdata('id_tiquet'), $data);
-                    $error = false;
+                if ($role == "sstt" || $role == "admin_sstt") {
+                    $emissor = $centre_model->obtenirCentre($centre_emissor);
+                    $reparador = $centre_model->obtenirCentre($centre_emissor);
+                    if ($emissor == null || $emissor['id_sstt'] != $actor['id_sstt']) {
+                        $centre_emissor = "";
+                        $data['codi_centre_emissor'] = $centre_emissor;
+                    }
+                    if ($reparador == null || $reparador['id_sstt'] != $actor['id_sstt']) {
+                        $centre_reparador = "";
+                        $data['codi_centre_reparador'] = $centre_reparador;
+                    }
                 }
 
-                if ($role == "admin_sstt" || $role == "desenvolupador") {
+                $centre = $centre_model->obtenirCentre($centre_reparador);
+                // Controlem que es puguin modificar les dades
+                if ($role == "sstt") {
+
+                    $estat_editable = false;
+                    if ($estat_origen == "Pendent de recollir") {
+
+                        if($estat_desti_nom == "Pendent de recollir" && $centre != null) {
+
+                            $estat_desti_nom = "Assignat i pendent de recollir";
+                            $estat_editable = true;
+
+                        } else if ($estat_desti_nom == "Emmagatzemat a SSTT" || $estat_desti_nom == "Rebutjat per SSTT") {
+                            $estat_editable = true;
+                        }  else if ($estat_desti_nom == "Emmagatzemat a SSTT" && $centre != null) {
+
+                            $estat_desti_nom = "Assignat i emmagatzemat a SSTT";
+                            $estat_editable = true;
+
+                        }
+
+                    } else if ($estat_origen == "Assignat i pendent de recollir") {
+
+                        if($estat_desti_nom == "Assignat i emmagatzemat a SSTT") {
+
+                            if ($centre != null) {
+                                $estat_desti_nom = "Assignat i emmagatzemat a SSTT";
+                                $estat_editable = true;
+                            } else {
+                                $estat_desti_nom = "Emmagatzemat a SSTT";
+                                $estat_editable = true;
+                            }
+                        }
+
+                    } else if ($estat_origen == "Emmagatzemat a SSTT") {
+
+                        if ($estat_desti_nom == "Desguassat") {
+                            $estat_editable = true;
+                        } else if ($centre != null) {
+                            $estat_desti_nom = "Assignat i emmagatzemat a SSTT";
+                            $estat_editable = true;
+                        }
+
+                    } else if ($estat_origen == "Assignat i emmagatzemat a SSTT") {
+
+                        if ($centre == null) {
+                            $estat_desti_nom = "Emmagatzemat a SSTT";
+                            $estat_editable = true;
+                        } else {
+
+                            if ($estat_desti_nom == "Pendent de reparar") {
+                                $estat_editable = true;
+                            }
+
+                        }
+
+                    } else if ($estat_origen == "Reparat i pendent de recollir") {
+
+                        if ($estat_desti_nom == "Pendent de retorn") {
+                            $estat_editable = true;
+                        }
+
+                    } else if ($estat_origen == "Pendent de retorn") {
+
+                        if ($estat_desti_nom == "Retornat" || $estat_desti_nom == "Desguassat") {
+                            $estat_editable = true;
+                        }
+
+                    }
+
+                    if ($estat_editable) {
+                        $data['id_estat'] = $estat_model->obtenirIdPerEstat($estat_desti_nom);
+                    } else {
+                        $data['id_estat'] = $tiquet['id_estat'];
+                    }
+                    
                     $tiquet_model->updateTiquet(session()->getFlashdata('id_tiquet'), $data);
                     $error = false;
+
+                } else if ($role == "admin_sstt" || $role == "desenvolupador") {
+
+                    $tiquet_model->updateTiquet(session()->getFlashdata('id_tiquet'), $data);
+                    $error = false;
+
                 } 
 
 

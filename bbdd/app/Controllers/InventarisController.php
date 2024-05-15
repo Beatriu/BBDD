@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\CentreModel;
+use App\Models\IntervencioModel;
 use App\Models\InventariModel;
 use App\Models\TipusInventariModel;
 use SIENSIS\KpaCrud\Libraries\KpaCrud;
@@ -51,7 +52,7 @@ class InventarisController extends BaseController
                     } else {
                         $data['no_permisos'] = "inventari.no_permisos";
                     }
-                } {
+                } else {
                     $data['no_permisos'] = "inventari.no_existeix";
                 }
 
@@ -386,6 +387,7 @@ class InventarisController extends BaseController
     public function eliminarInventari($id_inventari_eliminar) 
     {
         $inventari_model = new InventariModel();
+        $centre_model = new CentreModel();
 
         $inventari_eliminar = $inventari_model->obtenirInventariPerId($id_inventari_eliminar);
 
@@ -399,7 +401,21 @@ class InventarisController extends BaseController
                 return redirect()->to(base_url('/inventari'));
             } else {
 
-                //
+                if ($role == "professor" && $inventari_eliminar['codi_centre'] == $actor['codi_centre'] && $inventari_eliminar['id_intervencio'] == null) {
+
+                    $inventari_model->deleteInventari($inventari_eliminar['id_inventari']);
+
+                } else if ($role == "admin_sstt" && $centre_model->obtenirCentre($inventari_eliminar)['id_sstt'] == $actor['id_sstt']) {
+
+                    $inventari_model->deleteInventari($inventari_eliminar['id_inventari']);
+
+                } else if ($role == "desenvolupador") {
+
+                    $inventari_model->deleteInventari($inventari_eliminar['id_inventari']);
+
+                }
+
+                return redirect()->to(base_url('/inventari'));
 
             }
 
