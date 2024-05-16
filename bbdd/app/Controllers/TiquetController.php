@@ -138,7 +138,8 @@ class TiquetController extends BaseController
 
                     if ($role == "admin_sstt") {
                         $crud->addItemLink('edit', 'fa-pencil', base_url('editar/intervencio/' . $id_tiquet ), 'Editar Intervenció');
-                        $crud->addItemLink('delete', 'fa-trash', base_url('tiquets/esborrar'), 'Eliminar Tiquet');
+                        $crud->addItemLink('assignar', 'fa-screwdriver-wrench', base_url('tiquets/' . $id_tiquet . '/assignar'), 'Assignar Inventari');
+                        $crud->addItemLink('delete', 'fa-trash', base_url('tiquets/' . $id_tiquet . '/esborrar'), 'Eliminar Intervenció');
                     }
     
                     $crud->addWhere('id_tiquet', $id_tiquet);
@@ -1382,46 +1383,70 @@ class TiquetController extends BaseController
 
         if ($tiquet != null && ( $role == "sstt" || $role == "admin_sstt" || $role == "desenvolupador")) {
 
-            $estat = $estat_model->obtenirEstatPerId($tiquet['id_estat']);
-
-            if ($estat == "Retornat" || $estat == "Desguassat") {
-
-            // Carreguem les dades
-            $data['tiquet'] = $tiquet;
-            $data['tipus_dispositiu'] = $tipus_dispositiu_model->getNomTipusDispositiu($tiquet['id_tipus_dispositiu'])['nom_tipus_dispositiu'];
-            $data['nom_centre_emissor'] = $centre_model->obtenirCentre($tiquet['codi_centre_emissor'])['nom_centre'];
-            $data['nom_centre_reparador'] = $centre_model->obtenirCentre($tiquet['codi_centre_reparador'])['nom_centre'];
-            $preu_total = 0;
-            $array_intervencions = $intervencio_model->obtenirIntervencionsTiquet($id_tiquet);
+            $id_sstt_emissor = null;
+            if ($tiquet['codi_centre_emissor'] != null) {
+                $id_sstt_emissor = $centre_model->obtenirCentre($tiquet['codi_centre_emissor'])['id_sstt'];
+            }
+            $id_sstt_reparador = null;
+            if ($tiquet['codi_centre_reparador'] != null) {
+                $id_sstt_reparador = $centre_model->obtenirCentre($tiquet['codi_centre_reparador'])['id_sstt'];
+            }
             
-            for ($i = 0; $i < sizeof($array_intervencions); $i++) {
-                $array_intervencions[$i]['tipus_intervencio'] = $tipus_intervencio_model->obtenirNomTipusIntervencio($array_intervencions[$i]['id_tipus_intervencio'])['nom_tipus_intervencio'];
-                $array_inventari[$i] = $inventari_model->obtenirInventariIntervencio($array_intervencions[$i]['id_intervencio']);
-            }
+            if (($role == "sstt" || $role == "admin_sstt") && ($id_sstt_emissor == $actor['id_sstt'] || $id_sstt_reparador == $actor['id_sstt']) || $role == "desenvolupador") {
+                $estat = $estat_model->obtenirEstatPerId($tiquet['id_estat']);
 
-            for ($i = 0; $i < sizeof($array_intervencions); $i++) {
-                for ($j = 0; $j < sizeof($array_inventari[$i]); $j++) {
-                    $array_inventari[$i][$j]['tipus_inventari'] = $tipus_inventari_model->obtenirTipusInventariPerId($array_inventari[$i][$j]['id_tipus_inventari'])['nom_tipus_inventari'];
-                    $preu_total += $array_inventari[$i][$j]['preu'];
+                if ($estat == "Retornat" || $estat == "Desguassat") {
+    
+                    // Carreguem les dades
+                    $data['tiquet'] = $tiquet;
+                    $data['tipus_dispositiu'] = $tipus_dispositiu_model->getNomTipusDispositiu($tiquet['id_tipus_dispositiu'])['nom_tipus_dispositiu'];
+
+                    $data['nom_centre_emissor'] = "";
+                    if ($tiquet['codi_centre_emissor'] != null) {
+                        $data['nom_centre_emissor'] = $centre_model->obtenirCentre($tiquet['codi_centre_emissor'])['nom_centre'];
+                    }
+
+                    $data['nom_centre_reparador'] = null;
+                    if ($tiquet['codi_centre_reparador'] != null) {
+                        $data['nom_centre_reparador'] = $centre_model->obtenirCentre($tiquet['codi_centre_reparador'])['nom_centre'];
+                    }
+                    
+                    $preu_total = 0;
+                    $array_intervencions = $intervencio_model->obtenirIntervencionsTiquet($id_tiquet);
+                    $array_inventari = [];
+
+                    for ($i = 0; $i < sizeof($array_intervencions); $i++) {
+                        $array_intervencions[$i]['tipus_intervencio'] = $tipus_intervencio_model->obtenirNomTipusIntervencio($array_intervencions[$i]['id_tipus_intervencio'])['nom_tipus_intervencio'];
+                        $array_inventari[$i] = $inventari_model->obtenirInventariIntervencio($array_intervencions[$i]['id_intervencio']);
+                    }
+    
+                    for ($i = 0; $i < sizeof($array_intervencions); $i++) {
+                        for ($j = 0; $j < sizeof($array_inventari[$i]); $j++) {
+                            $array_inventari[$i][$j]['tipus_inventari'] = $tipus_inventari_model->obtenirTipusInventariPerId($array_inventari[$i][$j]['id_tipus_inventari'])['nom_tipus_inventari'];
+                            $preu_total += $array_inventari[$i][$j]['preu'];
+                        }
+                    }
+    
+                    $data['intervencions'] = $array_intervencions;
+                    $data['inventaris'] = $array_inventari;
+                    $data['preu_total'] = $preu_total;
+    
+    
+                    $html = view('tiquet' . DIRECTORY_SEPARATOR .'vistaPDF', $data); // Carreguem la vista per obtenir el codi HTML
+    
+                    // Cridem la llibreria PDF, per generar-lo i descarregar-lo com a resposta
+                    $mpdf = new \Mpdf\Mpdf();
+                    $mpdf->WriteHTML($html);
+                    $this->response->setHeader('Content-Type', 'application/pdf');
+                    $mpdf->Output('tiquet_' . $id_tiquet . '.pdf','D');
+    
+                } else {
+                    return redirect()->back();
                 }
-            }
-
-            $data['intervencions'] = $array_intervencions;
-            $data['inventaris'] = $array_inventari;
-            $data['preu_total'] = $preu_total;
-
-
-            $html = view('tiquet' . DIRECTORY_SEPARATOR .'vistaPDF', $data); // Carreguem la vista per obtenir el codi HTML
-
-            // Cridem la llibreria PDF, per generar-lo i descarregar-lo com a resposta
-            $mpdf = new \Mpdf\Mpdf();
-            $mpdf->WriteHTML($html);
-            $this->response->setHeader('Content-Type', 'application/pdf');
-            $mpdf->Output('tiquet_' . $id_tiquet . '.pdf','D');
-
             } else {
-                return redirect()->back();
+                return redirect()->to(base_url('/tiquets'));
             }
+
 
 
         } else {

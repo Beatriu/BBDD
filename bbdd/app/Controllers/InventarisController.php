@@ -408,8 +408,8 @@ class InventarisController extends BaseController
 
                     $inventari_model->deleteInventari($inventari_eliminar['id_inventari']);
 
-                } else if ($role == "admin_sstt" && $centre_model->obtenirCentre($inventari_eliminar)['id_sstt'] == $actor['id_sstt']) {
-
+                } else if ($role == "admin_sstt" && $centre_model->obtenirCentre($inventari_eliminar['codi_centre'])['id_sstt'] == $actor['id_sstt']) {
+                    // Admin SSTT pot esborrar una peça encara que estigui assignada a una intervenció. La intervenció, deixarà de tenir la peça
                     $inventari_model->deleteInventari($inventari_eliminar['id_inventari']);
 
                 } else if ($role == "desenvolupador") {
@@ -545,6 +545,7 @@ class InventarisController extends BaseController
 
                 $inventari = $inventari_model->obtenirInventariPerId($id_inventari);
     
+                dd($id_inventari);
                 if ($inventari != null && $inventari['id_intervencio'] == null) {
                     $estat = $estat_model->obtenirEstatPerId($tiquet['id_estat']);
     
