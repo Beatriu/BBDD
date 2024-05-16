@@ -354,7 +354,7 @@ class RegistresController extends BaseController
             // Dades per a la gestió de rols
             $tiquet = $tiquet_model->getTiquetById($id_tiquet);
             $codi_centre = session()->get('user_data')['codi_centre'];
-            dd($id_tiquet);
+
             $estat = $estat_model->obtenirEstatPerId($tiquet['id_estat']);
             if ((($role == "centre_emissor" || $role == "professor" || $role == "centre_reparador") && $estat == "Pendent de recollir" && $codi_centre == $tiquet['codi_centre_emissor']) || ($role == "sstt" && $estat == "Pendent de recollir") || $role == "admin_sstt" || $role == "desenvolupador") {
                 //Preguntar a la bbdd quin tiquet es i retornar l'array del tiquet.

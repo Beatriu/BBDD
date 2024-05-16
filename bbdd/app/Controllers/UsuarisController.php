@@ -72,9 +72,7 @@ class UsuarisController extends BaseController
                     $id_login = $login_model->obtenirId($nom_login);
                     $id_role = $login_in_rol_model->obtenirRol($id_login);
                     $role = $rol_model->obtenirRol($id_role);
-                    //dd($role);
                     $session_data['role'] = $role;
-
 
                     if ($role != "alumne" && $role != "professor") {
                         $session_data['codi_centre'] = "no_codi";

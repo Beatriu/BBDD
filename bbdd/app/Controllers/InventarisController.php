@@ -545,7 +545,6 @@ class InventarisController extends BaseController
 
                 $inventari = $inventari_model->obtenirInventariPerId($id_inventari);
     
-                dd($id_inventari);
                 if ($inventari != null && $inventari['id_intervencio'] == null) {
                     $estat = $estat_model->obtenirEstatPerId($tiquet['id_estat']);
     
