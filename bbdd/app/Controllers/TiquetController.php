@@ -157,7 +157,8 @@ class TiquetController extends BaseController
                     $crud->addWhere('id_tiquet', $id_tiquet);
 
                     $tiquets = $tiquet_model->getTiquets();
-
+                    
+                    $crud->addItemLink('edit', 'fa-pencil', base_url('editar/intervencio/' . $id_tiquet ), 'Editar Intervenció');
                     $crud->addItemLink('delete', 'fa-trash', base_url('tiquets/esborrar'), 'Eliminar Tiquet');
                 }
     
@@ -1362,8 +1363,6 @@ class TiquetController extends BaseController
         }
         
     }
-
-
 
     public function descarregarTiquetPDF($id_tiquet)
     {
