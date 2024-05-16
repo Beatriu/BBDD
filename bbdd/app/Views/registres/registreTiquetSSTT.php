@@ -48,7 +48,7 @@
                         <i class="fa-solid fa-boxes-stacked"></i>
                     </a>
                 </li>
-                <?php if ($tipus_sstt == 'admin') : ?>
+                <?php if ($tipus_sstt == 'admin' || $tipus_sstt == 'desenvolupador') : ?>
                     <li class="nav-item" title="<?= lang("registre.alumnes") ?>">
                         <a href="<?= base_url("/alumnes") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.alumnes") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                             <i class="fa-solid fa-users"></i>

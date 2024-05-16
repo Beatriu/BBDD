@@ -110,7 +110,7 @@
                     </li>
                 </ul>
             <?php endif; ?>
-            <?php if ($role == 'admin_sstt') : ?>
+            <?php if ($role == 'admin_sstt' || $role == 'desenvolupador') : ?>
                 <ul class="nav flex-column">
                     <li class="nav-item" title="<?= lang("registre.dispositius_rebuts") ?>">
                         <a href="<?= base_url("/tiquets/emissor") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.table-dispositius") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
