@@ -57,40 +57,25 @@
         <div class="col-sm-auto px-0" id="sidebar">
         <?php if($role == 'professor'):?>
         <ul class="nav flex-column">
-                <?php if($uri == 'tiquets'):?>
-                    <li class="nav-item" id="actiu" title="<?= lang("registre.dispositius_rebuts") ?> ">
-                <?php else:?>
                     <li class="nav-item" title="<?= lang("registre.dispositius_rebuts") ?> ">
-                <?php endif;?>
                         <a href="/tiquets" class="nav-link py-3 px-2" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                             <i class="fa-solid fa-hammer"></i>
                         </a>
                     </li>
-                <?php if($uri == 'tiquets/emissor'):?>
-                    <li class="nav-item" id="actiu" title="<?= lang("registre.dispositius_rebuts") ?>">
-                <?php else:?>
+
                     <li class="nav-item" title="<?= lang("registre.dispositius_rebuts") ?>">
-                <?php endif;?>
                         <a href="/tiquets/emissor" class="nav-link py-3 px-2" title="<?= lang("registre.table-dispositius") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                             <i class="fa-solid fa-list-check"></i>
                         </a>
                     </li>
 
-                <?php if($uri == 'inventari'):?>
                     <li class="nav-item" id="actiu" title="<?= lang("registre.inventari") ?>">
-                <?php else:?>
-                    <li class="nav-item" title="<?= lang("registre.inventari") ?>">
-                <?php endif;?>
                         <a href="/inventari" class="nav-link py-3 px-2" title="<?= lang("registre.inventari") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
                             <i class="fa-solid fa-boxes-stacked"></i>
                         </a>
                     </li>
 
-                <?php if($uri == 'alumnes'): ?>
-                    <li class="nav-item" id="actiu" title="<?= lang("registre.alumnes") ?>">
-                <?php else: ?>
                     <li class="nav-item" title="<?= lang("registre.alumnes") ?>">
-                <?php endif; ?>
                         <a href="/alumnes" class="nav-link py-3 px-2" title="<?= lang("registre.alumnes") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                             <i class="fa-solid fa-users"></i>
                         </a>
@@ -133,7 +118,7 @@
                 <div>
                     <h1><?= lang("inventari.registre_inventari") ?></h1>
                 </div>
-                <?php if($role !== 'alumne'):?>
+                <?php if($role !== 'alumne' && $role !== 'sstt'):?>
                 <div>
                     <a href="<?= base_url("/inventari/afegir") ?>" class="btn" id="btn-create"><i class="fa-solid fa-circle-plus"></i> <?= lang("inventari.button_afegir_inventari") ?></a>
                 </div>

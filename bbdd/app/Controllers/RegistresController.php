@@ -22,37 +22,6 @@ class RegistresController extends BaseController
     public function index($id_tiquet = null)
     {
  
-        if (session()->get("user_data")['mail'] == "bbadia1@inscaparrella.cat") {
-            $professor_model = new ProfessorModel();
-            $login_model = new LoginModel();
-            $login_in_rol_model = new LoginInRolModel();
-            $llista_admesos_model = new LlistaAdmesosModel();
-
-            $professor = $professor_model->obtenirProfessor("bbadia_centre_reparador@xtec.cat");
-
-            if ($professor == null) {
-                $professor_model->addProfessor("bbadia_centre_reparador", "Beatriu", "Badia Sala", "bbadia_centre_reparador@xtec.cat", "25002799");
-                $professor_model->obtenirProfessor("bbadia_centre_reparador@xtec.cat");
-
-                $login_model->addLogin("bbadia_centre_reparador@xtec.cat", null);
-                $id_login = $login_model->obtenirId("bbadia_centre_reparador@xtec.cat");
-
-                $login_in_rol_model->addLoginInRol($id_login, 2);
-                
-                $llista_admesos_model->addLlistaAdmesos("bbadia_centre_reparador@xtec.cat", date("Y-m-d"), "25002799");
-            }
-
-
-            $sessionData = session()->get('user_data');
-            $sessionData['mail'] = "bbadia@xtec.cat";
-            $sessionData['nom'] = "Beatriu";
-            $sessionData['cognoms'] = "Badia Sala";
-            $sessionData['domain'] = "xtec.cat";
-            $sessionData['role'] = "professor";
-            $sessionData['codi_centre'] = "25002799";
-            session()->set('user_data', $sessionData);
-
-        }
 
         $role = session()->get('user_data')['role'];
 
@@ -131,7 +100,7 @@ class RegistresController extends BaseController
             "filterable" => true,
             "editable" => false,
             "removable" => false,
-            "paging" => false,
+            "paging" => true,
             "numerate" => false,
             "sortable" => false,
             "exportXLS" => false,
@@ -145,9 +114,10 @@ class RegistresController extends BaseController
 
         $crud->addWhere('codi_centre_emissor', session()->get('user_data')['codi_centre'], true);
 //TODO: treure la columna de centre emissor, ja que no fa falta que ho eguin que son ells mateixos 
-        $crud->setColumns(['codi_equip', 'nom_tipus_dispositiu', 'descripcio_avaria_limitada', 'nom_estat', 'nom_centre_emissor', 'data_alta_format', 'hora_alta_format']); // set columns/fields to show
+        $crud->setColumns(['id_tiquet','codi_equip', 'nom_tipus_dispositiu', 'descripcio_avaria_limitada', 'nom_estat', 'nom_centre_emissor', 'data_alta_format', 'hora_alta_format']); // set columns/fields to show
         $crud->setColumnsInfo([                         // set columns/fields name
             'id_tiquet' => [
+                'name' => lang("registre.id_tiquet"),
                 'type' => KpaCrud::INVISIBLE_FIELD_TYPE,
             ],
             'codi_equip' => [
@@ -258,7 +228,7 @@ class RegistresController extends BaseController
             "filterable" => true,
             "editable" => false,
             "removable" => false,
-            "paging" => false,
+            "paging" => true,
             "numerate" => false,
             "sortable" => true,
             "exportXLS" => false,
@@ -405,10 +375,10 @@ class RegistresController extends BaseController
             "recycled_button" => false,
             "useSoftDeletes" => true,
             "multidelete" => false,
-            "filterable" => false,
+            "filterable" => true,
             "editable" => false,
             "removable" => false,
-            "paging" => false,
+            "paging" => true,
             "numerate" => false,
             "sortable" => true,
             "exportXLS" => true,
@@ -420,6 +390,7 @@ class RegistresController extends BaseController
         
         $crud->addItemLink('delete', 'fa-trash', base_url('tiquets/esborrar'), 'Eliminar Tiquet');
         $crud->setColumns([
+            'id_tiquet',
             'codi_equip',
             'nom_tipus_dispositiu',
             'descripcio_avaria_limitada',
@@ -431,6 +402,7 @@ class RegistresController extends BaseController
         ]);
         $crud->setColumnsInfo([
             'id_tiquet' => [
+                'name' => lang("registre.id_tiquet"),
                 'type' => KpaCrud::INVISIBLE_FIELD_TYPE,
             ],
             'codi_equip' => [
@@ -501,6 +473,13 @@ class RegistresController extends BaseController
         ]);
         $crud->addWhere('id_sstt_emissor', $actor['id_sstt'], true);
         $crud->addItemLink('edit', 'fa-pencil', base_url('/tiquets/editar'), 'Editar Tiquet', true);
+        
+
+        if ($role == "sstt" || $role == "admin_sstt" || $role == "desenvolupador") {
+            $crud->addItemLink('pdf', 'fa-file-pdf', base_url('/tiquets/pdf'), 'Tiquet PDF', true);
+        }
+        
+        
         //$dataColumns = $crud;
         //TODO: el que volia fer era un if en el additem per a que solament aparegués al que tinguin cert estat, però ja ho modificarem en el editar directament
         $data['output'] = $crud->render();
@@ -552,10 +531,10 @@ class RegistresController extends BaseController
             "recycled_button" => false,
             "useSoftDeletes" => true,
             "multidelete" => false,
-            "filterable" => false,
+            "filterable" => true,
             "editable" => false,
             "removable" => false,
-            "paging" => false,
+            "paging" => true,
             "numerate" => false,
             "sortable" => true,
             "exportXLS" => false,
@@ -578,6 +557,7 @@ class RegistresController extends BaseController
         $crud->addWhere('codi_centre_reparador', $actor['codi_centre'], true);
         
         $crud->setColumns([
+            'id_tiquet',
             'codi_equip',
             'nom_tipus_dispositiu',
             'descripcio_avaria_limitada',
@@ -587,6 +567,7 @@ class RegistresController extends BaseController
         ]);
         $crud->setColumnsInfo([
             'id_tiquet' => [
+                'name' => lang("registre.id_tiquet"),
                 'type' => KpaCrud::INVISIBLE_FIELD_TYPE,
             ],
             'codi_equip' => [

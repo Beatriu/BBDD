@@ -82,7 +82,7 @@
                     <?= lang('general_lang.problem') ?> *
                 </div>
                 <div class="col d-flex align-items-center justify-content-end">
-                    <button id="button_afegir_fila_tiquet" type="button" class="btn btn-success rounded-pill" onclick="afegirTiquet();"><i class="fa fa-plus"></i> <?= lang('general_lang.afegir_tiquet') ?></button>
+                    <button id="button_afegir_fila_tiquet" type="button" class="btn btn_afegir_linea rounded-pill text-white" onclick="afegirTiquet();"><i class="fa fa-plus"></i> <?= lang('general_lang.afegir_linea') ?></button>
                 </div>
             </div>
             <div class="row me-0 pe-0 ms-1" id = "div_files_formulari_tiquet">
@@ -118,7 +118,7 @@
                 <span id="span_nombre_tiquets">1</span>
             </div>
             <div class="d-flex justify-content-center align-items-center">
-                <button id="submit_afegir" type="submit" class="btn btn_save rounded-pill ms-3 me-3"><i class="fa-solid fa-floppy-disk me-2"></i><?= lang('general_lang.save') ?></button>
+                <button id="submit_afegir" type="submit" class="btn btn-success rounded-pill ms-3 me-3"><i class="fa-solid fa-floppy-disk me-2"></i><?= lang('general_lang.save') ?></button>
                 <div id="div_csv" class="btn btn_csv rounded-pill" onclick = "afegirFitxer();"> <i class="fa-solid fa-file-csv me-2"></i><?= lang('general_lang.importar_csv') ?></div>
                 <div id="cancelar_importar_csv" class="btn btn_cancell rounded-pill" onclick="cancellFitxer();" style="display: none;"><i class="fa-solid fa-xmark me-2"></i><?= lang('general_lang.cancell') ?></div>
                 <input type="file" id="csv_tiquet" name="csv_tiquet" class="btn btn_csv rounded-pill" hidden  onchange="mostrarFitxers(this);"> </input>

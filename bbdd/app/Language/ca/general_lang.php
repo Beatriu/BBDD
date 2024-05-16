@@ -22,6 +22,8 @@ return [
     'formulari_tiquet' => 'Crear Tiquet',
     'name' => 'Nom persona de contacte centre',
     'contact' => 'Correu persona de contacte centre',
+    'name_curt' => 'Persona de contacte centre',
+    'contact_curt' => 'Contacte persona',
     'create_tiquet' => 'Crear tiquet/s',
     'tiquet' => 'Tiquet',
     'edit_tiquet' => 'Editar tiquet',
@@ -59,4 +61,5 @@ return [
     'informacio_tiquet' => 'Informació tiquet',
     'plantilla_csv' => 'Plantilla CSV',
     'importar_csv' => 'Importar CSV',
+    'afegir_linea' => "Afegir línia",
 ];

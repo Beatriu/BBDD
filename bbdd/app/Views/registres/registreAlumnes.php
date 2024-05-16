@@ -34,7 +34,7 @@
             </div>
         </div>
     <?php endif; ?>
-    <?php if ($no_permisos != null): ?> 
+    <?php if ($no_permisos != null) : ?>
         <div class="modal" tabindex="-1" role="dialog" style="display:block">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -54,45 +54,49 @@
     <div class="row">
         <!--Sidebar estàtic-->
         <div class="col-sm-auto px-0" id="sidebar">
-        <ul class="nav flex-column">
-                <?php if($uri == 'tiquets'):?>
-                    <li class="nav-item" id="actiu" title="<?= lang("registre.dispositius_rebuts") ?> ">
-                <?php else:?>
+            <ul class="nav flex-column">
+                <?php if ($role == 'professor') : ?>
                     <li class="nav-item" title="<?= lang("registre.dispositius_rebuts") ?> ">
-                <?php endif;?>
                         <a href="/tiquets" class="nav-link py-3 px-2" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                             <i class="fa-solid fa-hammer"></i>
                         </a>
                     </li>
-                <?php if($uri == 'tiquets/emissor'):?>
-                    <li class="nav-item" id="actiu" title="<?= lang("registre.dispositius_rebuts") ?>">
-                <?php else:?>
                     <li class="nav-item" title="<?= lang("registre.dispositius_rebuts") ?>">
-                <?php endif;?>
                         <a href="/tiquets/emissor" class="nav-link py-3 px-2" title="<?= lang("registre.table-dispositius") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                             <i class="fa-solid fa-list-check"></i>
                         </a>
                     </li>
-                
-                <?php if($uri == 'inventari'):?>
-                    <li class="nav-item" id="actiu" title="<?= lang("registre.inventari") ?>">
-                <?php else:?>
+
                     <li class="nav-item" title="<?= lang("registre.inventari") ?>">
-                <?php endif;?>
                         <a href="/inventari" class="nav-link py-3 px-2" title="<?= lang("registre.inventari") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
                             <i class="fa-solid fa-boxes-stacked"></i>
                         </a>
                     </li>
 
-                <?php if($uri == 'alumnes'): ?>
                     <li class="nav-item" id="actiu" title="<?= lang("registre.alumnes") ?>">
-                <?php else: ?>
-                    <li class="nav-item" title="<?= lang("registre.alumnes") ?>">
-                <?php endif; ?>
                         <a href="/alumnes" class="nav-link py-3 px-2" title="<?= lang("registre.alumnes") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                             <i class="fa-solid fa-users"></i>
                         </a>
                     </li>
+                <?php endif; ?>
+                <?php if ($role == 'admin_sstt') : ?>
+                    <li class="nav-item" title="<?= lang("registre.dispositius_rebuts") ?> ">
+                        <a href="/tiquets" class="nav-link py-3 px-2" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                            <i class="fa-solid fa-hammer"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item" title="<?= lang("registre.inventari") ?>">
+                        <a href="/inventari" class="nav-link py-3 px-2" title="<?= lang("registre.inventari") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
+                            <i class="fa-solid fa-boxes-stacked"></i>
+                        </a>
+                    </li>
+
+                    <li class="nav-item" id="actiu" title="<?= lang("registre.alumnes") ?>">
+                        <a href="/alumnes" class="nav-link py-3 px-2" title="<?= lang("registre.alumnes") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                            <i class="fa-solid fa-users"></i>
+                        </a>
+                    </li>
+                <?php endif; ?>
             </ul>
         </div>
 

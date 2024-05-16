@@ -48,6 +48,8 @@
                         <i class="fa-solid fa-boxes-stacked"></i>
                     </a>
                 </li>
+                <?php if ($id_tiquet !== null) : ?>
+                    <?php endif; ?>
             </ul>
         </div>
         <!--SideBar desplegable-->
@@ -67,7 +69,7 @@
                     <h1><?= lang("registre.titol_dispositius_sstt") ?></h1>
                 </div>
                 <div>
-                    <button onclick="_open()" class="btn" id="btn-filter"><i class="fa-solid fa-filter"></i> <?= lang("registre.buttons.filter") ?></button>
+                    <!--<button onclick="_open()" class="btn" id="btn-filter"><i class="fa-solid fa-filter"></i> <?//= lang("registre.buttons.filter") ?></button>-->
                     <a href="<?= base_url("/tiquets?export=xls") ?>" id="btn-export" class="btn btn-info" title="<?= lang("registre.buttons.export_title") ?>"><i class="fa-solid fa-file-excel"></i> <?= lang("registre.buttons.export") ?></a>
                     <a href="<?= base_url("/formulariTiquet") ?>" class="btn" id="btn-create"><i class="fa-solid fa-circle-plus"></i> <?= lang("registre.buttons.create") ?></a>
                 </div>

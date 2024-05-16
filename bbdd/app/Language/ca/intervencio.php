@@ -6,7 +6,9 @@ return [
     'tipus_intervencio' => 'Tipus intervenció',
     'curs' => 'Curs',
     'descripcio_intervencio' => 'Descripció intervenció',
+    'data_intervencio' => 'Data creació intervenció',
     'save_intervencio' => 'Crear intervenció',
+    'editar_intervencio' => 'Editar intervenció',
     'tipus_intervencio_required' => "El tipus d'intervenció és obligatori!",
     'curs_required' => "El curs és obligatori!",
     'descripcio_intervencio_max' => 'La descripció de la intervenció pot tenir com a màxim 512 caràcters!',
@@ -17,6 +19,7 @@ return [
     'descripcio_intervencio_limitada' => 'Descripció intervenció',
     'id_xtec' => 'Identificador professor',
     'dades_tiquet' => [
+        'dades_id_tiquet' => 'Identificador',
         'dades_titol' => 'Dades',
         'dades_codi' => 'Codi',
         'dades_tipus' => 'Tipus',
@@ -28,4 +31,9 @@ return [
     'no_permisos_eliminar' => 'No tens permisos per a eliminar aquesta intervenció!',
     'modal_title' => 'Vols eliminar aquesta intervenció?',
     'modal_text' => 'Estàs segur que vols eliminar la següent intervenció?',
+    'btn_aplicar_estat' => "Aplicar",
+    "selecciona_inventari" => "Selecciona la peça i afegeix-la...",
+    'inventari_assignat' => 'Inventari assignat',
+    'intervencio_assignada' => 'Inventari de la intervenció: ',
+    'button_assignar_inventari' => 'Afegir peça',
 ];

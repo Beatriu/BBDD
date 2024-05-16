@@ -53,6 +53,12 @@ class IntervencioModel extends Model
         ]);
     }
 
+    public function obtenirIntervencionsTiquet($id_tiquet)
+    {
+        return $this->where("id_tiquet", $id_tiquet)->findAll();
+    }
+
+
     public function obtenirIdIntervencioAlumne($correu_alumne)
     {
         return $this->where("correu_alumne", $correu_alumne)->findAll();

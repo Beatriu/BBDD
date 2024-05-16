@@ -55,22 +55,14 @@
                             <i class="fa-solid fa-list-check"></i>
                         </a>
                     </li>
-                
-                <?php if($uri == 'inventari'):?>
-                    <li class="nav-item" id="actiu" title="<?= lang("registre.inventari") ?>">
-                <?php else:?>
+               
                     <li class="nav-item" title="<?= lang("registre.inventari") ?>">
-                <?php endif;?>
                         <a href="<?= base_url("/inventari") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.inventari") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
                             <i class="fa-solid fa-boxes-stacked"></i>
                         </a>
                     </li>
 
-                <?php if($uri == 'alumnes'): ?>
-                    <li class="nav-item" id="actiu" title="<?= lang("registre.alumnes") ?>">
-                <?php else: ?>
                     <li class="nav-item" title="<?= lang("registre.alumnes") ?>">
-                <?php endif; ?>
                         <a href="<?= base_url("/alumnes") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.alumnes") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                             <i class="fa-solid fa-users"></i>
                         </a>
@@ -98,7 +90,7 @@
                     <?php endif;?>
                 </div>
                 <div>
-                    <button onclick="_open()" class="btn" id="btn-filter"><i class="fa-solid fa-filter"></i> <?= lang("registre.buttons.filter") ?></button>
+                    <!--<button onclick="_open()" class="btn" id="btn-filter"><i class="fa-solid fa-filter"></i> <?//= lang("registre.buttons.filter") ?></button>-->
                     <a href="<?= base_url("/formulariTiquet") ?>" class="btn" id="btn-create"><i class="fa-solid fa-circle-plus"></i> <?= lang("registre.buttons.create") ?></a>
                 </div>
             </div>

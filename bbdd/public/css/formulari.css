@@ -28,5 +28,9 @@ input {
     background-color: #333333;
 }
 #div_csv_descarregar {
-    background-color: #2dfc8d;
+    background-color: #8C52FF;
+}
+
+.btn_afegir_linea {
+    background-color: #38B6FF;
 }

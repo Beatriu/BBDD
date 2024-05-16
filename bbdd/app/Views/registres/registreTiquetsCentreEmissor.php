@@ -35,7 +35,6 @@
 <div class="container-fluid">
     <div class="row">
         <!--Sidebar estàtic-->
-        <!--SideBar desplegable-->
         <div class="col-sm-auto px-0" style="display:none" id="mySidebar">
             <ul class="nav flex-column">
                <li> <a onclick="_close()"> <i class="fa-solid fa-xmark"></i></a></li>
@@ -52,7 +51,7 @@
                     <h1><?= lang("registre.table-dispositius") ?></h1>
                 </div>
                 <div>
-                    <button onclick="_open()" class="btn" id="btn-filter"><i class="fa-solid fa-filter"></i> <?= lang("registre.buttons.filter") ?></button>
+                    <!--<button onclick="_open()" class="btn" id="btn-filter"><i class="fa-solid fa-filter"></i> <?//= lang("registre.buttons.filter") ?></button>-->
                     <a href="<?= base_url("/formulariTiquet") ?>" class="btn" id="btn-create"><i class="fa-solid fa-circle-plus"></i> <?= lang("registre.buttons.create") ?></a>
                 </div>
             </div>

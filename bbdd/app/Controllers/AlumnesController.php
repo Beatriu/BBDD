@@ -64,7 +64,8 @@ class AlumnesController extends BaseController
             $codi_centre = session()->get('user_data')['codi_centre'];
 
             $data['title'] = 'Tiquets SSTT';
-
+            $role = session()->get('user_data')['role'];
+            $data['role'] = $role;
             $crud = new KpaCrud();
             $crud->setConfig('onlyView');
             $crud->setConfig([
@@ -74,10 +75,10 @@ class AlumnesController extends BaseController
                 "recycled_button" => false,
                 "useSoftDeletes" => true,
                 "multidelete" => false,
-                "filterable" => false,
+                "filterable" => true,
                 "editable" => false,
                 "removable" => false,
-                "paging" => false,
+                "paging" => true,
                 "numerate" => false,
                 "sortable" => true,
                 "exportXLS" => true,

@@ -58,4 +58,5 @@ return [
     'informacio_tiquet' => 'Información tiquet',
     'plantilla_csv' => 'Plantilla CSV',
     'importar_csv' => 'Importar CSV',
+    'afegir_linea' => "Afegir línea",
 ];

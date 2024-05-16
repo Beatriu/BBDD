@@ -7,9 +7,12 @@ use App\Models\CentreModel;
 use App\Models\CursModel;
 use App\Models\EstatModel;
 use App\Models\IntervencioModel;
+use App\Models\InventariModel;
 use App\Models\TipusIntervencioModel;
+use App\Models\TipusInventariModel;
 use App\Models\TiquetModel;
 use Faker\Provider\Base;
+
 
 class IntervencionsController extends BaseController
 {
@@ -43,7 +46,9 @@ class IntervencionsController extends BaseController
                         $estats_consulta[$i] = $estats_professor[$i]['id_estat'];
                     }
     
-                    if (!in_array($tiquet['id_estat'], $estats_consulta) || $actor['codi_centre'] != $tiquet['codi_centre_reparador']) {
+                    if (!in_array($tiquet['id_estat'], $estats_consulta)) {
+                        return redirect()->to(base_url('/tiquets/' . $tiquet['id_tiquet']));
+                    } else if ($actor['codi_centre'] != $tiquet['codi_centre_reparador']) {
                         return redirect()->to(base_url('/tiquets'));
                     }
     
@@ -265,7 +270,6 @@ class IntervencionsController extends BaseController
             
                     $data['tipus_intervencio'] = $options_tipus_intervencio;
                     $data['cursos'] = $options_curs;
-            
                     $data['title'] = lang('intervencio.formulari_editar_intervencio');
         
                     return view('formularis' . DIRECTORY_SEPARATOR .'formulariEditarIntervencio', $data);

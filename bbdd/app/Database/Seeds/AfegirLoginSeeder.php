@@ -16,6 +16,7 @@ class AfegirLoginSeeder extends Seeder
             if (!$firstline) {
                 $model = new \App\Models\LoginModel();
                 $model->addLoginCSV($data[0],$data[1],$data[2]);
+                //echo $data[2];
             }
             $firstline = false;
         }
