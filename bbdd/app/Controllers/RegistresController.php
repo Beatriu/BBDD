@@ -501,6 +501,13 @@ class RegistresController extends BaseController
         ]);
         $crud->addWhere('id_sstt_emissor', $actor['id_sstt'], true);
         $crud->addItemLink('edit', 'fa-pencil', base_url('/tiquets/editar'), 'Editar Tiquet', true);
+        
+
+        if ($role == "sstt" || $role == "admin_sstt" || $role == "desenvolupador") {
+            $crud->addItemLink('pdf', 'fa-file-pdf', base_url('/tiquets/pdf'), 'Tiquet PDF', true);
+        }
+        
+        
         //$dataColumns = $crud;
         //TODO: el que volia fer era un if en el additem per a que solament aparegués al que tinguin cert estat, però ja ho modificarem en el editar directament
         $data['output'] = $crud->render();

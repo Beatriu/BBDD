@@ -56,6 +56,26 @@ class InventariModel extends Model
         return $this->where('id_inventari', $id_inventari)->first();
     }
 
+    public function obtenirInventariCentre($codi_centre)
+    {
+        return $this->where('codi_centre', $codi_centre)->findAll();
+    }
+
+    public function obtenirInventariIntervencio($id_intervencio)
+    {
+        return $this->where('id_intervencio', $id_intervencio)->findAll();
+    }
+
+    public function editarInventariDesassignar($id_inventari) 
+    {
+        return $this->update($id_inventari, ["id_intervencio" => null]);
+    }
+
+    public function editarInventariAssignar($id_inventari, $id_intervencio) 
+    {
+        return $this->update($id_inventari, ["id_intervencio" => $id_intervencio]);
+    }
+
     public function deleteInventari($id_inventari) 
     {
         return $this->delete(['id_inventari' => $id_inventari]);

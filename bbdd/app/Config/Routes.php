@@ -26,6 +26,7 @@ $routes->get('/formulariTiquet', 'TiquetController::createTiquet', ['filter'=>'A
 $routes->post('/formulariTiquet', 'TiquetController::createTiquet_post', ['filter'=>'Autentica']);  
 $routes->get('/tiquets', 'RegistresController::index', ['filter'=>'Autentica']);
 $routes->get('/tiquets/emissor', 'RegistresController::index2', ['filter'=>'Autentica']);
+$routes->get('/tiquets/pdf/(:segment)', 'TiquetController::descarregarTiquetPDF/$1', ['filter'=>'Autentica']);
 
 $routes->post('/tiquets/editar', 'TiquetController::editarTiquet_post', ['filter'=>'Autentica']);
 $routes->get('/tiquets/editar/(:any)', 'TiquetController::editarTiquet/$1', ['filter'=>'Autentica']);
@@ -45,6 +46,10 @@ $routes->get('/inventari/afegir', 'InventarisController::crearInventari', ['filt
 $routes->post('/inventari/afegir', 'InventarisController::crearInventari_post', ['filter'=>'Autentica']);
 $routes->get('/inventari/esborrar/(:segment)', 'InventarisController::registreInventari/$1', ['filter'=>'Autentica']);
 $routes->get('/eliminarInventari/(:segment)', 'InventarisController::eliminarInventari/$1', ['filter'=>'Autentica']);
+
+$routes->get('/tiquets/(:segment)/assignar/(:segment)', 'InventarisController::assignarInventari/$1/$2', ['filter'=>'Autentica']);
+$routes->post('/tiquets/(:segment)/assignar/(:segment)', 'InventarisController::assignarInventari_post/$1/$2', ['filter'=>'Autentica']);
+$routes->get('/inventari/desassignar/(:segment)', 'InventarisController::desassignarInventari/$1', ['filter'=>'Autentica']);
 
 //Alumnes
 $routes->get('/alumnes', 'AlumnesController::registreAlumnes', ['filter'=>'Autentica']);

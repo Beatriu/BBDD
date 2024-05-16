@@ -48,4 +48,9 @@ class TipusInventariModel extends Model
     public function obtenirTipusInventari() {
         return $this->findAll();
     }
+
+    public function obtenirTipusInventariPerId($id_tipus_inventari)
+    {
+        return $this->where('id_tipus_inventari', $id_tipus_inventari)->first();
+    }
 }

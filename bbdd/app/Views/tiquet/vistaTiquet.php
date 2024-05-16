@@ -48,25 +48,54 @@
 
                 <img src="<?= base_url('/img/ordinador_defecte.png') ?>" alt="" width="200px" class="mb-3">
 
-                <div class="w-17 border-right-1">
+                <div class="row">
                     <h2><?= lang('intervencio.dades_tiquet.dades_titol') ?></h2>
-                    <ul class="w-17 border-danger ">
-                        <li><?= lang('intervencio.dades_tiquet.dades_codi') ?> </li>
-                        <li><?= lang('intervencio.dades_tiquet.dades_tipus') ?> </li>
-                        <li><?= lang('intervencio.dades_tiquet.dades_estat') ?> </li>
+                    <ul>
+                        <li><?= lang('intervencio.dades_tiquet.dades_id_tiquet') ?>: <?= $tiquet['id_tiquet'] ?> </li>
+                        <li><?= lang('intervencio.dades_tiquet.dades_codi') ?>: <?= $tiquet['codi_equip'] ?> </li>
+                        <li><?= lang('intervencio.dades_tiquet.dades_tipus') ?>: <?= $tipus_dispositiu ?> </li>
                     </ul>
                 </div>
+                
+                <?php if($role == "alumne" && $estat_editable != "disabled"): ?>
 
-                <?php if($role == "alumne"): ?>
                     <form method="POST" action="<?= base_url('/tiquets/editar') ?>" enctype="multipart/form-data">
                         <?= csrf_field() ?>
-                        <label class="form-label" for="estat"><?= lang('registre.estat') ?></label>
-                        <select id="estat" name="estat" class="form-select" value="<?= $tiquet['id_estat'] ?>">
-                            <?=$estats?>
-                        </select>
-                        <button type="submit"></button>
+                        <div class="row">
+                                <div class="col-9 pe-1">
+                                <select id="estat" name="estat" class="form-select" <?= $estat_editable ?> title="Estat del tiquet.">
+                                    <?=$estats?>
+                                </select>
+                            </div>
+                            <div class="col-3 ps-0">
+                                <button type="submit" class="btn btn-warning rounded-pill"><?= lang('intervencio.btn_aplicar_estat') ?></button>
+                            </div>
+                        </div>
                     </form>
+                    
+                <?php else: ?>
+                    <div class="row">
+                        <div class="col-12">
+                            <select id="estat" name="estat" class="form-select" <?= $estat_editable ?> title="Estat del tiquet.">
+                                <?=$estats?>
+                            </select>
+                        </div>
+                    </div>
                 <?php endif; ?>
+
+                <div class="row mt-3">
+                    <ul>
+                        <li><?= lang('registre.centre') ?>: <?= $nom_centre_emissor ?> </li>
+                        <li><?= lang('general_lang.name_curt') ?>: <?= $tiquet['nom_persona_contacte_centre'] ?> </li>
+                        <li><?= lang('general_lang.contact_curt') ?>: <?= $tiquet['correu_persona_contacte_centre'] ?> </li>
+                        <li><?= lang('registre.centre_reparador') ?>: <?= $nom_centre_reparador ?> </li>
+                        <li><?= lang('registre.data_alta') ?>: <?= $tiquet['data_alta'] ?> </li>
+                    </ul>
+                    <textarea id="mostrar_descripcio_tiquet" disabled>
+                        <?= trim($tiquet['descripcio_avaria']) ?>
+                    </textarea>
+                </div>
+
             </div>
 
             <div class="col-9">

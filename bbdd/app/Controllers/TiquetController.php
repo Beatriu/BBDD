@@ -5,8 +5,13 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\CentreModel;
 use App\Models\EstatModel;
+use App\Models\IntervencioModel;
+use App\Models\InventariModel;
 use App\Models\TipusDispositiuModel;
+use App\Models\TipusIntervencioModel;
+use App\Models\TipusInventariModel;
 use App\Models\TiquetModel;
+use Google\Service\BackupforGKE\Backup;
 use SIENSIS\KpaCrud\Libraries\KpaCrud;
 
 
@@ -27,6 +32,9 @@ class TiquetController extends BaseController
         $data['role'] = $role;
 
         $tiquet_existent = $tiquet_model->getTiquetById($id_tiquet);
+        $data['tiquet'] = $tiquet_existent;
+        $data['tipus_dispositiu'] = $tipus_dispositiu_model->getNomTipusDispositiu($tiquet_existent['id_tipus_dispositiu'])['nom_tipus_dispositiu'];
+        $data['estat_editable'] = "";
 
         if ($tiquet_existent != null) {
 
@@ -114,6 +122,7 @@ class TiquetController extends BaseController
                     }
 
                     $crud->addItemLink('edit', 'fa-pencil', base_url('editar/intervencio/' . $id_tiquet ), 'Editar Intervenció');
+                    $crud->addItemLink('assignar', 'fa-screwdriver-wrench', base_url('tiquets/' . $id_tiquet . '/assignar'), 'Assignar Inventari');
                     $crud->addItemLink('delete', 'fa-trash', base_url('tiquets/' . $id_tiquet . '/esborrar'), 'Eliminar Intervenció');
 
                     $crud->addWhere('id_tiquet', $id_tiquet);
@@ -166,7 +175,10 @@ class TiquetController extends BaseController
                 $data['options_tiquets'] = $options_tiquets;
 
 
+                
                 if ($role == "alumne") {
+
+                    session()->setFlashdata('id_tiquet_alumne', $tiquet_existent['id_tiquet']);
 
                     $id_pendent_recollir = $estat_model->obtenirIdPerEstat("Pendent de recollir");
                     $id_assignat_pendent_recollir = $estat_model->obtenirIdPerEstat("Assignat i pendent de recollir");
@@ -182,17 +194,37 @@ class TiquetController extends BaseController
 
                     $estat_tiquet = $estat_model->obtenirEstatPerId($tiquet_existent['id_estat']);
 
-                    $data['estat_ediatble'] = "";
+                    
                     if ($estat_tiquet == "Pendent de reparar") {
                         
                             $options_estat = "<option value='" . $id_pendent_reparar . "' selected>Pendent de reparar</option>
                                             <option value='" . $id_reparant . "'>Reparant</option>";
     
+                    } else if ($estat_tiquet == "Reparant") {
+                        $options_estat = "<option value='" . $id_reparant . "' selected>Reparant</option>
+                        <option value='" . $id_pendent_reparar . "'>Pendent de reparar</option>";
+                    } else {
+                        $options_estat = "<option value='" . $tiquet_existent['id_estat'] . "' selected>" . $estat_model->obtenirEstatPerId($tiquet_existent['id_estat']) . "</option>";
+                        $data['estat_editable'] = "disabled";
                     }
 
                     $data['estats'] = $options_estat;
+
+                } else {
+                    $options_estat = "<option value='" . $tiquet_existent['id_estat'] . "' selected>" . $estat_model->obtenirEstatPerId($tiquet_existent['id_estat']) . "</option>";
+                    $data['estat_editable'] = "disabled";
+                    $data['estats'] = $options_estat;
                 }
 
+                $data['nom_centre_emissor'] = "";
+                $data['nom_centre_reparador'] = "";
+                if ($tiquet_existent['codi_centre_emissor'] != null) {
+                    $data['nom_centre_emissor'] = $centre_model->obtenirCentre($tiquet_existent['codi_centre_emissor'])['nom_centre'];
+                }
+                if ($tiquet_existent['codi_centre_reparador'] != null) {
+                    $data['nom_centre_reparador'] = $centre_model->obtenirCentre($tiquet_existent['codi_centre_reparador'])['nom_centre'];
+                }
+    
     
                 $data['output'] = $crud->render();
                 return view('tiquet' . DIRECTORY_SEPARATOR . 'vistaTiquet', $data);
@@ -365,7 +397,8 @@ class TiquetController extends BaseController
      */
     public function createTiquet() 
     {
-        $role = session()->get('user_data')['role'];
+        $actor = session()->get('user_data');
+        $role = $actor['role'];
         $data['role'] = $role;
 
         if ($role == "alumne") {
@@ -388,20 +421,33 @@ class TiquetController extends BaseController
         $data['json_tipus_dispositius'] = json_encode($array_tipus_dispositius_nom);
 
 
-        if(session()->get('user_data')['role'] == "desenvolupador" || session()->get('user_data')['role'] == "admin_sstt" || session()->get('user_data')['role'] == "sstt") {
+        if($role == "desenvolupador" || $role == "admin_sstt" || $role == "sstt") {
             $centre_model = new CentreModel();
             $array_centres = $centre_model->obtenirCentres();
             $options_tipus_dispositius_emissors = "";
             $options_tipus_dispositius_reparadors = "";
             for ($i = 0; $i < sizeof($array_centres); $i++) {
-                $options_tipus_dispositius_emissors .= "<option value='" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "'>";
-                $options_tipus_dispositius_emissors .= $array_centres[$i]['nom_centre'];
-                $options_tipus_dispositius_emissors .= "</option>";
+                if (($role == "sstt" || $role == "admin_sstt") && $array_centres[$i]['id_sstt'] == $actor['id_sstt']) {
+                    $options_tipus_dispositius_emissors .= "<option value='" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "'>";
+                    $options_tipus_dispositius_emissors .= $array_centres[$i]['nom_centre'];
+                    $options_tipus_dispositius_emissors .= "</option>";
+                } else if ($role == "desenvolupador") {
+                    $options_tipus_dispositius_emissors .= "<option value='" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "'>";
+                    $options_tipus_dispositius_emissors .= $array_centres[$i]['nom_centre'];
+                    $options_tipus_dispositius_emissors .= "</option>";
+                }
+
     
                 if ($array_centres[$i]['taller'] == 1) {
-                    $options_tipus_dispositius_reparadors .= "<option value='" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "'>";
-                    $options_tipus_dispositius_reparadors .= $array_centres[$i]['nom_centre'];
-                    $options_tipus_dispositius_reparadors .= "</option>";
+                    if (($role == "sstt" || $role == "admin_sstt") && $array_centres[$i]['id_sstt'] == $actor['id_sstt']) {
+                        $options_tipus_dispositius_reparadors .= "<option value='" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "'>";
+                        $options_tipus_dispositius_reparadors .= $array_centres[$i]['nom_centre'];
+                        $options_tipus_dispositius_reparadors .= "</option>";
+                    } else if ($role == "desenvolupador") {
+                        $options_tipus_dispositius_reparadors .= "<option value='" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "'>";
+                        $options_tipus_dispositius_reparadors .= $array_centres[$i]['nom_centre'];
+                        $options_tipus_dispositius_reparadors .= "</option>";
+                    }
                 }
             }
             $data['centres_emissors'] = $options_tipus_dispositius_emissors;
@@ -914,13 +960,14 @@ class TiquetController extends BaseController
      */
     public function editarTiquet_post() 
     {
+
         $tiquet_model = new TiquetModel();
         $estat_model = new EstatModel();
         $centre_model = new CentreModel();
 
         $actor = session()->get('user_data');
         $role = $actor['role'];
-
+        
         $required = session()->getFlashdata('required');
 
         if ($required) {
@@ -983,16 +1030,60 @@ class TiquetController extends BaseController
             ];
         }
 
-
-        if ($this->validate($validationRules)) {
+        if ($role == "alumne" || $this->validate($validationRules)) {
             $error = true;
 
-            $tiquet = $tiquet_model->getTiquetById(session()->getFlashdata('id_tiquet'));
-            $estat_origen = $estat_model->obtenirEstatPerId($tiquet['id_estat']);
+            if ($role == "alumne") {
+                $tiquet = $tiquet_model->getTiquetById(session()->getFlashdata('id_tiquet_alumne'));
+            } else {
+                $tiquet = $tiquet_model->getTiquetById(session()->getFlashdata('id_tiquet'));
+            }
 
             if ($tiquet != null) {
+                $estat_origen = $estat_model->obtenirEstatPerId($tiquet['id_estat']);
+                
+                if ($role == "alumne") {
+                    
+                    $estat_desti = $this->request->getPost('estat');
+                    $estat_desti = $this->request->getPost('estat');
+                    if ($estat_desti != null) {
+                        $estat_desti_nom = $estat_model->obtenirEstatPerId($estat_desti);
+                    } else {
+                        $estat_desti_nom = null;
+                    }
 
-                if ($role == "professor" || $role == "centre_reparador" || $role == "centre_emissor") {
+                    $data_estat = [
+                        "id_estat" => $estat_desti,
+                    ];
+    
+
+                    $estat_editable = false;
+                    if ($estat_origen == "Pendent de reparar") {
+
+                        if ($estat_desti_nom == "Reparant") {
+                            $estat_editable = true;
+                        } 
+
+                    } else if ($estat_origen == "Reparant") {
+
+                        if ($estat_desti_nom == "Pendent de reparar") {
+                            $estat_editable = true;
+                        }
+
+                    }
+
+                    if ($estat_editable) {
+                        $data_estat['id_estat'] = $estat_model->obtenirIdPerEstat($estat_desti_nom);
+                    } else {
+                        $data_estat['id_estat'] = $tiquet['id_estat'];
+                    }
+                
+                    if ($role == "alumne" && $tiquet['codi_centre_reparador'] == $actor['codi_centre']) {
+                        $tiquet_model->updateTiquet(session()->getFlashdata('id_tiquet_alumne'), $data_estat);
+                        $error = false;
+                    } 
+
+                } else if ($role == "professor" || $role == "centre_reparador" || $role == "centre_emissor") {
 
 
                     $codi_centre = session()->get('user_data')['codi_centre'];
@@ -1022,7 +1113,7 @@ class TiquetController extends BaseController
                     ];
     
                     // Controlem que es puguin modificar les dades
-                    if (($role == "centre_emissor" || $role == "professor" || $role == "centre_reparador") && $estat_origen == "Pendent de recollir" && $codi_centre == $codi_centre_emissor && $estat_desti == "Pendent de recollir") {
+                    if (($role == "centre_emissor" || $role == "professor" || $role == "centre_reparador") && $estat_origen == "Pendent de recollir" && $codi_centre == $codi_centre_emissor) {
                         $tiquet_model->updateTiquet(session()->getFlashdata('id_tiquet'), $data);
                         $error = false;
                     }
@@ -1033,18 +1124,6 @@ class TiquetController extends BaseController
                     $data_estat = [
                         "id_estat" => $estat_desti,
                     ];
-    
-                    /*$array_estat_professor = $estat_model->getProfessorEstats();
-                    $estat_reparacio_origen = false;
-                    $estat_reparacio_desti = false;
-                    for ($j = 0; $j < sizeof($array_estat_professor); $j++) {
-                        if ($tiquet['id_estat'] == $array_estat_professor[$j]['id_estat']) {
-                            $estat_reparacio_origen = true;
-                        }
-                        if ($estat_desti == $array_estat_professor[$j]['id_estat']) {
-                            $estat_reparacio_desti = true;
-                        }
-                    }*/
     
 
                     $estat_editable = false;
@@ -1257,15 +1336,98 @@ class TiquetController extends BaseController
             return redirect()->back()->withInput();
         }
 
+
         if ($error) {
-            return redirect()->to(base_url('/tiquets/editar/' . session()->getFlashdata('id_tiquet')));
+            if ($role == "alumne"){
+                return redirect()->to(base_url('/tiquets/editar/' . session()->getFlashdata('id_tiquet_alumne')));
+            } else {
+                return redirect()->to(base_url('/tiquets/editar/' . session()->getFlashdata('id_tiquet')));
+            }
         } else {
-            if ($role == "professor") {
+
+            if ($role == "alumne"){
+                return redirect()->to(base_url('/tiquets/editar/' . session()->getFlashdata('id_tiquet_alumne')));
+            } else {
+                return redirect()->to(base_url('/tiquets/editar/' . session()->getFlashdata('id_tiquet')));
+            }
+
+            /*if ($role == "professor" && $tiquet['codi_centre_emissor'] == $actor['codi_centre']) {
                 return redirect()->to(base_url('/tiquets/emissor'));
+            } else if($role == "alumne") {
+                return redirect()->to(base_url('/tiquets/' . session()->getFlashdata('id_tiquet_alumne')));
             } else {
                 return redirect()->to(base_url('/tiquets'));
-            }
+            }*/
+            
         }
         
+    }
+
+
+
+    public function descarregarTiquetPDF($id_tiquet)
+    {
+        $tiquet_model = new TiquetModel();
+        $estat_model = new EstatModel();
+        $intervencio_model = new IntervencioModel();
+        $inventari_model = new InventariModel();
+        $tipus_dispositiu_model = new TipusDispositiuModel();
+        $centre_model = new CentreModel();
+        $tipus_intervencio_model = new TipusIntervencioModel();
+        $tipus_inventari_model = new TipusInventariModel();
+
+        $actor = session()->get('user_data');
+        $role = $actor['role'];
+
+        $tiquet = $tiquet_model->getTiquetById($id_tiquet);
+
+        if ($tiquet != null && ( $role == "sstt" || $role == "admin_sstt" || $role == "desenvolupador")) {
+
+            $estat = $estat_model->obtenirEstatPerId($tiquet['id_estat']);
+
+            if ($estat == "Retornat" || $estat == "Desguassat") {
+
+            // Carreguem les dades
+            $data['tiquet'] = $tiquet;
+            $data['tipus_dispositiu'] = $tipus_dispositiu_model->getNomTipusDispositiu($tiquet['id_tipus_dispositiu'])['nom_tipus_dispositiu'];
+            $data['nom_centre_emissor'] = $centre_model->obtenirCentre($tiquet['codi_centre_emissor'])['nom_centre'];
+            $data['nom_centre_reparador'] = $centre_model->obtenirCentre($tiquet['codi_centre_reparador'])['nom_centre'];
+            $preu_total = 0;
+            $array_intervencions = $intervencio_model->obtenirIntervencionsTiquet($id_tiquet);
+            
+            for ($i = 0; $i < sizeof($array_intervencions); $i++) {
+                $array_intervencions[$i]['tipus_intervencio'] = $tipus_intervencio_model->obtenirNomTipusIntervencio($array_intervencions[$i]['id_tipus_intervencio'])['nom_tipus_intervencio'];
+                $array_inventari[$i] = $inventari_model->obtenirInventariIntervencio($array_intervencions[$i]['id_intervencio']);
+            }
+
+            for ($i = 0; $i < sizeof($array_intervencions); $i++) {
+                for ($j = 0; $j < sizeof($array_inventari[$i]); $j++) {
+                    $array_inventari[$i][$j]['tipus_inventari'] = $tipus_inventari_model->obtenirTipusInventariPerId($array_inventari[$i][$j]['id_tipus_inventari'])['nom_tipus_inventari'];
+                    $preu_total += $array_inventari[$i][$j]['preu'];
+                }
+            }
+
+            $data['intervencions'] = $array_intervencions;
+            $data['inventaris'] = $array_inventari;
+            $data['preu_total'] = $preu_total;
+
+
+            $html = view('tiquet' . DIRECTORY_SEPARATOR .'vistaPDF', $data); // Carreguem la vista per obtenir el codi HTML
+
+            // Cridem la llibreria PDF, per generar-lo i descarregar-lo com a resposta
+            $mpdf = new \Mpdf\Mpdf();
+            $mpdf->WriteHTML($html);
+            $this->response->setHeader('Content-Type', 'application/pdf');
+            $mpdf->Output('tiquet_' . $id_tiquet . '.pdf','D');
+
+            } else {
+                return redirect()->back();
+            }
+
+
+        } else {
+            return redirect()->to(base_url('/tiquets'));
+        }
+
     }
 }

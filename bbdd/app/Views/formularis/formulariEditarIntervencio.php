@@ -55,14 +55,14 @@
             </div>
         </div>
 
-        <div class="mb-3">
+        <div class="row mb-3">
             <label for="descripcio_intervencio" class="form-label"><?= lang('intervencio.descripcio_intervencio') ?></label>
             <textarea maxlength="512" class="form-control" id="descripcio_intervencio" name="descripcio_intervencio" rows="3"><?= $intervencio['descripcio_intervencio'] ?></textarea>
         </div>
 
         <div class="row justify-content-center mt-4">
             <div class="d-flex justify-content-center align-items-center">
-                <button id="submit_afegir" type="submit" class="btn btn_save rounded-pill ms-3 me-3"><i class="fa-solid fa-floppy-disk me-2"></i><?= lang('intervencio.save_intervencio') ?></button>
+                <button id="submit_afegir" type="submit" class="btn btn-primary btn_save rounded-pill ms-3 me-3"><i class="fa-solid fa-floppy-disk me-2"></i><?= lang('intervencio.editar_intervencio') ?></button>
             </div>
         </div>
 

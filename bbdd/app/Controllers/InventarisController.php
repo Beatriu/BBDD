@@ -4,9 +4,11 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\CentreModel;
+use App\Models\EstatModel;
 use App\Models\IntervencioModel;
 use App\Models\InventariModel;
 use App\Models\TipusInventariModel;
+use App\Models\TiquetModel;
 use SIENSIS\KpaCrud\Libraries\KpaCrud;
 
 class InventarisController extends BaseController
@@ -423,5 +425,178 @@ class InventarisController extends BaseController
             return redirect()->to(base_url('/inventari/esborrar/' . $id_inventari_eliminar));
         }
 
+    }
+
+    public function assignarInventari($id_tiquet, $id_intervencio)
+    {
+        $tiquet_model = new TiquetModel();
+        $intervencio_model = new IntervencioModel();
+        $inventari_model = new InventariModel();
+        $tipus_inventari_model = new TipusInventariModel();
+        $estat_model = new EstatModel();
+
+        $actor = session()->get('user_data');
+        $role = $actor['role'];
+
+        $tiquet = $tiquet_model->getTiquetById($id_tiquet);
+        $intervencio = $intervencio_model->obtenirIntervencioPerId($id_intervencio);
+        if ($tiquet != null && $intervencio != null) {
+
+            $estat = $estat_model->obtenirEstatPerId($tiquet['id_estat']);
+            $data['estat'] = $estat;
+
+            // KPACRUD INVENTARI ASSIGNAT A LA INTERVENCIÓ
+
+            $data['title'] = 'Inventari Assignat';
+            $data['id_tiquet'] = $id_tiquet;
+            $data['id_intervencio'] = $id_intervencio;
+
+            $crud = new KpaCrud();
+            $crud->setConfig('onlyView');
+            $crud->setConfig([
+                "numerate" => false,
+                "add_button" => false,
+                "show_button" => false,
+                "recycled_button" => false,
+                "useSoftDeletes" => true,
+                "multidelete" => false,
+                "filterable" => false,
+                "editable" => false,
+                "removable" => false,
+                "paging" => false,
+                "numerate" => false,
+                "sortable" => true,
+                "exportXLS" => false,
+                "print" => false
+            ]);
+            $crud->setTable('vista_inventari');
+            $crud->setPrimaryKey('id_inventari');
+
+            $crud->setColumns([
+                'id_inventari',
+                'nom_tipus_inventari',
+                'data_compra'
+            ]);
+            $crud->setColumnsInfo([
+                'id_inventari' => [
+                    'name' => lang('inventari.id_inventari')
+                ],
+                'nom_tipus_inventari' => [
+                    'name' => lang('inventari.nom_tipus_inventari')
+                ],
+                'data_compra' => [
+                    'name' => lang('inventari.data_compra')
+                ]
+            ]);
+
+            if (($role == "alumne" || $role == "professor") && ($estat == "Pendent de reparar" || $estat == "Reparant")) {
+                $crud->addItemLink('delete', 'fa-trash', base_url('inventari/desassignar'), 'Desassignar Peça');
+            } else if ($role == "admin_sstt" || $role == "desenvolupador") {
+                $crud->addItemLink('delete', 'fa-trash', base_url('inventari/desassignar'), 'Desassignar Peça');
+            }
+
+            $crud->addWhere('codi_centre', $actor['codi_centre']);
+            $crud->addWhere('id_intervencio', $id_intervencio, true);
+
+            $data['output'] = $crud->render();
+
+            // Carregar peces d'inventari
+            $array_inventari = $inventari_model->obtenirInventariCentre($actor['codi_centre']);
+            $data['inventari_list'] = "";
+            for ($i = 0; $i < sizeof($array_inventari); $i++) {
+
+                if ($array_inventari[$i]['id_intervencio'] == null) {
+                    $nom_tipus_inventari = $tipus_inventari_model->obtenirTipusInventariPerId($array_inventari[$i]['id_tipus_inventari'])['nom_tipus_inventari'];
+                    $data['inventari_list'] .= "<option value=\"" . $nom_tipus_inventari . " // " . $array_inventari[$i]['data_compra'] . " // " . $array_inventari[$i]['id_inventari'] . "\">" . $nom_tipus_inventari . " // " . $array_inventari[$i]['data_compra'] . " // " . $array_inventari[$i]['id_inventari'] . "</option>";
+                }
+
+            }
+
+
+
+            return view('registres' . DIRECTORY_SEPARATOR .'registreInventariAssignat', $data);
+
+
+
+        } else {
+            return redirect()->back();
+        }
+    }
+
+    public function assignarInventari_post($id_tiquet, $id_intervencio)
+    {
+        $tiquet_model = new TiquetModel();
+        $intervencio_model = new IntervencioModel();
+        $inventari_model = new InventariModel();
+        $estat_model = new EstatModel();
+
+        $actor = session()->get('user_data');
+        $role = $actor['role'];
+
+        $tiquet = $tiquet_model->getTiquetById($id_tiquet);
+        $intervencio = $intervencio_model->obtenirIntervencioPerId($id_intervencio);
+        if ($tiquet != null && $intervencio != null) {
+
+            $inventari_post = $this->request->getPost('inventari');
+            if ($inventari_post != "") {
+
+                $id_inventari = trim(explode('//', (string) $inventari_post)[2]);
+
+                $inventari = $inventari_model->obtenirInventariPerId($id_inventari);
+    
+                if ($inventari != null && $inventari['id_intervencio'] == null) {
+                    $estat = $estat_model->obtenirEstatPerId($tiquet['id_estat']);
+    
+                    if (($role == "alumne" || $role == "professor") && ($estat == "Pendent de reparar" || $estat == "Reparant")) {
+                        $inventari_model->editarInventariAssignar($id_inventari, $id_intervencio);
+                    } else if ($role == "admin_sstt" || $role == "desenvolupador") {
+                        $inventari_model->editarInventariAssignar($id_inventari, $id_intervencio);
+                    }
+                }
+                
+            }
+
+            return redirect()->to(base_url('/tiquets/' . $id_tiquet . "/assignar/" . $id_intervencio));
+        }
+    }
+
+    public function desassignarInventari($id_inventari)
+    {
+        $inventari_model = new InventariModel();
+        $intervencio_model = new IntervencioModel();
+        $tiquet_model = new TiquetModel();
+        $estat_model = new EstatModel();
+
+        $inventari_desassignar = $inventari_model->obtenirInventariPerId($id_inventari);
+
+        if ($inventari_desassignar != null) {
+
+            $actor = session()->get('user_data');
+            $role = $actor['role'];
+    
+            if ($role == "centre_emissor") {
+                return redirect()->back();
+            } else if ($role == "centre_reparador" || $role == "sstt") {
+                return redirect()->back();
+            } else {
+
+                $id_intervencio = $inventari_desassignar['id_intervencio'];
+                $id_tiquet = $intervencio_model->obtenirIntervencioPerId($id_intervencio)['id_tiquet'];
+                $tiquet = $tiquet_model->getTiquetById($id_tiquet);
+                $estat = $estat_model->obtenirEstatPerId($tiquet['id_estat']);
+
+                if (($role == "alumne" || $role == "professor") && ($estat == "Pendent de reparar" || $estat == "Reparant")) {
+                    $inventari_model->editarInventariDesassignar($id_inventari);
+                } else if ($role == "admin_sstt" || $role == "desenvolupador") {
+                    $inventari_model->editarInventariDesassignar($id_inventari);
+                }
+                
+                return redirect()->to(base_url('/tiquets/' . $id_tiquet . "/assignar/" . $id_intervencio));
+
+            }
+
+        } else {
+            return redirect()->back();
+        }
     }
 }

@@ -48,4 +48,9 @@ class TipusIntervencioModel extends Model
     public function obtenirTipusIntervencio() {
         return $this->findAll();
     }
+
+    public function obtenirNomTipusIntervencio($id_tipus_intervencio)
+    {
+        return $this->where('id_tipus_intervencio', $id_tipus_intervencio)->first();
+    }
 }
