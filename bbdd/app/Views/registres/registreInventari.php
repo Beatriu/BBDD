@@ -14,7 +14,7 @@
 
 <div class="container-fluid">
 
-<?php if ($id_inventari !== null) : ?>
+    <?php if ($id_inventari !== null) : ?>
         <div class="modal" tabindex="-1" role="dialog" style="display:block">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -35,7 +35,7 @@
             </div>
         </div>
     <?php endif; ?>
-    <?php if ($no_permisos != null): ?> 
+    <?php if ($no_permisos != null) : ?>
         <div class="modal" tabindex="-1" role="dialog" style="display:block">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -55,8 +55,8 @@
     <div class="row">
         <!--Sidebar estàtic-->
         <div class="col-sm-auto px-0" id="sidebar">
-        <?php if($role == 'professor'):?>
-        <ul class="nav flex-column">
+            <?php if ($role == 'professor') : ?>
+                <ul class="nav flex-column">
                     <li class="nav-item" title="<?= lang("registre.dispositius_rebuts") ?> ">
                         <a href="/tiquets" class="nav-link py-3 px-2" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                             <i class="fa-solid fa-hammer"></i>
@@ -80,36 +80,55 @@
                             <i class="fa-solid fa-users"></i>
                         </a>
                     </li>
-            </ul>
-            <?php endif;?>
-            <?php if($role == 'alumne'):?>
+                </ul>
+            <?php endif; ?>
+            <?php if ($role == 'alumne') : ?>
                 <ul class="nav flex-column">
-                <li class="nav-item" title="<?= lang("registre.dispositius_rebuts") ?> ">
-                    <a href="/tiquets" class="nav-link py-3 px-2" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
-                        <i class="fa-solid fa-hammer"></i>
-                    </a>
-                </li>
-                <li class="nav-item" id="actiu" title="<?= lang("registre.inventari") ?>">
-                    <a href="<?= base_url("/inventari") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.inventari") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
-                        <i class="fa-solid fa-boxes-stacked"></i>
-                    </a>
-                </li>
-            </ul>
-            <?php endif;?>
-            <?php if($role == 'sstt'):?>
-            <ul class="nav flex-column">
-                <li class="nav-item" title="<?= lang("registre.dispositius_rebuts") ?>">
-                    <a href="<?= base_url("/tiquets/emissor") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.table-dispositius") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
-                        <i class="fa-solid fa-list-check"></i>
-                    </a>
-                </li>
-                <li class="nav-item"  id="actiu" title="<?= lang("registre.inventari") ?>">
-                    <a href="<?= base_url("/inventari") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.inventari") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
-                        <i class="fa-solid fa-boxes-stacked"></i>
-                    </a>
-                </li>
-            </ul>
-            <?php endif;?>
+                    <li class="nav-item" title="<?= lang("registre.dispositius_rebuts") ?> ">
+                        <a href="/tiquets" class="nav-link py-3 px-2" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                            <i class="fa-solid fa-hammer"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item" id="actiu" title="<?= lang("registre.inventari") ?>">
+                        <a href="<?= base_url("/inventari") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.inventari") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
+                            <i class="fa-solid fa-boxes-stacked"></i>
+                        </a>
+                    </li>
+                </ul>
+            <?php endif; ?>
+            <?php if ($role == 'sstt') : ?>
+                <ul class="nav flex-column">
+                    <li class="nav-item" title="<?= lang("registre.dispositius_rebuts") ?>">
+                        <a href="<?= base_url("/tiquets/emissor") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.table-dispositius") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                            <i class="fa-solid fa-list-check"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item" id="actiu" title="<?= lang("registre.inventari") ?>">
+                        <a href="<?= base_url("/inventari") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.inventari") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
+                            <i class="fa-solid fa-boxes-stacked"></i>
+                        </a>
+                    </li>
+                </ul>
+            <?php endif; ?>
+            <?php if ($role == 'admin_sstt') : ?>
+                <ul class="nav flex-column">
+                    <li class="nav-item" title="<?= lang("registre.dispositius_rebuts") ?>">
+                        <a href="<?= base_url("/tiquets/emissor") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.table-dispositius") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                            <i class="fa-solid fa-list-check"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item" id="actiu" title="<?= lang("registre.inventari") ?>">
+                        <a href="<?= base_url("/inventari") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.inventari") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
+                            <i class="fa-solid fa-boxes-stacked"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item" title="<?= lang("registre.alumnes") ?>">
+                        <a href="<?= base_url("/alumnes") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.alumnes") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                            <i class="fa-solid fa-users"></i>
+                        </a>
+                    </li>
+                </ul>
+            <?php endif; ?>
         </div>
 
         <!--Taula i títol-->
@@ -118,11 +137,11 @@
                 <div>
                     <h1><?= lang("inventari.registre_inventari") ?></h1>
                 </div>
-                <?php if($role !== 'alumne' && $role !== 'sstt'):?>
-                <div>
-                    <a href="<?= base_url("/inventari/afegir") ?>" class="btn" id="btn-create"><i class="fa-solid fa-circle-plus"></i> <?= lang("inventari.button_afegir_inventari") ?></a>
-                </div>
-                <?php endif;?>
+                <?php if ($role !== 'alumne' && $role !== 'sstt') : ?>
+                    <div>
+                        <a href="<?= base_url("/inventari/afegir") ?>" class="btn" id="btn-create"><i class="fa-solid fa-circle-plus"></i> <?= lang("inventari.button_afegir_inventari") ?></a>
+                    </div>
+                <?php endif; ?>
             </div>
             <div>
                 <?= $output ?>
