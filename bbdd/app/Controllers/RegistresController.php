@@ -21,7 +21,6 @@ class RegistresController extends BaseController
 {
     public function index($id_tiquet = null)
     {
- 
 
         $role = session()->get('user_data')['role'];
 
@@ -45,7 +44,7 @@ class RegistresController extends BaseController
                 return view('registres' . DIRECTORY_SEPARATOR . 'registreTiquetSSTT', $this->registreTiquetsSSTT($id_tiquet , 'admin'));
                 break;
             case "desenvolupador":
-                //return view('registres' . DIRECTORY_SEPARATOR . 'registreTiquetSSTT', $this->registreTiquetsSSTT($id_tiquet));
+                return view('registres' . DIRECTORY_SEPARATOR . 'registreTiquetSSTT', $this->registreTiquetsSSTT($id_tiquet , 'desenvolupador'));
                 break;
             default:
                 break;
@@ -357,7 +356,6 @@ class RegistresController extends BaseController
             $codi_centre = session()->get('user_data')['codi_centre'];
             dd($id_tiquet);
             $estat = $estat_model->obtenirEstatPerId($tiquet['id_estat']);
-
             if ((($role == "centre_emissor" || $role == "professor" || $role == "centre_reparador") && $estat == "Pendent de recollir" && $codi_centre == $tiquet['codi_centre_emissor']) || ($role == "sstt" && $estat == "Pendent de recollir") || $role == "admin_sstt" || $role == "desenvolupador") {
                 //Preguntar a la bbdd quin tiquet es i retornar l'array del tiquet.
                 $data['id_tiquet'] = $id_tiquet;
@@ -472,7 +470,9 @@ class RegistresController extends BaseController
                 'type' => KpaCrud::INVISIBLE_FIELD_TYPE
             ],
         ]);
-        $crud->addWhere('id_sstt_emissor', $actor['id_sstt'], true);
+        if($tipus_sstt !== 'desenvolupador'){
+            $crud->addWhere('id_sstt_emissor', $actor['id_sstt'], true);
+        }
         $crud->addItemLink('edit', 'fa-pencil', base_url('/tiquets/editar'), 'Editar Tiquet', true);
         
 
@@ -480,11 +480,7 @@ class RegistresController extends BaseController
             $crud->addItemLink('pdf', 'fa-file-pdf', base_url('/tiquets/pdf'), 'Tiquet PDF', true);
         }
         
-        
-        //$dataColumns = $crud;
-        //TODO: el que volia fer era un if en el additem per a que solament aparegués al que tinguin cert estat, però ja ho modificarem en el editar directament
         $data['output'] = $crud->render();
-        //dd($crud);
         return $data;
     }
 
