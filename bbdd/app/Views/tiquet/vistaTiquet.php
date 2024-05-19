@@ -91,7 +91,7 @@
                         <li><?= lang('registre.centre_reparador') ?>: <?= $nom_centre_reparador ?> </li>
                         <li><?= lang('registre.data_alta') ?>: <?= $tiquet['data_alta'] ?> </li>
                     </ul>
-                    <textarea id="mostrar_descripcio_tiquet" disabled>
+                    <textarea id="mostrar_descripcio_tiquet" rows="6" disabled>
                         <?= trim($tiquet['descripcio_avaria']) ?>
                     </textarea>
                 </div>

@@ -400,10 +400,10 @@ class AlumnesController extends BaseController
                     $login_model->addLogin($correu_alumne_post, null);
                     $login_in_rol->addLoginInRol($login_model->obtenirId($correu_alumne_post), $rol_model->obtenirIdRol("alumne"));
                     $intervencio_model->editarIntervencioCorreuNou($correu_alumne_editar, $correu_alumne_post);
-                    $alumne_model->deleteAlumneByCorreu($correu_alumne_editar);
-                    $id_login = $login_model->obtenirId($correu_alumne_editar);
-                    $login_in_rol->deleteLoginInRol($id_login);
-                    $login_model->deleteLogin($id_login);
+                    $alumne_model->editarAlumneActiu($correu_alumne_editar, 0);
+                    //$id_login = $login_model->obtenirId($correu_alumne_editar);
+                    //$login_in_rol->deleteLoginInRol($id_login);
+                    //$login_model->deleteLogin($id_login);
                     return redirect()->to(base_url('/alumnes'));
                     
                 } else if (($role == "admin_sstt" && $id_sstt_alumne == $actor['id_sstt']) || ($role == "desenvolupador")) {
@@ -426,10 +426,10 @@ class AlumnesController extends BaseController
                                 $intervencio_model->editarIntervencioCorreuNou($intervencions[$i]['id_intervencio'], $correu_alumne_post); // Assignem les intervencions al nou alumne
                             }
                 
-                            $alumne_model->deleteAlumneByCorreu($correu_alumne_editar); // Eliminem l'alumne antic
+                            $alumne_model->editarAlumneActiu($correu_alumne_editar, 0);
                             $id_login = $login_model->obtenirId($correu_alumne_editar);
-                            $login_in_rol->deleteLoginInRol($id_login);
-                            $login_model->deleteLogin($id_login);
+                            //$login_in_rol->deleteLoginInRol($id_login);
+                            //$login_model->deleteLogin($id_login);
 
                         } else { // En cas que els correu original i el nou siguin iguals, només cal editar el codi centre
                      

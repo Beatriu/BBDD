@@ -191,7 +191,7 @@ class UsuarisController extends BaseController
                     }
 
                 } else { // En cas que sigui alumne es comprova que existeixi a la taula LOGIN i ALUMNE
-    
+                    
                     session()->destroy();
                     return redirect()->back();
                 }
@@ -228,7 +228,7 @@ class UsuarisController extends BaseController
                         $session_data['codi_centre'] = $codi_centre;
                     }
                 } else { // En cas que sigui alumne
-
+                    
                     $alumne = $alumne_model->getAlumneByCorreu($session_data['mail']);
                     if ($alumne['actiu'] == 0) {
                         session()->destroy();
