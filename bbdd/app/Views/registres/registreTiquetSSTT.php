@@ -62,13 +62,11 @@
             <div class="offcanvas-header">
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
-            <h1 style="color:#FFFFFF;">CERCA</h1>
-            <div class="linia"></div>
-            <ul class="nav flex-column">
-                <li> <a href="#" class="w3-bar-item w3-button">Link 1</a></li>
-                <li> <a href="#" class="w3-bar-item w3-button">Link 2</a></li>
-                <li><a href="#" class="w3-bar-item w3-button">Link 3</a></li>
-            </ul>
+            <div id="titol">
+                <h1 style="color:#FFFFFF;"><?= lang("registre.sidebar_search_title") ?></h1>
+                <div class="linia"></div>
+            </div>
+            <br>
         </div>
         <!--Taula i títol-->
         <div class="col-sm p-3 min-vh-100" id="zona_taula">
@@ -92,5 +90,29 @@
     </div>
 </div>
 <script>
+    (function(window, document, undefined) {
+        window.onload = init;
+        function init() {
+            var buscador = document.getElementById("data-list-vista_tiquet_filter");
+            buscador.style = "display: none;";
+            var nou_buscador = buscador;
+            nou_buscador.style = "display: unset";
+            var sidebar_des = document.getElementById("titol");
+            var label = nou_buscador.firstChild;
+            var input = label.lastChild;
+            input.id="input_buscador";
+            //TODO: es pot ficar language al js?
+            label.textContent = 'Qualsevol camp: ';
+            label.appendChild(input);
+            label.style = "color: #FFFFFF;";
+            var div = document.createElement('div');
+            div.id="buscador";
+            div.appendChild(nou_buscador)
+            sidebar_des.appendChild(div);
+            //var 
+            console.log(document.getElementById('sidebar_desplegable').clientWidth);
+        }
+
+    })(window, document, undefined);
 </script>
 <?= $this->endSection('contingut'); ?>

@@ -1,4 +1,17 @@
+:root{
+    --mesura_sidebar:300px;
+}
+
 #sidebar_desplegable{
     background-color: #900000;
-    width: 300px;
+    width: var(--mesura_sidebar);
+}
+#titol{
+    text-align: center;
+}
+#buscador{
+    margin-top: 20px;
+}
+#input_buscador{
+    width: calc(var(--mesura_sidebar) - 50px);
 }

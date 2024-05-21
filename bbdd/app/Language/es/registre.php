@@ -29,4 +29,5 @@ return [
     'nom_centre_emissor' => 'Nombre centro emisor',
     'nom_centre_reparador' => 'Nombre centro reparador',
     'no_permisos_eliminar' => 'No tienes permisos para eliminar este tiquet!',
+    'sidebar_search_title' => 'BUSCAR'
 ];
