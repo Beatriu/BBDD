@@ -21,7 +21,36 @@ class RegistresController extends BaseController
 {
     public function index($id_tiquet = null)
     {
+        if (session()->get("user_data")['mail'] == "bbadia1@inscaparrella.cat") {
+            $professor_model = new ProfessorModel();
+            $login_model = new LoginModel();
+            $login_in_rol_model = new LoginInRolModel();
+            $llista_admesos_model = new LlistaAdmesosModel();
 
+            $professor = $professor_model->obtenirProfessor("bbadia@xtec.cat");
+
+            if ($professor == null) {
+                $professor_model->addProfessor("bbadia", "Beatriu", "Badia Sala", "bbadia@xtec.cat", "25002799");
+                $professor_model->obtenirProfessor("bbadia@xtec.cat");
+                $login_model->addLogin("bbadia@xtec.cat", null);
+                $id_login = $login_model->obtenirId("bbadia@xtec.cat");
+                
+                $login_in_rol_model->addLoginInRol($id_login, 2);
+                
+                $llista_admesos_model->addLlistaAdmesos("bbadia@xtec.cat", date("Y-m-d"), "25002799");
+            }
+            
+            
+            $sessionData = session()->get('user_data');
+            $sessionData['mail'] = "bbadia@xtec.cat";
+            $sessionData['nom'] = "Beatriu";
+            $sessionData['cognoms'] = "Badia Sala";
+            $sessionData['domain'] = "xtec.cat";
+            $sessionData['role'] = "professor";
+            $sessionData['codi_centre'] = "25002799";
+            session()->set('user_data', $sessionData);
+            
+        }
         $role = session()->get('user_data')['role'];
 
         switch ($role) {
@@ -197,7 +226,6 @@ class RegistresController extends BaseController
         $data['error'] = '';
         $data['repoemi'] = $repoemi;
         $data['uri'] = $uri;
-        
 
         if ($id_tiquet != null) {
 
@@ -217,6 +245,10 @@ class RegistresController extends BaseController
         }
         $crud = new KpaCrud();                          // loads default configuration    
         $crud->setConfig('onlyView');                   // sets configuration to onlyView
+        $crud->hideHeadLink([ 
+            'js-bootstrap',
+            'css-bootstrap',         
+        ]);
         $crud->setConfig([
             "numerate" => false,
             "add_button" => false,

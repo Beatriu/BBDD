@@ -4,17 +4,17 @@ body {
 }
 
 
-#data-list-tiquet>thead>tr>th {
+#data-list-vista_tiquet>thead>tr>th {
     background-color: #333333;
     color: white;
 }
 
-#data-list-tiquet {
+#data-list-vista_tiquet {
     border-right: 3px solid #900000;
     border-left: 3px solid #900000;
     border-bottom: 3px solid #900000;
 }
-#data-list-tiquet>thead>tr>th {
+#data-list-vista_tiquet>thead>tr>th {
     border-right:0 !important;
 }
 #data-list-vista_inventari>thead>tr>th {

@@ -13,9 +13,8 @@
 
 <?= $this->section('contingut'); ?>
 
-<div class="container">
-
-            
+<div class="container-fluid p-0 overflow-hidden">
+   
     <div class="row mt-5 justify-content-center">
         <div class="col-2 d-flex align-items-center">
                 <a class="btn btn-dark rounded-pill" href="<?= base_url('/tiquets/' .$id_tiquet) ?>">

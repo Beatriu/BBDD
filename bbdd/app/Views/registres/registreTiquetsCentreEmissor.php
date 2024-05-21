@@ -32,10 +32,10 @@
         </div>
     </div>
 <?php endif; ?>
-<div class="container-fluid">
+<div class="container-fluid p-0 overflow-hidden">
     <div class="row">
         <!--Sidebar estàtic-->
-        <div class="col-sm-auto px-0" style="display:none" id="mySidebar">
+        <div class="col-sm-auto pl-0" style="display:none" id="mySidebar">
             <ul class="nav flex-column">
                <li> <a onclick="_close()"> <i class="fa-solid fa-xmark"></i></a></li>
                <hr style="height:10px">

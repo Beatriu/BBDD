@@ -12,7 +12,7 @@
 
 <?= $this->section('contingut'); ?>
 
-<div class="container-fluid">
+<div class="container-fluid p-0 overflow-hidden">
     <?php if ($correu_alumne_eliminar !== null) : ?>
         <div class="modal" tabindex="-1" role="dialog" style="display:block">
             <div class="modal-dialog" role="document">
@@ -53,7 +53,7 @@
     <?php endif; ?>
     <div class="row">
         <!--Sidebar estàtic-->
-        <div class="col-sm-auto px-0" id="sidebar">
+        <div class="col-sm-auto pl-0" id="sidebar">
             <ul class="nav flex-column">
                 <?php if ($role == 'professor') : ?>
                     <li class="nav-item" title="<?= lang("registre.dispositius_rebuts") ?> ">

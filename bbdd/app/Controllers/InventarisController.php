@@ -83,6 +83,10 @@ class InventarisController extends BaseController
             ]);
             $crud->setTable('vista_inventari');
             $crud->setPrimaryKey('id_inventari');
+            $crud->hideHeadLink([
+                'js-bootstrap',
+                'css-bootstrap',         
+            ]);
             
             if ($role == "alumne" || $role == "professor" || $role == "centre_reparador") {
 

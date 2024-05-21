@@ -12,49 +12,10 @@
 
 <?= $this->section('contingut'); ?>
 
-<div class="container-fluid">
-
-    <?php if ($id_inventari !== null) : ?>
-        <div class="modal" tabindex="-1" role="dialog" style="display:block">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title"><?= lang('inventari.eliminar_title') ?></h5>
-                        <a href="<?= base_url("/inventari") ?>">
-                            <i class="fa-solid fa-xmark"></i>
-                        </a>
-                    </div>
-                    <div class="modal-body">
-                        <p><?= lang('alumne.eliminar_text') ?><?php echo $id_inventari; ?></p>
-                    </div>
-                    <div class="modal-footer">
-                        <a href="<?= base_url("/eliminarInventari/" . $id_inventari) ?>" type="button" class="btn btn-danger"><?= lang('inventari.eliminar') ?></a>
-                        <a href="<?= base_url("/inventari") ?>" type="button" class="btn btn-secondary" data-dismiss="modal"><?= lang('inventari.cancel_eliminar') ?></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    <?php endif; ?>
-    <?php if ($no_permisos != null) : ?>
-        <div class="modal" tabindex="-1" role="dialog" style="display:block">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title text-danger"><?= lang('inventari.no_permisos_title') ?></h5>
-                        <a href="<?= base_url("/inventari") ?>">
-                            <i class="fa-solid fa-xmark"></i>
-                        </a>
-                    </div>
-                    <div class="modal-body text-danger">
-                        <p><?= lang($no_permisos) ?></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    <?php endif; ?>
+<div class="container-fluid p-0 overflow-hidden">
     <div class="row">
         <!--Sidebar estàtic-->
-        <div class="col-sm-auto px-0" id="sidebar">
+        <div class="col-sm-auto pl-0" id="sidebar">
             <?php if ($role == 'professor') : ?>
                 <ul class="nav flex-column">
                     <li class="nav-item" title="<?= lang("registre.dispositius_rebuts") ?> ">
@@ -130,6 +91,45 @@
                 </ul>
             <?php endif; ?>
         </div>
+
+        <?php if ($id_inventari !== null) : ?>
+            <div class="modal" tabindex="-1" role="dialog" style="display:block">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title"><?= lang('inventari.eliminar_title') ?></h5>
+                            <a href="<?= base_url("/inventari") ?>">
+                                <i class="fa-solid fa-xmark"></i>
+                            </a>
+                        </div>
+                        <div class="modal-body">
+                            <p><?= lang('alumne.eliminar_text') ?><?php echo $id_inventari; ?></p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="<?= base_url("/eliminarInventari/" . $id_inventari) ?>" type="button" class="btn btn-danger"><?= lang('inventari.eliminar') ?></a>
+                            <a href="<?= base_url("/inventari") ?>" type="button" class="btn btn-secondary" data-dismiss="modal"><?= lang('inventari.cancel_eliminar') ?></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
+        <?php if ($no_permisos != null) : ?>
+            <div class="modal" tabindex="-1" role="dialog" style="display:block">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title text-danger"><?= lang('inventari.no_permisos_title') ?></h5>
+                            <a href="<?= base_url("/inventari") ?>">
+                                <i class="fa-solid fa-xmark"></i>
+                            </a>
+                        </div>
+                        <div class="modal-body text-danger">
+                            <p><?= lang($no_permisos) ?></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
 
         <!--Taula i títol-->
         <div class="col-sm p-3 min-vh-100" id="zona_taula">
