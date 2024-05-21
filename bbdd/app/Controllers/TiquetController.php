@@ -60,6 +60,10 @@ class TiquetController extends BaseController
 //TODO: preguntar al blai si aqui també he de ficar el filterable i el paging
                 $crud = new KpaCrud();
                 $crud->setConfig('onlyView');
+                $crud->hideHeadLink([ 
+                    'js-bootstrap',
+                    'css-bootstrap',         
+                ]);
                 $crud->setConfig([
                     "numerate" => false,
                     "add_button" => false,

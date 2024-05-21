@@ -84,6 +84,10 @@ class AlumnesController extends BaseController
                 "exportXLS" => true,
                 "print" => false
             ]);
+            $crud->hideHeadLink([ 
+                'js-bootstrap',
+                'css-bootstrap',         
+            ]);
             $crud->setTable('vista_alumne');
             $crud->setPrimaryKey('correu_alumne');
             $crud->addItemLink('edit', 'fa-pencil', base_url('alumnes/editar'), 'Editar Tiquet');
