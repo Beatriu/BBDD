@@ -3,9 +3,7 @@
 <?= $this->section('css_pagina'); ?>
     <link rel="stylesheet" href="<?= base_url('css/formulari.css') ?>">
     <link rel="stylesheet" href="<?= base_url('css/header.css') ?>">
-    <script>
-        var opcions_tipus_dispositius = JSON.parse('<?= $json_tipus_dispositius ?>');
-    </script>
+    <script>var opcions_tipus_dispositius = JSON.parse('<?= $json_tipus_dispositius ?>');</script>
     <link rel="stylesheet" href="<?= base_url('fontawesome/css/fontawesome.css') ?>"/>
     <script src="<?= base_url('js/main_formulari_tiquet.js') ?>"></script>
 <?= $this->endSection('css_pagina'); ?>

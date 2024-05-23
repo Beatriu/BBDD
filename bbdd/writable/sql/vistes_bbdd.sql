@@ -1,6 +1,6 @@
 CREATE VIEW vista_tiquet AS
 SELECT 
-    t.id_tiquet,
+    SUBSTRING_INDEX(t.id_tiquet, '-', -1) AS id_tiquet,
     t.codi_equip,
     LEFT(t.descripcio_avaria, 50) AS descripcio_avaria,
     IF(LENGTH(t.descripcio_avaria) > 50, CONCAT(LEFT(t.descripcio_avaria, 47), '...'), t.descripcio_avaria) AS descripcio_avaria_limitada,
@@ -18,12 +18,8 @@ SELECT
     ce.nom_centre AS nom_centre_emissor,
     cr.nom_centre AS nom_centre_reparador,
     ce.id_sstt AS id_sstt_emissor,
-    ce.id_poblacio AS id_poblacio_emissor,
-    cr.id_poblacio AS id_poblacio_reparador,
     pe.nom_poblacio AS nom_poblacio_emissor,
     pr.nom_poblacio AS nom_poblacio_reparador,
-    pe.id_comarca,
-    pr.id_comarca,
     come.nom_comarca AS nom_comarca_emissor,
     comr.nom_comarca AS nom_comarca_reparador	
     

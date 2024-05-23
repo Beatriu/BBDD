@@ -1,10 +1,10 @@
 <?= $this->extend('layouts/professors'); ?>
 
 <?= $this->section('css_pagina'); ?>
-<link rel="stylesheet" href="<?= base_url('css/formulari.css') ?>">
-<link rel="stylesheet" href="<?= base_url('css/taulaRegistre.css') ?>">
-<link rel="stylesheet" href="<?= base_url('css/header.css') ?>">
-<link rel="stylesheet" href="<?= base_url('css/style.css') ?>">
+<link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR . 'formulari.css') ?>">
+<link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR . 'taulaRegistre.css') ?>">
+<link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR . 'header.css') ?>">
+<link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR . 'style.css') ?>">
 <?= $this->endSection('css_pagina'); ?>
 
 <?= $this->section('header'); ?>
@@ -13,7 +13,7 @@
 
 <?= $this->section('contingut'); ?>
 
-<div class="container-fluid p-0 overflow-hidden">
+<div class="container p-0 overflow-hidden">
    
     <div class="row mt-5 justify-content-center">
         <div class="col-2 d-flex align-items-center">

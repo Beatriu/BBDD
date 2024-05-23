@@ -355,6 +355,7 @@ class RegistresController extends BaseController
         $actor = session()->get('user_data');
         $data['tipus_sstt'] = $tipus_sstt;
         $role = $actor['role'];
+        $data['role'] = $role;
 
         if ($id_tiquet != null) {
 
