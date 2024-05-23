@@ -28,7 +28,7 @@
         </div>
 
         <div class="row border mt-4 me-0 pe-0 ps-0">
-            <div class="row form_header p-3 ms-0">
+            <div class="row form_header pt-2 pb-2 ps-3 pe-3 ms-0">
                 <span><?= lang('intervencio.tiquet_intervencio') ?></span>
             </div>
         </div>

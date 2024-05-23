@@ -45,7 +45,7 @@
         </div>
 
         <div class="row border mt-4 me-0 pe-0 ps-0">
-            <div class="row form_header p-3 ms-0">
+            <div class="row form_header pt-2 pb-2 ps-3 pe-3 ms-0">
                 <span><?= lang('general_lang.informacio_comuna') ?></span>
             </div>
         </div>
@@ -81,7 +81,7 @@
         <?php endif; ?>
 
         <div class="row border mt-5 me-0 pe-0 ps-0">
-            <div class="row form_header p-2 ms-0">
+            <div class="row form_header p-1 ms-0">
                 <div class="col d-flex align-items-center justify-content-center">
                     <?= lang('general_lang.equipment_code') ?> *
                 </div>
@@ -92,7 +92,7 @@
                     <?= lang('general_lang.problem') ?> *
                 </div>
                 <div class="col d-flex align-items-center justify-content-end">
-                    <button id="button_afegir_fila_tiquet" type="button" class="btn btn_afegir_linea rounded-pill text-white" onclick="afegirTiquet();"><i class="fa fa-plus"></i> <?= lang('general_lang.afegir_linea') ?></button>
+                    <button id="button_afegir_fila_tiquet" type="button" class="btn btn_afegir_linea rounded-pill text-white pt-0 pb-0" onclick="afegirTiquet();"><i class="fa fa-plus"></i> <?= lang('general_lang.afegir_linea') ?></button>
                 </div>
             </div>
             <div class="row me-0 pe-0 ms-1" id = "div_files_formulari_tiquet">
