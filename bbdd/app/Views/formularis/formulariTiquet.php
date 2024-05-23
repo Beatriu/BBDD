@@ -99,15 +99,15 @@
 
                 <div class="row p-2" id = "fila_formulari_tiquet_1">
                     <div class="col d-flex align-items-center justify-content-center">
-                        <input id="equipment_code_1" title="Codi equip línea 1" type="text" name="equipment_code_1" />
+                        <input id="equipment_code_1" class="form-control" title="Codi equip línea 1" type="text" name="equipment_code_1" required/>
                     </div>
                     <div class="col d-flex align-items-center justify-content-center">
-                        <select id="type_1" name="type_1" title="Tipus dispositiu línea 1">
+                        <select id="type_1" class="form-select" name="type_1" title="Tipus dispositiu línea 1" required>
                             <?=$tipus_dispositius?>
                         </select>
                     </div>
                     <div class="col d-flex align-items-center justify-content-center">
-                        <textarea id="problem_1" title="Problema línea 1" type="text" name="problem_1" style="width: 100%;"></textarea>
+                        <textarea id="problem_1" class="form-control" title="Problema línea 1" type="text" name="problem_1" style="width: 100%; height: 30px;" required></textarea>
                     </div>
                     <div class="col d-flex align-items-center justify-content-center">
                         <button type="button" class="btn btn-danger rounded-circle" onclick = "esborrarTiquet('fila_formulari_tiquet_1');" title="Botó esborrar línea 1">

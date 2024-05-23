@@ -20,6 +20,7 @@ function afegirTiquet() {
     let div_col_codi_equip = document.createElement("div");
     div_col_codi_equip.classList.add("col", "d-flex", "align-items-center", "justify-content-center");
     let input_codi_equip = document.createElement("input");
+    input_codi_equip.classList.add('form-control');
     input_codi_equip.type = "text";
     input_codi_equip.name = "equipment_code_" + numero_tiquets_afegir;
     input_codi_equip.title = "Codi equip línea " + numero_tiquets_afegir;
@@ -31,6 +32,7 @@ function afegirTiquet() {
     
     let comptador_tipus_dispositius = 1;
     let select_col_type = document.createElement("select");
+    select_col_type.classList.add('form-select');
     select_col_type.name = "type_" + numero_tiquets_afegir;
     select_col_type.title = "Tipus dispositiu línea " + numero_tiquets_afegir;
     for (let i = 0; i < opcions_tipus_dispositius.length; i++) {
@@ -49,7 +51,9 @@ function afegirTiquet() {
     let div_col_problem = document.createElement("div");
     div_col_problem.classList.add("col", "d-flex", "align-items-center", "justify-content-center");
     let input_problem = document.createElement("textarea");
+    input_problem.classList.add('form-control');
     input_problem.style.width = '100%';
+    input_problem.style.height = '30px';
     input_problem.type = "text";
     input_problem.name = "problem_" + numero_tiquets_afegir;
     input_problem.title = "Problema línea " + numero_tiquets_afegir;
