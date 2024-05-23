@@ -30,5 +30,14 @@ return [
     'nom_centre_reparador' => 'Nombre centro reparador',
     'no_permisos_eliminar' => 'No tienes permisos para eliminar este tiquet!',
     'sidebar_search_title' => 'BUSCAR',
-    'searcher_placeholder' => 'Buscador automático...'
+    'searcher_placeholder' => 'Buscador automático...',
+    'save_filters' => 'Guardar',
+    'delete_filters' => 'Eliminar',
+    'title_div_tipus_dispositiu' => 'Tipo dispositivo: ',
+    'title_div_nom_centre_emissor' => 'Centro emisor: ',
+    'title_div_nom_centre_reparador' => 'Centro reparador: ',
+    'title_div_estat' => 'Estado: ',
+    'title_div_data_creacio' => 'Data creación: ',
+    'not_value_option_select_estat' => 'Seleccione un estado...',
+    'not_value_option_select_tipus_dispositiu' => 'Seleccione un dispositivo...'
 ];

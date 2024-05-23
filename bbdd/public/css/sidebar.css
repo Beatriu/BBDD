@@ -3,8 +3,10 @@
 }
 
 #sidebar_desplegable{
-    background-color: #900000;
+    background-color: #D4CECE;
+    color: #333333;
     width: var(--mesura_sidebar);
+    padding: 10px;
 }
 #titol{
     text-align: center;
@@ -12,8 +14,8 @@
 #buscador{
     margin-top: 20px;
 }
-#input_buscador{
-    /*width: ;*/
-    border: 1px solid black;
-    font-style: italic;
+
+.linia{
+    background-color: #333333;
+    height: 5px;
 }
