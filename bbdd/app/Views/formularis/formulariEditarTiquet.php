@@ -1,9 +1,9 @@
 <?= $this->extend('layouts/general'); ?>
 
 <?= $this->section('css_pagina'); ?>
-    <link rel="stylesheet" href="<?= base_url('css/formulari.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('css/header.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('fontawesome/css/fontawesome.css') ?>"/>
+    <link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR . 'formulari.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR . 'header.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('fontawesome' . DIRECTORY_SEPARATOR . 'css' . DIRECTORY_SEPARATOR . 'fontawesome.css') ?>"/>
 <?= $this->endSection('css_pagina'); ?>
 
 <?= $this->section('header'); ?>

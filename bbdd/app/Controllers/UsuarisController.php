@@ -83,6 +83,7 @@ class UsuarisController extends BaseController
                     }
                     
                     session()->set('user_data', $session_data);
+
                     return redirect()->to(base_url('/tiquets'));
                 }
             }
@@ -235,7 +236,7 @@ class UsuarisController extends BaseController
                     }
                     $session_data['codi_centre'] = $alumne['codi_centre'];
                 }
-                
+
                 session()->set('user_data', $session_data); //Guardem la informació de l'usuari
 
                 return redirect()->to(base_url('/tiquets'));
@@ -310,9 +311,8 @@ class UsuarisController extends BaseController
                     $id_rol = $login_in_rol_model->obtenirRol($id_login);
     
                     $session_data = session()->get('user_data');
-                    $session_data['role'] = $rol_model->obtenirRol($id_rol);
+                    $session_data['role'] = $rol_model->obtenirRol($id_rol);;
                     session()->set('user_data', $session_data);
-                    
     
                     return redirect()->to(base_url('/tiquets'));
                 }

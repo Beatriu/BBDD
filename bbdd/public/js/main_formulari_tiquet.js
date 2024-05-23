@@ -133,8 +133,12 @@ function mostrarFitxers(input) {
         document.getElementById("equipment_code_1").disabled = true;
         document.getElementById("type_1").disabled = true;
         document.getElementById("problem_1").disabled = true;
-        document.getElementById("cancelar_importar_csv").style.display = "inline";
-        document.getElementById("div_csv").style.display = "none";
+
+        document.getElementById("cancelar_importar_csv").style.display = "inline"; // Botó Cancel·lar
+        document.getElementById("div_csv").style.display = "none"; // Botó Importar CSV
+        document.getElementById("div_csv_descarregar").style.display = "none"; // Botó Importar CSV
+        document.getElementById("submit_afegir").style.display = "none"; // Botó Emetre Tiquet de baix
+        document.getElementById("submit_afegir_csv").classList.remove("d-none"); // Botó Emetre Tiquet de dalt
 
     } else {
         input.value = null;
@@ -154,6 +158,9 @@ function cancellFitxer() {
     document.getElementById("problem_1").disabled = false;
     document.getElementById("cancelar_importar_csv").style.display = "none";
     document.getElementById("div_csv").style.display = "inline";
+    document.getElementById("div_csv_descarregar").style.display = "inline"; // Botó Importar CSV
+    document.getElementById("submit_afegir").style.display = "inline";
+    document.getElementById("submit_afegir_csv").classList.add("d-none"); // Botó Emetre Tiquet de dalt
 
     document.getElementById("csv_tiquet").value = null;
     document.getElementById("mostrar_csv").innerHTML = "";

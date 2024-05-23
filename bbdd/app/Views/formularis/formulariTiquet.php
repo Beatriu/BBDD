@@ -1,11 +1,11 @@
 <?= $this->extend('layouts/general'); ?>
 
 <?= $this->section('css_pagina'); ?>
-    <link rel="stylesheet" href="<?= base_url('css/formulari.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('css/header.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR . 'formulari.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR . 'header.css') ?>">
     <script>var opcions_tipus_dispositius = JSON.parse('<?= $json_tipus_dispositius ?>');</script>
-    <link rel="stylesheet" href="<?= base_url('fontawesome/css/fontawesome.css') ?>"/>
-    <script src="<?= base_url('js/main_formulari_tiquet.js') ?>"></script>
+    <link rel="stylesheet" href="<?= base_url('fontawesome' . DIRECTORY_SEPARATOR . 'css' . DIRECTORY_SEPARATOR . 'fontawesome.css') ?>"/>
+    <script src="<?= base_url('js' . DIRECTORY_SEPARATOR . 'main_formulari_tiquet.js') ?>"></script>
 <?= $this->endSection('css_pagina'); ?>
 
 <?= $this->section('header'); ?>
@@ -27,8 +27,20 @@
                         <i class="fa-solid fa-arrow-left"></i> <?= lang('general_lang.tornar') ?>
                     </a>
             </div>
-            <div class="col-10 justify-content-left">
+            <div class="col-4 justify-content-left">
                 <h1><?= lang('general_lang.create_tiquet') ?></h1>
+            </div>
+            <div class="col-6 d-flex align-items-center justify-content-end">
+                <div class="d-flex justify-content-center align-items-center mt-3">
+                    <span id = "mostrar_csv" class="ms-2"></span>
+                </div>
+                <div class="d-flex align-items-center">
+                    <button id="submit_afegir_csv" type="submit" class="btn btn-success rounded-pill ms-3 me-3 d-none"><i class="fa-solid fa-floppy-disk me-2"></i><?= lang('general_lang.save') ?></button>
+                    <div id="div_csv" class="btn btn_csv rounded-pill" onclick = "afegirFitxer();"> <i class="fa-solid fa-file-csv me-2"></i><?= lang('general_lang.importar_csv') ?></div>
+                    <div id="cancelar_importar_csv" class="btn btn_cancell rounded-pill" onclick="cancellFitxer();" style="display: none;"><i class="fa-solid fa-xmark me-2"></i><?= lang('general_lang.cancell') ?></div>
+                    <input type="file" id="csv_tiquet" name="csv_tiquet" class="btn btn_csv rounded-pill" hidden  onchange="mostrarFitxers(this);"> </input>
+                    <a id="div_csv_descarregar" href="<?= base_url('/descarregar/exemple_afegir_tiquet') ?>" class="btn btn_csv rounded-pill ms-3" > <i class="fa-solid fa-file-csv me-2"></i><?= lang('general_lang.plantilla_csv') ?></a>
+                </div>
             </div>
         </div>
 
@@ -117,13 +129,6 @@
             </div>
             <div class="d-flex justify-content-center align-items-center">
                 <button id="submit_afegir" type="submit" class="btn btn-success rounded-pill ms-3 me-3"><i class="fa-solid fa-floppy-disk me-2"></i><?= lang('general_lang.save') ?></button>
-                <div id="div_csv" class="btn btn_csv rounded-pill" onclick = "afegirFitxer();"> <i class="fa-solid fa-file-csv me-2"></i><?= lang('general_lang.importar_csv') ?></div>
-                <div id="cancelar_importar_csv" class="btn btn_cancell rounded-pill" onclick="cancellFitxer();" style="display: none;"><i class="fa-solid fa-xmark me-2"></i><?= lang('general_lang.cancell') ?></div>
-                <input type="file" id="csv_tiquet" name="csv_tiquet" class="btn btn_csv rounded-pill" hidden  onchange="mostrarFitxers(this);"> </input>
-                <a id="div_csv_descarregar" href="<?= base_url('/descarregar/exemple_afegir_tiquet') ?>" class="btn btn_csv rounded-pill ms-3" > <i class="fa-solid fa-file-csv me-2"></i><?= lang('general_lang.plantilla_csv') ?></a>
-            </div>
-            <div class="d-flex justify-content-center mt-3">
-                <span id = "mostrar_csv" class="ms-2"></span>
             </div>
         </div>
 
