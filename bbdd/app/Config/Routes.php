@@ -38,6 +38,9 @@ $routes->post('/tiquets', 'RegistresController::opcions', ['filter'=>'Autentica'
 $routes->get('/eliminarTiquet/(:any)', 'RegistresController::eliminarTiquet/$1', ['filter'=>'Autentica']);
 
 
+//FILTRE
+$routes->post('/filtre', 'RegistresController::filtrePost');
+
 //$routes->get('/vistaTiquet1', 'TiquetController::viewTiquet1', ['filter'=>'Autentica']);
 
 //Inventari

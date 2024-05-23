@@ -44,11 +44,45 @@
 #list-btn-exportxls{
     display: none;
 }
-.linia{
-    background-color: #FFFFFF;
-    height: 5px;
-}
+
 
 #tornar_button_vista_tiquet {
     width: 100px;
+}
+
+#data-list-vista_tiquet_filter{
+    width: 350px;
+    height: 40px;
+}
+
+#icono_busqueda{
+    background-color: #D4CECE;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    border: 1px solid #333333;
+    border-right: none;
+    border-radius: 10px 0px 0px 10px;
+}
+
+#input_buscador{
+    border: 1px solid #333333;
+    
+    border-radius: 0px 10px 10px 0px;
+}
+#input_buscador::placeholder{
+    opacity: 0.5;
+    font-style: italic;
+}
+.input_buscador_class:focus{
+    outline: none;
+    box-shadow: none;
+}
+#trash_icon{
+    color: #FFFFFF !important;
+}
+.botons_filtre{
+    margin-top: 20px;
+    padding-top: 10px;
 }

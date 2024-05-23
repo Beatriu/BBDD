@@ -14,11 +14,14 @@ use App\Models\TiquetModel;
 use App\Models\ProfessorModel;
 use App\Models\LlistaAdmesosModel;
 use App\Models\SSTTModel;
+use App\Models\TipusDispositiuModel;
 use Google\Service\BigtableAdmin\Split;
+use Google\Service\CloudSearch\PushItem;
 use SebastianBergmann\Type\TrueType;
 
 class RegistresController extends BaseController
 {
+
     public function index($id_tiquet = null)
     {
 
@@ -41,10 +44,10 @@ class RegistresController extends BaseController
                 return view('registres' . DIRECTORY_SEPARATOR . 'registreTiquetSSTT', $this->registreTiquetsSSTT($id_tiquet, 'sstt'));
                 break;
             case "admin_sstt":
-                return view('registres' . DIRECTORY_SEPARATOR . 'registreTiquetSSTT', $this->registreTiquetsSSTT($id_tiquet , 'admin'));
+                return view('registres' . DIRECTORY_SEPARATOR . 'registreTiquetSSTT', $this->registreTiquetsSSTT($id_tiquet, 'admin'));
                 break;
             case "desenvolupador":
-                return view('registres' . DIRECTORY_SEPARATOR . 'registreTiquetSSTT', $this->registreTiquetsSSTT($id_tiquet , 'desenvolupador'));
+                return view('registres' . DIRECTORY_SEPARATOR . 'registreTiquetSSTT', $this->registreTiquetsSSTT($id_tiquet, 'desenvolupador'));
                 break;
             default:
                 break;
@@ -75,7 +78,7 @@ class RegistresController extends BaseController
             // Dades per a la gestió de rols
             $tiquet = $tiquet_model->getTiquetById($id_tiquet);
             $role = session()->get('user_data')['role'];
-            
+
             $codi_centre = session()->get('user_data')['codi_centre'];
             $estat = $estat_model->obtenirEstatPerId($tiquet['id_estat']);
 
@@ -108,16 +111,16 @@ class RegistresController extends BaseController
         // set into config file
         $crud->setTable('vista_tiquet');                        // set table name
         $crud->setPrimaryKey('id_tiquet');
-        $crud->hideHeadLink([ 
+        $crud->hideHeadLink([
             'js-bootstrap',
-            'css-bootstrap',         
+            'css-bootstrap',
         ]);
         $crud->addItemLink('edit', 'fa-pencil', base_url('/tiquets/editar'), 'Editar Tiquet');
         $crud->addItemLink('delete', 'fa-trash', base_url('tiquets/esborrar'), 'Eliminar Tiquet');
 
         $crud->addWhere('codi_centre_emissor', session()->get('user_data')['codi_centre'], true);
-//TODO: treure la columna de centre emissor, ja que no fa falta que ho eguin que son ells mateixos 
-        $crud->setColumns(['id_tiquet','codi_equip', 'nom_tipus_dispositiu', 'descripcio_avaria_limitada', 'nom_estat', 'nom_centre_emissor', 'data_alta_format', 'hora_alta_format']); // set columns/fields to show
+        //TODO: treure la columna de centre emissor, ja que no fa falta que ho eguin que son ells mateixos 
+        $crud->setColumns(['id_tiquet', 'codi_equip', 'nom_tipus_dispositiu', 'descripcio_avaria_limitada', 'nom_estat', 'nom_centre_emissor', 'data_alta_format', 'hora_alta_format']); // set columns/fields to show
         $crud->setColumnsInfo([                         // set columns/fields name
             'id_tiquet' => [
                 'name' => lang("registre.id_tiquet"),
@@ -220,9 +223,9 @@ class RegistresController extends BaseController
         }
         $crud = new KpaCrud();                          // loads default configuration    
         $crud->setConfig('onlyView');                   // sets configuration to onlyView
-        $crud->hideHeadLink([ 
+        $crud->hideHeadLink([
             'js-bootstrap',
-            'css-bootstrap',         
+            'css-bootstrap',
         ]);
         $crud->setConfig([
             "numerate" => false,
@@ -267,7 +270,6 @@ class RegistresController extends BaseController
             // OR Reparat i pendent de recollir AND codi centre reparador
             $crud->addWhere("nom_estat", "Reparat i pendent de recollir", false);
             $crud->addWhere('codi_centre_reparador', session()->get('user_data')['codi_centre'], true);
-
         }
 
 
@@ -347,6 +349,8 @@ class RegistresController extends BaseController
 
     public function registreTiquetsSSTT($id_tiquet, $tipus_sstt)
     {
+
+        $session_filtre = session()->get('filtres');
         $tiquet_model = new TiquetModel();
         $estat_model = new EstatModel();
         $data['title'] = 'Tiquets SSTT';
@@ -355,6 +359,11 @@ class RegistresController extends BaseController
         $actor = session()->get('user_data');
         $data['tipus_sstt'] = $tipus_sstt;
         $role = $actor['role'];
+
+        $data['tipus_dispositius'] = $this->selectorTipusDispositiu();
+        $data['estats'] = $this->selectorEstat();
+        $data['centre_emissor'] = $this->selectorCentreEmissor($role);
+        $data['centre_reparador'] = $this->selectorCentreReparador($role);
 
         if ($id_tiquet != null) {
 
@@ -374,9 +383,9 @@ class RegistresController extends BaseController
 
         $crud = new KpaCrud();
         $crud->setConfig('onlyView');
-        $crud->hideHeadLink([ 
+        $crud->hideHeadLink([
             'js-bootstrap',
-            'css-bootstrap',         
+            'css-bootstrap',
         ]);
         $crud->setConfig([
             "numerate" => false,
@@ -397,7 +406,7 @@ class RegistresController extends BaseController
         $crud->setTable('vista_tiquet');
         $crud->setPrimaryKey('id_tiquet');
         $crud->addItemLink('view', 'fa-eye', base_url('tiquets'), 'Veure Tiquet');
-        
+
         $crud->addItemLink('delete', 'fa-trash', base_url('tiquets/esborrar'), 'Eliminar Tiquet');
         $crud->setColumns([
             'id_tiquet',
@@ -481,16 +490,23 @@ class RegistresController extends BaseController
                 'type' => KpaCrud::INVISIBLE_FIELD_TYPE
             ],
         ]);
-        if($tipus_sstt !== 'desenvolupador'){
+        if ($tipus_sstt !== 'desenvolupador') {
             $crud->addWhere('id_sstt_emissor', $actor['id_sstt'], true);
         }
+
         $crud->addItemLink('edit', 'fa-pencil', base_url('/tiquets/editar'), 'Editar Tiquet', true);
-        
+
 
         if ($role == "sstt" || $role == "admin_sstt" || $role == "desenvolupador") {
             $crud->addItemLink('pdf', 'fa-file-pdf', base_url('/tiquets/pdf'), 'Tiquet PDF', true);
         }
-        
+
+        if (is_array($session_filtre)) {
+            //dd($session_filtre);
+            $crud->addWhere('nom_tipus_dispositiu', $session_filtre['tipus_dispositiu'][0], true);
+        }
+
+
         $data['output'] = $crud->render();
         return $data;
     }
@@ -509,7 +525,7 @@ class RegistresController extends BaseController
 
         if ($tiquet != null) {
             $estat = $estat_model->obtenirEstatPerId($tiquet['id_estat']);
-    
+
             // Gestió de rols
             if ((($role == "centre_emissor" || $role == "professor" || $role == "centre_reparador") && $estat == "Pendent de recollir" && $codi_centre == $tiquet['codi_centre_emissor']) || ($role == "sstt" && $estat == "Pendent de recollir") || $role == "admin_sstt" || $role == "desenvolupador") {
                 $model_tiquet = new TiquetModel();
@@ -535,9 +551,9 @@ class RegistresController extends BaseController
         $data['error'] = '';
         $crud = new KpaCrud();
         $crud->setConfig('onlyView');
-        $crud->hideHeadLink([ 
+        $crud->hideHeadLink([
             'js-bootstrap',
-            'css-bootstrap',         
+            'css-bootstrap',
         ]);
         $crud->setConfig([
             "numerate" => false,
@@ -570,7 +586,7 @@ class RegistresController extends BaseController
         // OR Reparat i pendent de recollir AND codi centre reparador
         $crud->addWhere("nom_estat", "Reparat i pendent de recollir", false);
         $crud->addWhere('codi_centre_reparador', $actor['codi_centre'], true);
-        
+
         $crud->setColumns([
             'id_tiquet',
             'codi_equip',
@@ -612,9 +628,111 @@ class RegistresController extends BaseController
     }
 
 
-    public function registreTiquetsAdminSSTT()
+    public function selectorTipusDispositiu()
     {
+        $tipus_dispositius = new TipusDispositiuModel;
+        $array_tipus_dispositius = $tipus_dispositius->getTipusDispositius();
+        $array_tipus_dispositius_nom = [];
 
+        $options_tipus_dispositius = "";
+        $options_tipus_dispositius .= "<option value='' selected disabled>" . lang('registre.not_value_option_select_tipus_dispositiu') . "</option>";
+        for ($i = 0; $i < sizeof($array_tipus_dispositius); $i++) {
+            $options_tipus_dispositius .= "<option value=" . $array_tipus_dispositius[$i]['nom_tipus_dispositiu'] . ">";
+            $options_tipus_dispositius .= $array_tipus_dispositius[$i]['nom_tipus_dispositiu'];
+            $options_tipus_dispositius .= "</option>";
+            $array_tipus_dispositius_nom[$i] = $array_tipus_dispositius[$i]['nom_tipus_dispositiu'];
+        }
+
+        return $options_tipus_dispositius;
     }
 
+    public function selectorEstat()
+    {
+        $estats = new EstatModel();
+        $array_estats = $estats->getEstats();
+        $array_estats_nom = [];
+
+        $options_estats = "";
+        $options_estats .= "<option value='' selected disabled>" . lang('registre.not_value_option_select_estat') . "</option>";
+        for ($i = 0; $i < sizeof($array_estats); $i++) {
+            $options_estats .= "<option value=" . $array_estats[$i]['nom_estat'] . ">";
+            $options_estats .= $array_estats[$i]['nom_estat'];
+            $options_estats .= "</option>";
+            $array_estats_nom[$i] = $array_estats[$i]['nom_estat'];
+        }
+
+        return $options_estats;
+    }
+
+    public function selectorCentreEmissor($role)
+    {
+        $centre_model = new CentreModel();
+        $array_centres = $centre_model->obtenirCentres();
+        $options_tipus_dispositius_emissors = "";
+
+        for ($i = 0; $i < sizeof($array_centres); $i++) {
+            if (($role == "sstt" || $role == "admin_sstt")) {
+                $options_tipus_dispositius_emissors .= "<option value='" . $array_centres[$i]['nom_centre'] . "'>";
+                $options_tipus_dispositius_emissors .= "</option>";
+            } else if ($role == "desenvolupador") {
+                $options_tipus_dispositius_emissors .= "<option value='"  . $array_centres[$i]['nom_centre'] . "'>";
+                $options_tipus_dispositius_emissors .= "</option>";
+            }
+        }
+        return  $options_tipus_dispositius_emissors;
+    }
+
+    public function selectorCentreReparador($role)
+    {
+        $centre_model = new CentreModel();
+        $array_centres = $centre_model->obtenirCentres();
+        $options_tipus_dispositius_reparadors = "";
+
+        for ($i = 0; $i < sizeof($array_centres); $i++) {
+            if ($array_centres[$i]['taller'] == 1) {
+                if (($role == "sstt" || $role == "admin_sstt")) {
+                    $options_tipus_dispositius_reparadors .= "<option value='" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "'>";
+                    $options_tipus_dispositius_reparadors .= $array_centres[$i]['nom_centre'];
+                    $options_tipus_dispositius_reparadors .= "</option>";
+                } else if ($role == "desenvolupador") {
+                    $options_tipus_dispositius_reparadors .= "<option value='" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "'>";
+                    $options_tipus_dispositius_reparadors .= $array_centres[$i]['nom_centre'];
+                    $options_tipus_dispositius_reparadors .= "</option>";
+                }
+            }
+        }
+
+        return $options_tipus_dispositius_reparadors;
+    }
+
+    public function filtrePost()
+    {
+        //dd($this->request->getPost());
+        $session = session();
+        $sessio_filtres = $session->get('filtres');
+
+        if ($sessio_filtres == null) {
+            $filtres = [];
+            $session->set('filtres', $filtres);
+        }
+
+        $eliminar = $this->request->getPost('submit_eliminar_filtres');
+
+        if ($eliminar !== null) {
+            $session->remove('filtres');
+        } else {
+
+            $dades = $this->request->getPost();
+            $tipus_dispositiu_seleccionat = $dades['selector_tipus_dispositiu'];
+            $tipus_estat_seleccionat = $dades['selector_tipus_estat'];
+            $nom_centre_emissor = $dades['nom_centre_emissor_list'];
+            $nom_centre_reparador = $dades['nom_centre_reparador_list'];
+
+
+            $array_tipus_dispositius = [];
+            array_push($array_tipus_dispositius, $tipus_dispositiu_seleccionat);
+            $session->push('filtres', ['tipus_dispositiu' => $array_tipus_dispositius]);
+        }
+        return redirect()->back();
+    }
 }
