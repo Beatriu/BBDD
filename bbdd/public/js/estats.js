@@ -148,7 +148,7 @@ window.addEventListener("load", (event) => {
 
             let element = tiquets[i].children[4];
             if (element.textContent == "Pendent de recollir") {
-                element.innerHTML = "<div class='border rounded text-bg-secondary p-2'>" + element.textContent + " <i class='fa-solid fa-circle-exclamation'></i></div>";
+                element.innerHTML = "<div class='border rounded text-bg-secondary p-2'>" + element.textContent + "</div>";
             } else if (element.textContent == "Assignat i pendent de recollir") {
                 element.innerHTML = "<div class='border rounded text-bg-secondary p-2'>" + element.textContent + "</div>";
             } else if (element.textContent == "Emmagatzemat a SSTT") {
