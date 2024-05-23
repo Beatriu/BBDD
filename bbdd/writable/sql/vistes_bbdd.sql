@@ -17,12 +17,26 @@ SELECT
     t.codi_centre_reparador,
     ce.nom_centre AS nom_centre_emissor,
     cr.nom_centre AS nom_centre_reparador,
-    ce.id_sstt AS id_sstt_emissor
+    ce.id_sstt AS id_sstt_emissor,
+    ce.id_poblacio AS id_poblacio_emissor,
+    cr.id_poblacio AS id_poblacio_reparador,
+    pe.nom_poblacio AS nom_poblacio_emissor,
+    pr.nom_poblacio AS nom_poblacio_reparador,
+    pe.id_comarca,
+    pr.id_comarca,
+    come.nom_comarca AS nom_comarca_emissor,
+    comr.nom_comarca AS nom_comarca_reparador	
+    
 FROM tiquet t
 LEFT JOIN centre ce ON t.codi_centre_emissor = ce.codi_centre
 LEFT JOIN centre cr ON t.codi_centre_reparador = cr.codi_centre
 LEFT JOIN tipus_dispositiu td ON t.id_tipus_dispositiu = td.id_tipus_dispositiu
-LEFT JOIN estat e ON t.id_estat = e.id_estat;
+LEFT JOIN estat e ON t.id_estat = e.id_estat
+LEFT JOIN poblacio pe ON ce.id_poblacio = pe.id_poblacio
+LEFT JOIN poblacio pr ON cr.id_poblacio = pr.id_poblacio
+LEFT JOIN comarca come ON pe.id_comarca = come.id_comarca
+LEFT JOIN comarca comr ON pr.id_comarca = comr.id_comarca;
+
 
 
 CREATE VIEW vista_alumne AS

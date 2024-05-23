@@ -13,5 +13,7 @@
     margin-top: 20px;
 }
 #input_buscador{
-    width: calc(var(--mesura_sidebar) - 50px);
+    /*width: ;*/
+    border: 1px solid black;
+    font-style: italic;
 }
