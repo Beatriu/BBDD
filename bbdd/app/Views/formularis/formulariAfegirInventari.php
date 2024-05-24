@@ -1,10 +1,10 @@
 <?= $this->extend('layouts/general'); ?>
 
 <?= $this->section('css_pagina'); ?>
-    <link rel="stylesheet" href="<?= base_url('css/formulari.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('css/header.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('fontawesome/css/fontawesome.css') ?>"/>
-    <script src="<?= base_url('js/main_formulari_tiquet.js') ?>"></script>
+    <link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR . 'formulari.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR . 'header.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('fontawesome' . DIRECTORY_SEPARATOR . 'css' . DIRECTORY_SEPARATOR . 'fontawesome.css') ?>"/>
+    <script src="<?= base_url('js' . DIRECTORY_SEPARATOR . 'main_formulari_tiquet.js') ?>"></script>
 <?= $this->endSection('css_pagina'); ?>
 
 <?= $this->section('header'); ?>
@@ -29,14 +29,14 @@
                 </div>
 
                 <div class="row border mt-4 me-0 pe-0 ps-0">
-                    <div class="row form_header p-3 ms-0">
+                    <div class="row form_header pt-2 pb-2 ps-3 pe-3 ms-0">
                     </div>
                 </div>
 
                 <div class="row mt-3 mb-3">
                     <div class="col">
                         <label for="quantitat" class="form-label"><?= lang('inventari.quantitat') ?> *</label>
-                        <input type="number" class="form-control" name = "quantitat" id="quantitat" placeholder="<?= lang('inventari.quantitat') ?>" value = "1" required>
+                        <input type="number" min="1" class="form-control" name = "quantitat" id="quantitat" placeholder="<?= lang('inventari.quantitat') ?>" value = "1" required>
                     </div>
 
                     <div class="col">
@@ -49,7 +49,7 @@
 
                     <div class="col">
                         <label for="preu" class="form-label"><?= lang('inventari.preu') ?> *</label>
-                        <input type="number" class="form-control" name = "preu" id="preu" placeholder="<?= lang('inventari.preu') ?>" value = "0" required>
+                        <input type="number" step="any" min="0.00" class="form-control" name = "preu" id="preu" placeholder="<?= lang('inventari.preu') ?>" value = "0" required>
                     </div>
 
                 </div>

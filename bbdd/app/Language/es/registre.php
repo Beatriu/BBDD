@@ -39,5 +39,6 @@ return [
     'title_div_estat' => 'Estado: ',
     'title_div_data_creacio' => 'Data creación: ',
     'not_value_option_select_estat' => 'Seleccione un estado...',
-    'not_value_option_select_tipus_dispositiu' => 'Seleccione un dispositivo...'
+    'not_value_option_select_tipus_dispositiu' => 'Seleccione un dispositivo...',
+    'preu_total' => 'Precio total',
 ];

@@ -1,9 +1,9 @@
 <?= $this->extend('layouts/general'); ?>
 
 <?= $this->section('css_pagina'); ?>
-    <link rel="stylesheet" href="<?= base_url('css/formulari.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('css/header.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('fontawesome/css/fontawesome.css') ?>"/>
+    <link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR . 'formulari.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR . 'header.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('fontawesome' . DIRECTORY_SEPARATOR . 'css' . DIRECTORY_SEPARATOR . 'fontawesome.css') ?>"/>
 <?= $this->endSection('css_pagina'); ?>
 
 <?= $this->section('header'); ?>
@@ -32,7 +32,7 @@
         </div>
 
         <div class="row border mt-4 me-0 pe-0 ps-0">
-            <div class="row form_header p-3 ms-0">
+            <div class="row form_header pt-2 pb-2 ps-3 pe-3 ms-0">
                 <span><?= lang('general_lang.informacio_tiquet') ?></span>
             </div>
         </div>

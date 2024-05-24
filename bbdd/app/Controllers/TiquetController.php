@@ -327,9 +327,13 @@ class TiquetController extends BaseController
 
                                     $uuid = $uuid_library->v4();
                                     if ($role == "professor" || $role == "centre_emissor" || $role == "centre_reparador") {
-                                        $model->addTiquet($uuid,$csv_data[1], $csv_data[2], $csv_data[3], $csv_data[4], $data_alta, null, $csv_data[7], $csv_data[8], $centre_emissor, null);
+                                        $model->addTiquet($uuid,$csv_data[0], $csv_data[1], $csv_data[2], $csv_data[3], $data_alta, null, $csv_data[4], 1, $centre_emissor, null);
                                     } else if ($role == "sstt" || $role == "admin_sstt" || $role == "desenvolupador") {
-                                        $model->addTiquet($uuid,$csv_data[0], $csv_data[1], $csv_data[2], $csv_data[3], $data_alta, null, $csv_data[4], $csv_data[5], $csv_data[6], $csv_data[7]);
+                                        if ($csv_data[6] == null) {
+                                            $model->addTiquet($uuid,$csv_data[0], $csv_data[1], $csv_data[2], $csv_data[3], $data_alta, null, $csv_data[4], 1, $csv_data[5], null);
+                                        } else {
+                                            $model->addTiquet($uuid,$csv_data[0], $csv_data[1], $csv_data[2], $csv_data[3], $data_alta, null, $csv_data[4], 2, $csv_data[5], $csv_data[6]);
+                                        }
                                     }
 
                                 }
@@ -380,7 +384,11 @@ class TiquetController extends BaseController
                     if ($role == "professor" || $role == "centre_emissor") {
                         $tiquet_model->addTiquet($uuid,$codi_equip, $problem, $nom_persona_contacte_centre, $correu_persona_contacte_centre, $data_alta, null, $tipus, 1, $centre_emissor, null);
                     } else {
-                        $tiquet_model->addTiquet($uuid,$codi_equip, $problem, $nom_persona_contacte_centre, $correu_persona_contacte_centre, $data_alta, null, $tipus, 2, $centre_emissor, $centre_reparador);
+                        if ($centre_reparador == null) {
+                            $tiquet_model->addTiquet($uuid,$codi_equip, $problem, $nom_persona_contacte_centre, $correu_persona_contacte_centre, $data_alta, null, $tipus, 1, $centre_emissor, null);
+                        } else {
+                            $tiquet_model->addTiquet($uuid,$codi_equip, $problem, $nom_persona_contacte_centre, $correu_persona_contacte_centre, $data_alta, null, $tipus, 2, $centre_emissor, $centre_reparador);
+                        }
                     }
                     
                 }

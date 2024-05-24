@@ -5,6 +5,11 @@
 <link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR . 'header.css') ?>">
 <link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR . 'style.css') ?>">
 <link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR . 'sidebar.css') ?>">
+<?php if($uri == "tiquets"): ?>
+    <script>var role = '<?= $role ?>';</script>
+<?php elseif($uri == "tiquets/emissor"): ?>
+    <script>var role = 'centre_emissor';</script>
+<?php endif; ?>
 <script src="<?= base_url('js' . DIRECTORY_SEPARATOR . 'estats.js') ?>"></script>
 <?= $this->endSection('css_pagina'); ?>
 

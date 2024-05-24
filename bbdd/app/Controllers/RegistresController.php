@@ -73,6 +73,10 @@ class RegistresController extends BaseController
         $data['error'] = '';
         //TODO: quan estigui fet el formulari de canviar les dades de centre que el botó només el pugui veure el centre_reparador
         $data['tipus_centre'] = $tipus_centre;
+
+        $actor = session()->get('user_data');
+        $data['role'] = $actor['role'];
+        
         if ($id_tiquet != null) {
 
             // Dades per a la gestió de rols
@@ -90,6 +94,7 @@ class RegistresController extends BaseController
                 $data['error'] = 'registre.no_permisos_eliminar';
             }
         }
+
         $crud = new KpaCrud();                          // loads default configuration    
         $crud->setConfig('onlyView');                   // sets configuration to onlyView
         $crud->setConfig([
@@ -120,9 +125,9 @@ class RegistresController extends BaseController
 
         $crud->addWhere('codi_centre_emissor', session()->get('user_data')['codi_centre'], true);
         //TODO: treure la columna de centre emissor, ja que no fa falta que ho eguin que son ells mateixos 
-        $crud->setColumns(['id_tiquet', 'codi_equip', 'nom_tipus_dispositiu', 'descripcio_avaria_limitada', 'nom_estat', 'nom_centre_emissor', 'data_alta_format', 'hora_alta_format']); // set columns/fields to show
+        $crud->setColumns(['id_tiquet_limitat', 'codi_equip', 'nom_tipus_dispositiu', 'descripcio_avaria_limitada', 'nom_estat', 'nom_centre_emissor', 'data_alta_format', 'hora_alta_format']); // set columns/fields to show
         $crud->setColumnsInfo([                         // set columns/fields name
-            'id_tiquet' => [
+            'id_tiquet_limitat' => [
                 'name' => lang("registre.id_tiquet"),
                 'type' => KpaCrud::INVISIBLE_FIELD_TYPE,
             ],
@@ -205,6 +210,9 @@ class RegistresController extends BaseController
         $data['repoemi'] = $repoemi;
         $data['uri'] = $uri;
 
+        $actor = session()->get('user_data');
+        $data['role'] = $actor['role'];
+
         if ($id_tiquet != null) {
 
             // Dades per a la gestió de rols
@@ -273,9 +281,9 @@ class RegistresController extends BaseController
         }
 
 
-        $crud->setColumns(['id_tiquet', 'codi_equip', 'nom_tipus_dispositiu', 'descripcio_avaria_limitada', 'nom_estat', 'nom_centre_emissor', 'data_alta_format', 'hora_alta_format']); // set columns/fields to show
+        $crud->setColumns(['id_tiquet_limitat', 'codi_equip', 'nom_tipus_dispositiu', 'descripcio_avaria_limitada', 'nom_estat', 'nom_centre_emissor', 'data_alta_format', 'hora_alta_format']); // set columns/fields to show
         $crud->setColumnsInfo([                         // set columns/fields name
-            'id_tiquet' => [
+            'id_tiquet_limitat' => [
                 'name' => lang("registre.id_tiquet"),
                 'type' => KpaCrud::INVISIBLE_FIELD_TYPE,
             ],
@@ -411,7 +419,7 @@ class RegistresController extends BaseController
 
         $crud->addItemLink('delete', 'fa-trash', base_url('tiquets/esborrar'), 'Eliminar Tiquet');
         $crud->setColumns([
-            'id_tiquet',
+            'id_tiquet_limitat',
             'codi_equip',
             'nom_tipus_dispositiu',
             'descripcio_avaria_limitada',
@@ -419,10 +427,11 @@ class RegistresController extends BaseController
             'nom_centre_reparador',
             'nom_estat',
             'data_alta_format',
-            'hora_alta_format'
+            'hora_alta_format',
+            'preu_total'
         ]);
         $crud->setColumnsInfo([
-            'id_tiquet' => [
+            'id_tiquet_limitat' => [
                 'name' => lang("registre.id_tiquet"),
                 'type' => KpaCrud::INVISIBLE_FIELD_TYPE,
             ],
@@ -491,6 +500,9 @@ class RegistresController extends BaseController
                 'name' => lang("registre.nom_centre_reparador"),
                 'type' => KpaCrud::INVISIBLE_FIELD_TYPE
             ],
+            'preu_total' => [
+                'name' => lang("registre.preu_total"),
+            ],
         ]);
         if ($tipus_sstt !== 'desenvolupador') {
             $crud->addWhere('id_sstt_emissor', $actor['id_sstt'], true);
@@ -503,10 +515,10 @@ class RegistresController extends BaseController
             $crud->addItemLink('pdf', 'fa-file-pdf', base_url('/tiquets/pdf'), 'Tiquet PDF', true);
         }
 
-        if (is_array($session_filtre)) {
+        /*if (is_array($session_filtre)) {
             //dd($session_filtre);
             $crud->addWhere('nom_tipus_dispositiu', $session_filtre['tipus_dispositiu'][0], true);
-        }
+        }*/
 
 
         $data['output'] = $crud->render();
@@ -523,6 +535,7 @@ class RegistresController extends BaseController
         // Dades per a la gestió de rols
         $tiquet = $tiquet_model->getTiquetById($id_tiquet);
         $role = session()->get('user_data')['role'];
+        $data['role'] = $role;
         $codi_centre = session()->get('user_data')['codi_centre'];
 
         if ($tiquet != null) {
@@ -547,10 +560,11 @@ class RegistresController extends BaseController
         $uri = $this->request->getPath();
         $data['uri'] = $uri;
         $actor = session()->get('user_data');
-
+        $data['role'] = $actor['role'];
         $data['title'] = 'Tiquets alumnes';
         $data['id_tiquet'] = null;
         $data['error'] = '';
+
         $crud = new KpaCrud();
         $crud->setConfig('onlyView');
         $crud->hideHeadLink([
@@ -590,7 +604,7 @@ class RegistresController extends BaseController
         $crud->addWhere('codi_centre_reparador', $actor['codi_centre'], true);
 
         $crud->setColumns([
-            'id_tiquet',
+            'id_tiquet_limitat',
             'codi_equip',
             'nom_tipus_dispositiu',
             'descripcio_avaria_limitada',
@@ -599,7 +613,7 @@ class RegistresController extends BaseController
             'hora_alta_format'
         ]);
         $crud->setColumnsInfo([
-            'id_tiquet' => [
+            'id_tiquet_limitat' => [
                 'name' => lang("registre.id_tiquet"),
                 'type' => KpaCrud::INVISIBLE_FIELD_TYPE,
             ],
@@ -726,9 +740,9 @@ class RegistresController extends BaseController
 
             $dades = $this->request->getPost();
             $tipus_dispositiu_seleccionat = $dades['selector_tipus_dispositiu'];
-            $tipus_estat_seleccionat = $dades['selector_tipus_estat'];
+            /*$tipus_estat_seleccionat = $dades['selector_tipus_estat'];
             $nom_centre_emissor = $dades['nom_centre_emissor_list'];
-            $nom_centre_reparador = $dades['nom_centre_reparador_list'];
+            $nom_centre_reparador = $dades['nom_centre_reparador_list'];*/
 
 
             $array_tipus_dispositius = [];

@@ -1,3 +1,2 @@
-Codi del equip;Descripció;Nom persona contacte centre;Correu persona contacte centre;Codi tipus de dispositiu;Codi estat;Codi centre emissor;Codi centre reparador
-EXEMPLE;Descripció d'exemple.;Persona;Correu persona;1;1;25006732 (pot estar buit);25002799 (pot estar buit)
-
+﻿Codi del equip *;Descripció avaria *;Nom persona contacte centre;Correu persona contacte centre;Codi tipus de dispositiu *;Codi centre emissor;Codi centre reparador
+EXEMPLE;Descripció d'exemple.;Persona;Correu persona;1;25006732 (pot estar buit);25002799 (pot estar buit)

@@ -560,6 +560,14 @@ class InventarisController extends BaseController
                     } else if ($role == "admin_sstt" || $role == "desenvolupador") {
                         $inventari_model->editarInventariAssignar($id_inventari, $id_intervencio);
                     }
+
+
+                    $data = [
+                        "preu_total" => $tiquet['preu_total'] + $inventari['preu'],
+                    ];
+
+                    $tiquet_model->updateTiquet($tiquet['id_tiquet'], $data);
+
                 }
                 
             }
@@ -598,6 +606,12 @@ class InventarisController extends BaseController
                 } else if ($role == "admin_sstt" || $role == "desenvolupador") {
                     $inventari_model->editarInventariDesassignar($id_inventari);
                 }
+
+                $data = [
+                    "preu_total" => $tiquet['preu_total'] - $inventari_desassignar['preu'],
+                ];
+
+                $tiquet_model->updateTiquet($tiquet['id_tiquet'], $data);
                 
                 return redirect()->to(base_url('/tiquets/' . $id_tiquet . "/assignar/" . $id_intervencio));
 

@@ -100,7 +100,12 @@ class EstatTipusDispositiuTiquetMigration extends Migration
                 'type' => 'VARCHAR',
                 'constraint' => '8',
                 'null' => true,
-            ]
+            ],
+            'preu_total' =>[
+                'type' => 'FLOAT',
+                'constraint' => 32,
+                'default' => 0,
+            ],
         ]);
         $this->forge->addKey('id_tiquet', true);
         $this->forge->addForeignKey('id_tipus_dispositiu','tipus_dispositiu','id_tipus_dispositiu');

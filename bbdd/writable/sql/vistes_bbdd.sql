@@ -1,6 +1,7 @@
 CREATE VIEW vista_tiquet AS
 SELECT 
-    SUBSTRING_INDEX(t.id_tiquet, '-', -1) AS id_tiquet,
+    t.id_tiquet,
+    SUBSTRING_INDEX(t.id_tiquet, '-', -1) AS id_tiquet_limitat,
     t.codi_equip,
     LEFT(t.descripcio_avaria, 50) AS descripcio_avaria,
     IF(LENGTH(t.descripcio_avaria) > 50, CONCAT(LEFT(t.descripcio_avaria, 47), '...'), t.descripcio_avaria) AS descripcio_avaria_limitada,
