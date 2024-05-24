@@ -55,6 +55,16 @@
     height: 40px;
 }
 
+#data-list-vista_inventari_filter{
+    width: 350px;
+    height: 40px;
+}
+
+#data-list-vista_alumne_filter{
+    width: 350px;
+    height: 40px;
+}
+
 #icono_busqueda{
     background-color: #D4CECE;
     display: flex;
@@ -75,7 +85,7 @@
     opacity: 0.5;
     font-style: italic;
 }
-.input_buscador_class:focus{
+.input_buscador_class:focus, .btn_etiqueta:focus{
     outline: none;
     box-shadow: none;
 }
@@ -85,4 +95,11 @@
 .botons_filtre{
     margin-top: 20px;
     padding-top: 10px;
+}
+.etiqueta{
+    border: 1px solid #333333;
+}
+.btn_etiqueta{
+    margin-left: 5px;
+    width: 3px;
 }

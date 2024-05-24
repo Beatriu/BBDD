@@ -4,7 +4,9 @@
 <link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR . 'taulaRegistre.css') ?>">
 <link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR . 'header.css') ?>">
 <link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR . 'style.css') ?>">
-<script>var role = '<?= $role ?>';</script>
+<script>
+    var role = '<?= $role ?>';
+</script>
 <script src="<?= base_url('js' . DIRECTORY_SEPARATOR . 'estats.js') ?>"></script>
 <?= $this->endSection('css_pagina'); ?>
 
@@ -79,7 +81,11 @@
                     <div class="nom_centre_emissor_div px-3">
                         <br>
                         <h5><?= lang('registre.title_div_nom_centre_emissor') ?></h5>
-                        <input list="nom_centre_emissor" name="nom_centre_emissor_list" class="form-control selector_filtre" />
+                        <?php if ($session_filtre !== null) : ?>
+                            <input list="nom_centre_emissor" name="nom_centre_emissor_list" class="form-control selector_filtre" value="<?= old('nom_centre_emissor_list') ?>" />
+                        <?php else : ?>
+                            <input list="nom_centre_emissor" name="nom_centre_emissor_list" class="form-control selector_filtre" />
+                        <?php endif; ?>
                         <datalist id="nom_centre_emissor">
                             <?= $centre_emissor ?>
                         </datalist>
@@ -87,7 +93,11 @@
                     <div class="nom_centre_reparador_div px-3">
                         <br>
                         <h5><?= lang('registre.title_div_nom_centre_reparador') ?></h5>
-                        <input list="nom_centre_reparador" name="nom_centre_reparador_list" class="form-control selector_filtre" />
+                        <?php if ($session_filtre !== null) : ?>
+                            <input list="nom_centre_reparador" name="nom_centre_reparador_list" class="form-control selector_filtre" value="<?= old('nom_centre_reparador_list') ?>" />
+                        <?php else : ?>
+                            <input list="nom_centre_reparador" name="nom_centre_reparador_list" class="form-control selector_filtre" />
+                        <?php endif; ?>
                         <datalist id="nom_centre_reparador">
                             <?= $centre_reparador ?>
                         </datalist>
@@ -102,7 +112,11 @@
                     <div class="data_creacio_div px-3">
                         <br>
                         <h5><?= lang('registre.title_div_data_creacio') ?></h5>
-                        <input type="date" name="data_creacio" id="data_creacio" class="form-control" />
+                        <?php if ($session_filtre !== null) : ?>
+                            <input type="date" name="data_creacio" id="data_creacio" class="form-control" value="<?= old('data_creacio') ?>" />
+                        <?php else : ?>
+                            <input type="date" name="data_creacio" id="data_creacio" class="form-control" />
+                        <?php endif; ?>
                     </div>
                     <div class="botons_filtre d-flex">
                         <button id="submit_eliminar_filtres" name="submit_eliminar_filtres" type="submit" class="btn btn-danger btn_save rounded-pill ms-3 me-3"><i class="fa-solid fa-trash me-2" id="trash_icon"></i><?= lang('registre.delete_filters') ?></button>
@@ -114,6 +128,7 @@
         </div>
         <!--Taula i títol-->
         <div class="col-sm p-3 min-vh-100" id="zona_taula">
+            <!--Títol-->
             <div class="d-flex justify-content-between align-items-center" id="contenidor_titol">
                 <div>
                     <h1><?= lang("registre.titol_dispositius_sstt") ?></h1>
@@ -124,6 +139,47 @@
                     <a href="<?= base_url("/formulariTiquet") ?>" class="btn" id="btn-create"><i class="fa-solid fa-circle-plus"></i> <?= lang("registre.buttons.create") ?></a>
                 </div>
             </div>
+            <!--Filtres activats-->
+            <?php if (isset($session_filtre)) : ?>
+                <div class="d-flex">
+                    <form method="POST" action="<?= base_url('/eliminarFiltre') ?>">
+                        <?= csrf_field() ?>
+                        <div class="row d-flex align-items-center">
+                            <input type="hidden" name="operacio" id="operacio" value="" />
+                            <div class="col">
+                                <p><?= lang('registre.title_activated_filters') ?></p>
+                            </div>
+                            <?php if (isset($session_filtre['tipus_dispositiu'])) : ?>
+                                <div class="col px-0 form-check form-check-inline">
+                                    <span class="badge bg-light text-dark etiqueta"><?= lang('registre.title_filtre_checkbox_dispositiu') ?> <button type="button" onclick="enviar('Dispositiu')" class="btn-close btn_etiqueta" aria-label="Close"></button></span>
+                                </div>
+                            <?php endif; ?>
+                            <?php if (isset($session_filtre['estat'])) : ?>
+                                <div class="col px-0 form-check form-check-inline">
+                                    <span class="badge bg-light text-dark etiqueta"><?= lang('registre.title_filtre_checkbox_estat') ?> <button type="button" onclick="enviar('Estat')" class="btn-close btn_etiqueta" aria-label="Close"></button></span>
+                                </div>
+                            <?php endif; ?>
+                            <?php if (isset($session_filtre['nom_centre_emissor'])) : ?>
+                                <div class="col px-0 form-check form-check-inline">
+                                    <span class="badge bg-light text-dark etiqueta"><?= lang('registre.title_filtre_checkbox_centre_emissor') ?> <button type="button" onclick="enviar('Centre_emissor')" class="btn-close btn_etiqueta" aria-label="Close"></button></span>
+                                </div>
+                            <?php endif; ?>
+                            <?php if (isset($session_filtre['nom_centre_reparador'])) : ?>
+                                <div class="col px-0 form-check form-check-inline">
+                                    <span class="badge bg-light text-dark etiqueta"><?= lang('registre.title_filtre_checkbox_centre_reparador') ?> <button type="button" onclick="enviar('Centre_reparador')" class="btn-close btn_etiqueta" aria-label="Close"></button></span>
+                                </div>
+                            <?php endif; ?>
+                            <?php if (isset($session_filtre['data_creacio'])) : ?>
+                                <div class="col px-0 form-check form-check-inline">
+                                    <span class="badge bg-light text-dark etiqueta"><?= lang('registre.title_filtre_checkbox_data') ?> <button type="button" onclick="enviar('data_creacio')" class="btn-close btn_etiqueta" aria-label="Close"></button></span>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    </form>
+                </div>
+            <?php endif; ?>
+
+            <!--Taula-->
             <div>
                 <?php if ($error != null) {
                     echo lang($error);
@@ -133,7 +189,6 @@
         </div>
     </div>
 </div>
-<span class="input-group-text text-white"><i class="fa-solid fa-envelope"></i></span>
 <script>
     (function(window, document, undefined) {
         window.onload = init;
@@ -170,8 +225,26 @@
             div.appendChild(nou_buscador);
             main.appendChild(nou_buscador);
             main.appendChild(botons);
+
+
+
+            var paginador = document.getElementById("data-list-vista_tiquet_length");
+            var pare_paginador = paginador.parentElement;
+            pare_paginador.removeChild(paginador);
+
+            var final_taula = document.getElementById("data-list-vista_tiquet_info");
+            var pare_final_taula = final_taula.parentElement;
+            pare_final_taula.appendChild(paginador);
         }
 
+
+
     })(window, document, undefined);
+</script>
+<script>
+    function enviar(x) {
+        document.getElementById("operacio").value = x;
+        document.forms[1].submit();
+    }
 </script>
 <?= $this->endSection('contingut'); ?>

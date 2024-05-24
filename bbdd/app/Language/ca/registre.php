@@ -42,5 +42,10 @@ return [
     'not_value_option_select_estat' => 'Seleccioni un estat...',
     'not_value_option_select_tipus_dispositiu' => 'Seleccioni un dispositiu...',
     'preu_total' => 'Preu total',
-
+    'title_activated_filters' => 'Filtres activats:',
+    'title_filtre_checkbox_dispositiu' => 'Dispositius',
+    'title_filtre_checkbox_centre_emissor' => 'Emissor',
+    'title_filtre_checkbox_centre_reparador' => 'Reparador',
+    'title_filtre_checkbox_estat' => 'Estat',
+    'title_filtre_checkbox_data' => 'Data',
 ];

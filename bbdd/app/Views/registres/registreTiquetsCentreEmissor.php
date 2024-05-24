@@ -48,11 +48,11 @@
         </div>
         <!--Taula i títol-->
         <div class="col-sm p-3 min-vh-100" id="zona_taula">
-            <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex justify-content-between align-items-center" id="contenidor_titol">
                 <div>
                     <h1><?= lang("registre.table-dispositius") ?></h1>
                 </div>
-                <div>
+                <div id="botons_titol"> 
                     <!--<button onclick="_open()" class="btn" id="btn-filter"><i class="fa-solid fa-filter"></i> <?//= lang("registre.buttons.filter") ?></button>-->
                     <a href="<?= base_url("/formulariTiquet") ?>" class="btn" id="btn-create"><i class="fa-solid fa-circle-plus"></i> <?= lang("registre.buttons.create") ?></a>
                 </div>
@@ -65,15 +65,51 @@
     </div>
 </div>
 <script>
-    function _open() {
-        document.getElementById("mySidebar").style.display = "block";
-        document.getElementById("mySidebar").style.backgroundColor = "#900000";
-        document.getElementById("sidebar").style.display = "none";
-    }
+(function(window, document, undefined) {
+        window.onload = init;
 
-    function _close() {
-        document.getElementById("mySidebar").style.display = "none";
-        document.getElementById("sidebar").style.display = "block";
-    }
+        function init() {
+            var buscador = document.getElementById("data-list-vista_tiquet_filter");
+            buscador.style = "display: none;";
+            var nou_buscador = buscador;
+            nou_buscador.style = "display: unset";
+            nou_buscador.classList.add("d-flex");
+            var main = document.getElementById("contenidor_titol");
+            var botons = document.getElementById("botons_titol");
+            main.removeChild(botons);
+
+
+            var sidebar_des = document.getElementById("titol");
+            var label = nou_buscador.firstChild;
+            var input = label.lastChild;
+            input.id = "input_buscador";
+            input.classList.add("input_buscador_class");
+            input.placeholder = "<?= lang("registre.searcher_placeholder") ?>";
+            nou_buscador.textContent = '';
+
+            var div = document.createElement('div');
+            var _span = document.createElement('span');
+            _span.id = "icono_busqueda";
+            var icon = document.createElement('i');
+            icon.classList.add("fa-solid");
+            icon.classList.add("fa-magnifying-glass");
+
+            _span.appendChild(icon);
+            nou_buscador.appendChild(_span);
+            nou_buscador.appendChild(input);
+            div.appendChild(nou_buscador);
+            main.appendChild(nou_buscador);
+            main.appendChild(botons);
+
+            var paginador = document.getElementById("data-list-vista_tiquet_length");
+            var pare_paginador = paginador.parentElement;
+            pare_paginador.removeChild(paginador);
+
+            var final_taula = document.getElementById("data-list-vista_tiquet_info");
+            var pare_final_taula = final_taula.parentElement;
+            pare_final_taula.appendChild(paginador);
+        }
+
+    })(window, document, undefined);
 </script>
 <?= $this->endSection('contingut'); ?>

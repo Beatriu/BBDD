@@ -39,7 +39,8 @@ $routes->get('/eliminarTiquet/(:any)', 'RegistresController::eliminarTiquet/$1',
 
 
 //FILTRE
-$routes->post('/filtre', 'RegistresController::filtrePost');
+$routes->post('/filtre', 'RegistresController::filtrePost', ['filter'=>'Autentica']);
+$routes->post('/eliminarFiltre', 'RegistresController::eliminarFiltre', ['filter'=>'Autentica']);
 
 //$routes->get('/vistaTiquet1', 'TiquetController::viewTiquet1', ['filter'=>'Autentica']);
 

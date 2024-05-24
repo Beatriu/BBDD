@@ -56,15 +56,5 @@
 
 </div>
 <script>
-    function _open() {
-        document.getElementById("mySidebar").style.display = "block";
-        document.getElementById("mySidebar").style.backgroundColor = "#900000";
-        document.getElementById("sidebar").style.display = "none";
-    }
-
-    function _close() {
-        document.getElementById("mySidebar").style.display = "none";
-        document.getElementById("sidebar").style.display = "block";
-    }
 </script>
 <?= $this->endSection('contingut'); ?>

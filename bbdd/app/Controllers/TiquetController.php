@@ -71,7 +71,7 @@ class TiquetController extends BaseController
                     "recycled_button" => false,
                     "useSoftDeletes" => true,
                     "multidelete" => false,
-                    "filterable" => true,
+                    "filterable" => false,
                     "editable" => false,
                     "removable" => false,
                     "paging" => true,
