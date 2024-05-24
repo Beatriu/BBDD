@@ -36,7 +36,7 @@
                 <div class="row mt-3 mb-3">
                     <div class="col">
                         <label for="quantitat" class="form-label"><?= lang('inventari.quantitat') ?> *</label>
-                        <input type="number" class="form-control" name = "quantitat" id="quantitat" placeholder="<?= lang('inventari.quantitat') ?>" value = "1" required>
+                        <input type="number" min="1" class="form-control" name = "quantitat" id="quantitat" placeholder="<?= lang('inventari.quantitat') ?>" value = "1" required>
                     </div>
 
                     <div class="col">
@@ -49,7 +49,7 @@
 
                     <div class="col">
                         <label for="preu" class="form-label"><?= lang('inventari.preu') ?> *</label>
-                        <input type="number" class="form-control" name = "preu" id="preu" placeholder="<?= lang('inventari.preu') ?>" value = "0" required>
+                        <input type="number" step="any" min="0.00" class="form-control" name = "preu" id="preu" placeholder="<?= lang('inventari.preu') ?>" value = "0" required>
                     </div>
 
                 </div>

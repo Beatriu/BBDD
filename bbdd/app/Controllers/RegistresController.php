@@ -426,7 +426,8 @@ class RegistresController extends BaseController
             'nom_centre_reparador',
             'nom_estat',
             'data_alta_format',
-            'hora_alta_format'
+            'hora_alta_format',
+            'preu_total'
         ]);
         $crud->setColumnsInfo([
             'id_tiquet_limitat' => [
@@ -497,6 +498,9 @@ class RegistresController extends BaseController
             'nom_centre_reparador' => [
                 'name' => lang("registre.nom_centre_reparador"),
                 'type' => KpaCrud::INVISIBLE_FIELD_TYPE
+            ],
+            'preu_total' => [
+                'name' => lang("registre.preu_total"),
             ],
         ]);
         if ($tipus_sstt !== 'desenvolupador') {

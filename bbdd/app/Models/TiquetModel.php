@@ -12,7 +12,7 @@ class TiquetModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id_tiquet','codi_equip','descripcio_avaria','nom_persona_contacte_centre','correu_persona_contacte_centre','data_alta','data_ultima_modificacio','id_tipus_dispositiu','id_estat','codi_centre_emissor','codi_centre_reparador'];
+    protected $allowedFields    = ['id_tiquet','codi_equip','descripcio_avaria','nom_persona_contacte_centre','correu_persona_contacte_centre','data_alta','data_ultima_modificacio','id_tipus_dispositiu','id_estat','codi_centre_emissor','codi_centre_reparador','preu_total'];
 
     // Dates
     protected $useTimestamps = false;
@@ -71,16 +71,14 @@ class TiquetModel extends Model
         return $this->where('codi_centre_reparador', $codi_centre_reparador)->findAll();
     }
 
-    public function deleteTiquetById($id_tiquet){
+    public function deleteTiquetById($id_tiquet)
+    {
         return $this->delete(['id_tiquet' => $id_tiquet]);
     }
 
-    public function updateTiquet($id_tiquet, $data) {
+    public function updateTiquet($id_tiquet, $data) 
+    {
         return $this->update($id_tiquet, $data);
     }
 
-    public function editarPiulada($id_piulada, $text_iulada, $privada) {
-        // Funció per editar una piulada
-        return $this->update($id_piulada,["text_piulada" => $text_iulada, "privada" => $privada]);
-    }
 }

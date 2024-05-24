@@ -32,7 +32,7 @@ function actualitzarColorsEstats() {
                 element.innerHTML = "<div class='border rounded text-bg-light p-2'>" + element.textContent + "</div>";
             }
 
-            let div_accions = tiquets[i].children[9];
+            let div_accions = tiquets[i].children[10];
             div_accions.style.minWidth = "100px";
 
         } else if (role == "alumne" || role == "professor") {
@@ -48,6 +48,11 @@ function actualitzarColorsEstats() {
                 } else if (role == "professor") {
                     element.innerHTML = "<div class='border rounded text-bg-warning p-2'>" + element.textContent + "</div>";
                 }
+            }
+
+            if (role == "professor") {
+                let div_accions = tiquets[i].children[8];
+                div_accions.style.minWidth = "100px";
             }
 
         } else if (role == "centre_emissor") {
@@ -77,16 +82,18 @@ function actualitzarColorsEstats() {
                 element.innerHTML = "<div class='border rounded text-bg-light p-2'>" + element.textContent + "</div>";
             }
 
+            let div_accions = tiquets[i].children[8];
+            div_accions.style.minWidth = "100px";
+
         }
 
     }
 }
 
 window.addEventListener("load", (event) => {
-    console.log(role);
     let paginate_buttons = document.getElementById("data-list-vista_tiquet_paginate");
     paginate_buttons.addEventListener("click", () => this.actualitzarColorsEstats());
-
+    
 
     let table = document.getElementById("data-list-vista_tiquet");
     let tbody = table.children.item(1);
@@ -121,7 +128,7 @@ window.addEventListener("load", (event) => {
                 element.innerHTML = "<div class='border rounded text-bg-light p-2'>" + element.textContent + "</div>";
             }
 
-            let div_accions = tiquets[i].children[9];
+            let div_accions = tiquets[i].children[10];
             div_accions.style.minWidth = "100px";
 
         } else if (role == "alumne" || role == "professor") {
@@ -171,12 +178,16 @@ window.addEventListener("load", (event) => {
                 element.innerHTML = "<div class='border rounded text-bg-light p-2'>" + element.textContent + "</div>";
             }
 
-            
             let div_accions = tiquets[i].children[8];
             div_accions.style.minWidth = "100px";
 
         }
 
     }
+
+
+    let input_buscador = document.getElementById("input_buscador");
+    console.log(input_buscador);
+    input_buscador.addEventListener("click", () => this.actualitzarColorsEstats());
 
   });
