@@ -351,6 +351,7 @@ class RegistresController extends BaseController
     {
 
         $session_filtre = session()->get('filtres');
+        $data['session_filtre'] = $session_filtre;
         $tiquet_model = new TiquetModel();
         $estat_model = new EstatModel();
         $data['title'] = 'Tiquets SSTT';
