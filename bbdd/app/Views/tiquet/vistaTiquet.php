@@ -126,7 +126,13 @@
                 <div class="row">
                     <?= $output ?>
                 </div>
-                
+
+                <?php if($id_intervencio_vista != null): ?>
+                    <div id = "vista_intervencio" class = "row mt-3 p-3">
+                        <textarea class="mb-0" rows="5" disabled><?= trim($descripcio_intervencio_vista) ?></textarea>
+                    </div>
+                <?php endif; ?>
+
             </div>
 
         </div>

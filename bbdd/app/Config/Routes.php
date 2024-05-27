@@ -41,8 +41,6 @@ $routes->get('/eliminarTiquet/(:any)', 'RegistresController::eliminarTiquet/$1',
 //FILTRE
 $routes->post('/filtre', 'RegistresController::filtrePost');
 
-//$routes->get('/vistaTiquet1', 'TiquetController::viewTiquet1', ['filter'=>'Autentica']);
-
 //Inventari
 $routes->get('/inventari', 'InventarisController::registreInventari', ['filter'=>'Autentica']);
 $routes->get('/inventari/afegir', 'InventarisController::crearInventari', ['filter'=>'Autentica']);
@@ -74,10 +72,11 @@ $routes->get('/editar/intervencio/(:segment)/(:segment)', 'IntervencionsControll
 $routes->post('/editar/intervencio', 'IntervencionsController::editarIntervencio_post', ['filter'=>'Autentica']);
 $routes->get('/tiquets/(:segment)/esborrar/(:segment)', 'IntervencionsController::eliminarIntervencio_vista/$1/$2', ['filter'=>'Autentica']);
 $routes->get('/eliminarIntervencio/(:segment)/(:segment)', 'IntervencionsController::eliminarIntervencio/$1/$2', ['filter'=>'Autentica']);
+$routes->get('/tiquets/(:segment)/intervencio/(:segment)', 'TiquetController::viewTiquet/$1/$2', ['filter'=>'Autentica']);
 
 //Vista Tiquets - Registre Intervencions
 $routes->post('/tiquets/cercar', 'TiquetController::viewTiquet_post', ['filter'=>'Autentica']);
-$routes->get('/tiquets/(:any)', 'TiquetController::viewTiquet/$1', ['filter'=>'Autentica']);
+$routes->get('/tiquets/(:segment)', 'TiquetController::viewTiquet/$1', ['filter'=>'Autentica']);
 
 // Canvi de language, Descarregar
 $routes->get('/canviLanguage', 'Home::canviLanguage');

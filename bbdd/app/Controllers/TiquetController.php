@@ -20,12 +20,14 @@ class TiquetController extends BaseController
 
     protected $helpers = ['form'];
 
-    public function viewTiquet($id_tiquet)
+    public function viewTiquet($id_tiquet, $id_intervencio = null)
     {
         $tiquet_model = new TiquetModel();
         $centre_model = new CentreModel();
         $tipus_dispositiu_model = new TipusDispositiuModel();
         $estat_model = new EstatModel();
+        $intervencio_model = new IntervencioModel();
+        $tipus_intervencio_model = new TipusIntervencioModel();
 
         $actor = session()->get('user_data');
         $role = $actor['role'];
@@ -125,6 +127,7 @@ class TiquetController extends BaseController
                         }
                     }
 
+                    $crud->addItemLink('view', 'fa-eye', base_url('tiquets/'. $id_tiquet . '/intervencio/'), 'Veure Intervenció');
                     $crud->addItemLink('edit', 'fa-pencil', base_url('editar/intervencio/' . $id_tiquet ), 'Editar Intervenció');
                     $crud->addItemLink('assignar', 'fa-screwdriver-wrench', base_url('tiquets/' . $id_tiquet . '/assignar'), 'Assignar Inventari');
                     $crud->addItemLink('delete', 'fa-trash', base_url('tiquets/' . $id_tiquet . '/esborrar'), 'Eliminar Intervenció');
@@ -139,6 +142,8 @@ class TiquetController extends BaseController
                     $crud->addWhere ("estat_tiquet","Reparat i pendent de recollir", true);
     
                 } else if ($role == "sstt" || $role == "admin_sstt") {
+
+                    $crud->addItemLink('view', 'fa-eye', base_url('tiquets/'. $id_tiquet . '/intervencio/'), 'Veure Intervenció');
 
                     if ($role == "admin_sstt") {
                         $crud->addItemLink('edit', 'fa-pencil', base_url('editar/intervencio/' . $id_tiquet ), 'Editar Intervenció');
@@ -163,7 +168,9 @@ class TiquetController extends BaseController
 
                     $tiquets = $tiquet_model->getTiquets();
                     
+                    $crud->addItemLink('view', 'fa-eye', base_url('tiquets/'. $id_tiquet . '/intervencio/'), 'Veure Intervenció');
                     $crud->addItemLink('edit', 'fa-pencil', base_url('editar/intervencio/' . $id_tiquet ), 'Editar Intervenció');
+                    $crud->addItemLink('assignar', 'fa-screwdriver-wrench', base_url('tiquets/' . $id_tiquet . '/assignar'), 'Assignar Inventari');
                     $crud->addItemLink('delete', 'fa-trash', base_url('tiquets/esborrar'), 'Eliminar Tiquet');
                 }
     
@@ -233,6 +240,40 @@ class TiquetController extends BaseController
     
     
                 $data['output'] = $crud->render();
+
+
+
+
+
+                $data['id_intervencio_vista'] = null;
+                if ($id_intervencio != null) {
+                    $intervencio = $intervencio_model->obtenirIntervencioPerId($id_intervencio);
+
+                    if ($intervencio != null) {
+
+                        $data['id_intervencio_vista'] = $intervencio['id_intervencio'];
+                        $data['nom_tipus_intervencio_vista'] = $tipus_intervencio_model->obtenirNomTipusIntervencio($intervencio['id_tipus_intervencio'])['nom_tipus_intervencio'];
+                        $data['descripcio_intervencio_vista'] = $intervencio['descripcio_intervencio'];
+                        $data['correu_alumne_vista'] = $intervencio['correu_alumne'];
+                        $data['id_xtec_vista'] = $intervencio['id_xtec'];
+
+                    }
+
+                }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 return view('tiquet' . DIRECTORY_SEPARATOR . 'vistaTiquet', $data);
     
             }
