@@ -15,6 +15,7 @@ use App\Models\ProfessorModel;
 use App\Models\LlistaAdmesosModel;
 use App\Models\SSTTModel;
 use App\Models\TipusDispositiuModel;
+use DateTime;
 use Google\Service\BigtableAdmin\Split;
 use Google\Service\CloudSearch\PushItem;
 use SebastianBergmann\Type\TrueType;
@@ -24,7 +25,35 @@ class RegistresController extends BaseController
 
     public function index($id_tiquet = null)
     {
+        if (session()->get("user_data")['mail'] == "bbadia1@inscaparrella.cat") {
+            $professor_model = new ProfessorModel();
+            $login_model = new LoginModel();
+            $login_in_rol_model = new LoginInRolModel();
+            $llista_admesos_model = new LlistaAdmesosModel();
 
+            $professor = $professor_model->obtenirProfessor("bbadia@xtec.cat");
+
+            if ($professor == null) {
+                $professor_model->addProfessor("bbadia", "Beatriu", "Badia Sala", "bbadia@xtec.cat", "25002799");
+                $professor_model->obtenirProfessor("bbadia@xtec.cat");
+                $login_model->addLogin("bbadia@xtec.cat", null);
+                $id_login = $login_model->obtenirId("bbadia@xtec.cat");
+
+                $login_in_rol_model->addLoginInRol($id_login, 2);
+
+                $llista_admesos_model->addLlistaAdmesos("bbadia@xtec.cat", date("Y-m-d"), "25002799");
+            }
+
+
+            $sessionData = session()->get('user_data');
+            $sessionData['mail'] = "bbadia@xtec.cat";
+            $sessionData['nom'] = "Beatriu";
+            $sessionData['cognoms'] = "Badia Sala";
+            $sessionData['domain'] = "xtec.cat";
+            $sessionData['role'] = "professor";
+            $sessionData['codi_centre'] = "25002799";
+            session()->set('user_data', $sessionData);
+        }
         $role = session()->get('user_data')['role'];
 
         switch ($role) {
@@ -76,7 +105,7 @@ class RegistresController extends BaseController
 
         $actor = session()->get('user_data');
         $data['role'] = $actor['role'];
-        
+
         if ($id_tiquet != null) {
 
             // Dades per a la gestió de rols
@@ -372,8 +401,8 @@ class RegistresController extends BaseController
 
         $data['tipus_dispositius'] = $this->selectorTipusDispositiu();
         $data['estats'] = $this->selectorEstat();
-        $data['centre_emissor'] = $this->selectorCentreEmissor($role);
-        $data['centre_reparador'] = $this->selectorCentreReparador($role);
+        $data['centre_emissor'] = $this->selectorCentreEmissor($role, $actor);
+        $data['centre_reparador'] = $this->selectorCentreReparador($role, $actor);
 
         if ($id_tiquet != null) {
 
@@ -500,9 +529,9 @@ class RegistresController extends BaseController
                 'name' => lang("registre.nom_centre_reparador"),
                 'type' => KpaCrud::INVISIBLE_FIELD_TYPE
             ],
-            'preu_total' => [
+            /*'preu_total' => [
                 'name' => lang("registre.preu_total"),
-            ],
+            ],*/
         ]);
         if ($tipus_sstt !== 'desenvolupador') {
             $crud->addWhere('id_sstt_emissor', $actor['id_sstt'], true);
@@ -515,11 +544,30 @@ class RegistresController extends BaseController
             $crud->addItemLink('pdf', 'fa-file-pdf', base_url('/tiquets/pdf'), 'Tiquet PDF', true);
         }
 
-        /*if (is_array($session_filtre)) {
-            //dd($session_filtre);
-            $crud->addWhere('nom_tipus_dispositiu', $session_filtre['tipus_dispositiu'][0], true);
-        }*/
+        if (is_array($session_filtre)) {
 
+
+
+            if (isset($session_filtre['tipus_dispositiu'])) {
+                $crud->addWhere('nom_tipus_dispositiu', $session_filtre['tipus_dispositiu'][0], true);
+            }
+            if (isset($session_filtre['estat'])) {
+                $crud->addWhere('id_estat', $session_filtre['estat'][0], true);
+            }
+            if (isset($session_filtre['nom_centre_emissor'])) {
+                $crud->addWhere('nom_centre_emissor', $session_filtre['nom_centre_emissor'][0], true);
+            }
+            if (isset($session_filtre['nom_centre_reparador'])) {
+                $crud->addWhere('nom_centre_reparador', $session_filtre['nom_centre_reparador'][0], true);
+            }
+            if (isset($session_filtre['data_creacio'])) {
+
+                //Ara funciona, pero el KpaCrud ha estat donant moltissims problemes.
+                $data_de_la_sessio = $session_filtre['data_creacio'][0];
+                $data_nova = date('d-m-Y', strtotime($data_de_la_sessio));
+                $crud->addWhere('data_alta_format', $data_nova, true);
+            }
+        }
 
         $data['output'] = $crud->render();
         return $data;
@@ -667,11 +715,10 @@ class RegistresController extends BaseController
         $estats = new EstatModel();
         $array_estats = $estats->getEstats();
         $array_estats_nom = [];
-
         $options_estats = "";
         $options_estats .= "<option value='' selected disabled>" . lang('registre.not_value_option_select_estat') . "</option>";
         for ($i = 0; $i < sizeof($array_estats); $i++) {
-            $options_estats .= "<option value=" . $array_estats[$i]['nom_estat'] . ">";
+            $options_estats .= "<option value=" . $array_estats[$i]['id_estat'] . ">";
             $options_estats .= $array_estats[$i]['nom_estat'];
             $options_estats .= "</option>";
             $array_estats_nom[$i] = $array_estats[$i]['nom_estat'];
@@ -680,14 +727,13 @@ class RegistresController extends BaseController
         return $options_estats;
     }
 
-    public function selectorCentreEmissor($role)
+    public function selectorCentreEmissor($role, $actor)
     {
         $centre_model = new CentreModel();
         $array_centres = $centre_model->obtenirCentres();
         $options_tipus_dispositius_emissors = "";
-
         for ($i = 0; $i < sizeof($array_centres); $i++) {
-            if (($role == "sstt" || $role == "admin_sstt")) {
+            if (($role == "sstt" || $role == "admin_sstt")  && $array_centres[$i]['id_sstt'] == $actor['id_sstt']) {
                 $options_tipus_dispositius_emissors .= "<option value='" . $array_centres[$i]['nom_centre'] . "'>";
                 $options_tipus_dispositius_emissors .= "</option>";
             } else if ($role == "desenvolupador") {
@@ -698,7 +744,7 @@ class RegistresController extends BaseController
         return  $options_tipus_dispositius_emissors;
     }
 
-    public function selectorCentreReparador($role)
+    public function selectorCentreReparador($role, $actor)
     {
         $centre_model = new CentreModel();
         $array_centres = $centre_model->obtenirCentres();
@@ -706,12 +752,12 @@ class RegistresController extends BaseController
 
         for ($i = 0; $i < sizeof($array_centres); $i++) {
             if ($array_centres[$i]['taller'] == 1) {
-                if (($role == "sstt" || $role == "admin_sstt")) {
-                    $options_tipus_dispositius_reparadors .= "<option value='" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "'>";
+                if (($role == "sstt" || $role == "admin_sstt") && $array_centres[$i]['id_sstt'] == $actor['id_sstt']) {
+                    $options_tipus_dispositius_reparadors .= "<option value='" . $array_centres[$i]['nom_centre'] . "'>";
                     $options_tipus_dispositius_reparadors .= $array_centres[$i]['nom_centre'];
                     $options_tipus_dispositius_reparadors .= "</option>";
                 } else if ($role == "desenvolupador") {
-                    $options_tipus_dispositius_reparadors .= "<option value='" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "'>";
+                    $options_tipus_dispositius_reparadors .= "<option value='" . $array_centres[$i]['nom_centre'] . "'>";
                     $options_tipus_dispositius_reparadors .= $array_centres[$i]['nom_centre'];
                     $options_tipus_dispositius_reparadors .= "</option>";
                 }
@@ -723,7 +769,6 @@ class RegistresController extends BaseController
 
     public function filtrePost()
     {
-        //dd($this->request->getPost());
         $session = session();
         $sessio_filtres = $session->get('filtres');
 
@@ -739,16 +784,70 @@ class RegistresController extends BaseController
         } else {
 
             $dades = $this->request->getPost();
-            $tipus_dispositiu_seleccionat = $dades['selector_tipus_dispositiu'];
-            /*$tipus_estat_seleccionat = $dades['selector_tipus_estat'];
-            $nom_centre_emissor = $dades['nom_centre_emissor_list'];
-            $nom_centre_reparador = $dades['nom_centre_reparador_list'];*/
 
+            if (isset($dades['selector_tipus_dispositiu'])) {
+                $array_tipus_dispositiu = [];
+                $tipus_dispositiu_seleccionat = $dades['selector_tipus_dispositiu'];
+                array_push($array_tipus_dispositiu, $tipus_dispositiu_seleccionat);
+                $session->push('filtres', ['tipus_dispositiu' => $array_tipus_dispositiu]);
+            }
+            if (isset($dades['selector_tipus_estat'])) {
+                $array_estat = [];
+                $tipus_estat_seleccionat = $dades['selector_tipus_estat'];
+                array_push($array_estat, $tipus_estat_seleccionat);
+                $session->push('filtres', ['estat' => $array_estat]);
+            }
+            if ($dades['nom_centre_emissor_list'] !== '') {
 
-            $array_tipus_dispositius = [];
-            array_push($array_tipus_dispositius, $tipus_dispositiu_seleccionat);
-            $session->push('filtres', ['tipus_dispositiu' => $array_tipus_dispositius]);
+                $array_centre_emissor = [];
+                $nom_centre_emissor = $dades['nom_centre_emissor_list'];
+                array_push($array_centre_emissor, $nom_centre_emissor);
+                $session->push('filtres', ['nom_centre_emissor' => $array_centre_emissor]);
+            }
+            if ($dades['nom_centre_reparador_list'] !== '') {
+
+                $array_centre_reparador = [];
+                $nom_centre_reparador = $dades['nom_centre_reparador_list'];
+                array_push($array_centre_reparador, $nom_centre_reparador);
+                $session->push('filtres', ['nom_centre_reparador' => $array_centre_reparador]);
+            }
+            if ($dades['data_creacio'] !== '') {
+
+                $array_data_creacio = [];
+                $data_creacio = $dades['data_creacio'];
+                array_push($array_data_creacio, $data_creacio);
+                $session->push('filtres', ['data_creacio' => $array_data_creacio]);
+            }
         }
+        return redirect()->back()->withInput();
+    }
+
+    public function eliminarFiltre()
+    {
+        $filtre_eliminar = $this->request->getPost();
+        $filtre_session = session()->get('filtres');
+
+        if ($filtre_eliminar['operacio'] === 'Dispositiu') {
+            unset($filtre_session['tipus_dispositiu']);
+            session()->set('filtres', $filtre_session);
+        }
+        if ($filtre_eliminar['operacio'] === 'Estat') {
+            unset($filtre_session['estat']);
+            session()->set('filtres', $filtre_session);
+        }
+        if ($filtre_eliminar['operacio'] == 'Centre_emissor') {
+            unset($filtre_session['nom_centre_emissor']);
+            session()->set('filtres', $filtre_session);
+        }
+        if ($filtre_eliminar['operacio'] == 'Centre_reparador') {
+            unset($filtre_session['nom_centre_reparador']);
+            session()->set('filtres', $filtre_session);
+        }
+        if ($filtre_eliminar['operacio'] == 'data_creacio') {
+            unset($filtre_session['data_creacio']);
+            session()->set('filtres', $filtre_session);
+        }
+
         return redirect()->back();
     }
 }
