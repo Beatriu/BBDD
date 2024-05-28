@@ -710,9 +710,9 @@ class RegistresController extends BaseController
         $options_tipus_dispositius .= "<option value='' selected disabled>" . lang('registre.not_value_option_select_tipus_dispositiu') . "</option>";
         for ($i = 0; $i < sizeof($array_tipus_dispositius); $i++) {
             if(isset($sessio_filtres['tipus_dispositiu']) && $sessio_filtres['tipus_dispositiu'][0] == $array_tipus_dispositius[$i]['nom_tipus_dispositiu']){
-                $options_tipus_dispositius .= "<option value=" . "'" . $array_tipus_dispositius[$i]['nom_tipus_dispositiu'] . "'" . " selected>";
+                $options_tipus_dispositius .= "<option value=\"" . $array_tipus_dispositius[$i]['nom_tipus_dispositiu'] . "\" selected>";
             } else {
-                $options_tipus_dispositius .= "<option value=" . "'" . $array_tipus_dispositius[$i]['nom_tipus_dispositiu'] . "'" . " >";
+                $options_tipus_dispositius .= "<option value=\"" . $array_tipus_dispositius[$i]['nom_tipus_dispositiu'] . "\">";
             }
             $options_tipus_dispositius .= $array_tipus_dispositius[$i]['nom_tipus_dispositiu'];
             $options_tipus_dispositius .= "</option>";
@@ -734,9 +734,9 @@ class RegistresController extends BaseController
         $options_estats .= "<option value='' selected disabled>" . lang('registre.not_value_option_select_estat') . "</option>";
         for ($i = 0; $i < sizeof($array_estats); $i++) {
             if(isset($sessio_filtres['estat']) && $sessio_filtres['estat'][0] == $array_estats[$i]['id_estat']){
-                $options_estats .= "<option value=" . $array_estats[$i]['id_estat'] . " selected>";
+                $options_estats .= "<option value=\"" . $array_estats[$i]['id_estat'] . "\" selected>";
             } else {
-                $options_estats .= "<option value=" . $array_estats[$i]['id_estat'] . ">";
+                $options_estats .= "<option value=\"" . $array_estats[$i]['id_estat'] . "\">";
             }
             $options_estats .= $array_estats[$i]['nom_estat'];
             $options_estats .= "</option>";
@@ -755,10 +755,10 @@ class RegistresController extends BaseController
 
         for ($i = 0; $i < sizeof($array_centres); $i++) {
             if (($role == "sstt" || $role == "admin_sstt")  && $array_centres[$i]['id_sstt'] == $actor['id_sstt']) {
-                $options_tipus_dispositius_emissors .= "<option value='" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "'>";
+                $options_tipus_dispositius_emissors .= "<option value=\"" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "\">";
                 $options_tipus_dispositius_emissors .= "</option>";
             } else if ($role == "desenvolupador") {
-                $options_tipus_dispositius_emissors .= "<option value='"  . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "'>";
+                $options_tipus_dispositius_emissors .= "<option value=\""  . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "\">";
                 $options_tipus_dispositius_emissors .= "</option>";
             }
         }
@@ -774,11 +774,11 @@ class RegistresController extends BaseController
         for ($i = 0; $i < sizeof($array_centres); $i++) {
             if ($array_centres[$i]['taller'] == 1) {
                 if (($role == "sstt" || $role == "admin_sstt") && $array_centres[$i]['id_sstt'] == $actor['id_sstt']) {
-                    $options_tipus_dispositius_reparadors .= "<option value='" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "'>";
+                    $options_tipus_dispositius_reparadors .= "<option value=\"" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "\">";
                     $options_tipus_dispositius_reparadors .= $array_centres[$i]['nom_centre'];
                     $options_tipus_dispositius_reparadors .= "</option>";
                 } else if ($role == "desenvolupador") {
-                    $options_tipus_dispositius_reparadors .= "<option value='" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "'>";
+                    $options_tipus_dispositius_reparadors .= "<option value=\"" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "\">";
                     $options_tipus_dispositius_reparadors .= $array_centres[$i]['nom_centre'];
                     $options_tipus_dispositius_reparadors .= "</option>";
                 }
