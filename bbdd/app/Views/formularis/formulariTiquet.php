@@ -3,7 +3,11 @@
 <?= $this->section('css_pagina'); ?>
     <link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR . 'formulari.css') ?>">
     <link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR . 'header.css') ?>">
-    <script>var opcions_tipus_dispositius = JSON.parse('<?= $json_tipus_dispositius ?>');</script>
+    <script>
+        var opcions_tipus_dispositius = JSON.parse('<?= $json_tipus_dispositius ?>');
+        var clic_escriu_codi = '<?= lang('general_lang.clic_escriu_codi') ?>';
+        var clic_escriu_problema = '<?= lang('general_lang.clic_escriu_problema') ?>';
+    </script>
     <link rel="stylesheet" href="<?= base_url('fontawesome' . DIRECTORY_SEPARATOR . 'css' . DIRECTORY_SEPARATOR . 'fontawesome.css') ?>"/>
     <script src="<?= base_url('js' . DIRECTORY_SEPARATOR . 'main_formulari_tiquet.js') ?>"></script>
 <?= $this->endSection('css_pagina'); ?>
@@ -91,20 +95,23 @@
                 <div class="col d-flex align-items-center justify-content-center">
                     <?= lang('general_lang.problem') ?> *
                 </div>
+                <div class="col-1 d-flex align-items-center justify-content-center">
+
+                </div>
             </div>
             <div class="row me-0 pe-0 ms-1" id = "div_files_formulari_tiquet">
 
                 <div class="row p-2" id = "fila_formulari_tiquet_1">
                     <div class="col d-flex align-items-center justify-content-center">
-                        <input id="equipment_code_1" class="form-control" title="Codi equip línea 1" type="text" name="provisional_equipment_code_1" oninput="afegirTiquetDisabled('fila_formulari_tiquet_1');" required/>
+                        <input id="equipment_code_1" class="form-control" title="Codi equip línea 1" type="text" name="provisional_equipment_code_1" oninput="afegirTiquetDisabled('fila_formulari_tiquet_1');" placeholder="<?= lang('general_lang.clic_escriu_codi') ?> 1" required/>
                     </div>
                     <div class="col d-flex align-items-center justify-content-center">
-                        <select id="type_1" class="form-select" name="provisional_type_1" title="Tipus dispositiu línea 1" required>
+                        <select id="type_1" class="form-select" name="provisional_type_1" title="Tipus dispositiu línea 1" onchange="afegirTiquetDisabled('fila_formulari_tiquet_1');" required>
                             <?=$tipus_dispositius?>
                         </select>
                     </div>
                     <div class="col d-flex align-items-center justify-content-center">
-                        <textarea id="problem_1" class="form-control" title="Problema línea 1" type="text" name="provisional_problem_1" style="width: 100%; height: 30px;" oninput="afegirTiquetDisabled('fila_formulari_tiquet_1');" required></textarea>
+                        <textarea id="problem_1" class="form-control" title="Problema línea 1" type="text" name="provisional_problem_1" style="width: 100%; height: 30px;" oninput="afegirTiquetDisabled('fila_formulari_tiquet_1');" placeholder="<?= lang('general_lang.clic_escriu_problema') ?> 1" required></textarea>
                     </div>
                 </div>
 

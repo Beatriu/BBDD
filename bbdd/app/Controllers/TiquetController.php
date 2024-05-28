@@ -59,7 +59,7 @@ class TiquetController extends BaseController
                 if ($data['id_intervencio'] != null) {
                     $data['id_intervencio'] = $data['id_intervencio']['id_intervencio'];
                 }
-//TODO: preguntar al blai si aqui també he de ficar el filterable i el paging
+
                 $crud = new KpaCrud();
                 $crud->setConfig('onlyView');
                 $crud->hideHeadLink([ 
@@ -180,7 +180,7 @@ class TiquetController extends BaseController
                     $nom_tipus_dispositiu = $tipus_dispositiu_model->getNomTipusDispositiu($tiquets_resultat[$i]['id_tipus_dispositiu'])['nom_tipus_dispositiu'];
                     $tiquets_resultat[$i]['nom_tipus_dispositiu'] = $nom_tipus_dispositiu;
 
-                    $options_tiquets .= "<option value=\"" . $tiquets_resultat[$i]['id_tiquet'] . " // " . $tiquets_resultat[$i]['nom_tipus_dispositiu'] . " // "  . $tiquets_resultat[$i]['codi_equip'] . "\">";
+                    $options_tiquets .= "<option value=\"" . explode("-",$tiquets_resultat[$i]['id_tiquet'])[4] . " // " . $tiquets_resultat[$i]['nom_tipus_dispositiu'] . " // "  . $tiquets_resultat[$i]['codi_equip'] . " // "  . $tiquets_resultat[$i]['id_tiquet'] . "\">";
                     $options_tiquets .= $tiquets_resultat[$i]['codi_equip'] . " // " . $tiquets_resultat[$i]['nom_tipus_dispositiu'];
                     $options_tiquets .= "</option>";
                 }
@@ -288,11 +288,20 @@ class TiquetController extends BaseController
     }
 
     public function viewTiquet_post() {
+
+        $tiquet_model = new TiquetModel();
+
         $input = $this->request->getPost('tiquet_seleccionat');
+        $id_tiquet = trim(explode('//', (string) $input)[3]);
 
-        $id_tiquet = trim(explode('//', (string) $input)[0]);
+        $tiquet = $tiquet_model->getTiquetById($id_tiquet);
 
-        return redirect()->to(base_url('/tiquets/' . $id_tiquet));
+        if ($tiquet != null) {
+            return redirect()->to(base_url('/tiquets/' . $id_tiquet));
+        } else {
+            return redirect()->back();
+        }
+
     }
 
     public function createTiquet_post()
@@ -302,7 +311,6 @@ class TiquetController extends BaseController
         $csv = $this->request->getFiles();
 
         $uuid_library = new \App\Libraries\UUID;
-
 
         if ($csv['csv_tiquet'] == null) {
             $validationRules = [
@@ -322,6 +330,7 @@ class TiquetController extends BaseController
         }
 
         if ($csv['csv_tiquet'] != null || $this->validate($validationRules)) { 
+
             $tiquet_model = new TiquetModel;
 
             $nom_persona_contacte_centre = $this->request->getPost('sNomContacteCentre');
@@ -387,7 +396,9 @@ class TiquetController extends BaseController
                 }
 
             } else {
+
                 $num_tiquets = $this->request->getPost('num_tiquets');
+                
                 // Validem camps            
                 for ($i = 1; $i <= intval($num_tiquets); $i++) {
                     $codi_equip = $this->request->getPost('equipment_code_' . $i);

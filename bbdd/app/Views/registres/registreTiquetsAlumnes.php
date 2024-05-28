@@ -36,10 +36,10 @@
                 <div>
                     <h1><?= lang("registre.titol_dispositius_sstt") ?></h1>
                 </div>
-                <div id="botons_titol">
-                    <!-- <button onclick="_open()" class="btn" id="btn-filter"><i class="fa-solid fa-filter"></i> <? //= lang("registre.buttons.filter") 
-                                                                                                                    ?></button>-->
-                </div>
+                <!--<div id="botons_titol">
+                     <button onclick="_open()" class="btn" id="btn-filter"><i class="fa-solid fa-filter"></i> <? //= lang("registre.buttons.filter") 
+                                                                                                                    ?></button>
+                </div>-->
             </div>
             <div>
                 <?php if ($error != null) {
@@ -61,8 +61,8 @@
             nou_buscador.style = "display: unset";
             nou_buscador.classList.add("d-flex");
             var main = document.getElementById("contenidor_titol");
-            var botons = document.getElementById("botons_titol");
-            main.removeChild(botons);
+           /* var botons = document.getElementById("botons_titol");
+            main.removeChild(botons);*/
 
 
             var sidebar_des = document.getElementById("titol");
@@ -85,7 +85,7 @@
             nou_buscador.appendChild(input);
             div.appendChild(nou_buscador);
             main.appendChild(nou_buscador);
-            main.appendChild(botons);
+            //main.appendChild(botons);
 
             var paginador = document.getElementById("data-list-vista_tiquet_length");
             var pare_paginador = paginador.parentElement;

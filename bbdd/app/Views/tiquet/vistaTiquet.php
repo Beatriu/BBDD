@@ -54,45 +54,16 @@
                         <li><?= lang('intervencio.dades_tiquet.dades_id_tiquet') ?>: <?= $tiquet['id_tiquet'] ?> </li>
                         <li><?= lang('intervencio.dades_tiquet.dades_codi') ?>: <?= $tiquet['codi_equip'] ?> </li>
                         <li><?= lang('intervencio.dades_tiquet.dades_tipus') ?>: <?= $tipus_dispositiu ?> </li>
-                    </ul>
-                </div>
-                
-                <?php if($role == "alumne" && $estat_editable != "disabled"): ?>
 
-                    <form method="POST" action="<?= base_url('/tiquets/editar') ?>" enctype="multipart/form-data">
-                        <?= csrf_field() ?>
-                        <div class="row">
-                                <div class="col-9 pe-1">
-                                <select id="estat" name="estat" class="form-select" <?= $estat_editable ?> title="Estat del tiquet.">
-                                    <?=$estats?>
-                                </select>
-                            </div>
-                            <div class="col-3 ps-0">
-                                <button type="submit" class="btn btn-warning rounded-pill"><?= lang('intervencio.btn_aplicar_estat') ?></button>
-                            </div>
-                        </div>
-                    </form>
-                    
-                <?php else: ?>
-                    <div class="row">
-                        <div class="col-12">
-                            <select id="estat" name="estat" class="form-select" <?= $estat_editable ?> title="Estat del tiquet.">
-                                <?=$estats?>
-                            </select>
-                        </div>
-                    </div>
-                <?php endif; ?>
-
-                <div class="row mt-3">
-                    <ul>
-                        <li><?= lang('registre.centre') ?>: <?= $nom_centre_emissor ?> </li>
-                        <li><?= lang('general_lang.name_curt') ?>: <?= $tiquet['nom_persona_contacte_centre'] ?> </li>
-                        <li><?= lang('general_lang.contact_curt') ?>: <?= $tiquet['correu_persona_contacte_centre'] ?> </li>
-                        <li><?= lang('registre.centre_reparador') ?>: <?= $nom_centre_reparador ?> </li>
+                        <?php if($role == "sstt" || $role == "admin_sstt" || $role == "desenvolupador"): ?>
+                            <li><?= lang('registre.centre') ?>: <?= $nom_centre_emissor ?> </li>
+                            <li><?= lang('general_lang.name_curt') ?>: <?= $tiquet['nom_persona_contacte_centre'] ?> </li>
+                            <li><?= lang('general_lang.contact_curt') ?>: <?= $tiquet['correu_persona_contacte_centre'] ?> </li>
+                            <li><?= lang('registre.centre_reparador') ?>: <?= $nom_centre_reparador ?> </li>
+                        <?php endif; ?>
                         <li><?= lang('registre.data_alta') ?>: <?= $tiquet['data_alta'] ?> </li>
                     </ul>
-                    <textarea id="mostrar_descripcio_tiquet" rows="6" disabled>
-                        <?= trim($tiquet['descripcio_avaria']) ?>
+                    <textarea id="mostrar_descripcio_tiquet" rows="6" disabled><?= trim($tiquet['descripcio_avaria']) ?>
                     </textarea>
                 </div>
 
@@ -100,19 +71,61 @@
 
             <div class="col-9">
 
-            <form method="POST" action="<?= base_url('/tiquets/cercar') ?>" enctype="multipart/form-data">
-            <?= csrf_field() ?>
                 <div class="row">
                     
-                    <div class="col-7">
-                        <input class="form-control selector" name = "tiquet_seleccionat" list="datalistOptionsTiquets" id="tiquetsDataList" placeholder="<?= lang('intervencio.tiquets_datalist') ?>">
-                        <datalist id="datalistOptionsTiquets">
-                            <?= $options_tiquets ?>
-                        </datalist>
+                    <div class="col-5">
+                        <form method="POST" action="<?= base_url('/tiquets/cercar') ?>" enctype="multipart/form-data">
+                            <?= csrf_field() ?>
+                            <div class="d-flex align-items-center gap-1">
+                                <div class="flex-grow-1">
+                                    <input class="form-control selector" name="tiquet_seleccionat" list="datalistOptionsTiquets" id="tiquetsDataList" placeholder="<?= lang('intervencio.tiquets_datalist') ?>">
+                                    <datalist id="datalistOptionsTiquets">
+                                        <?= $options_tiquets ?>
+                                    </datalist>
+                                </div>
+                                <button id="submit_cercar_tiquet" type="submit" class="btn btn-primary rounded" title="<?= lang('general_lang.buttons.buscar_button') ?>">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                    <div class="col-2">
-                        <button id="submit_cercar_tiquet" type="submit" class="btn btn-primary rounded-pill ms-3 me-3"><i class="fa-solid fa-magnifying-glass me-2"></i><?= lang('general_lang.buttons.buscar_button') ?></button>
-                    </div>
+
+                    
+                        
+                    <?php if($role == "alumne" && $estat_editable != "disabled"): ?>
+                        <div class="col-1">
+
+                        </div>
+                        <div class="col-3">
+                            <form method="POST" action="<?= base_url('/tiquets/editar') ?>" enctype="multipart/form-data">
+                                <?= csrf_field() ?>
+
+                                <div class="d-flex align-items-center gap-1">
+                                    <div class="flex-grow-1">
+                                        <select id="estat" name="estat" class="form-select" <?= $estat_editable ?> title="Estat del tiquet.">
+                                            <?=$estats?>
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-warning rounded"><i class="fa-solid fa-pen-to-square"></i></button>  
+                                </div>
+
+                            </form>
+                        </div>
+
+                    <?php else: ?>
+                        <div class="col-4">
+                            <div class="row">
+                                <div class="col-12">
+                                    <select id="estat" name="estat" class="form-select" <?= $estat_editable ?> title="Estat del tiquet.">
+                                        <?=$estats?>
+                                    </select>
+                                </div>
+                            </div>
+                        <div></div>
+
+                    <?php endif; ?>
+
+
                     <div class="col-3 d-flex justify-content-end">
                         <?php if( $role != "sstt"): ?>
                             <a href="<?= base_url("/afegir/intervencio/" . $id_tiquet) ?>" type="button" class="btn btn-success rounded-pill"><i class="fa-solid fa-plus me-2"></i><?= lang('intervencio.button_afegir_intervencio') ?></a>
@@ -120,7 +133,7 @@
                     </div>
 
                 </div> 
-            </form>
+
 
 
                 <div class="row">

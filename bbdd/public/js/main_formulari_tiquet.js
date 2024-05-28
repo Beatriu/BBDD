@@ -6,6 +6,7 @@
  */
 var numero_tiquets_afegir = 0;
 var numero_files = 0;
+var tiquets = [];
 
 function afegirTiquet() {
     numero_tiquets_afegir++;
@@ -25,8 +26,9 @@ function afegirTiquet() {
     input_codi_equip.classList.add('form-control');
     input_codi_equip.type = "text";
     input_codi_equip.id = "equipment_code_" + numero;
-    input_codi_equip.name = "provisional_equipment_code_" + numero;
+    input_codi_equip.name = "equipment_code_" + numero;
     input_codi_equip.title = "Codi equip línea " + numero;
+    input_codi_equip.placeholder = clic_escriu_codi + " " + numero;
     input_codi_equip.addEventListener("input", () => afegirTiquetDisabled('fila_formulari_tiquet_' + numero));
     input_codi_equip.style.backgroundColor = "#e9ecef";
     //input_codi_equip.required = true;
@@ -39,9 +41,10 @@ function afegirTiquet() {
     let select_col_type = document.createElement("select");
     select_col_type.classList.add('form-select');
     select_col_type.id = "type_" + numero;
-    select_col_type.name = "provisional_type_" + numero;
+    select_col_type.name = "type_" + numero;
     select_col_type.title = "Tipus dispositiu línea " + numero;
     select_col_type.style.backgroundColor = "#e9ecef";
+    select_col_type.addEventListener("onchange", () => afegirTiquetDisabled('fila_formulari_tiquet_' + numero));
     for (let i = 0; i < opcions_tipus_dispositius.length; i++) {
         let option_item = document.createElement("option");
         option_item.value = comptador_tipus_dispositius;
@@ -61,17 +64,35 @@ function afegirTiquet() {
     input_problem.style.height = '30px';
     input_problem.type = "text";
     input_problem.id = "problem_" + numero;
-    input_problem.name = "provisional_problem_" + numero;
+    input_problem.name = "problem_" + numero;
     input_problem.title = "Problema línea " + numero;
+    input_problem.placeholder = clic_escriu_problema + " " + numero;
     input_problem.addEventListener("input", () => afegirTiquetDisabled('fila_formulari_tiquet_' + numero));
     input_problem.style.backgroundColor = "#e9ecef";
     //input_problem.required = true;
     div_col_problem.appendChild(input_problem);
 
 
+    /*let numero_borrar = parseInt(numero_tiquets_afegir) + 1;
+    let div_borrar = document.createElement("div");
+    div_borrar.classList.add("col-1", "d-flex", "align-items-center", "justify-content-center");
+    let button_div_borrar = document.createElement("button");
+    button_div_borrar.id = "button_borrar_linea_" + numero_borrar;
+    button_div_borrar.type = "button";
+    button_div_borrar.title = "Botó esborrar línea " + numero_borrar;
+    button_div_borrar.classList.add("btn", "btn-danger", "rounded-circle");
+    button_div_borrar.addEventListener("click", () => eliminarLinea(numero_borrar));
+    let trash_icon = document.createElement("i");
+    trash_icon.classList.add("fa-solid", "fa-trash");
+    button_div_borrar.appendChild(trash_icon);
+    div_borrar.appendChild(button_div_borrar);*/
+
+
+
     div_fila.appendChild(div_col_codi_equip);
     div_fila.appendChild(div_col_type);
     div_fila.appendChild(div_col_problem);
+    //div_fila.appendChild(div_borrar);
 
     div_files_formulari_tiquet.appendChild(div_fila);
 
@@ -89,6 +110,9 @@ function afegirTiquetDisabled(id_fila) {
     let type = document.getElementById('type_' + numero);
     let problem = document.getElementById('problem_' + numero);
 
+    tiquets[numero] = [equipment_code.value, type.value, problem.value];
+    console.log(tiquets);
+
     if (equipment_code.value != "" && problem.value != "" && numero_files == (parseInt(numero)-1) ) {
         afegirTiquet();
     }
@@ -104,21 +128,122 @@ function afegirTiquetDisabled(id_fila) {
         equipment_code.required = true;
         problem.required = true;
 
+
+        let div_borrar = document.getElementById('button_borrar_linea_' + numero);
+        if (div_borrar == null) {
+            
+            let div_fila = document.getElementById('fila_formulari_tiquet_' + numero);
+    
+            let numero_borrar = parseInt(numero_tiquets_afegir) + 1;
+            let div_borrar = document.createElement("div");
+            div_borrar.id = "button_borrar_linea_" + numero_borrar;
+            div_borrar.classList.add("col-1", "d-flex", "align-items-center", "justify-content-center");
+            let button_div_borrar = document.createElement("button");
+            button_div_borrar.type = "button";
+            button_div_borrar.title = "Botó esborrar línea " + numero_borrar;
+            button_div_borrar.classList.add("btn", "btn-danger", "rounded-circle");
+            button_div_borrar.addEventListener("click", () => eliminarLinea(numero_borrar));
+            let trash_icon = document.createElement("i");
+            trash_icon.classList.add("fa-solid", "fa-trash");
+            button_div_borrar.appendChild(trash_icon);
+            div_borrar.appendChild(button_div_borrar);
+    
+            div_fila.appendChild(div_borrar);
+        }
+
+
     } else if (equipment_code.value == "" && problem.value == "") {
 
-        equipment_code.name = 'provisional_equipment_code_' + numero;
-        type.name = 'provisional_type_' + numero;
-        problem.name = 'provisional_problem_' + numero;
+        equipment_code.name = 'equipment_code_' + numero;
+        type.name = 'type_' + numero;
+        problem.name = 'problem_' + numero;
 
-        if (numero != 1) {
+        // Eliminem la línea següent, actualitzem l'array i actualitzem els números de control
+        if ( numero == (tiquets.length-1)) {
+            tiquets.splice(numero,1);
+            let numero_seguent = parseInt(numero) + 1;
+            let numero_anterior = parseInt(numero) - 1;
+            let div_seguent = document.getElementById('fila_formulari_tiquet_' + numero_seguent);
+            if (div_seguent != null) {
+                div_seguent.remove();
+            }
+
+            numero_tiquets_afegir = numero_anterior;
+            numero_files = numero_anterior;
+            document.getElementById('num_tiquets').value = numero_files;
+
+            let div_borrar = document.getElementById('button_borrar_linea_' + numero);
+            if (div_borrar != null) {
+                div_borrar.remove();
+                // TODO tb eliminarLinea
+            }
+
+            if (numero != 1) {
+                equipment_code.style.backgroundColor = "#e9ecef";
+                type.style.backgroundColor = "#e9ecef";
+                problem.style.backgroundColor = "#e9ecef";
+                equipment_code.required = false;
+                problem.required = false;
+    
+    
+            } 
+
+        } else {
+
+            let numero_linea = numero;
+
+            let llargada_tiquets_antiga = tiquets.length;
+            tiquets.splice(numero_linea,1);
+            let llargada_tiquets_nova = tiquets.length;
+    
+            for (let i = numero_linea; i < llargada_tiquets_nova; i++) {
+                let equipment_code = document.getElementById('equipment_code_' + i);
+                let type = document.getElementById('type_' + i);
+                let problem = document.getElementById('problem_' + i);
+    
+                equipment_code.value = tiquets[i][0];
+                type.value = tiquets[i][1];
+                problem.value = tiquets[i][2];
+            }
+    
+            // DIV DESHABILITAT
+            let equipment_code = document.getElementById('equipment_code_' + llargada_tiquets_nova);
+            let type = document.getElementById('type_' + llargada_tiquets_nova);
+            let problem = document.getElementById('problem_' + llargada_tiquets_nova);
+    
+            equipment_code.value = "";
+            type.value = 1;
+            problem.value = "";
+    
             equipment_code.style.backgroundColor = "#e9ecef";
             type.style.backgroundColor = "#e9ecef";
             problem.style.backgroundColor = "#e9ecef";
             equipment_code.required = false;
             problem.required = false;
+    
+            // ESBORREM EL DIV/BOTO DE BORRAR
+            let div_borrar = document.getElementById('button_borrar_linea_' + llargada_tiquets_nova);
+            div_borrar.remove();
+    
+            // DIV BORRAR
+            let div_ultim = document.getElementById('fila_formulari_tiquet_' + llargada_tiquets_antiga);
+            if (div_ultim != null) {
+                div_ultim.remove();
+            }
+    
+            // ACTUALITZEM NÚMEROS DE CONTROL
+            numero_tiquets_afegir = llargada_tiquets_nova-1;
+            numero_files = llargada_tiquets_nova-1;
+            document.getElementById('num_tiquets').value = numero_files;
+
         }
 
+
     }
+
+    let span = document.getElementById("span_nombre_tiquets");
+    span.innerHTML = numero_files;
+
 }
 
 
@@ -136,9 +261,7 @@ function esborrarTiquet(id_fila) {
 
 function sumarNumTiquet() {
     let num = document.getElementById('num_tiquets').value;
-
     num = parseInt(num) + 1;
-
     document.getElementById('num_tiquets').value = num;
 }
 
@@ -228,4 +351,105 @@ function cancellFitxer() {
 
     document.getElementById("csv_tiquet").value = null;
     document.getElementById("mostrar_csv").innerHTML = "";
+}
+
+function eliminarLinea(numero_linea) {
+
+    let equipment_code = document.getElementById('equipment_code_' + numero_linea);
+    let type = document.getElementById('type_' + numero_linea);
+    let problem = document.getElementById('problem_' + numero_linea);
+
+    if ( numero_linea == (tiquets.length-1) && numero_linea == 1) {
+
+        equipment_code.value = "";
+        type.value = 1;
+        problem.value = "";
+
+        let numero = parseInt(numero_linea) + 1;
+        let div_seguent = document.getElementById('fila_formulari_tiquet_' + numero);
+        if (div_seguent != null) {
+            div_seguent.remove();
+        }
+        
+        numero_tiquets_afegir = 0;
+        numero_files = 0;
+        tiquets.splice(numero_linea,1);
+
+        let div_borrar = document.getElementById('button_borrar_linea_' + numero_linea);
+        div_borrar.remove();
+
+    } else if ( numero_linea == (tiquets.length-1) ) {
+
+        equipment_code.value = "";
+        type.value = 1;
+        problem.value = "";
+        equipment_code.style.backgroundColor = "#e9ecef";
+        type.style.backgroundColor = "#e9ecef";
+        problem.style.backgroundColor = "#e9ecef";
+        equipment_code.required = false;
+        problem.required = false;
+
+        let numero = parseInt(numero_linea) + 1;
+        let div_seguent = document.getElementById('fila_formulari_tiquet_' + numero);
+        if (div_seguent != null) {
+            div_seguent.remove();
+        }
+        
+        numero_tiquets_afegir = numero_linea-1;
+        numero_files = numero_linea-1;
+        tiquets.splice(numero_linea,1);
+
+        let div_borrar = document.getElementById('button_borrar_linea_' + numero_linea);
+        div_borrar.remove();
+
+    } else {
+        let llargada_tiquets_antiga = tiquets.length;
+        tiquets.splice(numero_linea,1);
+        let llargada_tiquets_nova = tiquets.length;
+
+        for (let i = numero_linea; i < llargada_tiquets_nova; i++) {
+            let equipment_code = document.getElementById('equipment_code_' + i);
+            let type = document.getElementById('type_' + i);
+            let problem = document.getElementById('problem_' + i);
+
+            equipment_code.value = tiquets[i][0];
+            type.value = tiquets[i][1];
+            problem.value = tiquets[i][2];
+        }
+
+        // DIV DESHABILITAT
+        let equipment_code = document.getElementById('equipment_code_' + llargada_tiquets_nova);
+        let type = document.getElementById('type_' + llargada_tiquets_nova);
+        let problem = document.getElementById('problem_' + llargada_tiquets_nova);
+
+        equipment_code.value = "";
+        type.value = 1;
+        problem.value = "";
+
+        equipment_code.style.backgroundColor = "#e9ecef";
+        type.style.backgroundColor = "#e9ecef";
+        problem.style.backgroundColor = "#e9ecef";
+        equipment_code.required = false;
+        problem.required = false;
+
+        // ESBORREM EL DIV/BOTO DE BORRAR
+        let div_borrar = document.getElementById('button_borrar_linea_' + llargada_tiquets_nova);
+        div_borrar.remove();
+
+        // DIV BORRAR
+        let div_ultim = document.getElementById('fila_formulari_tiquet_' + llargada_tiquets_antiga);
+        if (div_ultim != null) {
+            div_ultim.remove();
+        }
+
+        // ACTUALITZEM NÚMEROS DE CONTROL
+        numero_tiquets_afegir = llargada_tiquets_nova-1;
+        numero_files = llargada_tiquets_nova-1;
+    }
+
+    let span = document.getElementById("span_nombre_tiquets");
+    span.innerHTML = numero_files;
+    document.getElementById('num_tiquets').value = numero_files;
+    console.log(tiquets);
+    console.log(tiquets.length);
 }
