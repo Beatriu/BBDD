@@ -48,4 +48,5 @@ return [
     'title_filtre_checkbox_centre_reparador' => 'Reparador',
     'title_filtre_checkbox_estat' => 'Estat',
     'title_filtre_checkbox_data' => 'Data',
+    'delete_all_filters' => 'Eliminar tots els filtres'
 ];

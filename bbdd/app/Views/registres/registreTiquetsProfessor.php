@@ -81,13 +81,54 @@
             <div class="offcanvas-header">
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
-            <h1 style="color:#FFFFFF;">CERCA</h1>
-                <div class="linia"></div>
-            <ul class="nav flex-column">
-               <li> <a href="#" class="w3-bar-item w3-button">Link 1</a></li>
-               <li> <a href="#" class="w3-bar-item w3-button">Link 2</a></li>
-               <li><a href="#" class="w3-bar-item w3-button">Link 3</a></li>
-            </ul>
+            <div id="titol">
+                <form method="POST" action="<?= base_url('/filtre') ?>">
+                    <?= csrf_field() ?>
+                    <h1><?= lang("registre.sidebar_search_title") ?></h1>
+                    <div class="linia"></div>
+                    <div class="tipus_dispositiu_div px-3">
+                        <br>
+                        <h5><?= lang('registre.title_div_tipus_dispositiu') ?></h5>
+                        <select class="form-select selector_filtre" id="selector_tipus_dispositiu" name="selector_tipus_dispositiu" title="Tipus dispositiu línea 1">
+                            <?= $tipus_dispositius ?>
+                        </select>
+                    </div>
+                    <div class="nom_centre_emissor_div px-3">
+                        <br>
+                        <h5><?= lang('registre.title_div_nom_centre_emissor') ?></h5>
+                        <?php if (isset($session_filtre['nom_centre_emissor'])) : ?>
+                            <input list="nom_centre_emissor" name="nom_centre_emissor_list" class="form-control selector_filtre" value="<?= old('nom_centre_emissor_list') ?>" />
+                        <?php else : ?>
+                            <input list="nom_centre_emissor" name="nom_centre_emissor_list" class="form-control selector_filtre" />
+                        <?php endif; ?>
+                        <datalist id="nom_centre_emissor">
+                            <?= $centre_emissor ?>
+                        </datalist>
+                    </div>
+
+                    <div class="estat_div px-3">
+                        <br>
+                        <h5><?= lang('registre.title_div_estat') ?></h5>
+                        <select class="form-select selector_filtre" id="selector_tipus_estat" name="selector_tipus_estat">
+                            <?= $estats ?>
+                        </select>
+                    </div>
+                    <div class="data_creacio_div px-3">
+                        <br>
+                        <h5><?= lang('registre.title_div_data_creacio') ?></h5>
+                        <?php if (isset($session_filtre['data_creacio'])) : ?>
+                            <input type="date" name="data_creacio" id="data_creacio" class="form-control" value="<?= old('data_creacio') ?>" />
+                        <?php else : ?>
+                            <input type="date" name="data_creacio" id="data_creacio" class="form-control" />
+                        <?php endif; ?>
+                    </div>
+                    <div class="botons_filtre d-flex">
+                        <button id="submit_eliminar_filtres" name="submit_eliminar_filtres" type="submit" class="btn btn-danger btn_save rounded-pill ms-3 me-3"><i class="fa-solid fa-trash me-2" id="trash_icon"></i><?= lang('registre.delete_filters') ?></button>
+                        <button id="submit_afegir_filtres" name="submit_afegir_filtres" type="submit" class="btn btn-primary btn_save rounded-pill ms-3 me-3"><i class="fa-solid fa-floppy-disk me-2"></i><?= lang('registre.save_filters') ?></button>
+                    </div>
+                </form>
+            </div>
+            <br>
         </div>
         <!--Taula i títol-->
         <div class="col-sm p-3 min-vh-100" id="zona_taula">

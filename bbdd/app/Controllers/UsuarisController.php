@@ -18,7 +18,7 @@ class UsuarisController extends BaseController
     public function login_post()
     {
         $data['title'] = "login";
-        
+
         // Determinem les regles de validació
         $validationRules = [
             'sUser' => [
@@ -41,7 +41,7 @@ class UsuarisController extends BaseController
 
             // Obtenim del formualri el nom d'usuari
             $nom_login = $this->request->getPost('sUser');
-            
+
             // Obtenim l'usuari mitjançant aquest
             $login_model = new LoginModel;
             $login_in_rol_model = new LoginInRolModel();
@@ -81,7 +81,7 @@ class UsuarisController extends BaseController
                             $session_data['id_sstt'] = $login_model->obtenirIdSSTT($session_data['mail'])['id_sstt'];
                         }
                     }
-                    
+
                     session()->set('user_data', $session_data);
 
                     return redirect()->to(base_url('/tiquets'));
@@ -95,7 +95,7 @@ class UsuarisController extends BaseController
     public function login()
     {
         // Funció principal d'inici de sessió. Aquesta és la primera, la que carrega la vista inicial
-        
+
         // Definim el títol de la pàgina i carreguem els models a utilitzar 
         $data['title'] = "login";
         $login_model = new LoginModel();
@@ -104,7 +104,7 @@ class UsuarisController extends BaseController
         $llista_admesos_model = new LlistaAdmesosModel();
         $centre_model = new CentreModel();
         $alumne_model = new AlumneModel();
-        
+
 
         $client = new \Google\Client(); //Generem un client de google
 
@@ -118,7 +118,7 @@ class UsuarisController extends BaseController
         $client->setAccessType('offline');
 
         if (isset($_GET["code"])) { // En cas que el paràmetre code estigui definit
-            
+
             $token = $client->fetchAccessTokenWithAuthCode($_GET['code']); // Es canvia el codi per un token autoritzat
 
             if (!isset($token["error"])) { //En cas que no hi hagi error en canviar el codi per un token autoritzat
@@ -129,23 +129,21 @@ class UsuarisController extends BaseController
                 $oauth2 = new \Google\Service\Oauth2($client); // Es defineix oauth2 pel client de google inicialitzat
 
                 //Obtenim la informació de l'usuari
-                $userInfo = $oauth2->userinfo->get(); 
-                $session_data['mail']=$userInfo->getEmail();
-                $session_data['nom']=$userInfo->getGivenName();
+                $userInfo = $oauth2->userinfo->get();
+                $session_data['mail'] = $userInfo->getEmail();
+                $session_data['nom'] = $userInfo->getGivenName();
 
-                
+
                 if ($userInfo->getFamilyName() == null) { // En cas que no existeixi el cognom, l'extraiem per la comparació del nom i el nom complet
-                    $nomComplet=$userInfo->getName();
+                    $nomComplet = $userInfo->getName();
                     $pos = strpos($nomComplet, $session_data['nom']);
-                    
+
                     if ($pos !== false) {
                         $diferencia = substr($nomComplet, $pos + strlen($session_data['nom']));
                         $session_data['cognoms'] = $diferencia; // Esto imprimirá " Burgués"
                     }
-
                 } else { // En cas que existeixi el cognom
-                    $session_data['cognoms']=$userInfo->getFamilyName();
-                    
+                    $session_data['cognoms'] = $userInfo->getFamilyName();
                 }
 
                 $session_data['domain'] = explode('@', $session_data['mail'])[1]; // Obtenim el domini del correu
@@ -161,7 +159,7 @@ class UsuarisController extends BaseController
 
             return view('logins' . DIRECTORY_SEPARATOR . 'loginGeneral', $data); // Es retorna la vista bàsica d'inici de sessió
         } else { // En cas que estigui creada la sessió de token i la sessió de la infromació de l'usuari
-            
+
             if (isset(session()->get('user_data')['codi_centre'])) {
                 return redirect()->to(base_url('/tiquets'));
             }
@@ -171,7 +169,7 @@ class UsuarisController extends BaseController
             if ($login_model->obtenirLogin($mail) == null) { // En cas que el login no existeixi
 
                 if (session()->get('user_data')['domain'] == "xtec.cat") { // En cas que sigui professor es registra a la taula LOGIN i a la taula LOGIN_IN_ROL
-                    
+
                     $centre = $centre_model->obtenirCentrePerCorreu($mail);
                     if ($centre != null) {
 
@@ -189,17 +187,15 @@ class UsuarisController extends BaseController
                     } else {
                         return redirect()->to(base_url('/loginSelect'));
                     }
-
                 } else { // En cas que sigui alumne es comprova que existeixi a la taula LOGIN i ALUMNE
-                    
+
                     session()->destroy();
                     return redirect()->back();
                 }
-
             } else { // En cas que el login existeixi
-                
+
                 $session_data = session()->get('user_data'); //Carreguem la informació de l'usuari
-                
+
                 // Obtenim el rol de l'usuari
                 $id_login = $login_model->obtenirId($mail);
                 $id_rol = $login_in_rol_model->obtenirRol($id_login);
@@ -219,7 +215,6 @@ class UsuarisController extends BaseController
                             $session_data['codi_centre'] = $centre['codi_centre'];
                         }
                         session()->set('user_data', $session_data);
-
                     } else {
                         $codi_centre = $llista_admesos_model->existeixProfessor($mail)['codi_centre'];
                         if ($codi_centre == null) {
@@ -228,7 +223,7 @@ class UsuarisController extends BaseController
                         $session_data['codi_centre'] = $codi_centre;
                     }
                 } else { // En cas que sigui alumne
-                    
+
                     $alumne = $alumne_model->getAlumneByCorreu($session_data['mail']);
                     if ($alumne['actiu'] == 0) {
                         session()->destroy();
@@ -241,7 +236,6 @@ class UsuarisController extends BaseController
 
                 return redirect()->to(base_url('/tiquets'));
             }
-
         }
     }
 
@@ -261,15 +255,15 @@ class UsuarisController extends BaseController
             $mail = session()->get('user_data')['mail'];
             $login = $login_model->obtenirLogin($mail);
 
-    
+
             if ($login != null || session()->get('user_data')['domain'] == "xtec.cat") {
-    
+
                 if (session()->get('user_data')['domain'] == "xtec.cat") {
-    
+
                     $professor = $llista_admesos_model->existeixProfessor($mail);
-    
+
                     if ($professor == null) {
-    
+
                         $centre_model = new CentreModel();
                         $array_centres = $centre_model->obtenirCentres();
                         $options_centres = "";
@@ -278,52 +272,47 @@ class UsuarisController extends BaseController
                             $options_centres .= $array_centres[$i]['nom_centre'];
                             $options_centres .= "</option>";
                         }
-    
+
                         $data['centres'] = $options_centres;
-    
+
                         $data['title'] = "login";
                         return view('logins' . DIRECTORY_SEPARATOR . 'loginSelect', $data);
-    
                     } else {
-    
+
                         $centre = $centre_model->obtenirCentre($professor['codi_centre']);
                         $session_data = session()->get('user_data');
                         if ($centre['taller'] == 0) {
                             $session_data['role'] = "centre_emissor";
                         } else if ($centre['taller'] == 1) {
-    
+
                             if ($centre['login'] != $professor['correu_professor']) {
                                 $session_data['role'] = "professor";
                             } else {
                                 $session_data['role'] = "centre_reparador";
                             }
-    
                         }
                         $session_data['codi_centre'] = $professor['codi_centre'];
                         session()->set('user_data', $session_data);
-    
+
                         return redirect()->to(base_url('/tiquets'));
                     }
-    
                 } else {
-    
+
                     $id_login = $login_model->obtenirId($mail);
                     $id_rol = $login_in_rol_model->obtenirRol($id_login);
-    
+
                     $session_data = session()->get('user_data');
                     $session_data['role'] = $rol_model->obtenirRol($id_rol);;
                     session()->set('user_data', $session_data);
-    
+
                     return redirect()->to(base_url('/tiquets'));
                 }
-    
             } else {
                 return redirect()->to(base_url('/login'));
             }
         } else {
             return redirect()->to(base_url('/login'));
         }
-
     }
 
     public function loginSelect_post()
@@ -355,7 +344,6 @@ class UsuarisController extends BaseController
             $login_model->addLogin($correu, null);
             $id_login = $login_model->obtenirId($correu);
             $login_in_rol_model->addLoginInRol($id_login, $rol);
-
         } else if ($centre['taller'] == 1) { // En cas que l'usuari hagi estat associat a un centre reparador
 
             if ($centre['login'] != $correu) { // En cas que el correu sigui diferent del correu del centre, és de rol professor
@@ -367,11 +355,9 @@ class UsuarisController extends BaseController
                 $login_model->addLogin($correu, null);
                 $id_login = $login_model->obtenirId($correu);
                 $login_in_rol_model->addLoginInRol($id_login, $rol);
-
             } else { // En cas que el correu sigui el mateix el rol és centre_reparador
                 $session_data['role'] = "centre_reparador";
             }
-
         }
 
         $session_data['codi_centre'] = $codi_centre;

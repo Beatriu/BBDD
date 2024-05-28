@@ -47,4 +47,5 @@ return [
     'title_filtre_checkbox_centre_reparador' => 'Reparador',
     'title_filtre_checkbox_estat' => 'Estado',
     'title_filtre_checkbox_data' => 'Fecha',
+    'delete_all_filters' => 'Eliminar todos los filtros'
 ];
