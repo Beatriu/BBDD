@@ -559,8 +559,7 @@ class IntervencionsController extends BaseController
                         }
         
                     }
-                    /*$msg = lang('alertes.flash_data_delete_intervencio') . $id_tiquet;
-                    session()->setFlashdata('eliminarIntervencio', $msg);*/
+                    
 
                     $array_inventari = $inventari_model->obtenirInventariIntervencio($id_intervencio);
 
@@ -569,6 +568,8 @@ class IntervencionsController extends BaseController
                     }
                     
                     $intervencio_model->deleteIntervencio($id_intervencio);
+                    $msg = lang('alertes.flash_data_delete_intervencio') . $id_tiquet;
+                    session()->setFlashdata('eliminarIntervencio', $msg);
                     return redirect()->to(base_url('/tiquets/' . $id_tiquet));
 
                 }
