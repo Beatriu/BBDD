@@ -510,6 +510,7 @@ class IntervencionsController extends BaseController
         $intervencio_model = new IntervencioModel();
         $estat_model = new EstatModel();
         $centre_model = new CentreModel();
+        $inventari_model = new InventariModel();
 
         $actor = session()->get('user_data');
         $role = $actor['role'];
@@ -555,6 +556,12 @@ class IntervencionsController extends BaseController
         
                     }
 
+                    $array_inventari = $inventari_model->obtenirInventariIntervencio($id_intervencio);
+
+                    for ($k = 0; $k < sizeof($array_inventari); $k++) {
+                        $inventari_model->editarInventariDesassignar($array_inventari[$k]['id_inventari']);
+                    }
+                    
                     $intervencio_model->deleteIntervencio($id_intervencio);
                     return redirect()->to(base_url('/tiquets/' . $id_tiquet));
 
