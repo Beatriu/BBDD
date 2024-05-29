@@ -91,14 +91,14 @@ class InventarisController extends BaseController
             if ($role == "alumne" || $role == "professor" || $role == "centre_reparador") {
 
                 $crud->setColumns([
-                    'id_inventari',
+                    'id_inventari_limitat',
                     'nom_tipus_inventari',
                     'descripcio_inventari_limitada',
                     'data_compra',
                     'id_intervencio'
                 ]);
                 $crud->setColumnsInfo([
-                    'id_inventari' => [
+                    'id_inventari_limitat' => [
                         'name' => lang('inventari.id_inventari')
                     ],
                     'nom_tipus_inventari' => [
@@ -120,7 +120,7 @@ class InventarisController extends BaseController
             } else if ($role == "sstt" || $role == "admin_sstt") {
 
                 $crud->setColumns([
-                    'id_inventari',
+                    'id_inventari_limitat',
                     'nom_tipus_inventari',
                     'descripcio_inventari_limitada',
                     'data_compra',
@@ -128,7 +128,7 @@ class InventarisController extends BaseController
                     'nom_centre'
                 ]);
                 $crud->setColumnsInfo([
-                    'id_inventari' => [
+                    'id_inventari_limitat' => [
                         'name' => lang('inventari.id_inventari')
                     ],
                     'nom_tipus_inventari' => [
@@ -153,7 +153,7 @@ class InventarisController extends BaseController
             } else if ($role == "desenvolupador") {
 
                 $crud->setColumns([
-                    'id_inventari',
+                    'id_inventari_limitat',
                     'nom_tipus_inventari',
                     'descripcio_inventari_limitada',
                     'data_compra',
@@ -162,7 +162,7 @@ class InventarisController extends BaseController
                     'nom_sstt'
                 ]);
                 $crud->setColumnsInfo([
-                    'id_inventari' => [
+                    'id_inventari_limitat' => [
                         'name' => lang('inventari.id_inventari')
                     ],
                     'nom_tipus_inventari' => [
@@ -481,12 +481,12 @@ class InventarisController extends BaseController
                 'css-bootstrap',         
             ]);
             $crud->setColumns([
-                'id_inventari',
+                'id_inventari_limitat',
                 'nom_tipus_inventari',
                 'data_compra'
             ]);
             $crud->setColumnsInfo([
-                'id_inventari' => [
+                'id_inventari_limitat' => [
                     'name' => lang('inventari.id_inventari')
                 ],
                 'nom_tipus_inventari' => [

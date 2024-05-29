@@ -45,6 +45,7 @@ INNER JOIN centre c ON a.codi_centre = c.codi_centre;
 CREATE VIEW vista_intervencio AS
 SELECT 
     i.id_intervencio,
+    SUBSTRING_INDEX(i.id_intervencio, '-', -1) AS id_intervencio_limitat,
     i.id_tiquet,
     LEFT(i.descripcio_intervencio, 25) AS descripcio_intervencio,
     IF(LENGTH(i.descripcio_intervencio) > 25, CONCAT(LEFT(i.descripcio_intervencio, 22), '...'), i.descripcio_intervencio) AS descripcio_intervencio_limitada,
@@ -63,6 +64,7 @@ LEFT JOIN tipus_intervencio ti ON i.id_tipus_intervencio = ti.id_tipus_intervenc
 CREATE VIEW vista_inventari AS
 SELECT 
     i.id_inventari,
+    SUBSTRING_INDEX(i.id_inventari, '-', -1) AS id_inventari_limitat,
     LEFT(i.descripcio_inventari, 50) AS descripcio_inventari_limitada,
     IF(CHAR_LENGTH(i.descripcio_inventari) > 50, CONCAT(LEFT(i.descripcio_inventari, 47), '...'), i.descripcio_inventari) AS descripcio_inventari,
     i.data_compra,

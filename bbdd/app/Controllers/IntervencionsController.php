@@ -115,6 +115,8 @@ class IntervencionsController extends BaseController
         $estat_model = new EstatModel();
         $centre_model = new CentreModel();
         $inventari_model = new InventariModel();
+        $curs_model = new CursModel();
+        $tipus_intervencio_model = new TipusIntervencioModel();
 
         $validationRules = [
             'tipus_intervencio' => [
@@ -181,6 +183,12 @@ class IntervencionsController extends BaseController
     
                 $id_tipus_intervencio = trim(explode('-', (string) $tipus_intervencio)[0]);
                 $id_curs = trim(explode('-', (string) $curs)[0]);
+
+
+                if ($tipus_intervencio_model->obtenirNomTipusIntervencio($id_tipus_intervencio) == null || $curs_model->obtenirCursosPerId($id_curs) == null) {
+                    return redirect()->back()->withInput();
+                }
+               
     
                 if ($role == "professor") {
                     $id_xtec = explode("@", session()->get('user_data')['mail'])[0];
@@ -193,8 +201,10 @@ class IntervencionsController extends BaseController
                 $inventari_json = $this->request->getPost('inventari_json');
                 $inventari_array = json_decode((string) $inventari_json);
 
-                for ($i = 0; $i < sizeof($inventari_array); $i++) {
-                    $inventari_model->editarInventariAssignar($inventari_array[$i]->id, $uuid);
+                if ($inventari_array != null) {
+                    for ($i = 0; $i < sizeof($inventari_array); $i++) {
+                        $inventari_model->editarInventariAssignar($inventari_array[$i]->id, $uuid);
+                    }
                 }
 
                 return redirect()->to('tiquets/' . $id_tiquet);

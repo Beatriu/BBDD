@@ -50,4 +50,8 @@ class CursModel extends Model
     public function obtenirCursos() {
         return $this->findAll();
     }
+
+    public function obtenirCursosPerId($id_curs) {
+        return $this->where('id_curs', $id_curs)->find();
+    }
 }

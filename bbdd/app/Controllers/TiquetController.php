@@ -86,14 +86,14 @@ class TiquetController extends BaseController
                 $crud->setPrimaryKey('id_intervencio');
                 
                 $crud->setColumns([
-                    'id_intervencio',
+                    'id_intervencio_limitat',
                     'nom_tipus_intervencio',
                     'descripcio_intervencio_limitada',
                     'correu_alumne',
                     'id_xtec'
                 ]);
                 $crud->setColumnsInfo([
-                    'id_intervencio' => [
+                    'id_intervencio_limitat' => [
                         'name' => lang('intervencio.id_intervencio')
                     ],
                     'nom_tipus_intervencio' => [
@@ -110,6 +110,12 @@ class TiquetController extends BaseController
                     ],
                 ]);
                 
+                if ($id_intervencio != null) {
+                    $intervencio = $intervencio_model->obtenirIntervencioPerId($id_intervencio);
+                    if ($intervencio != null) {
+                        $crud->addWhere('id_intervencio', $id_intervencio);
+                    }
+                }
         
                 $tiquets_resultat = [];
                 if ($role == "professor" || $role == "alumne") {
@@ -263,8 +269,6 @@ class TiquetController extends BaseController
 
                 if ($kpacrud2) {
                     $crud->addItemLink('view', 'fa-eye-slash', base_url('tiquets/'. $id_tiquet), 'Deixar de veure Intervenció');
-                    $crud->addWhere('id_intervencio', $id_intervencio);
-                    $data['output'] = $crud->render();
 
                     // KPACRUD INVENTARI ASSIGNAT A LA INTERVENCIÓ
 
@@ -293,12 +297,12 @@ class TiquetController extends BaseController
                         'css-bootstrap',         
                     ]);
                     $crud2->setColumns([
-                        'id_inventari',
+                        'id_inventari_limitat',
                         'nom_tipus_inventari',
                         'data_compra'
                     ]);
                     $crud2->setColumnsInfo([
-                        'id_inventari' => [
+                        'id_inventari_limitat' => [
                             'name' => lang('inventari.id_inventari')
                         ],
                         'nom_tipus_inventari' => [
@@ -314,11 +318,9 @@ class TiquetController extends BaseController
 
                     $data['output2'] = $crud2->render();
 
-                } else {
-                    $data['output'] = $crud->render();
-                }
+                } 
 
-                
+                $data['output'] = $crud->render();
                 return view('tiquet' . DIRECTORY_SEPARATOR . 'vistaTiquet', $data);
     
             }
