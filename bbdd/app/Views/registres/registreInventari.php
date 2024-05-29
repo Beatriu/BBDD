@@ -96,11 +96,15 @@
             <div class="modal" tabindex="-1" role="dialog" style="display:block">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title"><?= lang('inventari.eliminar_title') ?></h5>
-                            <a href="<?= base_url("/inventari") ?>">
-                                <i class="fa-solid fa-xmark"></i>
-                            </a>
+                        <div class="modal-header d-flex justify-content-between">
+                            <div>
+                                <h5 class="modal-title"><?= lang('inventari.eliminar_title') ?></h5>
+                            </div>
+                            <div>
+                                <a href="<?= base_url("/inventari") ?>">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </a>
+                            </div>
                         </div>
                         <div class="modal-body">
                             <p><?= lang('alumne.eliminar_text') ?><?php echo $id_inventari; ?></p>
@@ -143,6 +147,20 @@
                     </div>
                 <?php endif; ?>
             </div>
+
+            <div>
+                <?php if ((session()->get('afegirInventari')) !== null) : ?>
+                    <div class="alert alert-success alerta_esborrar" role="alert">
+                        <?= session()->get('afegirInventari') ?>
+                    </div>
+                <?php endif; ?>
+                <?php if ((session()->get('esborrarInventari')) !== null) : ?>
+                    <div class="alert alert-success alerta_esborrar" role="alert">
+                        <?= session()->get('esborrarInventari') ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+
             <div>
                 <?= $output ?>
             </div>
@@ -150,7 +168,7 @@
     </div>
 </div>
 <script>
-(function(window, document, undefined) {
+    (function(window, document, undefined) {
         window.onload = init;
 
         function init() {
@@ -161,7 +179,7 @@
             nou_buscador.classList.add("d-flex");
             var main = document.getElementById("contenidor_titol");
             var botons = document.getElementById("botons_titol");
-            if(botons !== null){
+            if (botons !== null) {
                 main.removeChild(botons);
             }
 
@@ -186,7 +204,7 @@
             nou_buscador.appendChild(input);
             div.appendChild(nou_buscador);
             main.appendChild(nou_buscador);
-            if(botons !== null){
+            if (botons !== null) {
                 main.appendChild(botons);
             }
 

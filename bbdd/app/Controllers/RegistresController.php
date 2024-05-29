@@ -25,7 +25,7 @@ class RegistresController extends BaseController
 
     public function index($id_tiquet = null)
     {
-       
+        
         $role = session()->get('user_data')['role'];
 
         switch ($role) {
@@ -365,14 +365,13 @@ class RegistresController extends BaseController
             if (isset($session_filtre['nom_centre_emissor'])) {
                 $crud->addWhere('nom_centre_emissor', $session_filtre['nom_centre_emissor'][0]);
             }
-            if(isset($session_filtre['data_creacio'])){
+            if (isset($session_filtre['data_creacio'])) {
                 $data_de_la_sessio = $session_filtre['data_creacio'][0];
                 $data_nova = date('d-m-Y', strtotime($data_de_la_sessio));
-                
+
                 $crud->addWhere('data_alta_format', $data_nova);
-            } 
-                $crud->addWhere("codi_centre_reparador='". session()->get('user_data')['codi_centre'] ."' AND (nom_estat='Pendent de reparar' or nom_estat='Reparant' or nom_estat='Reparat i pendent de recollir')");
-           
+            }
+            $crud->addWhere("codi_centre_reparador='" . session()->get('user_data')['codi_centre'] . "' AND (nom_estat='Pendent de reparar' or nom_estat='Reparant' or nom_estat='Reparat i pendent de recollir')");
         }
 
 
@@ -485,7 +484,7 @@ class RegistresController extends BaseController
             'descripcio_avaria_limitada' => [
                 'name' => lang("registre.descripcio_avaria"),
             ],
-            
+
             'nom_centre_emissor' => [
                 'name' => lang("registre.centre"),
             ],
@@ -600,6 +599,8 @@ class RegistresController extends BaseController
             if ((($role == "centre_emissor" || $role == "professor" || $role == "centre_reparador") && $estat == "Pendent de recollir" && $codi_centre == $tiquet['codi_centre_emissor']) || ($role == "sstt" && $estat == "Pendent de recollir") || $role == "admin_sstt" || $role == "desenvolupador") {
                 $model_tiquet = new TiquetModel();
                 $model_tiquet->deleteTiquetById($id_tiquet);
+                $msg = lang('alertes.flash_data_delete_tiquet') . $tiquet['id_tiquet'];
+                session()->setFlashdata("tiquetEliminat", $msg);
             }
         }
 
@@ -612,6 +613,9 @@ class RegistresController extends BaseController
 
     public function registreTiquetsAlumnes($id_tiquet)
     {
+        $session_filtre = session()->get('filtres');
+        $data['session_filtre'] = $session_filtre;
+
         $uri = $this->request->getPath();
         $data['uri'] = $uri;
         $actor = session()->get('user_data');
@@ -619,6 +623,10 @@ class RegistresController extends BaseController
         $data['title'] = 'Tiquets alumnes';
         $data['id_tiquet'] = null;
         $data['error'] = '';
+
+        $data['tipus_dispositius'] = $this->selectorTipusDispositiu();
+        $data['estats'] = $this->selectorEstat();
+        $data['centre_emissor'] = $this->selectorCentreEmissor($data['role'], $actor);
 
         $crud = new KpaCrud();
         $crud->setConfig('onlyView');
@@ -646,17 +654,23 @@ class RegistresController extends BaseController
         $crud->setPrimaryKey('id_tiquet');
         $crud->addItemLink('view', 'fa-eye', base_url('tiquets'), 'Veure Tiquet');
 
-        //Pendent de reparar AND codi centre reparador
-        $crud->addWhere("nom_estat", "Pendent de reparar");
-        $crud->addWhere('codi_centre_reparador', $actor['codi_centre'], true);
+        if (isset($session_filtre['tipus_dispositiu'])) {
+            $crud->addWhere('nom_tipus_dispositiu', $session_filtre['tipus_dispositiu'][0]);
+        }
+        if (isset($session_filtre['estat'])) {
+            $crud->addWhere('id_estat', $session_filtre['estat'][0]);
+        }
+        if (isset($session_filtre['nom_centre_emissor'])) {
+            $crud->addWhere('nom_centre_emissor', $session_filtre['nom_centre_emissor'][0]);
+        }
+        if (isset($session_filtre['data_creacio'])) {
+            $data_de_la_sessio = $session_filtre['data_creacio'][0];
+            $data_nova = date('d-m-Y', strtotime($data_de_la_sessio));
 
-        // OR Reparant AND codi centre reparador
-        $crud->addWhere("nom_estat", "Reparant", false);
-        $crud->addWhere('codi_centre_reparador', $actor['codi_centre'], true);
+            $crud->addWhere('data_alta_format', $data_nova);
+        }
 
-        // OR Reparat i pendent de recollir AND codi centre reparador
-        $crud->addWhere("nom_estat", "Reparat i pendent de recollir", false);
-        $crud->addWhere('codi_centre_reparador', $actor['codi_centre'], true);
+        $crud->addWhere("codi_centre_reparador='" . session()->get('user_data')['codi_centre'] . "' AND (nom_estat='Pendent de reparar' or nom_estat='Reparant' or nom_estat='Reparat i pendent de recollir')");
 
         $crud->setColumns([
             'id_tiquet_limitat',
@@ -709,7 +723,7 @@ class RegistresController extends BaseController
         $options_tipus_dispositius = "";
         $options_tipus_dispositius .= "<option value='' selected disabled>" . lang('registre.not_value_option_select_tipus_dispositiu') . "</option>";
         for ($i = 0; $i < sizeof($array_tipus_dispositius); $i++) {
-            if(isset($sessio_filtres['tipus_dispositiu']) && $sessio_filtres['tipus_dispositiu'][0] == $array_tipus_dispositius[$i]['nom_tipus_dispositiu']){
+            if (isset($sessio_filtres['tipus_dispositiu']) && $sessio_filtres['tipus_dispositiu'][0] == $array_tipus_dispositius[$i]['nom_tipus_dispositiu']) {
                 $options_tipus_dispositius .= "<option value=\"" . $array_tipus_dispositius[$i]['nom_tipus_dispositiu'] . "\" selected>";
             } else {
                 $options_tipus_dispositius .= "<option value=\"" . $array_tipus_dispositius[$i]['nom_tipus_dispositiu'] . "\">";
@@ -733,7 +747,7 @@ class RegistresController extends BaseController
         $options_estats = "";
         $options_estats .= "<option value='' selected disabled>" . lang('registre.not_value_option_select_estat') . "</option>";
         for ($i = 0; $i < sizeof($array_estats); $i++) {
-            if(isset($sessio_filtres['estat']) && $sessio_filtres['estat'][0] == $array_estats[$i]['id_estat']){
+            if (isset($sessio_filtres['estat']) && $sessio_filtres['estat'][0] == $array_estats[$i]['id_estat']) {
                 $options_estats .= "<option value=\"" . $array_estats[$i]['id_estat'] . "\" selected>";
             } else {
                 $options_estats .= "<option value=\"" . $array_estats[$i]['id_estat'] . "\">";
@@ -751,7 +765,6 @@ class RegistresController extends BaseController
         $centre_model = new CentreModel();
         $array_centres = $centre_model->obtenirCentres();
         $options_tipus_dispositius_emissors = "";
-        
 
         for ($i = 0; $i < sizeof($array_centres); $i++) {
             if (($role == "sstt" || $role == "admin_sstt")  && $array_centres[$i]['id_sstt'] == $actor['id_sstt']) {
@@ -805,7 +818,6 @@ class RegistresController extends BaseController
             }
 
             $dades = $this->request->getPost();
-
 
             if (isset($dades['selector_tipus_dispositiu'])) {
                 $array_tipus_dispositiu = [];

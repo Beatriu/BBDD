@@ -59,6 +59,11 @@
             </div>
             <div>
                 <?php if($error != null) { echo lang( $error ); } ?>
+                <?php if ((session()->get('crearTiquet')) !== null) : ?>
+                    <div class="alert alert-success alerta_esborrar" role="alert">
+                        <?= session()->get('crearTiquet') ?>
+                    </div>
+                <?php endif; ?>
                 <?= $output ?>
             </div>
         </div>

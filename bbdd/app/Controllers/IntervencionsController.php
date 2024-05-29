@@ -195,7 +195,8 @@ class IntervencionsController extends BaseController
                 } else if ($role == "alumne") {
                     $correu_alumne = session()->get('user_data')['mail'];
                 }
-    
+                $msg = lang('alertes.flash_data_create_intervencio');
+                session()->setFlashdata('afegirIntervencio', $msg);
                 $intervencio_model->addIntervencio($uuid, $descripcio_intervencio, $id_tiquet, $data_intervencio, $id_tipus_intervencio, $id_curs, $correu_alumne, $id_xtec);
             
                 $inventari_json = $this->request->getPost('inventari_json');
@@ -424,8 +425,11 @@ class IntervencionsController extends BaseController
                     $correu_alumne = session()->get('user_data')['mail'];
                 }*/
     
+                
                 $intervencio_model->editarIntervencio($id_intervencio_editar, $id_tipus_intervencio, $id_curs, $descripcio_intervencio, $correu_alumne, $id_xtec);
-            
+                $msg = lang('alertes.flash_data_update_intervencio') . $id_intervencio_editar;
+                session()->setFlashdata('editarIntervencio', $msg);
+                
                 return redirect()->to('tiquets/' . $id_tiquet_intervencio_editar);
 
             }
@@ -554,7 +558,8 @@ class IntervencionsController extends BaseController
                         }
         
                     }
-
+                    $msg = lang('alertes.flash_data_delete_intervencio') . $id_tiquet;
+                    session()->setFlashdata('eliminarIntervencio', $msg);
                     $intervencio_model->deleteIntervencio($id_intervencio);
                     return redirect()->to(base_url('/tiquets/' . $id_tiquet));
 

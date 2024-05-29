@@ -37,9 +37,11 @@ LEFT JOIN comarca comr ON pr.id_comarca = comr.id_comarca;
 
 
 CREATE VIEW vista_alumne AS
-SELECT a.*, c.id_sstt, c.nom_centre
+SELECT a.*, c.id_sstt, c.nom_centre, p.nom_poblacio, com.nom_comarca
 FROM alumne a
-INNER JOIN centre c ON a.codi_centre = c.codi_centre;
+INNER JOIN centre c ON a.codi_centre = c.codi_centre
+INNER JOIN poblacio p ON c.id_poblacio = p.id_poblacio
+INNER JOIN comarca com ON p.id_comarca = com.id_comarca;
 
 
 CREATE VIEW vista_intervencio AS
@@ -75,7 +77,9 @@ SELECT
     i.codi_centre,
     c.nom_centre,
     c.id_sstt,
-    s.nom_sstt
+    s.nom_sstt,
+    p.nom_poblacio,
+    com.nom_comarca
 FROM 
     inventari i
 JOIN 
@@ -83,7 +87,9 @@ JOIN
 JOIN 
     tipus_inventari ti ON i.id_tipus_inventari = ti.id_tipus_inventari
 JOIN
-    sstt s ON c.id_sstt = s.id_sstt;
+    sstt s ON c.id_sstt = s.id_sstt
+JOIN poblacio p ON c.id_poblacio = p.id_poblacio
+JOIN comarca com ON p.id_comarca = com.id_comarca;
 
 
 
