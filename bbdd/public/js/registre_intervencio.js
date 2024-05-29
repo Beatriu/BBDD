@@ -35,8 +35,12 @@ window.addEventListener("load", (event) => {
         console.log(tiquets[i]);
         div_accions.style.minWidth = "100px";
 
-        let div_id = tiquets[i].children[0];
-        
+        let div_id = tiquets[i].children[1];
+        if (div_id.innerHTML == "BLOQUEJANT") {
+            for (let j = 0; j < tiquets[i].children.length; j++) {
+                tiquets[i].children[j].style.backgroundColor = "#ffa4a4";
+            }
+        }
     }
 
   });
