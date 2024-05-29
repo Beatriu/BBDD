@@ -349,6 +349,8 @@ class InventarisController extends BaseController
                         $uuid_library = new \App\Libraries\UUID;
                         $uuid = $uuid_library->v4();
                         $inventari_model->addInventari($uuid, $descripcio_inventari, $data_compra, $preu, $actor['codi_centre'], $id_tipus_inventari, null);
+                        $msg = lang('alertes.flash_data_create_inventari');
+                        session()->setFlashdata('afegirInventari', $msg);
                     }
 
                 } else if ($role == "admin_sstt") {
@@ -362,6 +364,8 @@ class InventarisController extends BaseController
                             $uuid_library = new \App\Libraries\UUID;
                             $uuid = $uuid_library->v4();
                             $inventari_model->addInventari($uuid, $descripcio_inventari, $data_compra, $preu, $codi_centre, $id_tipus_inventari, null);
+                            $msg = lang('alertes.flash_data_create_inventari');
+                            session()->setFlashdata('afegirInventari', $msg);
                         }
 
                     } else {
@@ -377,6 +381,8 @@ class InventarisController extends BaseController
                         $uuid_library = new \App\Libraries\UUID;
                         $uuid = $uuid_library->v4();
                         $inventari_model->addInventari($uuid, $descripcio_inventari, $data_compra, $preu, $codi_centre, $id_tipus_inventari, null);
+                        $msg = lang('alertes.flash_data_create_inventari');
+                        session()->setFlashdata('afegirInventari', $msg);
                     }
 
                 }
@@ -411,14 +417,20 @@ class InventarisController extends BaseController
                 if ($role == "professor" && $inventari_eliminar['codi_centre'] == $actor['codi_centre'] && $inventari_eliminar['id_intervencio'] == null) {
 
                     $inventari_model->deleteInventari($inventari_eliminar['id_inventari']);
+                    $msg = lang('alertes.flash_data_delete_inventari') . $inventari_eliminar['id_inventari'];
+                    session()->setFlashdata('esborrarInventari', $msg);
 
                 } else if ($role == "admin_sstt" && $centre_model->obtenirCentre($inventari_eliminar['codi_centre'])['id_sstt'] == $actor['id_sstt']) {
                     // Admin SSTT pot esborrar una peça encara que estigui assignada a una intervenció. La intervenció, deixarà de tenir la peça
                     $inventari_model->deleteInventari($inventari_eliminar['id_inventari']);
+                    $msg = lang('alertes.flash_data_delete_inventari') . $inventari_eliminar['id_inventari'];
+                    session()->setFlashdata('esborrarInventari', $msg);
 
                 } else if ($role == "desenvolupador") {
 
                     $inventari_model->deleteInventari($inventari_eliminar['id_inventari']);
+                    $msg = lang('alertes.flash_data_delete_inventari') . $inventari_eliminar['id_inventari'];
+                    session()->setFlashdata('esborrarInventari', $msg);
 
                 }
 
@@ -544,7 +556,7 @@ class InventarisController extends BaseController
             if ($inventari_post != "") {
                 
                 $id_inventari = trim(explode('//', (string) $inventari_post)[2]);
-                
+                $tipus_inventari = trim(explode('//', (string) $inventari_post)[0]);
                 $inventari = $inventari_model->obtenirInventariPerId($id_inventari);
 
                 if ($inventari != null && $inventari['id_intervencio'] == null) {
@@ -552,8 +564,12 @@ class InventarisController extends BaseController
  
                     if (($role == "alumne" || $role == "professor") && ($estat == "Pendent de reparar" || $estat == "Reparant")) {
                         $inventari_model->editarInventariAssignar($id_inventari, $id_intervencio);
+                        $msg = lang('alertes.flash_data_assignar_inventari') . $tipus_inventari;
+                        session()->setFlashdata('assignarInventari', $msg);
                     } else if ($role == "admin_sstt" || $role == "desenvolupador") {
                         $inventari_model->editarInventariAssignar($id_inventari, $id_intervencio);
+                        $msg = lang('alertes.flash_data_assignar_inventari') . $tipus_inventari;
+                        session()->setFlashdata('assignarInventari', $msg);
                     }
 
 
@@ -598,8 +614,12 @@ class InventarisController extends BaseController
 
                 if (($role == "alumne" || $role == "professor") && ($estat == "Pendent de reparar" || $estat == "Reparant")) {
                     $inventari_model->editarInventariDesassignar($id_inventari);
+                    $msg = lang('alertes.flash_data_desasignar_inventari') . $id_inventari;
+                    session()->setFlashdata('desassingarInventari', $msg);
                 } else if ($role == "admin_sstt" || $role == "desenvolupador") {
                     $inventari_model->editarInventariDesassignar($id_inventari);
+                    $msg = lang('alertes.flash_data_desasignar_inventari') . $id_inventari;
+                    session()->setFlashdata('desassingarInventari', $msg);
                 }
 
                 $data = [

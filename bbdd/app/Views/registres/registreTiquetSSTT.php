@@ -20,11 +20,15 @@
     <div class="modal" tabindex="-1" role="dialog" style="display:block">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title"><?= lang('registre.model_title') ?></h5>
+                <div class="modal-header d-flex justify-content-between">
+                    <div>
+                        <h5 class="modal-title"><?= lang('registre.model_title') ?></h5>
+                    </div>
+                    <div>
                     <a href="<?= base_url("/tiquets") ?>">
                         <i class="fa-solid fa-xmark"></i>
                     </a>
+                    </div>
                 </div>
                 <div class="modal-body">
                     <p><?= lang('registre.model_text') ?><?php echo session()->getFlashdata('tiquet')["codi_equip"]; ?></p>
@@ -146,14 +150,14 @@
                         <?= csrf_field() ?>
                         <div class="row d-flex align-items-center">
                             <input type="hidden" name="operacio" id="operacio" value="" />
-                            <?php if(count($session_filtre) !== 0):?>
-                            <div class="col">
-                                <p><?= lang('registre.title_activated_filters') ?></p>
-                            </div>
-                            <?php endif;?>
+                            <?php if (count($session_filtre) !== 0) : ?>
+                                <div class="col">
+                                    <p><?= lang('registre.title_activated_filters') ?></p>
+                                </div>
+                            <?php endif; ?>
                             <?php if (isset($session_filtre['tipus_dispositiu'])) : ?>
                                 <div class="col px-0 form-check form-check-inline">
-                                    <span class="badge bg-light text-dark etiqueta"><?= lang('registre.title_filtre_checkbox_dispositiu') ?> <i class="fa-solid fa-arrow-right"></i> <?= $session_filtre['tipus_dispositiu'][0]?><button type="button" onclick="enviar('Dispositiu')" class="btn-close btn_etiqueta" aria-label="Close"></button></span>
+                                    <span class="badge bg-light text-dark etiqueta"><?= lang('registre.title_filtre_checkbox_dispositiu') ?> <i class="fa-solid fa-arrow-right"></i> <?= $session_filtre['tipus_dispositiu'][0] ?><button type="button" onclick="enviar('Dispositiu')" class="btn-close btn_etiqueta" aria-label="Close"></button></span>
                                 </div>
                             <?php endif; ?>
                             <?php if (isset($session_filtre['estat'])) : ?>
@@ -184,11 +188,25 @@
                 </div>
             <?php endif; ?>
 
-            <!--Taula-->
+            <!--Taula i errors-->
             <div>
-                <?php if ($error != null) {
-                    echo lang($error);
-                } ?>
+                <!--Errors-->
+                <?php if ($error != null) : ?>
+                    <div class="alert alert-danger alerta_esborrar" role="alert">
+                        <?= lang($error) ?>
+                    </div>
+                <?php endif; ?>
+                <?php if ((session()->get('tiquetEliminat')) !== null) : ?>
+                    <div class="alert alert-success alerta_esborrar" role="alert">
+                        <?= session()->get('tiquetEliminat') ?>
+                    </div>
+                <?php endif; ?>
+                <?php if ((session()->get('crearTiquet')) !== null) : ?>
+                    <div class="alert alert-success alerta_esborrar" role="alert">
+                        <?= session()->get('crearTiquet') ?>
+                    </div>
+                <?php endif; ?>
+                <!--Taula-->
                 <?= $output ?>
             </div>
         </div>
