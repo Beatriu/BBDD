@@ -125,7 +125,9 @@ class InventarisController extends BaseController
                     'descripcio_inventari_limitada',
                     'data_compra',
                     'id_intervencio',
-                    'nom_centre'
+                    'nom_centre',
+                    'nom_poblacio',
+                    'nom_comarca'
                 ]);
                 $crud->setColumnsInfo([
                     'id_inventari_limitat' => [
@@ -145,6 +147,12 @@ class InventarisController extends BaseController
                     ],
                     'nom_centre' => [
                         'name' => lang('inventari.nom_centre')
+                    ],
+                    'nom_poblacio' => [
+                        'name' => lang('inventari.nom_poblacio')
+                    ],
+                    'nom_comarca' => [
+                        'name' => lang('inventari.nom_comarca')
                     ]
                 ]);
 
@@ -159,7 +167,9 @@ class InventarisController extends BaseController
                     'data_compra',
                     'id_intervencio',
                     'nom_centre',
-                    'nom_sstt'
+                    'nom_sstt',
+                    'nom_poblacio',
+                    'nom_comarca'
                 ]);
                 $crud->setColumnsInfo([
                     'id_inventari_limitat' => [
@@ -182,6 +192,12 @@ class InventarisController extends BaseController
                     ],
                     'nom_sstt' => [
                         'name' => lang('inventari.nom_sstt')
+                    ],
+                    'nom_poblacio' => [
+                        'name' => lang('inventari.nom_poblacio')
+                    ],
+                    'nom_comarca' => [
+                        'name' => lang('inventari.nom_comarca')
                     ]
                 ]);
 

@@ -31,4 +31,6 @@ return [
     'no_permisos' => '¡No tienes permisos para realizar esta acción!',
     'no_permisos_title' => 'Acción bloqueada',
     'no_existeix' => 'Esta pieza no existe',
+    'nom_poblacio' => 'Población',
+    'nom_comarca' => 'Comarca'
 ];

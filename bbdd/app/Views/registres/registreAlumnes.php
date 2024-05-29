@@ -17,11 +17,15 @@
         <div class="modal" tabindex="-1" role="dialog" style="display:block">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title"><?= lang('alumne.eliminar_title') ?></h5>
-                        <a href="<?= base_url("/alumnes") ?>">
-                            <i class="fa-solid fa-xmark"></i>
-                        </a>
+                    <div class="modal-header d-flex justify-content-between">
+                        <div>
+                            <h5 class="modal-title"><?= lang('alumne.eliminar_title') ?></h5>
+                        </div>
+                        <div>
+                            <a href="<?= base_url("/alumnes") ?>">
+                                <i class="fa-solid fa-xmark"></i>
+                            </a>
+                        </div>
                     </div>
                     <div class="modal-body">
                         <p><?= lang('alumne.eliminar_text') ?><?php echo session()->getFlashdata('correu_alumne_eliminar')['correu_alumne']; ?></p>
@@ -111,13 +115,31 @@
                 </div>
             </div>
             <div>
+                <?php if ((session()->get('afegirAlumne')) !== null) : ?>
+                    <div class="alert alert-success alerta_esborrar" role="alert">
+                        <?= session()->get('afegirAlumne') ?>
+                    </div>
+                <?php endif; ?>
+                <?php if ((session()->get('eliminarAlumne')) !== null) : ?>
+                    <div class="alert alert-success alerta_esborrar" role="alert">
+                        <?= session()->get('eliminarAlumne') ?>
+                    </div>
+                <?php endif; ?>
+                <?php if ((session()->get('editarAlumne')) !== null) : ?>
+                    <div class="alert alert-success alerta_esborrar" role="alert">
+                        <?= session()->get('editarAlumne') ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+
+            <div>
                 <?= $output ?>
             </div>
         </div>
     </div>
 </div>
 <script>
-(function(window, document, undefined) {
+    (function(window, document, undefined) {
         window.onload = init;
 
         function init() {
