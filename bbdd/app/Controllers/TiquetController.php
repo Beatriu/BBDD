@@ -127,10 +127,13 @@ class TiquetController extends BaseController
                         }
                     }
 
-                    $crud->addItemLink('view', 'fa-eye', base_url('tiquets/'. $id_tiquet . '/intervencio/'), 'Veure Intervenció');
-                    $crud->addItemLink('edit', 'fa-pencil', base_url('editar/intervencio/' . $id_tiquet ), 'Editar Intervenció');
-                    $crud->addItemLink('assignar', 'fa-screwdriver-wrench', base_url('tiquets/' . $id_tiquet . '/assignar'), 'Assignar Inventari');
-                    $crud->addItemLink('delete', 'fa-trash', base_url('tiquets/' . $id_tiquet . '/esborrar'), 'Eliminar Intervenció');
+                    $crud->addItemLink('view', 'fa-eye', base_url('tiquets/'. $id_tiquet . '/intervencio'), 'Veure Intervenció');
+
+                    if ($estat == 'Pendent de reparar' || $estat == 'Reparant') {
+                        $crud->addItemLink('edit', 'fa-pencil', base_url('editar/intervencio/' . $id_tiquet ), 'Editar Intervenció');
+                        $crud->addItemLink('assignar', 'fa-screwdriver-wrench', base_url('tiquets/' . $id_tiquet . '/assignar'), 'Assignar Inventari');
+                        $crud->addItemLink('delete', 'fa-trash', base_url('tiquets/' . $id_tiquet . '/esborrar'), 'Eliminar Intervenció');
+                    }
 
                     $crud->addWhere('id_tiquet', $id_tiquet);
                     $crud->addWhere ("estat_tiquet","Pendent de reparar", true);
@@ -143,7 +146,7 @@ class TiquetController extends BaseController
     
                 } else if ($role == "sstt" || $role == "admin_sstt") {
 
-                    $crud->addItemLink('view', 'fa-eye', base_url('tiquets/'. $id_tiquet . '/intervencio/'), 'Veure Intervenció');
+                    $crud->addItemLink('view', 'fa-eye', base_url('tiquets/'. $id_tiquet . '/intervencio'), 'Veure Intervenció');
 
                     if ($role == "admin_sstt") {
                         $crud->addItemLink('edit', 'fa-pencil', base_url('editar/intervencio/' . $id_tiquet ), 'Editar Intervenció');
@@ -168,7 +171,7 @@ class TiquetController extends BaseController
 
                     $tiquets = $tiquet_model->getTiquets();
                     
-                    $crud->addItemLink('view', 'fa-eye', base_url('tiquets/'. $id_tiquet . '/intervencio/'), 'Veure Intervenció');
+                    $crud->addItemLink('view', 'fa-eye', base_url('tiquets/'. $id_tiquet . '/intervencio'), 'Veure Intervenció');
                     $crud->addItemLink('edit', 'fa-pencil', base_url('editar/intervencio/' . $id_tiquet ), 'Editar Intervenció');
                     $crud->addItemLink('assignar', 'fa-screwdriver-wrench', base_url('tiquets/' . $id_tiquet . '/assignar'), 'Assignar Inventari');
                     $crud->addItemLink('delete', 'fa-trash', base_url('tiquets/esborrar'), 'Eliminar Tiquet');
@@ -238,14 +241,9 @@ class TiquetController extends BaseController
                     $data['nom_centre_reparador'] = $centre_model->obtenirCentre($tiquet_existent['codi_centre_reparador'])['nom_centre'];
                 }
     
-    
-                $data['output'] = $crud->render();
-
-
-
-
 
                 $data['id_intervencio_vista'] = null;
+                $kpacrud2 = false;
                 if ($id_intervencio != null) {
                     $intervencio = $intervencio_model->obtenirIntervencioPerId($id_intervencio);
 
@@ -257,23 +255,70 @@ class TiquetController extends BaseController
                         $data['correu_alumne_vista'] = $intervencio['correu_alumne'];
                         $data['id_xtec_vista'] = $intervencio['id_xtec'];
 
+                        $kpacrud2 = true;
                     }
 
                 }
 
 
+                if ($kpacrud2) {
+                    $crud->addItemLink('view', 'fa-eye-slash', base_url('tiquets/'. $id_tiquet), 'Deixar de veure Intervenció');
+                    $crud->addWhere('id_intervencio', $id_intervencio);
+                    $data['output'] = $crud->render();
 
+                    // KPACRUD INVENTARI ASSIGNAT A LA INTERVENCIÓ
 
+                    $crud2 = new KpaCrud();
+                    $crud2->setConfig('onlyView');
+                    $crud2->setConfig([
+                        "numerate" => false,
+                        "add_button" => false,
+                        "show_button" => false,
+                        "recycled_button" => false,
+                        "useSoftDeletes" => true,
+                        "multidelete" => false,
+                        "filterable" => false,
+                        "editable" => false,
+                        "removable" => false,
+                        "paging" => false,
+                        "numerate" => false,
+                        "sortable" => true,
+                        "exportXLS" => false,
+                        "print" => false
+                    ]);
+                    $crud2->setTable('vista_inventari');
+                    $crud2->setPrimaryKey('id_inventari');
+                    $crud2->hideHeadLink([ 
+                        'js-bootstrap',
+                        'css-bootstrap',         
+                    ]);
+                    $crud2->setColumns([
+                        'id_inventari',
+                        'nom_tipus_inventari',
+                        'data_compra'
+                    ]);
+                    $crud2->setColumnsInfo([
+                        'id_inventari' => [
+                            'name' => lang('inventari.id_inventari')
+                        ],
+                        'nom_tipus_inventari' => [
+                            'name' => lang('inventari.nom_tipus_inventari')
+                        ],
+                        'data_compra' => [
+                            'name' => lang('inventari.data_compra')
+                        ]
+                    ]);
 
+                    $crud2->addWhere('codi_centre', $actor['codi_centre']);
+                    $crud2->addWhere('id_intervencio', $id_intervencio, true);
 
+                    $data['output2'] = $crud2->render();
 
+                } else {
+                    $data['output'] = $crud->render();
+                }
 
-
-
-
-
-
-
+                
                 return view('tiquet' . DIRECTORY_SEPARATOR . 'vistaTiquet', $data);
     
             }

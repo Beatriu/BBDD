@@ -78,6 +78,7 @@ $routes->get('/tiquets/(:segment)/intervencio/(:segment)', 'TiquetController::vi
 //Vista Tiquets - Registre Intervencions
 $routes->post('/tiquets/cercar', 'TiquetController::viewTiquet_post', ['filter'=>'Autentica']);
 $routes->get('/tiquets/(:segment)', 'TiquetController::viewTiquet/$1', ['filter'=>'Autentica']);
+$routes->get('/tiquets/(:segment)/(:segment)', 'TiquetController::viewTiquet/$1', ['filter'=>'Autentica']);
 
 // Canvi de language, Descarregar
 $routes->get('/canviLanguage', 'Home::canviLanguage');

@@ -4,8 +4,8 @@
 <link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR .'taulaRegistre.css') ?>">
 <link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR .'header.css') ?>">
 <link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR .'style.css') ?>">
-
 <link rel="stylesheet" href="<?= base_url('fontawesome/css/fontawesome.css') ?>" />
+<script src="<?= base_url('js' . DIRECTORY_SEPARATOR . 'registre_intervencio.js') ?>"></script>
 <?= $this->endSection('css_pagina'); ?>
 
 <?= $this->section('header'); ?>
@@ -121,7 +121,7 @@
                                     </select>
                                 </div>
                             </div>
-                        <div></div>
+                        </div>
 
                     <?php endif; ?>
 
@@ -141,8 +141,9 @@
                 </div>
 
                 <?php if($id_intervencio_vista != null): ?>
-                    <div id = "vista_intervencio" class = "row mt-3 p-3">
-                        <textarea class="mb-0" rows="5" disabled><?= trim($descripcio_intervencio_vista) ?></textarea>
+                    <textarea id="vista_descripcio_intervencio" class="mb-0 mt-3" rows="3" disabled><?= trim($descripcio_intervencio_vista) ?></textarea>
+                    <div id="output2" class="row pt-0 mt-0">
+                        <?= $output2 ?>
                     </div>
                 <?php endif; ?>
 

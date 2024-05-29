@@ -434,6 +434,7 @@ class InventarisController extends BaseController
 
     public function assignarInventari($id_tiquet, $id_intervencio)
     {
+
         $tiquet_model = new TiquetModel();
         $intervencio_model = new IntervencioModel();
         $inventari_model = new InventariModel();
@@ -451,7 +452,6 @@ class InventarisController extends BaseController
             $data['estat'] = $estat;
 
             // KPACRUD INVENTARI ASSIGNAT A LA INTERVENCIÓ
-
             $data['title'] = 'Inventari Assignat';
             $data['id_tiquet'] = $id_tiquet;
             $data['id_intervencio'] = $id_intervencio;
@@ -520,12 +520,7 @@ class InventarisController extends BaseController
 
             }
 
-
-
             return view('registres' . DIRECTORY_SEPARATOR .'registreInventariAssignat', $data);
-
-
-
         } else {
             return redirect()->back();
         }
@@ -544,17 +539,17 @@ class InventarisController extends BaseController
         $tiquet = $tiquet_model->getTiquetById($id_tiquet);
         $intervencio = $intervencio_model->obtenirIntervencioPerId($id_intervencio);
         if ($tiquet != null && $intervencio != null) {
-
+            
             $inventari_post = $this->request->getPost('inventari');
             if ($inventari_post != "") {
-
+                
                 $id_inventari = trim(explode('//', (string) $inventari_post)[2]);
-
+                
                 $inventari = $inventari_model->obtenirInventariPerId($id_inventari);
-    
+
                 if ($inventari != null && $inventari['id_intervencio'] == null) {
                     $estat = $estat_model->obtenirEstatPerId($tiquet['id_estat']);
-    
+ 
                     if (($role == "alumne" || $role == "professor") && ($estat == "Pendent de reparar" || $estat == "Reparant")) {
                         $inventari_model->editarInventariAssignar($id_inventari, $id_intervencio);
                     } else if ($role == "admin_sstt" || $role == "desenvolupador") {

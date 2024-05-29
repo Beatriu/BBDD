@@ -104,7 +104,8 @@
     width: 3px;
 }
 
-#vista_intervencio {
+#vista_descripcio_intervencio {
+    width: 100%;
     background-color: #f2f2f2;
 }
 

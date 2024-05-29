@@ -25,6 +25,8 @@ class IntervencionsController extends BaseController
         $centre_model = new CentreModel();
         $tipus_intervencio_model = new TipusIntervencioModel();
         $curs_model = new CursModel();
+        $inventari_model = new InventariModel();
+        $tipus_inventari_model = new TipusInventariModel();
 
         $actor = session()->get('user_data');
         $role = $actor['role'];
@@ -79,6 +81,18 @@ class IntervencionsController extends BaseController
                     $options_curs .= $array_curs[$i]['curs'] . " " . $array_curs[$i]['cicle'] . " " . $array_curs[$i]['titol'];
                     $options_curs .= "</option>";
                 }
+
+                // Carregar peces d'inventari
+                $array_inventari = $inventari_model->obtenirInventariCentre($actor['codi_centre']);
+                $data['inventari_list'] = "";
+                for ($i = 0; $i < sizeof($array_inventari); $i++) {
+
+                    if ($array_inventari[$i]['id_intervencio'] == null) {
+                        $nom_tipus_inventari = $tipus_inventari_model->obtenirTipusInventariPerId($array_inventari[$i]['id_tipus_inventari'])['nom_tipus_inventari'];
+                        $data['inventari_list'] .= "<option id=\"" . $array_inventari[$i]['id_inventari'] . "\" value=\"" . $nom_tipus_inventari . " // " . $array_inventari[$i]['data_compra'] . " // " . $array_inventari[$i]['id_inventari'] . "\">" . $nom_tipus_inventari . " // " . $array_inventari[$i]['data_compra'] . " // " . $array_inventari[$i]['id_inventari'] . "</option>";
+                    }
+
+                }
         
         
                 $data['tipus_intervencio'] = $options_tipus_intervencio;
@@ -100,6 +114,7 @@ class IntervencionsController extends BaseController
         $tiquet_model = new TiquetModel();
         $estat_model = new EstatModel();
         $centre_model = new CentreModel();
+        $inventari_model = new InventariModel();
 
         $validationRules = [
             'tipus_intervencio' => [
@@ -160,7 +175,7 @@ class IntervencionsController extends BaseController
                 $curs = $this->request->getPost('curs');
                 $descripcio_intervencio = $this->request->getPost('descripcio_intervencio');
                 $data_intervencio = date("Y-m-d H:i:s");
-    
+
                 $id_xtec = null;
                 $correu_alumne = null;
     
@@ -175,6 +190,13 @@ class IntervencionsController extends BaseController
     
                 $intervencio_model->addIntervencio($uuid, $descripcio_intervencio, $id_tiquet, $data_intervencio, $id_tipus_intervencio, $id_curs, $correu_alumne, $id_xtec);
             
+                $inventari_json = $this->request->getPost('inventari_json');
+                $inventari_array = json_decode((string) $inventari_json);
+
+                for ($i = 0; $i < sizeof($inventari_array); $i++) {
+                    $inventari_model->editarInventariAssignar($inventari_array[$i]->id, $uuid);
+                }
+
                 return redirect()->to('tiquets/' . $id_tiquet);
             }
 
