@@ -682,11 +682,11 @@ class InventarisController extends BaseController
         if(isset($sessio_filtres['tipus_dispositiu'])){
             $tipus_inventari = $model_tipus_inventari->obtenirTipusInventariPerId($sessio_filtres['tipus_dispositiu'][0]);
         }
-
+        //dd($tipus_inventari);
         $options_tipus_dispositius = "";
         $options_tipus_dispositius .= "<option value='' selected disabled>" . lang('registre.not_value_option_select_tipus_dispositiu') . "</option>";
         for ($i = 0; $i < sizeof($array_tipus_dispositius); $i++) {
-            if (isset($sessio_filtres['tipus_dispositiu']) && $tipus_inventari == $array_tipus_dispositius[$i]['nom_tipus_inventari']) {
+            if (isset($sessio_filtres['tipus_dispositiu']) && $tipus_inventari['nom_tipus_inventari'] == $array_tipus_dispositius[$i]['nom_tipus_inventari']) {
                 $options_tipus_dispositius .= "<option value=\"" . $array_tipus_dispositius[$i]['id_tipus_inventari']. " - " . $array_tipus_dispositius[$i]['nom_tipus_inventari'] . "\" selected>";
             } else {
                 $options_tipus_dispositius .= "<option value=\"" . $array_tipus_dispositius[$i]['id_tipus_inventari']. " - " . $array_tipus_dispositius[$i]['nom_tipus_inventari'] . "\">";
