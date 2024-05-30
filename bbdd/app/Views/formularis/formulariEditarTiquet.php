@@ -155,33 +155,33 @@
         var estat = estat_div.value;
         console.log(estat_inicial);
         console.log();
-        if(estat_inicial !== estat){
-        if (estat == 3 || estat == 5 || estat == 7 || estat == 8 || estat == 9 || estat == 10 || estat == 11) {
-            $("form").submit(function(e) {
-                e.preventDefault();
-                var paragraf = document.getElementById("alerta_contingut");
-                var nom_estat = '';
-                if (estat == 3) {
-                    nom_estat = 'Emmagatzemat a SSTT';
-                } else if (estat == 5) {
-                    nom_estat = 'Pendent de reparar';
-                } else if (estat == 7) {
-                    nom_estat = 'Reparat i pendent de recollir';
-                } else if (estat == 8) {
-                    nom_estat = 'Pendent de retorn';
-                } else if (estat == 9) {
-                    nom_estat = 'Retornat';
-                } else if (estat == 10) {
-                    nom_estat = 'Rebutjat per SSTT';
-                } else {
-                    nom_estat = 'Desguassat';
-                }
-                paragraf.innerText = paragraf.innerText + " " + nom_estat;
-            });
-            var modal = document.getElementById("modal");
-            modal.style = "display:block";
+        if (estat_inicial !== estat) {
+            if (estat == 3 || estat == 5 || estat == 7 || estat == 8 || estat == 9 || estat == 10 || estat == 11) {
+                $("form").submit(function(e) {
+                    e.preventDefault();
+                    var paragraf = document.getElementById("alerta_contingut");
+                    var nom_estat = '';
+                    if (estat == 3) {
+                        nom_estat = 'Emmagatzemat a SSTT';
+                    } else if (estat == 5) {
+                        nom_estat = 'Pendent de reparar';
+                    } else if (estat == 7) {
+                        nom_estat = 'Reparat i pendent de recollir';
+                    } else if (estat == 8) {
+                        nom_estat = 'Pendent de retorn';
+                    } else if (estat == 9) {
+                        nom_estat = 'Retornat';
+                    } else if (estat == 10) {
+                        nom_estat = 'Rebutjat per SSTT';
+                    } else {
+                        nom_estat = 'Desguassat';
+                    }
+                    paragraf.innerText = paragraf.innerText + " " + nom_estat;
+                });
+                var modal = document.getElementById("modal");
+                modal.style = "display:block";
+            }
         }
-    } 
     }
 
     function tancar() {
