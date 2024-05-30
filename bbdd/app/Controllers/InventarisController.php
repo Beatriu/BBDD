@@ -232,14 +232,14 @@ class InventarisController extends BaseController
                     $model_poblacio = new PoblacioModel();
                     $poblacio_escollida = $model_poblacio->getPoblacio($session_filtre['nom_poblacio'][0], true);
                     $data['poblacio_escollida'] = $poblacio_escollida['nom_poblacio'];
-                    $crud->addWhere('nom_poblacio', $poblacio_escollida['nom_poblacio'], true);
+                    $crud->addWhere('id_poblacio', $poblacio_escollida['id_poblacio'], true);
                 }
                 if (isset($session_filtre['nom_comarca'])) {
                     $model_comarca = new ComarcaModel();
                     $comarca_escollida = $model_comarca->obtenirComarca($session_filtre['nom_comarca'][0], true);
                     $data['comarca_escollida'] = $comarca_escollida['nom_comarca'];
 
-                    $crud->addWhere('nom_comarca', $comarca_escollida['nom_comarca'], true);
+                    $crud->addWhere('id_comarca', $comarca_escollida['id_comarca'], true);
                 }
             }
 
@@ -822,7 +822,6 @@ class InventarisController extends BaseController
         $filtre_eliminar = $this->request->getPost();
         $filtre_session = session()->get('filtresInventari');
         $eliminar = $this->request->getPost('submit_eliminar_filtres');
-        //dd($filtre_session);
         if ($eliminar !== null) {
             session()->remove('filtresInventari');
         }
@@ -858,6 +857,6 @@ class InventarisController extends BaseController
             session()->set('filtresInventari', $filtre_session);
         }
 
-        return redirect()->back();
+        return redirect()->back()->withInput();
     }
 }

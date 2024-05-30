@@ -14,13 +14,18 @@ SELECT
     td.nom_tipus_dispositiu, 
     t.id_estat,
     e.nom_estat, 
+    t.preu_total,
     t.codi_centre_emissor,
     t.codi_centre_reparador,
     ce.nom_centre AS nom_centre_emissor,
     cr.nom_centre AS nom_centre_reparador,
     ce.id_sstt AS id_sstt_emissor,
+    pe.id_poblacio AS id_poblacio_emissor,
+    pr.id_poblacio AS id_poblacio_reparador,
     pe.nom_poblacio AS nom_poblacio_emissor,
     pr.nom_poblacio AS nom_poblacio_reparador,
+    come.id_comarca AS id_comarca_emissor,
+    comr.id_comarca AS id_comarca_reparador,
     come.nom_comarca AS nom_comarca_emissor,
     comr.nom_comarca AS nom_comarca_reparador	
     

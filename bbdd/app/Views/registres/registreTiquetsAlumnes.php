@@ -105,6 +105,9 @@
                                 <div class="col">
                                     <p><?= lang('registre.title_activated_filters') ?></p>
                                 </div>
+                                <div class="col px-0 form-check form-check-inline">
+                                <button id="submit_eliminar_tots_filtres" name="submit_eliminar_filtres" type="submit" class="btn btn-danger btn_save rounded-pill ms-3 me-3"><i class="fa-solid fa-trash me-2" id="trash_icon"></i><?= lang('registre.delete_all_filters') ?></button>
+                            </div>
                             <?php endif; ?>
                             <?php if (isset($session_filtre['tipus_dispositiu'])) : ?>
                                 <div class="col px-0 form-check form-check-inline">
@@ -126,9 +129,7 @@
                                     <span class="badge bg-light text-dark etiqueta"><?= lang('registre.title_filtre_checkbox_data') ?> <i class="fa-solid fa-arrow-right"></i> <?= $session_filtre['data_creacio'][0] ?> <button type="button" onclick="enviar('data_creacio')" class="btn-close btn_etiqueta" aria-label="Close"></button></span>
                                 </div>
                             <?php endif; ?>
-                            <div class="col px-0 form-check form-check-inline">
-                                <button id="submit_eliminar_tots_filtres" name="submit_eliminar_filtres" type="submit" class="btn btn-danger btn_save rounded-pill ms-3 me-3"><i class="fa-solid fa-trash me-2" id="trash_icon"></i><?= lang('registre.delete_all_filters') ?></button>
-                            </div>
+                            
                         </div>
                     </form>
                 </div>

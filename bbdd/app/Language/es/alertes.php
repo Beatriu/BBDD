@@ -13,5 +13,8 @@ return [
     'flash_data_desasignar_inventari' => "Se ha desasignado la pieza seleccionada: ",
     'flash_data_create_alumne' => "El nuevo alumno se ha añadido correctamente",
     'flash_data_update_alumne' => "El siguiente alumno se ha editado correctamente: ",
-    'flash_data_delete_alumne' => "S'ha eliminat correctament el següent alumne: "
+    'flash_data_delete_alumne' => "S'ha eliminat correctament el següent alumne: ",
+    'change_estat_title' => "Estas seguro de este cambio de estado?",
+    'change_estat_contingut' => "Estas seguro de que quieres hacer este cambio <b><i>NO REVERSIBLE?</b></i>",
+    'change_estat_contingut2' =>"El estado pasarà aser el siguiente: "
 ];

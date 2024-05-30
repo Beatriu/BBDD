@@ -147,12 +147,12 @@
                     </div>
                 <?php endif; ?>
                 <?php if ((session()->get('eliminarIntervencio')) !== null) : ?>
-                    <div class="alert alert-success alerta_esborrar" role="alert">
+                    <div class="alert alert-danger alerta_esborrar" role="alert">
                         <?= session()->get('eliminarIntervencio') ?>
                     </div>
                 <?php endif; ?>
                 <?php if ((session()->get('editarIntervencio')) !== null) : ?>
-                    <div class="alert alert-success alerta_esborrar" role="alert">
+                    <div class="alert alert-warning alerta_esborrar" role="alert">
                         <?= session()->get('editarIntervencio') ?>
                     </div>
                 <?php endif; ?>
@@ -186,8 +186,6 @@
             var pare_final_taula = final_taula.parentElement;
             pare_final_taula.appendChild(paginador);
         }
-
-
 
     })(window, document, undefined);
 </script>

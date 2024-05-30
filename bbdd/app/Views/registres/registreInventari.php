@@ -181,11 +181,11 @@
                             </div>
                         </div>
                         <div class="modal-body">
-                            <p><?= lang('alumne.eliminar_text') ?><?php echo $id_inventari; ?></p>
+                            <p><?= lang('inventari.eliminar_text') ?><?php echo $id_inventari; ?></p>
                         </div>
                         <div class="modal-footer">
-                            <a href="<?= base_url("/eliminarInventari/" . $id_inventari) ?>" type="button" class="btn btn-danger"><?= lang('inventari.eliminar') ?></a>
                             <a href="<?= base_url("/inventari") ?>" type="button" class="btn btn-secondary" data-dismiss="modal"><?= lang('inventari.cancel_eliminar') ?></a>
+                            <a href="<?= base_url("/eliminarInventari/" . $id_inventari) ?>" type="button" class="btn btn-danger"><?= lang('inventari.eliminar') ?></a>
                         </div>
                     </div>
                 </div>
@@ -234,6 +234,9 @@
                                 <div class="col">
                                     <p><?= lang('registre.title_activated_filters') ?></p>
                                 </div>
+                                <div class="col px-0 form-check form-check-inline">
+                                <button id="submit_eliminar_tots_filtres" name="submit_eliminar_filtres" type="submit" class="btn btn-danger btn_save rounded-pill ms-3 me-3"><i class="fa-solid fa-trash me-2" id="trash_icon"></i><?= lang('registre.delete_all_filters') ?></button>
+                            </div>
                             <?php endif; ?>
                             <?php if (isset($session_filtre['tipus_dispositiu'])) : ?>
                                 <div class="col px-0 form-check form-check-inline">
@@ -260,11 +263,7 @@
                                     <span class="badge bg-light text-dark etiqueta"><?= lang('registre.title_filtre_checkbox_comarca') ?> <i class="fa-solid fa-arrow-right"></i> <?= $comarca_escollida ?> <button type="button" onclick="enviar('Comarca')" class="btn-close btn_etiqueta" aria-label="Close"></button></span>
                                 </div>
                             <?php endif; ?>
-                            <?php if (count($session_filtre) !== 0) : ?>
-                            <div class="col px-0 form-check form-check-inline">
-                                <button id="submit_eliminar_tots_filtres" name="submit_eliminar_filtres" type="submit" class="btn btn-danger btn_save rounded-pill ms-3 me-3"><i class="fa-solid fa-trash me-2" id="trash_icon"></i><?= lang('registre.delete_all_filters') ?></button>
-                            </div>
-                            <?php endif; ?>
+                            
                         </div>
                     </form>
                 </div>
@@ -277,7 +276,7 @@
                     </div>
                 <?php endif; ?>
                 <?php if ((session()->get('esborrarInventari')) !== null) : ?>
-                    <div class="alert alert-success alerta_esborrar" role="alert">
+                    <div class="alert alert-danger alerta_esborrar" role="alert">
                         <?= session()->get('esborrarInventari') ?>
                     </div>
                 <?php endif; ?>

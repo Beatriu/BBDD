@@ -183,6 +183,9 @@
                                 <div class="col">
                                     <p><?= lang('registre.title_activated_filters') ?></p>
                                 </div>
+                                <div class="col px-0 form-check form-check-inline">
+                                <button id="submit_eliminar_tots_filtres" name="submit_eliminar_filtres" type="submit" class="btn btn-danger btn_save rounded-pill ms-3 me-3"><i class="fa-solid fa-trash me-2" id="trash_icon"></i><?= lang('registre.delete_all_filters') ?></button>
+                            </div>
                             <?php endif; ?>
                             <?php if (isset($session_filtre['nom_centre_reparador'])) : ?>
                                 <div class="col px-0 form-check form-check-inline">
@@ -199,11 +202,7 @@
                                     <span class="badge bg-light text-dark etiqueta"><?= lang('registre.title_filtre_checkbox_comarca') ?> <i class="fa-solid fa-arrow-right"></i> <?= $comarca_escollida ?> <button type="button" onclick="enviar('Comarca')" class="btn-close btn_etiqueta" aria-label="Close"></button></span>
                                 </div>
                             <?php endif; ?>
-                            <?php if (count($session_filtre) !== 0) : ?>
-                            <div class="col px-0 form-check form-check-inline">
-                                <button id="submit_eliminar_tots_filtres" name="submit_eliminar_filtres" type="submit" class="btn btn-danger btn_save rounded-pill ms-3 me-3"><i class="fa-solid fa-trash me-2" id="trash_icon"></i><?= lang('registre.delete_all_filters') ?></button>
-                            </div>
-                            <?php endif; ?>
+                            
                         </div>
                     </form>
                 </div>
@@ -216,12 +215,12 @@
                     </div>
                 <?php endif; ?>
                 <?php if ((session()->get('eliminarAlumne')) !== null) : ?>
-                    <div class="alert alert-success alerta_esborrar" role="alert">
+                    <div class="alert alert-danger alerta_esborrar" role="alert">
                         <?= session()->get('eliminarAlumne') ?>
                     </div>
                 <?php endif; ?>
                 <?php if ((session()->get('editarAlumne')) !== null) : ?>
-                    <div class="alert alert-success alerta_esborrar" role="alert">
+                    <div class="alert alert-warning alerta_esborrar" role="alert">
                         <?= session()->get('editarAlumne') ?>
                     </div>
                 <?php endif; ?>

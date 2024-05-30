@@ -114,6 +114,8 @@ class AlumnesController extends BaseController
                 $crud->setColumns([
                     'correu_alumne',
                     'nom_centre',
+                    'nom_poblacio',
+                    'nom_comarca'
                 ]);
                 $crud->setColumnsInfo([
                     'correu_alumne' => [
@@ -121,6 +123,12 @@ class AlumnesController extends BaseController
                     ],
                     'nom_centre' => [
                         'name' => lang('alumne.nom_centre'),
+                    ],
+                    'nom_poblacio' => [
+                        'name' => lang('inventari.nom_poblacio')
+                    ],
+                    'nom_comarca' => [
+                        'name' => lang('inventari.nom_comarca')
                     ]
                 ]);
                 $crud->addWhere('id_sstt', session()->get('user_data')['id_sstt']);
@@ -129,6 +137,8 @@ class AlumnesController extends BaseController
                 $crud->setColumns([
                     'correu_alumne',
                     'nom_centre',
+                    'nom_poblacio',
+                    'nom_comarca'
                 ]);
                 $crud->setColumnsInfo([
                     'correu_alumne' => [
@@ -136,6 +146,12 @@ class AlumnesController extends BaseController
                     ],
                     'nom_centre' => [
                         'name' => lang('alumne.nom_centre'),
+                    ],
+                    'nom_poblacio' => [
+                        'name' => lang('inventari.nom_poblacio')
+                    ],
+                    'nom_comarca' => [
+                        'name' => lang('inventari.nom_comarca')
                     ]
                 ]);
             }
@@ -155,14 +171,14 @@ class AlumnesController extends BaseController
                     $model_poblacio = new PoblacioModel();
                     $poblacio_escollida = $model_poblacio->getPoblacio($session_filtre['nom_poblacio'][0], true);
                     $data['poblacio_escollida'] = $poblacio_escollida['nom_poblacio'];
-                    $crud->addWhere('nom_poblacio', $poblacio_escollida['nom_poblacio'], true);
+                    $crud->addWhere('id_poblacio', $poblacio_escollida['id_poblacio'], true);
                 }
                 if (isset($session_filtre['nom_comarca'])) {
                     $model_comarca = new ComarcaModel();
                     $comarca_escollida = $model_comarca->obtenirComarca($session_filtre['nom_comarca'][0], true);
                     $data['comarca_escollida'] = $comarca_escollida['nom_comarca'];
 
-                    $crud->addWhere('nom_comarca', $comarca_escollida['nom_comarca'], true);
+                    $crud->addWhere('id_comarca', $comarca_escollida['id_comarca'], true);
                 }
             }
 
@@ -428,7 +444,7 @@ class AlumnesController extends BaseController
                 //$id_login = $login_model->obtenirId($correu_alumne_editar);
                 //$login_in_rol->deleteLoginInRol($id_login);
                 //$login_model->deleteLogin($id_login);
-                $msg = lang('alertes.flash_data_create_alumne');
+                $msg = lang('alertes.flash_data_update_alumne');
                 session()->setFlashdata('afegirAlumne', $msg);
                 return redirect()->to(base_url('/alumnes'));
             } else if (($role == "admin_sstt" && $id_sstt_alumne == $actor['id_sstt']) || ($role == "desenvolupador")) {
@@ -445,7 +461,7 @@ class AlumnesController extends BaseController
                         $alumne_model->addAlumne($correu_alumne_post, $codi_centre_post); // Creem un alumne nou
                         $login_model->addLogin($correu_alumne_post, null);
                         $login_in_rol->addLoginInRol($login_model->obtenirId($correu_alumne_post), $rol_model->obtenirIdRol("alumne"));
-                        $msg = lang('alertes.flash_data_create_alumne');
+                        $msg = lang('alertes.flash_data_update_alumne');
                         session()->setFlashdata('afegirAlumne', $msg);
                         $intervencions = $intervencio_model->obtenirIdIntervencioAlumne($correu_alumne_editar); // Obtenim els id de les intervencions de l'alumne
                         for ($i = 0; $i < sizeof($intervencions); $i++) {

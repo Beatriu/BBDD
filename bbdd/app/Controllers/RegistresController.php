@@ -917,6 +917,6 @@ class RegistresController extends BaseController
             session()->remove('filtres');
         }
 
-        return redirect()->back();
+        return redirect()->back()->withInput();
     }
 }
