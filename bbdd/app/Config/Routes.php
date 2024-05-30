@@ -66,6 +66,10 @@ $routes->post('/alumnes/editar', 'AlumnesController::editarAlumne_post', ['filte
 $routes->get('/alumnes/esborrar/(:segment)', 'AlumnesController::registreAlumnes/$1', ['filter'=>'Autentica']);
 $routes->get('/eliminarAlumne/(:segment)', 'AlumnesController::eliminarAlumne/$1', ['filter'=>'Autentica']);
 
+//FILTRE ALUMNES
+$routes->post('/filtreAlumnes', 'AlumnesController::filtrePost', ['filter'=>'Autentica']);
+$routes->post('/eliminarFiltreAlumnes', 'AlumnesController::eliminarFiltre', ['filter'=>'Autentica']);
+
 //Backtickets
 
 

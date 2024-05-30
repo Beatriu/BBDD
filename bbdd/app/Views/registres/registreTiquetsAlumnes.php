@@ -94,6 +94,46 @@
                 <button class="btn" id="btn-filter" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar_desplegable" aria-controls="sidebar_desplegable"><i class="fa-solid fa-filter"></i> <?= lang("registre.buttons.filter") ?></button>
                 </div>
             </div>
+            <!--Filtres-->
+            <?php if (isset($session_filtre)) : ?>
+                <div class="d-flex">
+                    <form method="POST" action="<?= base_url('/eliminarFiltre') ?>">
+                        <?= csrf_field() ?>
+                        <div class="row d-flex align-items-center">
+                            <input type="hidden" name="operacio" id="operacio" value="" />
+                            <?php if (count($session_filtre) !== 0) : ?>
+                                <div class="col">
+                                    <p><?= lang('registre.title_activated_filters') ?></p>
+                                </div>
+                            <?php endif; ?>
+                            <?php if (isset($session_filtre['tipus_dispositiu'])) : ?>
+                                <div class="col px-0 form-check form-check-inline">
+                                    <span class="badge bg-light text-dark etiqueta"><?= lang('registre.title_filtre_checkbox_dispositiu') ?> <i class="fa-solid fa-arrow-right"></i> <?= $session_filtre['tipus_dispositiu'][0] ?><button type="button" onclick="enviar('Dispositiu')" class="btn-close btn_etiqueta" aria-label="Close"></button></span>
+                                </div>
+                            <?php endif; ?>
+                            <?php if (isset($session_filtre['estat'])) : ?>
+                                <div class="col px-0 form-check form-check-inline">
+                                    <span class="badge bg-light text-dark etiqueta"><?= lang('registre.title_filtre_checkbox_estat') ?> <i class="fa-solid fa-arrow-right"></i> <?= $estat_escollit ?> <button type="button" onclick="enviar('Estat')" class="btn-close btn_etiqueta" aria-label="Close"></button></span>
+                                </div>
+                            <?php endif; ?>
+                            <?php if (isset($session_filtre['nom_centre_emissor'])) : ?>
+                                <div class="col px-0 form-check form-check-inline">
+                                    <span class="badge bg-light text-dark etiqueta"><?= lang('registre.title_filtre_checkbox_centre_emissor') ?> <i class="fa-solid fa-arrow-right"></i> <?= $centre_emissor_escollit['nom_centre'] ?><button type="button" onclick="enviar('Centre_emissor')" class="btn-close btn_etiqueta" aria-label="Close"></button></span>
+                                </div>
+                            <?php endif; ?>
+                            <?php if (isset($session_filtre['data_creacio'])) : ?>
+                                <div class="col px-0 form-check form-check-inline">
+                                    <span class="badge bg-light text-dark etiqueta"><?= lang('registre.title_filtre_checkbox_data') ?> <i class="fa-solid fa-arrow-right"></i> <?= $session_filtre['data_creacio'][0] ?> <button type="button" onclick="enviar('data_creacio')" class="btn-close btn_etiqueta" aria-label="Close"></button></span>
+                                </div>
+                            <?php endif; ?>
+                            <div class="col px-0 form-check form-check-inline">
+                                <button id="submit_eliminar_tots_filtres" name="submit_eliminar_filtres" type="submit" class="btn btn-danger btn_save rounded-pill ms-3 me-3"><i class="fa-solid fa-trash me-2" id="trash_icon"></i><?= lang('registre.delete_all_filters') ?></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            <?php endif; ?>
+            <!--Taula-->
             <div>
                 <?php if ($error != null) {
                     echo lang($error);
@@ -150,5 +190,11 @@
         }
 
     })(window, document, undefined);
+</script>
+<script>
+    function enviar(x) {
+        document.getElementById("operacio").value = x;
+        document.forms[1].submit();
+    }
 </script>
 <?= $this->endSection('contingut'); ?>

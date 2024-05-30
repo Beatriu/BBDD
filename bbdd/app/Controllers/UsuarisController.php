@@ -95,7 +95,6 @@ class UsuarisController extends BaseController
     public function login()
     {
         // Funció principal d'inici de sessió. Aquesta és la primera, la que carrega la vista inicial
-
         // Definim el títol de la pàgina i carreguem els models a utilitzar 
         $data['title'] = "login";
         $login_model = new LoginModel();
@@ -104,7 +103,6 @@ class UsuarisController extends BaseController
         $llista_admesos_model = new LlistaAdmesosModel();
         $centre_model = new CentreModel();
         $alumne_model = new AlumneModel();
-
 
         $client = new \Google\Client(); //Generem un client de google
 

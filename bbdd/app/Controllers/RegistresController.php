@@ -673,10 +673,17 @@ class RegistresController extends BaseController
             $crud->addWhere('nom_tipus_dispositiu', $session_filtre['tipus_dispositiu'][0]);
         }
         if (isset($session_filtre['estat'])) {
+            $model_estat = new EstatModel();
+            $estat_escollit = $model_estat->obtenirEstatPerId($session_filtre['estat'][0]);
+            
+            $data['estat_escollit'] = $estat_escollit;
             $crud->addWhere('id_estat', $session_filtre['estat'][0]);
         }
         if (isset($session_filtre['nom_centre_emissor'])) {
-            $crud->addWhere('nom_centre_emissor', $session_filtre['nom_centre_emissor'][0]);
+            $model_centre = new CentreModel();
+            $centre_emissor_escollit = $model_centre->obtenirCentre($session_filtre['nom_centre_emissor'][0]);
+            $data['centre_emissor_escollit'] = $centre_emissor_escollit;
+            $crud->addWhere('codi_centre_emissor', $session_filtre['nom_centre_emissor'][0], true);
         }
         if (isset($session_filtre['data_creacio'])) {
             $data_de_la_sessio = $session_filtre['data_creacio'][0];

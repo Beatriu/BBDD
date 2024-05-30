@@ -727,7 +727,7 @@ class InventarisController extends BaseController
         $poblacio_model = new PoblacioModel();
         $array_poblacions = $poblacio_model->obtenirPoblacions();
         $options_poblacions = "";
-
+        //dd($actor);
         for ($i = 0; $i < sizeof($array_poblacions); $i++) {
             //if (($role == "sstt" || $role == "admin_sstt") && $array_poblacions[$i]['id_sstt'] == $actor['id_sstt']) {
             //} else if ($role == "desenvolupador") {
@@ -822,7 +822,7 @@ class InventarisController extends BaseController
         $filtre_eliminar = $this->request->getPost();
         $filtre_session = session()->get('filtresInventari');
         $eliminar = $this->request->getPost('submit_eliminar_filtres');
-
+        //dd($filtre_session);
         if ($eliminar !== null) {
             session()->remove('filtresInventari');
         }
