@@ -88,7 +88,7 @@ class TiquetController extends BaseController
                     'nom_tipus_intervencio',
                     'descripcio_intervencio_limitada',
                     'correu_alumne',
-                    'id_xtec'
+                    'id_xtec',
                 ]);
                 $crud->setColumnsInfo([
                     'id_intervencio_limitat' => [
@@ -312,6 +312,8 @@ class TiquetController extends BaseController
                     $data['output2'] = $crud2->render();
                 }
 
+
+                
                 $data['output'] = $crud->render();
                 return view('tiquet' . DIRECTORY_SEPARATOR . 'vistaTiquet', $data);
             }
@@ -327,6 +329,11 @@ class TiquetController extends BaseController
         $tiquet_model = new TiquetModel();
 
         $input = $this->request->getPost('tiquet_seleccionat');
+
+        if (substr_count((string) $input, " // ") != 3) {
+            return redirect()->back();
+        }
+
         $id_tiquet = trim(explode('//', (string) $input)[3]);
 
         $tiquet = $tiquet_model->getTiquetById($id_tiquet);
@@ -340,6 +347,9 @@ class TiquetController extends BaseController
 
     public function createTiquet_post()
     {
+        $tiquet_model = new TiquetModel;
+        $centre_model = new CentreModel();
+        
         $data['title'] = "login";
 
         $csv = $this->request->getFiles();
@@ -364,8 +374,6 @@ class TiquetController extends BaseController
         }
 
         if ($csv['csv_tiquet'] != null || $this->validate($validationRules)) {
-
-            $tiquet_model = new TiquetModel;
 
             $nom_persona_contacte_centre = $this->request->getPost('sNomContacteCentre');
             $correu_persona_contacte_centre = $this->request->getPost('sCorreuContacteCentre');
@@ -463,7 +471,19 @@ class TiquetController extends BaseController
                     if ($centre_reparador == "") {
                         $centre_reparador = null;
                     }
+
+                    // TODO Bea alerta que els centres que han introduït no són vàlids
+                    if ($centre_emissor != null && $centre_model->obtenirCentre($centre_emissor) == null) {
+                        return redirect()->back()->withInput();
+                    }
+
+                    if ($centre_reparador != null && $centre_model->obtenirCentre($centre_reparador) == null) {
+                        return redirect()->back()->withInput();
+                    }
                 }
+
+
+
 
                 for ($i = 1; $i <= $num_tiquets; $i++) {
                     $codi_equip = $this->request->getPost('equipment_code_' . $i);
@@ -535,11 +555,11 @@ class TiquetController extends BaseController
             $options_tipus_dispositius_reparadors = "";
             for ($i = 0; $i < sizeof($array_centres); $i++) {
                 if (($role == "sstt" || $role == "admin_sstt") && $array_centres[$i]['id_sstt'] == $actor['id_sstt']) {
-                    $options_tipus_dispositius_emissors .= "<option value='" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "'>";
+                    $options_tipus_dispositius_emissors .= "<option value=\"" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "\">";
                     $options_tipus_dispositius_emissors .= $array_centres[$i]['nom_centre'];
                     $options_tipus_dispositius_emissors .= "</option>";
                 } else if ($role == "desenvolupador") {
-                    $options_tipus_dispositius_emissors .= "<option value='" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "'>";
+                    $options_tipus_dispositius_emissors .= "<option value=\"" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "\">";
                     $options_tipus_dispositius_emissors .= $array_centres[$i]['nom_centre'];
                     $options_tipus_dispositius_emissors .= "</option>";
                 }
@@ -547,11 +567,11 @@ class TiquetController extends BaseController
 
                 if ($array_centres[$i]['taller'] == 1) {
                     if (($role == "sstt" || $role == "admin_sstt") && $array_centres[$i]['id_sstt'] == $actor['id_sstt']) {
-                        $options_tipus_dispositius_reparadors .= "<option value='" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "'>";
+                        $options_tipus_dispositius_reparadors .= "<option value=\"" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "\">";
                         $options_tipus_dispositius_reparadors .= $array_centres[$i]['nom_centre'];
                         $options_tipus_dispositius_reparadors .= "</option>";
                     } else if ($role == "desenvolupador") {
-                        $options_tipus_dispositius_reparadors .= "<option value='" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "'>";
+                        $options_tipus_dispositius_reparadors .= "<option value=\"" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "\">";
                         $options_tipus_dispositius_reparadors .= $array_centres[$i]['nom_centre'];
                         $options_tipus_dispositius_reparadors .= "</option>";
                     }
@@ -1174,6 +1194,15 @@ class TiquetController extends BaseController
                         $estat_desti_nom = null;
                     }
 
+                    // TODO Bea alerta que els centres que han introduït no són vàlids
+                    if ($codi_centre_emissor != null && $centre_model->obtenirCentre($codi_centre_emissor) == null) {
+                        return redirect()->back()->withInput();
+                    }
+
+                    if ($codi_centre_reparador != null && $centre_model->obtenirCentre($codi_centre_reparador) == null) {
+                        return redirect()->back()->withInput();
+                    }
+
                     $data = [
                         "nom_persona_contacte_centre" => $nom_contacte_centre,
                         "correu_persona_contacte_centre" => $correu_contacte_centre,
@@ -1245,6 +1274,14 @@ class TiquetController extends BaseController
                     $centre_emissor = trim(explode('-', (string) $centre_emissor)[0]);
                     $centre_reparador = trim(explode('-', (string) $centre_reparador)[0]);
 
+                    // TODO Bea alerta que els centres que han introduït no són vàlids
+                    if ($centre_emissor != null && $centre_model->obtenirCentre($centre_emissor) == null) {
+                        return redirect()->back()->withInput();
+                    }
+
+                    if ($centre_reparador != null && $centre_model->obtenirCentre($centre_reparador) == null) {
+                        return redirect()->back()->withInput();
+                    }
 
                     $data_informacio = [
                         "nom_persona_contacte_centre" => $nom_contacte_centre,

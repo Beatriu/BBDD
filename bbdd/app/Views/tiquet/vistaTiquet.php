@@ -60,8 +60,10 @@
                     <li><?= lang('intervencio.dades_tiquet.dades_codi') ?>: <?= $tiquet['codi_equip'] ?> </li>
                     <li><?= lang('intervencio.dades_tiquet.dades_tipus') ?>: <?= $tipus_dispositiu ?> </li>
 
-                    <?php if ($role == "sstt" || $role == "admin_sstt" || $role == "desenvolupador") : ?>
+                    <?php if ($role == "sstt" || $role == "admin_sstt" || $role == "desenvolupador" || $role == "professor") : ?>
                         <li><?= lang('registre.centre') ?>: <?= $nom_centre_emissor ?> </li>
+                    <?php endif; ?>
+                    <?php if ($role == "sstt" || $role == "admin_sstt" || $role == "desenvolupador") : ?>
                         <li><?= lang('general_lang.name_curt') ?>: <?= $tiquet['nom_persona_contacte_centre'] ?> </li>
                         <li><?= lang('general_lang.contact_curt') ?>: <?= $tiquet['correu_persona_contacte_centre'] ?> </li>
                         <li><?= lang('registre.centre_reparador') ?>: <?= $nom_centre_reparador ?> </li>

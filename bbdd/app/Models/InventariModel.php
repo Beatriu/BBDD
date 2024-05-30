@@ -51,6 +51,11 @@ class InventariModel extends Model
         ]);
     }
 
+    public function obtenirInventari()
+    {
+        return $this->findAll();
+    }
+
     public function obtenirInventariPerId($id_inventari)
     {
         return $this->where('id_inventari', $id_inventari)->first();
