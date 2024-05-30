@@ -635,6 +635,10 @@ class RegistresController extends BaseController
         $data['id_tiquet'] = null;
         $data['error'] = '';
 
+        $model_centre = new CentreModel();
+        $dades_centre = $model_centre->obtenirCentre($actor['codi_centre']);
+        $actor['id_sstt'] = $dades_centre['id_sstt'];
+
         $data['tipus_dispositius'] = $this->selectorTipusDispositiu();
         $data['estats'] = $this->selectorEstat();
         $data['centre_emissor'] = $this->selectorCentreEmissor($data['role'], $actor);
@@ -689,6 +693,7 @@ class RegistresController extends BaseController
             'nom_tipus_dispositiu',
             'descripcio_avaria_limitada',
             'nom_estat',
+            'nom_centre_emissor',
             'data_alta_format',
             'hora_alta_format'
         ]);
@@ -708,6 +713,10 @@ class RegistresController extends BaseController
             ],
             'nom_estat' => [
                 'name' => lang("registre.estat"),
+            ],
+            'nom_centre_emissor' => [
+                'name' => lang("registre.centre"),
+                'type' => KpaCrud::INVISIBLE_FIELD_TYPE,
             ],
             'data_alta_format' => [
                 'name' => lang("registre.data_alta"),
@@ -778,7 +787,7 @@ class RegistresController extends BaseController
         $options_tipus_dispositius_emissors = "";
 
         for ($i = 0; $i < sizeof($array_centres); $i++) {
-            if ((($role == "sstt" || $role == "admin_sstt" || $role == 'professor' )  && $array_centres[$i]['id_sstt'] == $actor['id_sstt']) ) {
+            if ((($role == "sstt" || $role == "admin_sstt" || $role == 'professor' || $role == 'alumne' )  && $array_centres[$i]['id_sstt'] == $actor['id_sstt']) ) {
                 $options_tipus_dispositius_emissors .= "<option value=\"" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "\">";
                 $options_tipus_dispositius_emissors .= "</option>";
             } else if ($role == "desenvolupador") {
