@@ -49,7 +49,7 @@
 
                     <div class="col">
                         <label for="preu" class="form-label"><?= lang('inventari.preu') ?> *</label>
-                        <input type="number" step="any" min="0.00" class="form-control" name = "preu" id="preu" placeholder="<?= lang('inventari.preu') ?>" value = "0" required>
+                        <input type="number" step="0.01" min="0.00" class="form-control" name = "preu" id="preu" placeholder="<?= lang('inventari.preu') ?>" value = "0" required>
                     </div>
 
                 </div>

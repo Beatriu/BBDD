@@ -219,7 +219,7 @@
 
         function init() {
             var buscador = document.getElementById("data-list-vista_tiquet_filter");
-            buscador.style = "display: none;";
+            buscador.style.display = "none";
             var nou_buscador = buscador;
             nou_buscador.style = "display: unset";
             nou_buscador.classList.add("d-flex");
@@ -259,6 +259,9 @@
             var final_taula = document.getElementById("data-list-vista_tiquet_info");
             var pare_final_taula = final_taula.parentElement;
             pare_final_taula.appendChild(paginador);
+
+            let paginate_buttons = document.getElementById("data-list-vista_tiquet_paginate");
+            paginate_buttons.addEventListener("click", () => this.actualitzarColorsEstats());
         }
 
 

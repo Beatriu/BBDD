@@ -99,7 +99,8 @@ class InventarisController extends BaseController
                     'nom_tipus_inventari',
                     'descripcio_inventari_limitada',
                     'data_compra',
-                    'id_intervencio'
+                    'id_intervencio',
+                    'preu'
                 ]);
                 $crud->setColumnsInfo([
                     'id_inventari_limitat' => [
@@ -117,6 +118,9 @@ class InventarisController extends BaseController
                     'id_intervencio' => [
                         'name' => lang('inventari.id_intervencio')
                     ],
+                    'preu' => [
+                        'name' => lang('inventari.preu')
+                    ]
                 ]);
 
                 $crud->addWhere('codi_centre', $actor['codi_centre']);
@@ -130,7 +134,8 @@ class InventarisController extends BaseController
                     'id_intervencio',
                     'nom_centre',
                     'nom_poblacio',
-                    'nom_comarca'
+                    'nom_comarca',
+                    'preu'
                 ]);
                 $crud->setColumnsInfo([
                     'id_inventari_limitat' => [
@@ -156,6 +161,9 @@ class InventarisController extends BaseController
                     ],
                     'nom_comarca' => [
                         'name' => lang('inventari.nom_comarca')
+                    ],
+                    'preu' => [
+                        'name' => lang('inventari.preu')
                     ]
                 ]);
 
@@ -171,7 +179,8 @@ class InventarisController extends BaseController
                     'nom_centre',
                     'nom_sstt',
                     'nom_poblacio',
-                    'nom_comarca'
+                    'nom_comarca',
+                    'preu',
                 ]);
                 $crud->setColumnsInfo([
                     'id_inventari_limitat' => [
@@ -200,6 +209,9 @@ class InventarisController extends BaseController
                     ],
                     'nom_comarca' => [
                         'name' => lang('inventari.nom_comarca')
+                    ],
+                    'preu' => [
+                        'name' => lang('inventari.preu')
                     ]
                 ]);
             }
@@ -306,6 +318,7 @@ class InventarisController extends BaseController
     {
         $inventari_model = new InventariModel();
         $centre_model = new CentreModel();
+        $tipus_inventari_model = new TipusInventariModel();
 
         $actor = session()->get('user_data');
         $role = $actor['role'];
@@ -392,6 +405,11 @@ class InventarisController extends BaseController
 
                 $tipus_inventari = $this->request->getPost('tipus_inventari');
                 $id_tipus_inventari = trim(explode('-', (string) $tipus_inventari)[0]);
+
+                // TODO Bea alerta que els centres que han introduït no són vàlids
+                if ($tipus_inventari_model->obtenirTipusInventariPerId($id_tipus_inventari) == null) {
+                    return redirect()->back()->withInput();
+                }
 
                 if ($role == "professor") {
 
@@ -490,6 +508,7 @@ class InventarisController extends BaseController
         $inventari_model = new InventariModel();
         $tipus_inventari_model = new TipusInventariModel();
         $estat_model = new EstatModel();
+        $centre_model = new CentreModel();
 
         $actor = session()->get('user_data');
         $role = $actor['role'];
@@ -559,7 +578,21 @@ class InventarisController extends BaseController
             $data['output'] = $crud->render();
 
             // Carregar peces d'inventari
-            $array_inventari = $inventari_model->obtenirInventariCentre($actor['codi_centre']);
+            if (($role == "alumne" || $role == "professor") && ($estat == "Pendent de reparar" || $estat == "Reparant")) {
+                $array_inventari = $inventari_model->obtenirInventariCentre($actor['codi_centre']);
+            } else if ($role == "admin_sstt") {
+
+                $array_inventari = $inventari_model->obtenirInventari();
+                for ($k = 0; $k < sizeof($array_inventari); $k++) {
+                    if ($actor['id_sstt'] != $centre_model->obtenirCentre($array_inventari[$k]['codi_centre'])['id_sstt']){
+
+                    }
+                }
+
+            } else if ($role == "desenvolupador") {
+
+            }
+            
             $data['inventari_list'] = "";
             for ($i = 0; $i < sizeof($array_inventari); $i++) {
 
@@ -592,6 +625,11 @@ class InventarisController extends BaseController
             $inventari_post = $this->request->getPost('inventari');
             if ($inventari_post != "") {
 
+                // TODO Bea afegir alerta
+                if (substr_count((string) $inventari_post, " // ") != 2) {
+                    return redirect()->back();
+                }
+                
                 $id_inventari = trim(explode('//', (string) $inventari_post)[2]);
                 $tipus_inventari = trim(explode('//', (string) $inventari_post)[0]);
                 $inventari = $inventari_model->obtenirInventariPerId($id_inventari);

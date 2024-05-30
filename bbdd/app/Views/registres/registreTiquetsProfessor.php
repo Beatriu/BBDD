@@ -256,6 +256,9 @@
             var final_taula = document.getElementById("data-list-vista_tiquet_info");
             var pare_final_taula = final_taula.parentElement;
             pare_final_taula.appendChild(paginador);
+
+            let input_buscador = document.getElementById("input_buscador");
+            input_buscador.addEventListener("click", () => this.actualitzarColorsEstats());
         }
 
     })(window, document, undefined);
@@ -266,4 +269,5 @@
         document.forms[1].submit();
     }
 </script>
+<script src=""></script>
 <?= $this->endSection('contingut'); ?>

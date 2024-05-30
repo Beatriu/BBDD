@@ -91,8 +91,8 @@ function actualitzarColorsEstats() {
 }
 
 window.addEventListener("load", (event) => {
-    let paginate_buttons = document.getElementById("data-list-vista_tiquet_paginate");
-    paginate_buttons.addEventListener("click", () => this.actualitzarColorsEstats());
+    //let paginate_buttons = document.getElementById("data-list-vista_tiquet_paginate");
+    //paginate_buttons.addEventListener("click", () => this.actualitzarColorsEstats());
     
 
     let table = document.getElementById("data-list-vista_tiquet");
@@ -184,10 +184,5 @@ window.addEventListener("load", (event) => {
         }
 
     }
-
-
-    let input_buscador = document.getElementById("input_buscador");
-    console.log(input_buscador);
-    input_buscador.addEventListener("click", () => this.actualitzarColorsEstats());
 
   });

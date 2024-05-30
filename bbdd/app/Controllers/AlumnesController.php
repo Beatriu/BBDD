@@ -436,17 +436,24 @@ class AlumnesController extends BaseController
 
             if ($role == "professor" && $codi_centre_alumne == $actor['codi_centre']) {
 
-                $alumne_model->addAlumne($correu_alumne_post, $alumne_editar['codi_centre']);
-                $login_model->addLogin($correu_alumne_post, null);
-                $login_in_rol->addLoginInRol($login_model->obtenirId($correu_alumne_post), $rol_model->obtenirIdRol("alumne"));
+                $alumne_post = $alumne_model->getAlumneByCorreu($correu_alumne_post);
+
+                if ($alumne_post) {
+                    $alumne_model->editarAlumneActiu($correu_alumne_post, 1);
+                } else {
+                    $alumne_model->addAlumne($correu_alumne_post, $alumne_editar['codi_centre']);
+                    $login_model->addLogin($correu_alumne_post, null);
+                    $login_in_rol->addLoginInRol($login_model->obtenirId($correu_alumne_post), $rol_model->obtenirIdRol("alumne"));
+                }
+
                 $intervencio_model->editarIntervencioCorreuNou($correu_alumne_editar, $correu_alumne_post);
                 $alumne_model->editarAlumneActiu($correu_alumne_editar, 0);
-                //$id_login = $login_model->obtenirId($correu_alumne_editar);
-                //$login_in_rol->deleteLoginInRol($id_login);
-                //$login_model->deleteLogin($id_login);
+
                 $msg = lang('alertes.flash_data_update_alumne');
                 session()->setFlashdata('afegirAlumne', $msg);
+
                 return redirect()->to(base_url('/alumnes'));
+
             } else if (($role == "admin_sstt" && $id_sstt_alumne == $actor['id_sstt']) || ($role == "desenvolupador")) {
 
                 $codi_centre_post = $this->request->getPost('centre');
@@ -457,7 +464,7 @@ class AlumnesController extends BaseController
                 if ($id_sstt_alumne == $id_sstt_post) { // Comprovem que l'identificador del sstt que volem assignar a l'alumne sigui el mateix que el de l'actor
 
                     if ($correu_alumne_editar != $correu_alumne_post) { // En cas que el correu original i el nou siguin diferents
-
+                        
                         $alumne_model->addAlumne($correu_alumne_post, $codi_centre_post); // Creem un alumne nou
                         $login_model->addLogin($correu_alumne_post, null);
                         $login_in_rol->addLoginInRol($login_model->obtenirId($correu_alumne_post), $rol_model->obtenirIdRol("alumne"));
