@@ -25,7 +25,7 @@ class RegistresController extends BaseController
 
     public function index($id_tiquet = null)
     {
-        
+
         $role = session()->get('user_data')['role'];
 
         switch ($role) {
@@ -217,10 +217,13 @@ class RegistresController extends BaseController
         $actor = session()->get('user_data');
         $data['role'] = $actor['role'];
 
+        $model_centre = new CentreModel();
+        $dades_centre = $model_centre->obtenirCentre($actor['codi_centre']);
+        $actor['id_sstt'] = $dades_centre['id_sstt'];
+
         $data['tipus_dispositius'] = $this->selectorTipusDispositiu();
         $data['estats'] = $this->selectorEstat();
         $data['centre_emissor'] = $this->selectorCentreEmissor($data['role'], $actor);
-
 
         if ($id_tiquet != null) {
 
@@ -360,10 +363,17 @@ class RegistresController extends BaseController
                 $crud->addWhere('nom_tipus_dispositiu', $session_filtre['tipus_dispositiu'][0]);
             }
             if (isset($session_filtre['estat'])) {
+                $model_estat = new EstatModel();
+                $estat_escollit = $model_estat->obtenirEstatPerId($session_filtre['estat'][0]);
+                
+                $data['estat_escollit'] = $estat_escollit;
                 $crud->addWhere('id_estat', $session_filtre['estat'][0]);
             }
             if (isset($session_filtre['nom_centre_emissor'])) {
-                $crud->addWhere('nom_centre_emissor', $session_filtre['nom_centre_emissor'][0]);
+                $model_centre = new CentreModel();
+                $centre_emissor_escollit = $model_centre->obtenirCentre($session_filtre['nom_centre_emissor'][0]);
+                $data['centre_emissor_escollit'] = $centre_emissor_escollit;
+                $crud->addWhere('codi_centre_emissor', $session_filtre['nom_centre_emissor'][0], true);
             }
             if (isset($session_filtre['data_creacio'])) {
                 $data_de_la_sessio = $session_filtre['data_creacio'][0];
@@ -540,15 +550,16 @@ class RegistresController extends BaseController
         if ($role == "sstt" || $role == "admin_sstt" || $role == "desenvolupador") {
             $crud->addItemLink('pdf', 'fa-file-pdf', base_url('/tiquets/pdf'), 'Tiquet PDF', true);
         }
+        
 
         if (is_array($session_filtre)) {
-
             if (isset($session_filtre['tipus_dispositiu'])) {
                 $crud->addWhere('nom_tipus_dispositiu', $session_filtre['tipus_dispositiu'][0], true);
             }
             if (isset($session_filtre['estat'])) {
                 $model_estat = new EstatModel();
                 $estat_escollit = $model_estat->obtenirEstatPerId($session_filtre['estat'][0]);
+                
                 $data['estat_escollit'] = $estat_escollit;
                 $crud->addWhere('id_estat', $session_filtre['estat'][0], true);
             }
@@ -624,6 +635,10 @@ class RegistresController extends BaseController
         $data['id_tiquet'] = null;
         $data['error'] = '';
 
+        $model_centre = new CentreModel();
+        $dades_centre = $model_centre->obtenirCentre($actor['codi_centre']);
+        $actor['id_sstt'] = $dades_centre['id_sstt'];
+
         $data['tipus_dispositius'] = $this->selectorTipusDispositiu();
         $data['estats'] = $this->selectorEstat();
         $data['centre_emissor'] = $this->selectorCentreEmissor($data['role'], $actor);
@@ -658,10 +673,17 @@ class RegistresController extends BaseController
             $crud->addWhere('nom_tipus_dispositiu', $session_filtre['tipus_dispositiu'][0]);
         }
         if (isset($session_filtre['estat'])) {
+            $model_estat = new EstatModel();
+            $estat_escollit = $model_estat->obtenirEstatPerId($session_filtre['estat'][0]);
+            
+            $data['estat_escollit'] = $estat_escollit;
             $crud->addWhere('id_estat', $session_filtre['estat'][0]);
         }
         if (isset($session_filtre['nom_centre_emissor'])) {
-            $crud->addWhere('nom_centre_emissor', $session_filtre['nom_centre_emissor'][0]);
+            $model_centre = new CentreModel();
+            $centre_emissor_escollit = $model_centre->obtenirCentre($session_filtre['nom_centre_emissor'][0]);
+            $data['centre_emissor_escollit'] = $centre_emissor_escollit;
+            $crud->addWhere('codi_centre_emissor', $session_filtre['nom_centre_emissor'][0], true);
         }
         if (isset($session_filtre['data_creacio'])) {
             $data_de_la_sessio = $session_filtre['data_creacio'][0];
@@ -678,6 +700,7 @@ class RegistresController extends BaseController
             'nom_tipus_dispositiu',
             'descripcio_avaria_limitada',
             'nom_estat',
+            'nom_centre_emissor',
             'data_alta_format',
             'hora_alta_format'
         ]);
@@ -697,6 +720,10 @@ class RegistresController extends BaseController
             ],
             'nom_estat' => [
                 'name' => lang("registre.estat"),
+            ],
+            'nom_centre_emissor' => [
+                'name' => lang("registre.centre"),
+                'type' => KpaCrud::INVISIBLE_FIELD_TYPE,
             ],
             'data_alta_format' => [
                 'name' => lang("registre.data_alta"),
@@ -767,7 +794,7 @@ class RegistresController extends BaseController
         $options_tipus_dispositius_emissors = "";
 
         for ($i = 0; $i < sizeof($array_centres); $i++) {
-            if (($role == "sstt" || $role == "admin_sstt")  && $array_centres[$i]['id_sstt'] == $actor['id_sstt']) {
+            if ((($role == "sstt" || $role == "admin_sstt" || $role == 'professor' || $role == 'alumne' )  && $array_centres[$i]['id_sstt'] == $actor['id_sstt']) ) {
                 $options_tipus_dispositius_emissors .= "<option value=\"" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "\">";
                 $options_tipus_dispositius_emissors .= "</option>";
             } else if ($role == "desenvolupador") {
@@ -826,7 +853,6 @@ class RegistresController extends BaseController
                 $session->push('filtres', ['tipus_dispositiu' => $array_tipus_dispositiu]);
             }
             if (isset($dades['selector_tipus_estat'])) {
-
                 $array_estat = [];
                 $tipus_estat_seleccionat = $dades['selector_tipus_estat'];
                 array_push($array_estat, $tipus_estat_seleccionat);
@@ -891,6 +917,6 @@ class RegistresController extends BaseController
             session()->remove('filtres');
         }
 
-        return redirect()->back();
+        return redirect()->back()->withInput();
     }
 }

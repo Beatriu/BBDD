@@ -53,6 +53,10 @@ $routes->get('/tiquets/(:segment)/assignar/(:segment)', 'InventarisController::a
 $routes->post('/tiquets/(:segment)/assignar/(:segment)', 'InventarisController::assignarInventari_post/$1/$2', ['filter'=>'Autentica']);
 $routes->get('/inventari/desassignar/(:segment)', 'InventarisController::desassignarInventari/$1', ['filter'=>'Autentica']);
 
+//FILTRE INVENTARI
+$routes->post('/filtreInventari', 'InventarisController::filtrePost', ['filter'=>'Autentica']);
+$routes->post('/eliminarFiltreInventari', 'InventarisController::eliminarFiltre', ['filter'=>'Autentica']);
+
 //Alumnes
 $routes->get('/alumnes', 'AlumnesController::registreAlumnes', ['filter'=>'Autentica']);
 $routes->get('/alumnes/afegir', 'AlumnesController::crearAlumne', ['filter'=>'Autentica']);
@@ -61,6 +65,10 @@ $routes->get('/alumnes/editar/(:segment)', 'AlumnesController::editarAlumne/$1',
 $routes->post('/alumnes/editar', 'AlumnesController::editarAlumne_post', ['filter'=>'Autentica']);
 $routes->get('/alumnes/esborrar/(:segment)', 'AlumnesController::registreAlumnes/$1', ['filter'=>'Autentica']);
 $routes->get('/eliminarAlumne/(:segment)', 'AlumnesController::eliminarAlumne/$1', ['filter'=>'Autentica']);
+
+//FILTRE ALUMNES
+$routes->post('/filtreAlumnes', 'AlumnesController::filtrePost', ['filter'=>'Autentica']);
+$routes->post('/eliminarFiltreAlumnes', 'AlumnesController::eliminarFiltre', ['filter'=>'Autentica']);
 
 //Backtickets
 

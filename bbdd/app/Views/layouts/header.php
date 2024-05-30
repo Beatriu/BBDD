@@ -5,7 +5,9 @@
 
 <header class="d-flex bd-highlight" style="background-color: #333333;">
     <div class="p-2 flex-grow-1 bd-highlight">
-        <img class="logo" src="<?= base_url('img' . DIRECTORY_SEPARATOR . 'Logotip' . DIRECTORY_SEPARATOR . 'Logotip per aplicar a fons negres.png') ?>" alt="Imatge del log de l'empresa. Es mostra un ordinador amb una imatge de clau anglesa i base de dades a l'interior."/>
+        <a href="<?= base_url('/tiquets')?>">
+            <img class="logo" src="<?= base_url('img' . DIRECTORY_SEPARATOR . 'Logotip' . DIRECTORY_SEPARATOR . 'Logotip per aplicar a fons negres.png') ?>" alt="Imatge del log de l'empresa. Es mostra un ordinador amb una imatge de clau anglesa i base de dades a l'interior."/>
+        </a>
     </div>
     <div class="p-2 bd-highlight d-flex pe-4">
 

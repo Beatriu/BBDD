@@ -52,4 +52,9 @@ class PoblacioModel extends Model
         return $this->where('id_poblacio', $d1)->first();
     }
 
+    public function obtenirPoblacions()
+    {
+        return $this->findAll();
+    }
+
 }

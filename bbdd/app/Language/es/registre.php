@@ -47,6 +47,9 @@ return [
     'title_filtre_checkbox_centre_reparador' => 'Reparador',
     'title_filtre_checkbox_estat' => 'Estado',
     'title_filtre_checkbox_data' => 'Fecha',
+    'title_filtre_checkbox_poblacio' => 'Población',
+    'title_filtre_checkbox_comarca' => 'Comarca',
     'delete_all_filters' => 'Eliminar todos los filtros',
-    
+    'title_div_poblacio' => 'Població:',
+    'title_div_comarca' => 'Comarca:'
 ];

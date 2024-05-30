@@ -14,13 +14,18 @@ SELECT
     td.nom_tipus_dispositiu, 
     t.id_estat,
     e.nom_estat, 
+    t.preu_total,
     t.codi_centre_emissor,
     t.codi_centre_reparador,
     ce.nom_centre AS nom_centre_emissor,
     cr.nom_centre AS nom_centre_reparador,
     ce.id_sstt AS id_sstt_emissor,
+    pe.id_poblacio AS id_poblacio_emissor,
+    pr.id_poblacio AS id_poblacio_reparador,
     pe.nom_poblacio AS nom_poblacio_emissor,
     pr.nom_poblacio AS nom_poblacio_reparador,
+    come.id_comarca AS id_comarca_emissor,
+    comr.id_comarca AS id_comarca_reparador,
     come.nom_comarca AS nom_comarca_emissor,
     comr.nom_comarca AS nom_comarca_reparador	
     
@@ -37,7 +42,7 @@ LEFT JOIN comarca comr ON pr.id_comarca = comr.id_comarca;
 
 
 CREATE VIEW vista_alumne AS
-SELECT a.*, c.id_sstt, c.nom_centre, p.nom_poblacio, com.nom_comarca
+SELECT a.*, c.id_sstt, c.nom_centre, p.id_poblacio, p.nom_poblacio, com.id_comarca ,com.nom_comarca
 FROM alumne a
 INNER JOIN centre c ON a.codi_centre = c.codi_centre
 INNER JOIN poblacio p ON c.id_poblacio = p.id_poblacio
@@ -78,7 +83,9 @@ SELECT
     c.nom_centre,
     c.id_sstt,
     s.nom_sstt,
+    p.id_poblacio,
     p.nom_poblacio,
+    com.id_comarca,
     com.nom_comarca
 FROM 
     inventari i

@@ -15,6 +15,28 @@
 
 <form class="container" method="POST" action="<?= base_url('/tiquets/editar') ?>">
     <?= csrf_field() ?>
+    <!--Modal-->
+
+    <div id="modal" class="modal" tabindex="-1" style="display:none">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><?= lang('alertes.change_estat_title') ?></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="tancar()"></button>
+                </div>
+                <div class="modal-body">
+                    <p><?= lang('alertes.change_estat_contingut') ?></p>
+                    <p id="alerta_contingut"><?= lang('alertes.change_estat_contingut2') ?> </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="tancar()"><?= lang('registre.buttons.delete') ?></button>
+                    <button type="button" class="btn btn-primary" onclick="executar()"><?= lang('registre.buttons.save_changes') ?></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Formulari-->
     <div class="row mt-5 justify-content-center">
         <div class="col-2 d-flex align-items-center">
 
@@ -32,7 +54,7 @@
     </div>
     <div>
         <?php if ((session()->get('editarTiquet')) !== null) : ?>
-            <div class="alert alert-success alerta_esborrar" role="alert">
+            <div class="alert alert-warning alerta_esborrar" role="alert">
                 <?= session()->get('editarTiquet') ?>
             </div>
         <?php endif; ?>
@@ -111,10 +133,65 @@
 
     <div class="row justify-content-center mt-4">
         <div class="d-flex justify-content-center">
-            <button id="submit_afegir" type="submit" class="btn btn_save rounded-pill ms-3 me-3"><i class="fa-solid fa-floppy-disk me-2"></i><?= lang('registre.buttons.save_changes') ?></button>
+            <button id="submit_afegir" type="submit" class="btn btn_save rounded-pill ms-3 me-3" onclick="enviar()"><i class="fa-solid fa-floppy-disk me-2"></i><?= lang('registre.buttons.save_changes') ?></button>
         </div>
     </div>
 
 </form>
+<script>
+    var estat_inicial = 0;
+
+    (function(window, document, undefined) {
+        window.onload = init;
+
+        function init() {
+            var estat_div = document.getElementById("estat");
+            estat_inicial = estat_div.value;
+        }
+    })(window, document);
+
+    function enviar() {
+        var estat_div = document.getElementById("estat");
+        var estat = estat_div.value;
+        console.log(estat_inicial);
+        console.log();
+        if(estat_inicial !== estat){
+        if (estat == 3 || estat == 5 || estat == 7 || estat == 8 || estat == 9 || estat == 10 || estat == 11) {
+            $("form").submit(function(e) {
+                e.preventDefault();
+                var paragraf = document.getElementById("alerta_contingut");
+                var nom_estat = '';
+                if (estat == 3) {
+                    nom_estat = 'Emmagatzemat a SSTT';
+                } else if (estat == 5) {
+                    nom_estat = 'Pendent de reparar';
+                } else if (estat == 7) {
+                    nom_estat = 'Reparat i pendent de recollir';
+                } else if (estat == 8) {
+                    nom_estat = 'Pendent de retorn';
+                } else if (estat == 9) {
+                    nom_estat = 'Retornat';
+                } else if (estat == 10) {
+                    nom_estat = 'Rebutjat per SSTT';
+                } else {
+                    nom_estat = 'Desguassat';
+                }
+                paragraf.innerText = paragraf.innerText + " " + nom_estat;
+            });
+            var modal = document.getElementById("modal");
+            modal.style = "display:block";
+        }
+    } 
+    }
+
+    function tancar() {
+        var modal = document.getElementById("modal");
+        modal.style = "display:none";
+    }
+
+    function executar() {
+        document.forms[0].submit();
+    }
+</script>
 
 <?= $this->endSection('contingut'); ?>

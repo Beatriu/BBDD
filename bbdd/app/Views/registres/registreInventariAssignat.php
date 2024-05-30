@@ -32,7 +32,7 @@
             </div>
         <?php endif; ?>
         <?php if ((session()->get('desassingarInventari')) !== null) : ?>
-            <div class="alert alert-success alerta_esborrar" role="alert">
+            <div class="alert alert-danger alerta_esborrar" role="alert">
                 <?= session()->get('desassingarInventari') ?>
             </div>
         <?php endif; ?>

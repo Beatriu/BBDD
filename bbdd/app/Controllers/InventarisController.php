@@ -4,9 +4,12 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\CentreModel;
+use App\Models\ComarcaModel;
 use App\Models\EstatModel;
 use App\Models\IntervencioModel;
 use App\Models\InventariModel;
+use App\Models\PoblacioModel;
+use App\Models\TipusDispositiuModel;
 use App\Models\TipusInventariModel;
 use App\Models\TiquetModel;
 use SIENSIS\KpaCrud\Libraries\KpaCrud;
@@ -14,16 +17,17 @@ use SIENSIS\KpaCrud\Libraries\KpaCrud;
 class InventarisController extends BaseController
 {
     protected $helpers = ['form'];
-    
+
     public function index()
     {
-
     }
 
     public function registreInventari($id_inventari = null)
     {
         $inventari_model = new InventariModel();
         $centre_model = new CentreModel();
+        $session_filtre = session()->get('filtresInventari');
+        $data['session_filtre'] = $session_filtre;
 
         $actor = session()->get('user_data');
         $role = $actor['role'];
@@ -32,7 +36,6 @@ class InventarisController extends BaseController
         if ($role == "centre_reparador") {
 
             return redirect()->to(base_url('/tiquets'));
-
         } else {
 
             $data['id_inventari'] = null;
@@ -40,28 +43,29 @@ class InventarisController extends BaseController
             if ($id_inventari != null) {
 
                 $inventari_eliminar = $inventari_model->obtenirInventariPerId($id_inventari);
-    
+
                 if ($inventari_eliminar != null) {
                     $codi_centre_inventari = $inventari_eliminar['codi_centre'];
                     $id_sstt_inventari = $centre_model->obtenirCentre($codi_centre_inventari)['id_sstt'];
-            
+
                     if (($role == "professor" && $codi_centre_inventari == $actor['codi_centre']) || ($role == "admin_sstt" && $id_sstt_inventari == $actor['id_sstt']) || ($role == "desenvolupador")) {
-            
+
                         //Preguntar a la bbdd quin tiquet es i retornar l'array del tiquet.
                         $data['id_inventari'] = $id_inventari;
-                        session()->setFlashdata("id_inventari",$inventari_eliminar);
-            
+                        session()->setFlashdata("id_inventari", $inventari_eliminar);
                     } else {
                         $data['no_permisos'] = "inventari.no_permisos";
                     }
                 } else {
                     $data['no_permisos'] = "inventari.no_existeix";
                 }
-
-    
             }
 
             $data['title'] = 'Inventari';
+            $data['tipus_dispositius'] = $this->selectorTipusDispositiu();
+            $data['centre_reparador'] = $this->selectorCentreReparador($role, $actor);
+            $data['poblacio'] = $this->selectorPoblacio($role, $actor);
+            $data['comarca'] = $this->selectorComarca($role, $actor);
 
             $crud = new KpaCrud();
             $crud->setConfig('onlyView');
@@ -85,9 +89,9 @@ class InventarisController extends BaseController
             $crud->setPrimaryKey('id_inventari');
             $crud->hideHeadLink([
                 'js-bootstrap',
-                'css-bootstrap',         
+                'css-bootstrap',
             ]);
-            
+
             if ($role == "alumne" || $role == "professor" || $role == "centre_reparador") {
 
                 $crud->setColumns([
@@ -120,7 +124,6 @@ class InventarisController extends BaseController
                 ]);
 
                 $crud->addWhere('codi_centre', $actor['codi_centre']);
-
             } else if ($role == "sstt" || $role == "admin_sstt") {
 
                 $crud->setColumns([
@@ -165,7 +168,6 @@ class InventarisController extends BaseController
                 ]);
 
                 $crud->addWhere('id_sstt', $actor['id_sstt']);
-
             } else if ($role == "desenvolupador") {
 
                 $crud->setColumns([
@@ -212,17 +214,51 @@ class InventarisController extends BaseController
                         'name' => lang('inventari.preu')
                     ]
                 ]);
-
             }
-            if($role !== 'sstt' && $role !== 'alumne'){
+            if ($role !== 'sstt' && $role !== 'alumne') {
                 $crud->addItemLink('delete', 'fa-trash', base_url('inventari/esborrar'), 'Eliminar Peça');
             }
-            
-    
+
+            if (is_array($session_filtre)) {
+
+                if (isset($session_filtre['tipus_dispositiu'])) {
+                    $model_tipus_inventari = new TipusInventariModel();
+                    $tipus_inventari = $model_tipus_inventari->obtenirTipusInventariPerId($session_filtre['tipus_dispositiu'][0]);
+                    $data['tipus_dispositiu_escollit'] = $tipus_inventari['nom_tipus_inventari'];
+                    $crud->addWhere('nom_tipus_inventari', $tipus_inventari['nom_tipus_inventari'], true);
+                }
+                if (isset($session_filtre['nom_centre_reparador'])) {
+                    $model_centre = new CentreModel();
+                    $centre_reparador_escollit = $model_centre->obtenirCentre($session_filtre['nom_centre_reparador'][0]);
+                    $data['centre_reparador_escollit'] = $centre_reparador_escollit;
+
+                    $crud->addWhere('codi_centre', $session_filtre['nom_centre_reparador'][0], true);
+                }
+                if (isset($session_filtre['data_creacio'])) {
+
+                    $data_de_la_sessio = $session_filtre['data_creacio'][0];
+                    $data_nova = date('d-m-Y', strtotime($data_de_la_sessio));
+                    $crud->addWhere('data_compra', $data_nova, true);
+                }
+                if (isset($session_filtre['nom_poblacio'])) {
+                    $model_poblacio = new PoblacioModel();
+                    $poblacio_escollida = $model_poblacio->getPoblacio($session_filtre['nom_poblacio'][0], true);
+                    $data['poblacio_escollida'] = $poblacio_escollida['nom_poblacio'];
+                    $crud->addWhere('id_poblacio', $poblacio_escollida['id_poblacio'], true);
+                }
+                if (isset($session_filtre['nom_comarca'])) {
+                    $model_comarca = new ComarcaModel();
+                    $comarca_escollida = $model_comarca->obtenirComarca($session_filtre['nom_comarca'][0], true);
+                    $data['comarca_escollida'] = $comarca_escollida['nom_comarca'];
+
+                    $crud->addWhere('id_comarca', $comarca_escollida['id_comarca'], true);
+                }
+            }
+
             $data['output'] = $crud->render();
             $data['uri'] = $this->request->getPath();
             return view('registres' . DIRECTORY_SEPARATOR . 'registreInventari', $data);
-        } 
+        }
     }
 
 
@@ -236,6 +272,7 @@ class InventarisController extends BaseController
         $role = $actor['role'];
         $data['role'] = $role;
         $data['title'] = "Inventari";
+
 
         $array_tipus_inventari = $tipus_inventari_model->obtenirTipusInventari();
         $options_tipus_intervencio = "";
@@ -261,7 +298,6 @@ class InventarisController extends BaseController
                 }
             }
             $data['centres'] = $options_centres;
-
         } else if ($role == "desenvolupador") {
             $array_centres = $centre_model->obtenirCentres();
             $options_centres = "";
@@ -278,7 +314,7 @@ class InventarisController extends BaseController
         return view('formularis' . DIRECTORY_SEPARATOR . 'formulariAfegirInventari', $data);
     }
 
-    public function crearInventari_post() 
+    public function crearInventari_post()
     {
         $inventari_model = new InventariModel();
         $centre_model = new CentreModel();
@@ -295,7 +331,7 @@ class InventarisController extends BaseController
                     'errors' => [
                         'required' => lang('inventari.errors.quantitat_required'),
                     ],
-                ],            
+                ],
                 'tipus_inventari' => [
                     'rules'  => 'required',
                     'errors' => [
@@ -316,7 +352,6 @@ class InventarisController extends BaseController
                     ],
                 ],
             ];
-
         } else if ($role == "admin_sstt" || $role == "desenvolupador") {
 
             $validationRules = [
@@ -325,7 +360,7 @@ class InventarisController extends BaseController
                     'errors' => [
                         'required' => lang('inventari.errors.quantitat_required'),
                     ],
-                ],            
+                ],
                 'tipus_inventari' => [
                     'rules'  => 'required',
                     'errors' => [
@@ -352,7 +387,6 @@ class InventarisController extends BaseController
                     ],
                 ],
             ];
-
         }
 
 
@@ -386,14 +420,13 @@ class InventarisController extends BaseController
                         $msg = lang('alertes.flash_data_create_inventari');
                         session()->setFlashdata('afegirInventari', $msg);
                     }
-
                 } else if ($role == "admin_sstt") {
 
                     $codi_centre = $this->request->getPost('codi_centre');
                     $codi_centre = trim(explode('-', (string) $codi_centre)[0]);
 
                     if ($centre_model->obtenirCentre($codi_centre)['id_sstt'] == $actor['id_sstt']) {
-                        
+
                         for ($i = 0; $i < $quantitat; $i++) {
                             $uuid_library = new \App\Libraries\UUID;
                             $uuid = $uuid_library->v4();
@@ -401,11 +434,9 @@ class InventarisController extends BaseController
                             $msg = lang('alertes.flash_data_create_inventari');
                             session()->setFlashdata('afegirInventari', $msg);
                         }
-
                     } else {
                         return redirect()->back()->withInput();
                     }
-
                 } else if ($role == "desenvolupador") {
 
                     $codi_centre = $this->request->getPost('codi_centre');
@@ -418,20 +449,17 @@ class InventarisController extends BaseController
                         $msg = lang('alertes.flash_data_create_inventari');
                         session()->setFlashdata('afegirInventari', $msg);
                     }
-
                 }
 
                 return redirect()->to(base_url('/inventari'));
-
             }
-
         } else {
             return redirect()->back()->withInput();
         }
     }
 
 
-    public function eliminarInventari($id_inventari_eliminar) 
+    public function eliminarInventari($id_inventari_eliminar)
     {
         $inventari_model = new InventariModel();
         $centre_model = new CentreModel();
@@ -441,7 +469,7 @@ class InventarisController extends BaseController
         if ($inventari_eliminar != null) {
             $actor = session()->get('user_data');
             $role = $actor['role'];
-    
+
             if ($role == "centre_emissor") {
                 return redirect()->to(base_url('/tiquets'));
             } else if ($role == "alumne" || $role == "centre_reparador" || $role == "sstt") {
@@ -453,29 +481,23 @@ class InventarisController extends BaseController
                     $inventari_model->deleteInventari($inventari_eliminar['id_inventari']);
                     $msg = lang('alertes.flash_data_delete_inventari') . $inventari_eliminar['id_inventari'];
                     session()->setFlashdata('esborrarInventari', $msg);
-
                 } else if ($role == "admin_sstt" && $centre_model->obtenirCentre($inventari_eliminar['codi_centre'])['id_sstt'] == $actor['id_sstt']) {
                     // Admin SSTT pot esborrar una peça encara que estigui assignada a una intervenció. La intervenció, deixarà de tenir la peça
                     $inventari_model->deleteInventari($inventari_eliminar['id_inventari']);
                     $msg = lang('alertes.flash_data_delete_inventari') . $inventari_eliminar['id_inventari'];
                     session()->setFlashdata('esborrarInventari', $msg);
-
                 } else if ($role == "desenvolupador") {
 
                     $inventari_model->deleteInventari($inventari_eliminar['id_inventari']);
                     $msg = lang('alertes.flash_data_delete_inventari') . $inventari_eliminar['id_inventari'];
                     session()->setFlashdata('esborrarInventari', $msg);
-
                 }
 
                 return redirect()->to(base_url('/inventari'));
-
             }
-
         } else {
             return redirect()->to(base_url('/inventari/esborrar/' . $id_inventari_eliminar));
         }
-
     }
 
     public function assignarInventari($id_tiquet, $id_intervencio)
@@ -523,9 +545,9 @@ class InventarisController extends BaseController
             ]);
             $crud->setTable('vista_inventari');
             $crud->setPrimaryKey('id_inventari');
-            $crud->hideHeadLink([ 
+            $crud->hideHeadLink([
                 'js-bootstrap',
-                'css-bootstrap',         
+                'css-bootstrap',
             ]);
             $crud->setColumns([
                 'id_inventari_limitat',
@@ -578,10 +600,9 @@ class InventarisController extends BaseController
                     $nom_tipus_inventari = $tipus_inventari_model->obtenirTipusInventariPerId($array_inventari[$i]['id_tipus_inventari'])['nom_tipus_inventari'];
                     $data['inventari_list'] .= "<option value=\"" . $nom_tipus_inventari . " // " . $array_inventari[$i]['data_compra'] . " // " . $array_inventari[$i]['id_inventari'] . "\">" . $nom_tipus_inventari . " // " . $array_inventari[$i]['data_compra'] . " // " . $array_inventari[$i]['id_inventari'] . "</option>";
                 }
-
             }
 
-            return view('registres' . DIRECTORY_SEPARATOR .'registreInventariAssignat', $data);
+            return view('registres' . DIRECTORY_SEPARATOR . 'registreInventariAssignat', $data);
         } else {
             return redirect()->back();
         }
@@ -600,7 +621,7 @@ class InventarisController extends BaseController
         $tiquet = $tiquet_model->getTiquetById($id_tiquet);
         $intervencio = $intervencio_model->obtenirIntervencioPerId($id_intervencio);
         if ($tiquet != null && $intervencio != null) {
-            
+
             $inventari_post = $this->request->getPost('inventari');
             if ($inventari_post != "") {
 
@@ -615,7 +636,7 @@ class InventarisController extends BaseController
 
                 if ($inventari != null && $inventari['id_intervencio'] == null) {
                     $estat = $estat_model->obtenirEstatPerId($tiquet['id_estat']);
- 
+
                     if (($role == "alumne" || $role == "professor") && ($estat == "Pendent de reparar" || $estat == "Reparant")) {
                         $inventari_model->editarInventariAssignar($id_inventari, $id_intervencio);
                         $msg = lang('alertes.flash_data_assignar_inventari') . $tipus_inventari;
@@ -632,9 +653,7 @@ class InventarisController extends BaseController
                     ];
 
                     $tiquet_model->updateTiquet($tiquet['id_tiquet'], $data);
-
                 }
-                
             }
 
             return redirect()->to(base_url('/tiquets/' . $id_tiquet . "/assignar/" . $id_intervencio));
@@ -654,7 +673,7 @@ class InventarisController extends BaseController
 
             $actor = session()->get('user_data');
             $role = $actor['role'];
-    
+
             if ($role == "centre_emissor") {
                 return redirect()->back();
             } else if ($role == "centre_reparador" || $role == "sstt") {
@@ -681,13 +700,201 @@ class InventarisController extends BaseController
                 ];
 
                 $tiquet_model->updateTiquet($tiquet['id_tiquet'], $data);
-                
+
                 return redirect()->to(base_url('/tiquets/' . $id_tiquet . "/assignar/" . $id_intervencio));
-
             }
-
         } else {
             return redirect()->back();
         }
+    }
+
+    public function selectorTipusDispositiu()
+    {
+        $tipus_dispositius = new TipusInventariModel();
+        $array_tipus_dispositius = $tipus_dispositius->obtenirTipusInventari();
+        $array_tipus_dispositius_nom = [];
+        $sessio_filtres = session()->get('filtresInventari');
+        $model_tipus_inventari = new TipusInventariModel();
+        $tipus_inventari = '';
+        
+        if(isset($sessio_filtres['tipus_dispositiu'])){
+            $tipus_inventari = $model_tipus_inventari->obtenirTipusInventariPerId($sessio_filtres['tipus_dispositiu'][0]);
+        }
+        $options_tipus_dispositius = "";
+        $options_tipus_dispositius .= "<option value='' selected disabled>" . lang('registre.not_value_option_select_tipus_dispositiu') . "</option>";
+        for ($i = 0; $i < sizeof($array_tipus_dispositius); $i++) {
+            if (isset($sessio_filtres['tipus_dispositiu']) && $tipus_inventari['nom_tipus_inventari'] == $array_tipus_dispositius[$i]['nom_tipus_inventari']) {
+                $options_tipus_dispositius .= "<option value=\"" . $array_tipus_dispositius[$i]['id_tipus_inventari']. " - " . $array_tipus_dispositius[$i]['nom_tipus_inventari'] . "\" selected>";
+            } else {
+                $options_tipus_dispositius .= "<option value=\"" . $array_tipus_dispositius[$i]['id_tipus_inventari']. " - " . $array_tipus_dispositius[$i]['nom_tipus_inventari'] . "\">";
+            }
+            
+            $options_tipus_dispositius .= $array_tipus_dispositius[$i]['nom_tipus_inventari'];
+            $options_tipus_dispositius .= "</option>";
+            $array_tipus_dispositius_nom[$i] = $array_tipus_dispositius[$i]['nom_tipus_inventari'];
+        }
+
+        return $options_tipus_dispositius;
+    }
+
+    public function selectorCentreReparador($role, $actor)
+    {
+        $centre_model = new CentreModel();
+        $array_centres = $centre_model->obtenirCentres();
+        $options_tipus_dispositius_reparadors = "";
+
+        for ($i = 0; $i < sizeof($array_centres); $i++) {
+            if ($array_centres[$i]['taller'] == 1) {
+                if (($role == "sstt" || $role == "admin_sstt") && $array_centres[$i]['id_sstt'] == $actor['id_sstt']) {
+                    $options_tipus_dispositius_reparadors .= "<option value=\"" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "\">";
+                    $options_tipus_dispositius_reparadors .= $array_centres[$i]['nom_centre'];
+                    $options_tipus_dispositius_reparadors .= "</option>";
+                } else if ($role == "desenvolupador") {
+                    $options_tipus_dispositius_reparadors .= "<option value=\"" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "\">";
+                    $options_tipus_dispositius_reparadors .= $array_centres[$i]['nom_centre'];
+                    $options_tipus_dispositius_reparadors .= "</option>";
+                }
+            }
+        }
+
+        return $options_tipus_dispositius_reparadors;
+    }
+
+    public function selectorPoblacio($role, $actor)
+    {
+        $poblacio_model = new PoblacioModel();
+        $array_poblacions = $poblacio_model->obtenirPoblacions();
+        $options_poblacions = "";
+        //dd($actor);
+        for ($i = 0; $i < sizeof($array_poblacions); $i++) {
+            //if (($role == "sstt" || $role == "admin_sstt") && $array_poblacions[$i]['id_sstt'] == $actor['id_sstt']) {
+            //} else if ($role == "desenvolupador") {
+            //}
+            $options_poblacions .= "<option value=\"" . $array_poblacions[$i]['id_poblacio'] . " - " . $array_poblacions[$i]['nom_poblacio'] . "\">";
+            $options_poblacions .= $array_poblacions[$i]['nom_poblacio'];
+            $options_poblacions .= "</option>";
+        }
+
+        return $options_poblacions;
+    }
+
+    public function selectorComarca($role, $actor)
+    {
+        $comarca_model = new ComarcaModel();
+        $array_comarques = $comarca_model->obtenirComarques();
+        $options_comarques = "";
+        //dd($array_comarques);
+        for ($i = 0; $i < sizeof($array_comarques); $i++) {
+            //if (($role == "sstt" || $role == "admin_sstt") && $array_poblacions[$i]['id_sstt'] == $actor['id_sstt']) {
+            //} else if ($role == "desenvolupador") {
+            //}
+            $options_comarques .= "<option value=\"" . $array_comarques[$i]['id_comarca'] . " - " . $array_comarques[$i]['nom_comarca'] . "\">";
+            $options_comarques .= $array_comarques[$i]['nom_comarca'];
+            $options_comarques .= "</option>";
+        }
+
+        return $options_comarques;
+    }
+
+    public function filtrePost()
+    {
+        $session = session();
+        $sessio_filtres = $session->get('filtresInventari');
+
+        $eliminar = $this->request->getPost('submit_eliminar_filtres');
+
+        if ($eliminar !== null) {
+            $session->remove('filtresInventari');
+        } else {
+
+            if ($sessio_filtres == null) {
+                $filtres = [];
+                $session->set('filtresInventari', $filtres);
+            }
+
+            $dades = $this->request->getPost();
+
+            if (isset($dades['selector_tipus_dispositiu'])) {
+                $array_tipus_dispositiu = [];
+                $tipus_dispositiu_seleccionat = $dades['selector_tipus_dispositiu'];
+                $tipus_dispositiu = trim(explode('-', (string) $tipus_dispositiu_seleccionat)[0]);
+                array_push($array_tipus_dispositiu, $tipus_dispositiu);
+                $session->push('filtresInventari', ['tipus_dispositiu' => $array_tipus_dispositiu]);
+            }
+            if (isset($dades['nom_centre_reparador_list']) && $dades['nom_centre_reparador_list'] !== '') {
+
+                $array_centre_reparador = [];
+                $nom_centre_reparador = $dades['nom_centre_reparador_list'];
+                $centre_reparador = trim(explode('-', (string) $nom_centre_reparador)[0]);
+                array_push($array_centre_reparador, $centre_reparador);
+                $session->push('filtresInventari', ['nom_centre_reparador' => $array_centre_reparador]);
+            }
+            if (isset($dades['data_creacio']) &&  $dades['data_creacio'] !== '') {
+                $array_data_creacio = [];
+                $data_creacio = $dades['data_creacio'];
+                array_push($array_data_creacio, $data_creacio);
+                $session->push('filtresInventari', ['data_creacio' => $array_data_creacio]);
+            }
+            if (isset($dades['nom_poblacio_list']) && $dades['nom_poblacio_list'] !== '') {
+
+                $array_poblacio = [];
+                $nom_poblacio = $dades['nom_poblacio_list'];
+                $poblacio = trim(explode('-', (string) $nom_poblacio)[0]);
+                array_push($array_poblacio, $poblacio);
+                $session->push('filtresInventari', ['nom_poblacio' => $array_poblacio]);
+            }
+            if (isset($dades['nom_comarca_list']) && $dades['nom_comarca_list'] !== '') {
+
+                $array_comarca = [];
+                $nom_comarca = $dades['nom_comarca_list'];
+                $comarca = trim(explode('-', (string) $nom_comarca)[0]);
+                array_push($array_comarca, $comarca);
+                $session->push('filtresInventari', ['nom_comarca' => $array_comarca]);
+            }
+        }
+        return redirect()->back()->withInput();
+    }
+
+    public function eliminarFiltre()
+    {
+        $filtre_eliminar = $this->request->getPost();
+        $filtre_session = session()->get('filtresInventari');
+        $eliminar = $this->request->getPost('submit_eliminar_filtres');
+        if ($eliminar !== null) {
+            session()->remove('filtresInventari');
+        }
+        if ($filtre_eliminar['operacio'] === 'Dispositiu') {
+            unset($filtre_session['tipus_dispositiu']);
+            session()->set('filtresInventari', $filtre_session);
+        }
+        if ($filtre_eliminar['operacio'] === 'Estat') {
+            unset($filtre_session['estat']);
+            session()->set('filtresInventari', $filtre_session);
+        }
+        if ($filtre_eliminar['operacio'] == 'Centre_emissor') {
+            unset($filtre_session['nom_centre_emissor']);
+            session()->set('filtresInventari', $filtre_session);
+        }
+        if ($filtre_eliminar['operacio'] == 'Centre_reparador') {
+            unset($filtre_session['nom_centre_reparador']);
+            session()->set('filtresInventari', $filtre_session);
+        }
+        if ($filtre_eliminar['operacio'] == 'data_creacio') {
+            unset($filtre_session['data_creacio']);
+            session()->set('filtresInventari', $filtre_session);
+        }
+        if (count($filtre_session) == 0) {
+            session()->remove('filtresInventari');
+        }
+        if ($filtre_eliminar['operacio'] == 'Poblacio') {
+            unset($filtre_session['nom_poblacio']);
+            session()->set('filtresInventari', $filtre_session);
+        }
+        if ($filtre_eliminar['operacio'] == 'Comarca') {
+            unset($filtre_session['nom_comarca']);
+            session()->set('filtresInventari', $filtre_session);
+        }
+
+        return redirect()->back()->withInput();
     }
 }

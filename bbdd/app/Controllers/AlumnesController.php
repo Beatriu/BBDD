@@ -5,12 +5,14 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\AlumneModel;
 use App\Models\CentreModel;
+use App\Models\ComarcaModel;
 use SIENSIS\KpaCrud\Libraries\KpaCrud;
 use App\Models\TiquetModel;
 use App\Models\EstatModel;
 use App\Models\IntervencioModel;
 use App\Models\LoginInRolModel;
 use App\Models\LoginModel;
+use App\Models\PoblacioModel;
 use App\Models\RolModel;
 
 class AlumnesController extends BaseController
@@ -27,6 +29,8 @@ class AlumnesController extends BaseController
         $data['correu_alumne_eliminar'] = null;
         $data['no_permisos'] = null;
         $data['no_permisos'] = session()->getFlashdata('alumne_no_permisos');
+        $session_filtre = session()->get('filtresAlumnes');
+        $data['session_filtre'] = $session_filtre;
 
 
         if ($correu_alumne_eliminar != null) {
@@ -61,6 +65,11 @@ class AlumnesController extends BaseController
             $data['title'] = 'Tiquets SSTT';
             $role = session()->get('user_data')['role'];
             $data['role'] = $role;
+            $data['centre_reparador'] = $this->selectorCentreReparador($role, $actor);
+            $data['poblacio'] = $this->selectorPoblacio($role, $actor);
+            $data['comarca'] = $this->selectorComarca($role, $actor);
+
+
             $crud = new KpaCrud();
             $crud->setConfig('onlyView');
             $crud->setConfig([
@@ -105,6 +114,8 @@ class AlumnesController extends BaseController
                 $crud->setColumns([
                     'correu_alumne',
                     'nom_centre',
+                    'nom_poblacio',
+                    'nom_comarca'
                 ]);
                 $crud->setColumnsInfo([
                     'correu_alumne' => [
@@ -112,6 +123,12 @@ class AlumnesController extends BaseController
                     ],
                     'nom_centre' => [
                         'name' => lang('alumne.nom_centre'),
+                    ],
+                    'nom_poblacio' => [
+                        'name' => lang('inventari.nom_poblacio')
+                    ],
+                    'nom_comarca' => [
+                        'name' => lang('inventari.nom_comarca')
                     ]
                 ]);
                 $crud->addWhere('id_sstt', session()->get('user_data')['id_sstt']);
@@ -120,6 +137,8 @@ class AlumnesController extends BaseController
                 $crud->setColumns([
                     'correu_alumne',
                     'nom_centre',
+                    'nom_poblacio',
+                    'nom_comarca'
                 ]);
                 $crud->setColumnsInfo([
                     'correu_alumne' => [
@@ -127,10 +146,45 @@ class AlumnesController extends BaseController
                     ],
                     'nom_centre' => [
                         'name' => lang('alumne.nom_centre'),
+                    ],
+                    'nom_poblacio' => [
+                        'name' => lang('inventari.nom_poblacio')
+                    ],
+                    'nom_comarca' => [
+                        'name' => lang('inventari.nom_comarca')
                     ]
                 ]);
             }
             $crud->addWhere('actiu', 1);
+
+
+            if (is_array($session_filtre)) {
+
+                if (isset($session_filtre['nom_centre_reparador'])) {
+                    $model_centre = new CentreModel();
+                    $centre_reparador_escollit = $model_centre->obtenirCentre($session_filtre['nom_centre_reparador'][0]);
+                    $data['centre_reparador_escollit'] = $centre_reparador_escollit;
+
+                    $crud->addWhere('codi_centre', $session_filtre['nom_centre_reparador'][0], true);
+                }
+                if (isset($session_filtre['nom_poblacio'])) {
+                    $model_poblacio = new PoblacioModel();
+                    $poblacio_escollida = $model_poblacio->getPoblacio($session_filtre['nom_poblacio'][0], true);
+                    $data['poblacio_escollida'] = $poblacio_escollida['nom_poblacio'];
+                    $crud->addWhere('id_poblacio', $poblacio_escollida['id_poblacio'], true);
+                }
+                if (isset($session_filtre['nom_comarca'])) {
+                    $model_comarca = new ComarcaModel();
+                    $comarca_escollida = $model_comarca->obtenirComarca($session_filtre['nom_comarca'][0], true);
+                    $data['comarca_escollida'] = $comarca_escollida['nom_comarca'];
+
+                    $crud->addWhere('id_comarca', $comarca_escollida['id_comarca'], true);
+                }
+            }
+
+
+
+
 
             $data['output'] = $crud->render();
             $data['uri'] = $this->request->getPath();
@@ -395,7 +449,7 @@ class AlumnesController extends BaseController
                 $intervencio_model->editarIntervencioCorreuNou($correu_alumne_editar, $correu_alumne_post);
                 $alumne_model->editarAlumneActiu($correu_alumne_editar, 0);
 
-                $msg = lang('alertes.flash_data_create_alumne');
+                $msg = lang('alertes.flash_data_update_alumne');
                 session()->setFlashdata('afegirAlumne', $msg);
 
                 return redirect()->to(base_url('/alumnes'));
@@ -414,7 +468,7 @@ class AlumnesController extends BaseController
                         $alumne_model->addAlumne($correu_alumne_post, $codi_centre_post); // Creem un alumne nou
                         $login_model->addLogin($correu_alumne_post, null);
                         $login_in_rol->addLoginInRol($login_model->obtenirId($correu_alumne_post), $rol_model->obtenirIdRol("alumne"));
-                        $msg = lang('alertes.flash_data_create_alumne');
+                        $msg = lang('alertes.flash_data_update_alumne');
                         session()->setFlashdata('afegirAlumne', $msg);
                         $intervencions = $intervencio_model->obtenirIdIntervencioAlumne($correu_alumne_editar); // Obtenim els id de les intervencions de l'alumne
                         for ($i = 0; $i < sizeof($intervencions); $i++) {
@@ -453,5 +507,167 @@ class AlumnesController extends BaseController
 
             return redirect()->back()->withInput();
         }
+    }
+
+    public function selectorCentreReparador($role, $actor)
+    {
+        $centre_model = new CentreModel();
+        $array_centres = $centre_model->obtenirCentres();
+        $options_tipus_dispositius_reparadors = "";
+
+        for ($i = 0; $i < sizeof($array_centres); $i++) {
+            if ($array_centres[$i]['taller'] == 1) {
+                if (($role == "sstt" || $role == "admin_sstt") && $array_centres[$i]['id_sstt'] == $actor['id_sstt']) {
+                    $options_tipus_dispositius_reparadors .= "<option value=\"" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "\">";
+                    $options_tipus_dispositius_reparadors .= $array_centres[$i]['nom_centre'];
+                    $options_tipus_dispositius_reparadors .= "</option>";
+                } else if ($role == "desenvolupador") {
+                    $options_tipus_dispositius_reparadors .= "<option value=\"" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "\">";
+                    $options_tipus_dispositius_reparadors .= $array_centres[$i]['nom_centre'];
+                    $options_tipus_dispositius_reparadors .= "</option>";
+                }
+            }
+        }
+
+        return $options_tipus_dispositius_reparadors;
+    }
+
+    public function selectorPoblacio($role, $actor)
+    {
+        $poblacio_model = new PoblacioModel();
+        $array_poblacions = $poblacio_model->obtenirPoblacions();
+        $options_poblacions = "";
+        //dd($actor);
+        for ($i = 0; $i < sizeof($array_poblacions); $i++) {
+            //if (($role == "sstt" || $role == "admin_sstt") && $array_poblacions[$i]['id_sstt'] == $actor['id_sstt']) {
+            //} else if ($role == "desenvolupador") {
+            //}
+            $options_poblacions .= "<option value=\"" . $array_poblacions[$i]['id_poblacio'] . " - " . $array_poblacions[$i]['nom_poblacio'] . "\">";
+            $options_poblacions .= $array_poblacions[$i]['nom_poblacio'];
+            $options_poblacions .= "</option>";
+        }
+
+        return $options_poblacions;
+    }
+
+    public function selectorComarca($role, $actor)
+    {
+        $comarca_model = new ComarcaModel();
+        $array_comarques = $comarca_model->obtenirComarques();
+        $options_comarques = "";
+        //dd($array_comarques);
+        for ($i = 0; $i < sizeof($array_comarques); $i++) {
+            //if (($role == "sstt" || $role == "admin_sstt") && $array_poblacions[$i]['id_sstt'] == $actor['id_sstt']) {
+            //} else if ($role == "desenvolupador") {
+            //}
+            $options_comarques .= "<option value=\"" . $array_comarques[$i]['id_comarca'] . " - " . $array_comarques[$i]['nom_comarca'] . "\">";
+            $options_comarques .= $array_comarques[$i]['nom_comarca'];
+            $options_comarques .= "</option>";
+        }
+
+        return $options_comarques;
+    }
+
+    public function filtrePost()
+    {
+        $session = session();
+        $sessio_filtres = $session->get('filtresAlumnes');
+
+        $eliminar = $this->request->getPost('submit_eliminar_filtres');
+
+        if ($eliminar !== null) {
+            $session->remove('filtresAlumnes');
+        } else {
+
+            if ($sessio_filtres == null) {
+                $filtres = [];
+                $session->set('filtresAlumnes', $filtres);
+            }
+
+            $dades = $this->request->getPost();
+
+            if (isset($dades['selector_tipus_dispositiu'])) {
+                $array_tipus_dispositiu = [];
+                $tipus_dispositiu_seleccionat = $dades['selector_tipus_dispositiu'];
+                $tipus_dispositiu = trim(explode('-', (string) $tipus_dispositiu_seleccionat)[0]);
+                array_push($array_tipus_dispositiu, $tipus_dispositiu);
+                $session->push('filtresAlumnes', ['tipus_dispositiu' => $array_tipus_dispositiu]);
+            }
+            if (isset($dades['nom_centre_reparador_list']) && $dades['nom_centre_reparador_list'] !== '') {
+
+                $array_centre_reparador = [];
+                $nom_centre_reparador = $dades['nom_centre_reparador_list'];
+                $centre_reparador = trim(explode('-', (string) $nom_centre_reparador)[0]);
+                array_push($array_centre_reparador, $centre_reparador);
+                $session->push('filtresAlumnes', ['nom_centre_reparador' => $array_centre_reparador]);
+            }
+            if (isset($dades['data_creacio']) &&  $dades['data_creacio'] !== '') {
+                $array_data_creacio = [];
+                $data_creacio = $dades['data_creacio'];
+                array_push($array_data_creacio, $data_creacio);
+                $session->push('filtresAlumnes', ['data_creacio' => $array_data_creacio]);
+            }
+            if (isset($dades['nom_poblacio_list']) && $dades['nom_poblacio_list'] !== '') {
+
+                $array_poblacio = [];
+                $nom_poblacio = $dades['nom_poblacio_list'];
+                $poblacio = trim(explode('-', (string) $nom_poblacio)[0]);
+                array_push($array_poblacio, $poblacio);
+                $session->push('filtresAlumnes', ['nom_poblacio' => $array_poblacio]);
+            }
+            if (isset($dades['nom_comarca_list']) && $dades['nom_comarca_list'] !== '') {
+
+                $array_comarca = [];
+                $nom_comarca = $dades['nom_comarca_list'];
+                $comarca = trim(explode('-', (string) $nom_comarca)[0]);
+                array_push($array_comarca, $comarca);
+                $session->push('filtresAlumnes', ['nom_comarca' => $array_comarca]);
+            }
+        }
+        return redirect()->back()->withInput();
+    }
+
+    public function eliminarFiltre()
+    {
+        $filtre_eliminar = $this->request->getPost();
+        $filtre_session = session()->get('filtresAlumnes');
+        $eliminar = $this->request->getPost('submit_eliminar_filtres');
+
+        if ($eliminar !== null) {
+            session()->remove('filtresAlumnes');
+        }
+        if ($filtre_eliminar['operacio'] === 'Dispositiu') {
+            unset($filtre_session['tipus_dispositiu']);
+            session()->set('filtresAlumnes', $filtre_session);
+        }
+        if ($filtre_eliminar['operacio'] === 'Estat') {
+            unset($filtre_session['estat']);
+            session()->set('filtresAlumnes', $filtre_session);
+        }
+        if ($filtre_eliminar['operacio'] == 'Centre_emissor') {
+            unset($filtre_session['nom_centre_emissor']);
+            session()->set('filtresAlumnes', $filtre_session);
+        }
+        if ($filtre_eliminar['operacio'] == 'Centre_reparador') {
+            unset($filtre_session['nom_centre_reparador']);
+            session()->set('filtresAlumnes', $filtre_session);
+        }
+        if ($filtre_eliminar['operacio'] == 'data_creacio') {
+            unset($filtre_session['data_creacio']);
+            session()->set('filtresAlumnes', $filtre_session);
+        }
+        if (count($filtre_session) == 0) {
+            session()->remove('filtresAlumnes');
+        }
+        if ($filtre_eliminar['operacio'] == 'Poblacio') {
+            unset($filtre_session['nom_poblacio']);
+            session()->set('filtresAlumnes', $filtre_session);
+        }
+        if ($filtre_eliminar['operacio'] == 'Comarca') {
+            unset($filtre_session['nom_comarca']);
+            session()->set('filtresAlumnes', $filtre_session);
+        }
+
+        return redirect()->back();
     }
 }

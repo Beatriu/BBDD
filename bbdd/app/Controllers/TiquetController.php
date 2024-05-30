@@ -1057,7 +1057,7 @@ class TiquetController extends BaseController
         $tiquet_model = new TiquetModel();
         $estat_model = new EstatModel();
         $centre_model = new CentreModel();
-
+        
         $actor = session()->get('user_data');
         $role = $actor['role'];
 
