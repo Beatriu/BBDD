@@ -46,5 +46,13 @@ class ComarcaModel extends Model
         ]);
     }
 
+    public function obtenirComarca($d1) {
+        return $this->where('id_comarca', $d1)->first();
+    }
+
+    public function obtenirComarques()
+    {
+        return $this->findAll();
+    }
 
 }

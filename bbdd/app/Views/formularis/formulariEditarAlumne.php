@@ -17,11 +17,15 @@
         <div class="modal" tabindex="-1" role="dialog" style="display:block">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title"><?= lang('alumne.alerta') ?></h5>
-                        <a href="<?= base_url("/alumnes/editar/" . $correu_editar) ?>">
+                    <div class="modal-header d-flex justify-content-between">
+                        <div>
+                            <h5 class="modal-title"><?= lang('alumne.alerta') ?></h5>
+                        </div>
+                        <div>
+                            <a href="<?= base_url("/alumnes/editar/" . $correu_editar) ?>">
                             <i class="fa-solid fa-xmark"></i>
                         </a>
+                    </div>
                     </div>
                     <div class="modal-body text-warning">
                         <p><?= lang($editar_alumne_error) ?></p>
