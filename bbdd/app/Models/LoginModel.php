@@ -12,7 +12,7 @@ class LoginModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id_login', 'login', 'contrasenya'];
+    protected $allowedFields    = ['id_login', 'login', 'contrasenya','id_sstt'];
 
     protected bool $allowEmptyInserts = false;
 

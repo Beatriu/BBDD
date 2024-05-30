@@ -830,6 +830,8 @@ class RegistresController extends BaseController
 
     public function filtrePost()
     {
+        $centre_model = new CentreModel();
+
         $session = session();
         $sessio_filtres = $session->get('filtres');
 
@@ -863,6 +865,12 @@ class RegistresController extends BaseController
                 $array_centre_emissor = [];
                 $nom_centre_emissor = $dades['nom_centre_emissor_list'];
                 $centre_emissor = trim(explode('-', (string) $nom_centre_emissor)[0]);
+
+                // TODO Bea ficar alerta
+                if ($centre_emissor != null && $centre_model->obtenirCentre($centre_emissor) == null) {
+                    return redirect()->back()->withInput();
+                }
+
                 array_push($array_centre_emissor, $centre_emissor);
                 $session->push('filtres', ['nom_centre_emissor' => $array_centre_emissor]);
             }
@@ -871,6 +879,12 @@ class RegistresController extends BaseController
                 $array_centre_reparador = [];
                 $nom_centre_reparador = $dades['nom_centre_reparador_list'];
                 $centre_reparador = trim(explode('-', (string) $nom_centre_reparador)[0]);
+
+                // TODO Bea ficar alerta
+                if ($centre_reparador != null && $centre_model->obtenirCentre($centre_reparador) == null) {
+                    return redirect()->back()->withInput();
+                }
+
                 array_push($array_centre_reparador, $centre_reparador);
                 $session->push('filtres', ['nom_centre_reparador' => $array_centre_reparador]);
             }

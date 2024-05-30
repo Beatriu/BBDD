@@ -16,7 +16,7 @@ class AfegirPoblacioSeeder extends Seeder
             if (!$firstline) {
                 $model = new \App\Models\PoblacioModel();
                 if ($model->getPoblacio($data[9]) == null) {
-                    $model->addPoblacio($data[9], $data[3], $data[10], $data[7]);
+                    $model->addPoblacio($data[9], $data[3], $data[10], $data[7], $data[5]);
                 }
                 
             }

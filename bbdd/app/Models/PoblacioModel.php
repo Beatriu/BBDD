@@ -12,7 +12,7 @@ class PoblacioModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id_poblacio', 'codi_postal', 'nom_poblacio','id_comarca'];
+    protected $allowedFields    = ['id_poblacio', 'codi_postal', 'nom_poblacio','id_comarca','id_sstt'];
 
     // Dates
     protected $useTimestamps = false;
@@ -38,13 +38,14 @@ class PoblacioModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function addPoblacio($d1,$d2,$d3,$d4)
+    public function addPoblacio($d1,$d2,$d3,$d4,$d5)
     {
         $this->insert([
             "id_poblacio" => $d1,
             "codi_postal" => $d2,
             "nom_poblacio" => $d3,
-            "id_comarca" => $d4
+            "id_comarca" => $d4,
+            "id_sstt" => $d5,
         ]);
     }
 

@@ -117,9 +117,9 @@
                         <br>
                         <h5><?= lang('registre.title_div_nom_centre_reparador') ?></h5>
                         <?php if (isset($session_filtre['nom_centre_reparador'])) : ?>
-                            <input list="nom_centre_reparador" name="nom_centre_reparador_list" class="form-control selector_filtre" value="<?= old('nom_centre_reparador_list') ?>" />
+                            <input list="nom_centre_reparador" name="nom_centre_reparador_list" class="form-select selector_filtre" value="<?= old('nom_centre_reparador_list') ?>" />
                         <?php else : ?>
-                            <input list="nom_centre_reparador" name="nom_centre_reparador_list" class="form-control selector_filtre" />
+                            <input list="nom_centre_reparador" name="nom_centre_reparador_list" class="form-select selector_filtre" />
                         <?php endif; ?>
                         <datalist id="nom_centre_reparador">
                             <?= $centre_reparador ?>
@@ -129,9 +129,9 @@
                             <br>
                             <h5><?= lang('registre.title_div_poblacio') ?></h5>
                             <?php if (isset($session_filtre['nom_poblacio'])) : ?>
-                                <input list="nom_poblacio" name="nom_poblacio_list" class="form-control selector_filtre" value="<?= old('nom_poblacio_list') ?>" />
+                                <input list="nom_poblacio" name="nom_poblacio_list" class="form-select selector_filtre" value="<?= old('nom_poblacio_list') ?>" />
                             <?php else : ?>
-                                <input list="nom_poblacio" name="nom_poblacio_list" class="form-control selector_filtre" />
+                                <input list="nom_poblacio" name="nom_poblacio_list" class="form-select selector_filtre" />
                             <?php endif; ?>
                             <datalist id="nom_poblacio">
                                 <?= $poblacio ?>
@@ -141,9 +141,9 @@
                             <br>
                             <h5><?= lang('registre.title_div_comarca') ?></h5>
                             <?php if (isset($session_filtre['nom_comarca'])) : ?>
-                                <input list="nom_comarca" name="nom_comarca_list" class="form-control selector_filtre" value="<?= old('nom_comarca_list') ?>" />
+                                <input list="nom_comarca" name="nom_comarca_list" class="form-select selector_filtre" value="<?= old('nom_comarca_list') ?>" />
                             <?php else : ?>
-                                <input list="nom_comarca" name="nom_comarca_list" class="form-control selector_filtre" />
+                                <input list="nom_comarca" name="nom_comarca_list" class="form-select selector_filtre" />
                             <?php endif; ?>
                             <datalist id="nom_comarca">
                                 <?= $comarca ?>
