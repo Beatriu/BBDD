@@ -65,6 +65,7 @@ class UsuarisController extends BaseController
                 if (password_verify($password, $hash) && $password != "" && $password != null) { // Verifiquem que la contrasenya coincideixi amb la de la base de dades i que existeixi
 
                     $session_data['mail'] = $nom_login;
+                    //TODO: si es un alumne agafar lo de la base de dades de nom i cognom
                     $session_data['nom'] = explode("@", (string) $nom_login)[0];
                     $session_data['cognoms'] = "Cognom Exemple";
                     $session_data['domain'] = explode('@', $session_data['mail'])[1];

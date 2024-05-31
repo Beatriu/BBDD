@@ -450,7 +450,7 @@ class AlumnesController extends BaseController
                 $alumne_model->editarAlumneActiu($correu_alumne_editar, 0);
 
                 $msg = lang('alertes.flash_data_update_alumne');
-                session()->setFlashdata('afegirAlumne', $msg);
+                session()->setFlashdata('editarAlumne', $msg);
 
                 return redirect()->to(base_url('/alumnes'));
 
@@ -469,7 +469,7 @@ class AlumnesController extends BaseController
                         $login_model->addLogin($correu_alumne_post, null);
                         $login_in_rol->addLoginInRol($login_model->obtenirId($correu_alumne_post), $rol_model->obtenirIdRol("alumne"));
                         $msg = lang('alertes.flash_data_update_alumne');
-                        session()->setFlashdata('afegirAlumne', $msg);
+                        session()->setFlashdata('editarAlumne', $msg);
                         $intervencions = $intervencio_model->obtenirIdIntervencioAlumne($correu_alumne_editar); // Obtenim els id de les intervencions de l'alumne
                         for ($i = 0; $i < sizeof($intervencions); $i++) {
                             $intervencio_model->editarIntervencioCorreuNou($intervencions[$i]['id_intervencio'], $correu_alumne_post); // Assignem les intervencions al nou alumne
