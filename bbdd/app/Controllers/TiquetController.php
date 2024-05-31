@@ -22,6 +22,7 @@ class TiquetController extends BaseController
 
     public function viewTiquet($id_tiquet, $id_intervencio = null)
     {
+        
         $tiquet_model = new TiquetModel();
         $centre_model = new CentreModel();
         $tipus_dispositiu_model = new TipusDispositiuModel();

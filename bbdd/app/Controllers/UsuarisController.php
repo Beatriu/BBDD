@@ -325,6 +325,11 @@ class UsuarisController extends BaseController
         $codi_centre = $this->request->getPost('centre_seleccionat');
         $codi_centre = trim(explode('-', (string) $codi_centre)[0]);
 
+        // TODO Bea ficar alerta
+        if ($codi_centre != null && $centre_model->obtenirCentre($codi_centre) == null) {
+            return redirect()->back()->withInput();
+        }
+
         $nom = session()->get('user_data')['nom'];
         $cognoms = session()->get('user_data')['cognoms'];
         $correu = session()->get('user_data')['mail'];
