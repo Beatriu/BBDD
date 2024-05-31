@@ -86,9 +86,9 @@
                         <br>
                         <h5><?= lang('registre.title_div_nom_centre_emissor') ?></h5>
                         <?php if (isset($session_filtre['nom_centre_emissor'])) : ?>
-                            <input list="nom_centre_emissor" name="nom_centre_emissor_list" class="form-control selector_filtre" value="<?= old('nom_centre_emissor_list') ?>" />
+                            <input list="nom_centre_emissor" name="nom_centre_emissor_list" class="form-select selector_filtre" value="<?= old('nom_centre_emissor_list') ?>" />
                         <?php else : ?>
-                            <input list="nom_centre_emissor" name="nom_centre_emissor_list" class="form-control selector_filtre" />
+                            <input list="nom_centre_emissor" name="nom_centre_emissor_list" class="form-select selector_filtre" />
                         <?php endif; ?>
                         <datalist id="nom_centre_emissor">
                             <?= $centre_emissor ?>
@@ -98,9 +98,9 @@
                         <br>
                         <h5><?= lang('registre.title_div_nom_centre_reparador') ?></h5>
                         <?php if (isset($session_filtre['nom_centre_reparador'])) : ?>
-                            <input list="nom_centre_reparador" name="nom_centre_reparador_list" class="form-control selector_filtre" value="<?= old('nom_centre_reparador_list') ?>" />
+                            <input list="nom_centre_reparador" name="nom_centre_reparador_list" class="form-select selector_filtre" value="<?= old('nom_centre_reparador_list') ?>" />
                         <?php else : ?>
-                            <input list="nom_centre_reparador" name="nom_centre_reparador_list" class="form-control selector_filtre" />
+                            <input list="nom_centre_reparador" name="nom_centre_reparador_list" class="form-select selector_filtre" />
                         <?php endif; ?>
                         <datalist id="nom_centre_reparador">
                             <?= $centre_reparador ?>

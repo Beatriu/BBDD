@@ -17,17 +17,17 @@ class Install extends Seeder
         $this->call("AfegirEstatSeeder");
         $this->call("AfegirTipusIntervencioSeeder");
         $this->call("AfegirCursSeeder");
-        //$this->call("AfegirLlistaAdmesosSeeder");
+            //$this->call("AfegirLlistaAdmesosSeeder");
         $this->call("AfegirTipusInventariSeeder");
 
-        //$this->call("AfegirTiquetSeeder");
-        //$this->call("AfegirProfessorSeeder");
-        //$this->call("AfegirAlumneSeeder");
+            //$this->call("AfegirTiquetSeeder");
+            //$this->call("AfegirProfessorSeeder");
+            //$this->call("AfegirAlumneSeeder");
 
-        //$this->call("AfegirIntervencioSeeder");
-        //$this->call("AfegirInventariSeeder");
+            //$this->call("AfegirIntervencioSeeder");
+            //$this->call("AfegirInventariSeeder");
 
-        //$this->call("AfegirBackTicketSeeder");
+            //$this->call("AfegirBackTicketSeeder");
 
         $this->call("AfegirRolSeeder");
         $this->call("AfegirLoginSeeder");

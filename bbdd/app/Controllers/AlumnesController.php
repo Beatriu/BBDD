@@ -570,6 +570,10 @@ class AlumnesController extends BaseController
 
     public function filtrePost()
     {
+        $centre_model = new CentreModel();
+        $poblacio_model = new PoblacioModel();
+        $comarca_model = new ComarcaModel();
+
         $session = session();
         $sessio_filtres = $session->get('filtresAlumnes');
 
@@ -598,6 +602,12 @@ class AlumnesController extends BaseController
                 $array_centre_reparador = [];
                 $nom_centre_reparador = $dades['nom_centre_reparador_list'];
                 $centre_reparador = trim(explode('-', (string) $nom_centre_reparador)[0]);
+
+                // TODO Bea ficar alerta
+                if ($centre_reparador != null && $centre_model->obtenirCentre($centre_reparador) == null) {
+                    return redirect()->back()->withInput();
+                }
+
                 array_push($array_centre_reparador, $centre_reparador);
                 $session->push('filtresAlumnes', ['nom_centre_reparador' => $array_centre_reparador]);
             }
@@ -612,6 +622,12 @@ class AlumnesController extends BaseController
                 $array_poblacio = [];
                 $nom_poblacio = $dades['nom_poblacio_list'];
                 $poblacio = trim(explode('-', (string) $nom_poblacio)[0]);
+
+                // TODO Bea ficar alerta
+                if ($poblacio != null && $poblacio_model->getPoblacio($poblacio) == null) {
+                    return redirect()->back()->withInput();
+                }
+
                 array_push($array_poblacio, $poblacio);
                 $session->push('filtresAlumnes', ['nom_poblacio' => $array_poblacio]);
             }
@@ -620,6 +636,12 @@ class AlumnesController extends BaseController
                 $array_comarca = [];
                 $nom_comarca = $dades['nom_comarca_list'];
                 $comarca = trim(explode('-', (string) $nom_comarca)[0]);
+
+                // TODO Bea ficar alerta
+                if ($comarca != null && $comarca_model->obtenirComarca($comarca) == null) {
+                    return redirect()->back()->withInput();
+                }
+
                 array_push($array_comarca, $comarca);
                 $session->push('filtresAlumnes', ['nom_comarca' => $array_comarca]);
             }
