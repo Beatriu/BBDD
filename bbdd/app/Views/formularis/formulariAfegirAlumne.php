@@ -54,14 +54,12 @@
 
     <div class="row mt-3 mb-3">
         <div class="col">
-            <label for="correu_alumne" class="form-label"><?= lang('alumne.correu_alumne') ?> *</label>
-            <input class="form-control" name="correu_alumne" id="correu_alumne" placeholder="<?= lang('alumne.correu_alumne') ?>" required>
 
         </div>
         <?php if ($role == "admin_sstt" || $role == "desenvolupador") : ?>
             <div class="col">
                 <label for="correu_alumne" class="form-label"><?= lang('alumne.correu_alumne') ?> *</label>
-                <input type="text" pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"  class="form-control" name = "correu_alumne" id="correu_alumne" placeholder="<?= lang('alumne.correu_alumne') ?>" required>
+                <input type="text" pattern="[-a-zA-Z0-9~!$%^&amp;*_=+}{'?]+(\.[-a-zA-Z0-9~!$%^&amp;*_=+}{'?]+)*@([a-zA-Z0-9_][-a-zA-Z0-9_]*(\.[-a-zA-Z0-9_]+)*\.([cC][oO][mM]))(:[0-9]{1,5})?"  class="form-control" name = "correu_alumne" id="correu_alumne" placeholder="<?= lang('alumne.correu_alumne') ?>" required>
                 
                 <label for="centre" class="form-label"><?= lang('alumne.centre') ?> *</label>
                 <input class="form-control selector" name="centre" list="datalistOptionsCentres" id="centre" placeholder="<?= lang('alumne.centre') ?>" required>

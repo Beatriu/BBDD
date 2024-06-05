@@ -140,14 +140,17 @@ class TiquetController extends BaseController
                         $crud->addItemLink('delete', 'fa-trash', base_url('tiquets/' . $id_tiquet . '/esborrar'), 'Eliminar Intervenció');
                     }
 
-                    $crud->addWhere('id_tiquet', $id_tiquet);
+                    /*$crud->addWhere('id_tiquet', $id_tiquet);
                     $crud->addWhere("estat_tiquet", "Pendent de reparar", true);
 
                     $crud->addWhere('id_tiquet', $id_tiquet, false);
                     $crud->addWhere("estat_tiquet", "Reparant", true);
 
                     $crud->addWhere('id_tiquet', $id_tiquet, false);
-                    $crud->addWhere("estat_tiquet", "Reparat i pendent de recollir", true);
+                    $crud->addWhere("estat_tiquet", "Reparat i pendent de recollir", true);*/
+
+                    $crud->addWhere("id_tiquet='" . $id_tiquet . "' AND (estat_tiquet='Pendent de reparar' or estat_tiquet='Reparant' or estat_tiquet='Reparat i pendent de recollir')");
+
                 } else if ($role == "sstt" || $role == "admin_sstt") {
 
                     $crud->addItemLink('view', 'fa-eye', base_url('tiquets/' . $id_tiquet . '/intervencio'), 'Veure Intervenció');

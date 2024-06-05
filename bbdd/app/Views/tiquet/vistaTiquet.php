@@ -60,7 +60,7 @@
                     <li><?= lang('intervencio.dades_tiquet.dades_codi') ?>: <?= $tiquet['codi_equip'] ?> </li>
                     <li><?= lang('intervencio.dades_tiquet.dades_tipus') ?>: <?= $tipus_dispositiu ?> </li>
 
-                    <?php if ($role == "sstt" || $role == "admin_sstt" || $role == "desenvolupador" || $role == "professor") : ?>
+                    <?php if ($role == "sstt" || $role == "admin_sstt" || $role == "desenvolupador" || $role == "professor" || $role == "alumne") : ?>
                         <li><?= lang('registre.centre') ?>: <?= $nom_centre_emissor ?> </li>
                     <?php endif; ?>
                     <?php if ($role == "sstt" || $role == "admin_sstt" || $role == "desenvolupador") : ?>

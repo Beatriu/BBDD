@@ -465,27 +465,32 @@ class AlumnesController extends BaseController
 
                     if ($correu_alumne_editar != $correu_alumne_post) { // En cas que el correu original i el nou siguin diferents
                         
-                        $alumne_model->addAlumne($correu_alumne_post, $codi_centre_post); // Creem un alumne nou
-                        $login_model->addLogin($correu_alumne_post, null);
-                        $login_in_rol->addLoginInRol($login_model->obtenirId($correu_alumne_post), $rol_model->obtenirIdRol("alumne"));
-                        $msg = lang('alertes.flash_data_update_alumne');
-                        session()->setFlashdata('editarAlumne', $msg);
-                        $intervencions = $intervencio_model->obtenirIdIntervencioAlumne($correu_alumne_editar); // Obtenim els id de les intervencions de l'alumne
-                        for ($i = 0; $i < sizeof($intervencions); $i++) {
-                            $intervencio_model->editarIntervencioCorreuNou($intervencions[$i]['id_intervencio'], $correu_alumne_post); // Assignem les intervencions al nou alumne
+                        $alumne_post = $alumne_model->getAlumneByCorreu($correu_alumne_post);
+
+                        if ($alumne_post) {
+                            $alumne_model->editarAlumneActiu($correu_alumne_post, 1);
+                            $alumne_model->editarAlumneCodiCentre($correu_alumne_post, $codi_centre_post);
+                        } else {
+                            $alumne_model->addAlumne($correu_alumne_post, $codi_centre_post); // Creem un alumne nou
+                            $login_model->addLogin($correu_alumne_post, null);
+                            $login_in_rol->addLoginInRol($login_model->obtenirId($correu_alumne_post), $rol_model->obtenirIdRol("alumne"));
                         }
 
+
+                        $msg = lang('alertes.flash_data_update_alumne');
+                        session()->setFlashdata('editarAlumne', $msg);
+
+                        $intervencio_model->editarIntervencioCorreuNou($correu_alumne_editar, $correu_alumne_post);
                         $alumne_model->editarAlumneActiu($correu_alumne_editar, 0);
+                        
                         $msg = lang('alertes.flash_data_delete_alumne') . $correu_alumne_editar;
                         session()->setFlashdata('eliminarAlumne', $msg);
-                        $id_login = $login_model->obtenirId($correu_alumne_editar);
-                        //$login_in_rol->deleteLoginInRol($id_login);
-                        //$login_model->deleteLogin($id_login);
+                        
 
-                    } else { // En cas que els correu original i el nou siguin iguals, només cal editar el codi centre
+                    } /*else { // En cas que els correu original i el nou siguin iguals, només cal editar el codi centre
 
                         $alumne_model->editarAlumneCodiCentre($correu_alumne_editar, $codi_centre_post);
-                    }
+                    }*/
 
                     return redirect()->to(base_url('/alumnes'));
                 } else {
