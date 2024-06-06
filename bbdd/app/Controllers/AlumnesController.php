@@ -231,7 +231,7 @@ class AlumnesController extends BaseController
 
     public function crearAlumne_post()
     {
-        
+
         $alumne_model = new AlumneModel();
         $centre_model = new CentreModel();
         $login_model = new LoginModel();
@@ -304,7 +304,7 @@ class AlumnesController extends BaseController
                 if ($alumne['actiu'] == 0) {
                     $alumne_model->editarAlumneActiu($alumne['correu_alumne'], 1);
                     $msg = lang('alertes.flash_data_create_alumne');
-                        session()->setFlashdata('afegirAlumne', $msg);
+                    session()->setFlashdata('afegirAlumne', $msg);
                 } else {
                     session()->setFlashdata('afegir_alumne_error', 'alumne.alumne_existeix');
                     return redirect()->back()->withInput();
@@ -453,7 +453,6 @@ class AlumnesController extends BaseController
                 session()->setFlashdata('editarAlumne', $msg);
 
                 return redirect()->to(base_url('/alumnes'));
-
             } else if (($role == "admin_sstt" && $id_sstt_alumne == $actor['id_sstt']) || ($role == "desenvolupador")) {
 
                 $codi_centre_post = $this->request->getPost('centre');
@@ -464,29 +463,31 @@ class AlumnesController extends BaseController
                 if ($id_sstt_alumne == $id_sstt_post) { // Comprovem que l'identificador del sstt que volem assignar a l'alumne sigui el mateix que el de l'actor
 
                     if ($correu_alumne_editar != $correu_alumne_post) { // En cas que el correu original i el nou siguin diferents
-                        
+
                         $alumne_post = $alumne_model->getAlumneByCorreu($correu_alumne_post);
 
                         if ($alumne_post) {
                             $alumne_model->editarAlumneActiu($correu_alumne_post, 1);
                             $alumne_model->editarAlumneCodiCentre($correu_alumne_post, $codi_centre_post);
+
+                            $msg = lang('alertes.flash_data_update_alumne');
+                            session()->setFlashdata('editarAlumne', $msg);
                         } else {
                             $alumne_model->addAlumne($correu_alumne_post, $codi_centre_post); // Creem un alumne nou
                             $login_model->addLogin($correu_alumne_post, null);
                             $login_in_rol->addLoginInRol($login_model->obtenirId($correu_alumne_post), $rol_model->obtenirIdRol("alumne"));
+                            $msg = lang('alertes.flash_data_create_alumne');
+                            session()->setFlashdata('afegirAlumne', $msg);
                         }
 
 
-                        $msg = lang('alertes.flash_data_update_alumne');
-                        session()->setFlashdata('editarAlumne', $msg);
+
 
                         $intervencio_model->editarIntervencioCorreuNou($correu_alumne_editar, $correu_alumne_post);
                         $alumne_model->editarAlumneActiu($correu_alumne_editar, 0);
-                        
+
                         $msg = lang('alertes.flash_data_delete_alumne') . $correu_alumne_editar;
                         session()->setFlashdata('eliminarAlumne', $msg);
-                        
-
                     } /*else { // En cas que els correu original i el nou siguin iguals, només cal editar el codi centre
 
                         $alumne_model->editarAlumneCodiCentre($correu_alumne_editar, $codi_centre_post);
@@ -608,8 +609,9 @@ class AlumnesController extends BaseController
                 $nom_centre_reparador = $dades['nom_centre_reparador_list'];
                 $centre_reparador = trim(explode('-', (string) $nom_centre_reparador)[0]);
 
-                // TODO Bea ficar alerta
                 if ($centre_reparador != null && $centre_model->obtenirCentre($centre_reparador) == null) {
+                    $msg = lang("alertes.filter_error_centre_reparador");
+                    session()->setFlashdata("escriure_malament_filtre", $msg);
                     return redirect()->back()->withInput();
                 }
 
@@ -628,8 +630,9 @@ class AlumnesController extends BaseController
                 $nom_poblacio = $dades['nom_poblacio_list'];
                 $poblacio = trim(explode('-', (string) $nom_poblacio)[0]);
 
-                // TODO Bea ficar alerta
                 if ($poblacio != null && $poblacio_model->getPoblacio($poblacio) == null) {
+                    $msg = lang("alertes.filter_error_poblacio");
+                    session()->setFlashdata("escriure_malament_filtre", $msg);
                     return redirect()->back()->withInput();
                 }
 
@@ -642,8 +645,9 @@ class AlumnesController extends BaseController
                 $nom_comarca = $dades['nom_comarca_list'];
                 $comarca = trim(explode('-', (string) $nom_comarca)[0]);
 
-                // TODO Bea ficar alerta
                 if ($comarca != null && $comarca_model->obtenirComarca($comarca) == null) {
+                    $msg = lang("alertes.filter_error_comarca");
+                    session()->setFlashdata("escriure_malament_filtre", $msg);
                     return redirect()->back()->withInput();
                 }
 

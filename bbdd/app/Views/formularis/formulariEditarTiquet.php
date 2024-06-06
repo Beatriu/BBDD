@@ -58,6 +58,11 @@
                 <?= session()->get('editarTiquet') ?>
             </div>
         <?php endif; ?>
+        <?php if ((session()->get('error_filtre')) !== null) : ?>
+            <div class="alert alert-danger alerta_esborrar" role="alert">
+                <?= session()->get('error_filtre') ?>
+            </div>
+        <?php endif; ?>
     </div>
 
 

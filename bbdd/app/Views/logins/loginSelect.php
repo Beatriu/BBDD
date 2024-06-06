@@ -16,7 +16,11 @@
 
 <?= $this->section('contingut'); ?>
 
-
+<?php if ((session()->get('error_filtre')) !== null) : ?>
+    <div class="alert alert-danger alerta_esborrar" role="alert">
+        <?= session()->get('error_filtre') ?>
+    </div>
+<?php endif; ?>
 <form class="d-flex align-items-center justify-content-center" method="POST" action="<?= base_url('/loginSelect') ?>">
     <?= csrf_field() ?>
     <div class="w-25 p-3" id="formulari">
@@ -25,9 +29,9 @@
                 <p class="titol h6">Institut</p>
             </div>
             <div class="d-flex justify-content-center">
-                <input class="form-control selector" name = "centre_seleccionat" list="datalistOptions" id="institutsDataList" placeholder="<?= lang('general_lang.centres_datalist') ?>">
+                <input class="form-control selector" name="centre_seleccionat" list="datalistOptions" id="institutsDataList" placeholder="<?= lang('general_lang.centres_datalist') ?>">
                 <datalist id="datalistOptions">
-                    <?=$centres?>
+                    <?= $centres ?>
                 </datalist>
             </div>
             <div class="d-flex justify-content-center">
