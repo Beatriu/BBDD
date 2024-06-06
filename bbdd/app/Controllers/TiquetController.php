@@ -301,8 +301,16 @@ class TiquetController extends BaseController
                         ]
                     ]);
 
-                    $crud2->addWhere('codi_centre', $actor['codi_centre']);
-                    $crud2->addWhere('id_intervencio', $id_intervencio, true);
+                    if ($role == "alumne" || $role == "professor") {
+                        $crud2->addWhere('codi_centre', $actor['codi_centre']);
+                        $crud2->addWhere('id_intervencio', $id_intervencio, true);
+                    } else if ($role == "sstt" || $role == "admin_sstt") {
+                        $crud2->addWhere('id_sstt', $actor['id_sstt']);
+                        $crud2->addWhere('id_intervencio', $id_intervencio, true);
+                    } else if ($role == "desenvolupador") {
+                        
+                    }
+
 
                     $data['output2'] = $crud2->render();
                 }

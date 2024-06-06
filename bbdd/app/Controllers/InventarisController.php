@@ -168,6 +168,7 @@ class InventarisController extends BaseController
                 ]);
 
                 $crud->addWhere('id_sstt', $actor['id_sstt']);
+
             } else if ($role == "desenvolupador") {
 
                 $crud->setColumns([
@@ -215,6 +216,7 @@ class InventarisController extends BaseController
                     ]
                 ]);
             }
+
             if ($role !== 'sstt' && $role !== 'alumne') {
                 $crud->addItemLink('delete', 'fa-trash', base_url('inventari/esborrar'), 'Eliminar Peça');
             }
@@ -568,12 +570,19 @@ class InventarisController extends BaseController
 
             if (($role == "alumne" || $role == "professor") && ($estat == "Pendent de reparar" || $estat == "Reparant")) {
                 $crud->addItemLink('delete', 'fa-trash', base_url('inventari/desassignar'), 'Desassignar Peça');
-            } else if ($role == "admin_sstt" || $role == "desenvolupador") {
+
+                $crud->addWhere('codi_centre', $actor['codi_centre']);
+                $crud->addWhere('id_intervencio', $id_intervencio, true);
+            } else if ($role == "admin_sstt") {
                 $crud->addItemLink('delete', 'fa-trash', base_url('inventari/desassignar'), 'Desassignar Peça');
+
+                $crud->addWhere('id_sstt', $actor['id_sstt']);
+                $crud->addWhere('id_intervencio', $id_intervencio, true);
+            } else if ($role == "desenvolupador") {
+
             }
 
-            $crud->addWhere('codi_centre', $actor['codi_centre']);
-            $crud->addWhere('id_intervencio', $id_intervencio, true);
+
 
             $data['output'] = $crud->render();
 
