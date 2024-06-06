@@ -83,7 +83,12 @@ class IntervencionsController extends BaseController
                 }
 
                 // Carregar peces d'inventari
-                $array_inventari = $inventari_model->obtenirInventariCentre($actor['codi_centre']);
+                if ($role == "alumne" || $role == "professor") {
+                    $array_inventari = $inventari_model->obtenirInventariCentre($actor['codi_centre']);
+                } else if ($role == "admin_sstt" || $role = "desenvolupador") {
+                    $array_inventari = $inventari_model->obtenirInventariCentre($tiquet['codi_centre_reparador']);
+                }
+                
                 $data['inventari_list'] = "";
                 for ($i = 0; $i < sizeof($array_inventari); $i++) {
 

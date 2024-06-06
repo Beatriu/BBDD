@@ -591,12 +591,20 @@ class InventarisController extends BaseController
                 $array_inventari = $inventari_model->obtenirInventariCentre($actor['codi_centre']);
             } else if ($role == "admin_sstt") {
 
-                $array_inventari = $inventari_model->obtenirInventari();
+                /*$array_inventari = $inventari_model->obtenirInventari();
+                $array_inventari_sstt = [];
+                d($array_inventari);
                 for ($k = 0; $k < sizeof($array_inventari); $k++) {
-                    if ($actor['id_sstt'] != $centre_model->obtenirCentre($array_inventari[$k]['codi_centre'])['id_sstt']){
-
+                    d($actor['id_sstt'], $array_inventari[$k]['codi_centre'], $centre_model->obtenirCentre($array_inventari[$k]['codi_centre'])['id_sstt']);
+                    if ($actor['id_sstt'] == $centre_model->obtenirCentre($array_inventari[$k]['codi_centre'])['id_sstt']){
+                        array_push($array_inventari_sstt, $array_inventari[$k]);
                     }
                 }
+                dd($array_inventari_sstt);
+
+                $array_inventari = $array_inventari_sstt;*/
+
+                $array_inventari = $inventari_model->obtenirInventariCentre($tiquet['codi_centre_reparador']);
 
             } else if ($role == "desenvolupador") {
 
