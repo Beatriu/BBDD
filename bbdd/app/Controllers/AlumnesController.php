@@ -440,13 +440,13 @@ class AlumnesController extends BaseController
 
                 if ($alumne_post) {
                     $alumne_model->editarAlumneActiu($correu_alumne_post, 1);
+                    //$intervencio_model->editarIntervencioCorreuNou($correu_alumne_editar, $correu_alumne_post);
                 } else {
                     $alumne_model->addAlumne($correu_alumne_post, $alumne_editar['codi_centre']);
                     $login_model->addLogin($correu_alumne_post, null);
                     $login_in_rol->addLoginInRol($login_model->obtenirId($correu_alumne_post), $rol_model->obtenirIdRol("alumne"));
                 }
 
-                $intervencio_model->editarIntervencioCorreuNou($correu_alumne_editar, $correu_alumne_post);
                 $alumne_model->editarAlumneActiu($correu_alumne_editar, 0);
 
                 $msg = lang('alertes.flash_data_update_alumne');
