@@ -214,7 +214,7 @@ class AlumnesController extends BaseController
             $options_centres = "";
 
             for ($i = 0; $i < sizeof($array_centres); $i++) {
-                if ($array_centres[$i]['id_sstt'] == $id_sstt) {
+                if ($array_centres[$i]['id_sstt'] == $id_sstt && $array_centres[$i]['taller'] == "1") {
                     $options_centres .= "<option value=\"" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "\">";
                     $options_centres .= $array_centres[$i]['nom_centre'];
                     $options_centres .= "</option>";
@@ -238,7 +238,8 @@ class AlumnesController extends BaseController
         $login_in_rol = new LoginInRolModel();
         $rol_model = new RolModel();
 
-        $role = session()->get('user_data')['role'];
+        $actor = session()->get('user_data');
+        $role = $actor['role'];
 
         if ($role == "professor") {
             $validationRules = [
@@ -276,7 +277,7 @@ class AlumnesController extends BaseController
             if ($alumne == null) {
 
                 if ($role == "professor") {
-                    $codi_centre = session()->get('user_data')['codi_centre'];
+                    $codi_centre = $actor['codi_centre'];
                     $alumne_model->addAlumne($correu_alumne, $codi_centre);
                     $login_model->addLogin($correu_alumne, null);
                     $login_in_rol->addLoginInRol($login_model->obtenirId($correu_alumne), $rol_model->obtenirIdRol("alumne"));
@@ -288,17 +289,23 @@ class AlumnesController extends BaseController
                     $codi_centre = trim(explode('-', (string) $codi_centre)[0]);
 
                     $id_sstt_post = $centre_model->obtenirCentre($codi_centre)['id_sstt'];
+                    $taller = $centre_model->obtenirCentre($codi_centre)['taller'];
 
-                    if (session()->get('user_data')['id_sstt'] == $id_sstt_post) {
+                    if ($actor['id_sstt'] == $id_sstt_post && $taller == "1") {
                         $alumne_model->addAlumne($correu_alumne, $codi_centre);
                         $login_model->addLogin($correu_alumne, null);
                         $login_in_rol->addLoginInRol($login_model->obtenirId($correu_alumne), $rol_model->obtenirIdRol("alumne"));
                         $msg = lang('alertes.flash_data_create_alumne');
                         session()->setFlashdata('afegirAlumne', $msg);
-                    } else {
+                    } elseif ($actor['id_sstt'] != $id_sstt_post) {
+                        // TODO Bea revisar si està bé
                         session()->setFlashdata('afegir_alumne_error', 'alumne.codi_no_sstt');
                         return redirect()->back()->withInput();
+                    } else if ($taller != "1") {
+                        session()->setFlashdata('afegir_alumne_error', 'alumne.centre_no_taller');
+                        return redirect()->back()->withInput();
                     }
+
                 }
             } else {
                 if ($alumne['actiu'] == 0) {
@@ -440,11 +447,15 @@ class AlumnesController extends BaseController
 
                 if ($alumne_post) {
                     $alumne_model->editarAlumneActiu($correu_alumne_post, 1);
-                    //$intervencio_model->editarIntervencioCorreuNou($correu_alumne_editar, $correu_alumne_post);
                 } else {
                     $alumne_model->addAlumne($correu_alumne_post, $alumne_editar['codi_centre']);
                     $login_model->addLogin($correu_alumne_post, null);
                     $login_in_rol->addLoginInRol($login_model->obtenirId($correu_alumne_post), $rol_model->obtenirIdRol("alumne"));
+                }
+
+                $array_intervencions = $intervencio_model->obtenirIdIntervencioAlumne($correu_alumne_editar);
+                for ($i = 0; $i < sizeof($array_intervencions); $i++) {
+                    $intervencio_model->editarIntervencioCorreuNou($array_intervencions[$i]['id_intervencio'], $correu_alumne_post);
                 }
 
                 $alumne_model->editarAlumneActiu($correu_alumne_editar, 0);
@@ -459,6 +470,11 @@ class AlumnesController extends BaseController
                 $codi_centre_post = $this->request->getPost('centre');
                 $codi_centre_post = trim(explode('-', (string) $codi_centre_post)[0]);
 
+                // TODO Bea ficar alerta
+                if ($codi_centre_post != null && $centre_model->obtenirCentre($codi_centre_post) == null) {
+                    return redirect()->back()->withInput();
+                }
+
                 $id_sstt_post = $centre_model->obtenirCentre($codi_centre_post)['id_sstt'];
 
                 if ($id_sstt_alumne == $id_sstt_post) { // Comprovem que l'identificador del sstt que volem assignar a l'alumne sigui el mateix que el de l'actor
@@ -469,7 +485,6 @@ class AlumnesController extends BaseController
 
                         if ($alumne_post) {
                             $alumne_model->editarAlumneActiu($correu_alumne_post, 1);
-                            $alumne_model->editarAlumneCodiCentre($correu_alumne_post, $codi_centre_post);
                         } else {
                             $alumne_model->addAlumne($correu_alumne_post, $codi_centre_post); // Creem un alumne nou
                             $login_model->addLogin($correu_alumne_post, null);
@@ -480,7 +495,11 @@ class AlumnesController extends BaseController
                         $msg = lang('alertes.flash_data_update_alumne');
                         session()->setFlashdata('editarAlumne', $msg);
 
-                        $intervencio_model->editarIntervencioCorreuNou($correu_alumne_editar, $correu_alumne_post);
+                        $array_intervencions = $intervencio_model->obtenirIdIntervencioAlumne($correu_alumne_editar);
+                        for ($i = 0; $i < sizeof($array_intervencions); $i++) {
+                            $intervencio_model->editarIntervencioCorreuNou($array_intervencions[$i]['id_intervencio'], $correu_alumne_post);
+                        }
+
                         $alumne_model->editarAlumneActiu($correu_alumne_editar, 0);
                         
                         $msg = lang('alertes.flash_data_delete_alumne') . $correu_alumne_editar;

@@ -55,7 +55,13 @@ class IntervencionsController extends BaseController
                     }
     
                 } else if ($role == "admin_sstt") {
-                    $id_sstt_tiquet = $centre_model->obtenirCentre($tiquet['codi_centre_emissor'])['id_sstt'];
+                    if ($tiquet['codi_centre_emissor'] != null) {
+                        $id_sstt_tiquet =  $centre_model->obtenirCentre($tiquet['codi_centre_emissor'])['id_sstt'];
+                    } else if ($tiquet['codi_centre_reparador']) {
+                        $id_sstt_tiquet =  $centre_model->obtenirCentre($tiquet['codi_centre_emissor'])['id_sstt'];
+                    } else {
+                        $id_sstt_tiquet = $tiquet['id_sstt'];
+                    }
     
                     if ($id_sstt_tiquet != $actor['id_sstt']) {
                         return redirect()->to(base_url('/tiquets'));

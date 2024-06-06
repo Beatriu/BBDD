@@ -157,7 +157,14 @@ class TiquetController extends BaseController
                     $tiquets = $tiquet_model->getTiquets();
 
                     for ($i = 0; $i < sizeof($tiquets); $i++) {
-                        $id_sstt_tiquet =  $centre_model->obtenirCentre($tiquets[$i]['codi_centre_emissor'])['id_sstt'];
+                        if ($tiquets[$i]['codi_centre_emissor'] != null) {
+                            $id_sstt_tiquet =  $centre_model->obtenirCentre($tiquets[$i]['codi_centre_emissor'])['id_sstt'];
+                        } else if ($tiquets[$i]['codi_centre_reparador']) {
+                            $id_sstt_tiquet =  $centre_model->obtenirCentre($tiquets[$i]['codi_centre_emissor'])['id_sstt'];
+                        } else {
+                            $id_sstt_tiquet = $tiquets[$i]['id_sstt'];
+                        }
+                        
 
                         if ($id_sstt_tiquet == $actor['id_sstt']) {
                             array_push($tiquets_resultat, $tiquets[$i]);
@@ -308,7 +315,7 @@ class TiquetController extends BaseController
                         $crud2->addWhere('id_sstt', $actor['id_sstt']);
                         $crud2->addWhere('id_intervencio', $id_intervencio, true);
                     } else if ($role == "desenvolupador") {
-                        
+
                     }
 
 

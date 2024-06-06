@@ -59,9 +59,6 @@
         </div>
         <?php if ($role == "admin_sstt" || $role == "desenvolupador") : ?>
             <div class="col">
-                <label for="correu_alumne" class="form-label"><?= lang('alumne.correu_alumne') ?> *</label>
-                <input type="email" class="form-control" name = "correu_alumne" id="correu_alumne" placeholder="<?= lang('alumne.correu_alumne') ?>" required>
-                
                 <label for="centre" class="form-label"><?= lang('alumne.centre') ?> *</label>
                 <input class="form-control selector" name="centre" list="datalistOptionsCentres" id="centre" placeholder="<?= lang('alumne.centre') ?>" required>
                 <datalist id="datalistOptionsCentres">

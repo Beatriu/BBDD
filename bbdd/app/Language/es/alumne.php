@@ -23,4 +23,5 @@ return [
     'editar_alumne' => 'Editar alumno',
     'no_existeix' => 'Este alumno no existe!',
     'codi_no_sstt' => 'El código del centro tiene que ser de tu sstt!',
+    'centre_no_taller' => 'El centro no es reparador!',
 ];
