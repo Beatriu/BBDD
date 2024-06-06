@@ -541,7 +541,7 @@ class RegistresController extends BaseController
         ]);
 
         if ($tipus_sstt !== 'desenvolupador') {
-            $crud->addWhere('id_sstt_emissor', $actor['id_sstt'], true);
+            $crud->addWhere("id_sstt_emissor='" . $actor['id_sstt'] . "' OR id_sstt_reparador='" . $actor['id_sstt'] . "' OR id_sstt='" . $actor['id_sstt'] . "'");
         }
 
         $crud->addItemLink('edit', 'fa-pencil', base_url('/tiquets/editar'), 'Editar Tiquet', true);

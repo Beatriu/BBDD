@@ -140,15 +140,6 @@ class TiquetController extends BaseController
                         $crud->addItemLink('delete', 'fa-trash', base_url('tiquets/' . $id_tiquet . '/esborrar'), 'Eliminar Intervenció');
                     }
 
-                    /*$crud->addWhere('id_tiquet', $id_tiquet);
-                    $crud->addWhere("estat_tiquet", "Pendent de reparar", true);
-
-                    $crud->addWhere('id_tiquet', $id_tiquet, false);
-                    $crud->addWhere("estat_tiquet", "Reparant", true);
-
-                    $crud->addWhere('id_tiquet', $id_tiquet, false);
-                    $crud->addWhere("estat_tiquet", "Reparat i pendent de recollir", true);*/
-
                     $crud->addWhere("id_tiquet='" . $id_tiquet . "' AND (estat_tiquet='Pendent de reparar' or estat_tiquet='Reparant' or estat_tiquet='Reparat i pendent de recollir')");
 
                 } else if ($role == "sstt" || $role == "admin_sstt") {
@@ -382,8 +373,10 @@ class TiquetController extends BaseController
             $nom_persona_contacte_centre = $this->request->getPost('sNomContacteCentre');
             $correu_persona_contacte_centre = $this->request->getPost('sCorreuContacteCentre');
             $data_alta = date("Y-m-d H:i:s");
-            $centre_emissor = session()->get('user_data')['codi_centre'];
-            $role = session()->get('user_data')['role'];
+            
+            $actor = session()->get('user_data');
+            $centre_emissor = $actor['codi_centre'];
+            $role = $actor['role'];
 
 
             if ($csv['csv_tiquet'] != "") {
@@ -423,18 +416,41 @@ class TiquetController extends BaseController
 
                                     $uuid = $uuid_library->v4();
                                     if ($role == "professor" || $role == "centre_emissor" || $role == "centre_reparador") {
+
                                         $msg = lang('alertes.flash_data_create_tiquet');
                                         session()->setFlashdata('crearTiquet', $msg);
-                                        $model->addTiquet($uuid, $csv_data[0], $csv_data[1], $csv_data[2], $csv_data[3], $data_alta, null, $csv_data[4], 1, $centre_emissor, null);
-                                    } else if ($role == "sstt" || $role == "admin_sstt" || $role == "desenvolupador") {
+
+                                        $id_sstt = $centre_model->obtenirCentre($centre_emissor)['id_sstt'];
+                                        $model->addTiquet($uuid, $csv_data[0], $csv_data[1], $csv_data[2], $csv_data[3], $data_alta, null, $csv_data[4], 1, $centre_emissor, null,$id_sstt);
+                                    } else if ($role == "sstt" || $role == "admin_sstt") {
+
                                         if ($csv_data[6] == null) {
                                             $msg = lang('alertes.flash_data_create_tiquet');
                                             session()->setFlashdata('crearTiquet', $msg);
-                                            $model->addTiquet($uuid, $csv_data[0], $csv_data[1], $csv_data[2], $csv_data[3], $data_alta, null, $csv_data[4], 1, $csv_data[5], null);
+
+                                            $model->addTiquet($uuid, $csv_data[0], $csv_data[1], $csv_data[2], $csv_data[3], $data_alta, null, $csv_data[4], 1, $csv_data[5], null, $actor['id_sstt']);
                                         } else {
+
                                             $msg = lang('alertes.flash_data_create_tiquet');
                                             session()->setFlashdata('crearTiquet', $msg);
-                                            $model->addTiquet($uuid, $csv_data[0], $csv_data[1], $csv_data[2], $csv_data[3], $data_alta, null, $csv_data[4], 2, $csv_data[5], $csv_data[6]);
+
+                                            $model->addTiquet($uuid, $csv_data[0], $csv_data[1], $csv_data[2], $csv_data[3], $data_alta, null, $csv_data[4], 2, $csv_data[5], $csv_data[6], $actor['id_sstt']);
+                                        }
+
+                                    } else if ($role == "desenvolupador") {
+
+                                        $id_sstt = $centre_model->obtenirCentre($csv_data[5])['id_sstt'];
+                                        if ($csv_data[6] == null) {
+                                            $msg = lang('alertes.flash_data_create_tiquet');
+                                            session()->setFlashdata('crearTiquet', $msg);
+
+                                            $model->addTiquet($uuid, $csv_data[0], $csv_data[1], $csv_data[2], $csv_data[3], $data_alta, null, $csv_data[4], 1, $csv_data[5], null, $id_sstt);
+                                        } else {
+
+                                            $msg = lang('alertes.flash_data_create_tiquet');
+                                            session()->setFlashdata('crearTiquet', $msg);
+
+                                            $model->addTiquet($uuid, $csv_data[0], $csv_data[1], $csv_data[2], $csv_data[3], $data_alta, null, $csv_data[4], 2, $csv_data[5], $csv_data[6], $id_sstt);
                                         }
                                     }
                                 }
@@ -496,20 +512,38 @@ class TiquetController extends BaseController
 
                     $uuid = $uuid_library->v4();
                     if ($role == "professor" || $role == "centre_emissor") {
+
                         $msg = lang('alertes.flash_data_create_tiquet');
                         session()->setFlashdata('crearTiquet', $msg);
-                        $tiquet_model->addTiquet($uuid, $codi_equip, $problem, $nom_persona_contacte_centre, $correu_persona_contacte_centre, $data_alta, null, $tipus, 1, $centre_emissor, null);
-                    } else {
+
+                        $id_sstt = $centre_model->obtenirCentre($centre_emissor)['id_sstt'];
+                        $tiquet_model->addTiquet($uuid, $codi_equip, $problem, $nom_persona_contacte_centre, $correu_persona_contacte_centre, $data_alta, null, $tipus, 1, $centre_emissor, null, $id_sstt);
+                    
+                    } else if ($role == "sstt" || $role == "admin_sstt") {
                         if ($centre_reparador == null) {
                             $msg = lang('alertes.flash_data_create_tiquet');
                             session()->setFlashdata('crearTiquet', $msg);
-                            $tiquet_model->addTiquet($uuid, $codi_equip, $problem, $nom_persona_contacte_centre, $correu_persona_contacte_centre, $data_alta, null, $tipus, 1, $centre_emissor, null);
+                            $tiquet_model->addTiquet($uuid, $codi_equip, $problem, $nom_persona_contacte_centre, $correu_persona_contacte_centre, $data_alta, null, $tipus, 1, $centre_emissor, null, $actor['id_sstt']);
                         } else {
                             $msg = lang('alertes.flash_data_create_tiquet');
                             session()->setFlashdata('crearTiquet', $msg);
-                            $tiquet_model->addTiquet($uuid, $codi_equip, $problem, $nom_persona_contacte_centre, $correu_persona_contacte_centre, $data_alta, null, $tipus, 2, $centre_emissor, $centre_reparador);
+                            $tiquet_model->addTiquet($uuid, $codi_equip, $problem, $nom_persona_contacte_centre, $correu_persona_contacte_centre, $data_alta, null, $tipus, 2, $centre_emissor, $centre_reparador, $actor['id_sstt']);
+                        }
+                    } else if ($role == "desenvolupador") {
+
+                        $id_sstt = $centre_model->obtenirCentre($centre_emissor)['id_sstt'];
+
+                        if ($centre_reparador == null) {
+                            $msg = lang('alertes.flash_data_create_tiquet');
+                            session()->setFlashdata('crearTiquet', $msg);
+                            $tiquet_model->addTiquet($uuid, $codi_equip, $problem, $nom_persona_contacte_centre, $correu_persona_contacte_centre, $data_alta, null, $tipus, 1, $centre_emissor, null, $id_sstt);
+                        } else {
+                            $msg = lang('alertes.flash_data_create_tiquet');
+                            session()->setFlashdata('crearTiquet', $msg);
+                            $tiquet_model->addTiquet($uuid, $codi_equip, $problem, $nom_persona_contacte_centre, $correu_persona_contacte_centre, $data_alta, null, $tipus, 2, $centre_emissor, $centre_reparador, $id_sstt);
                         }
                     }
+
                 }
             }
         }

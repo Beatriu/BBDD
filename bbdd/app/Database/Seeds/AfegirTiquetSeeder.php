@@ -2,6 +2,7 @@
 
 namespace App\Database\Seeds;
 
+use App\Models\CentreModel;
 use CodeIgniter\Database\Seeder;
 use Faker\Factory;
 
@@ -9,6 +10,7 @@ class AfegirTiquetSeeder extends Seeder
 {
     public function run()
     {
+        $centre_model = new CentreModel();
         $uuid_library = new \App\Libraries\UUID;
         $csvFile = fopen(WRITEPATH."uploads". DIRECTORY_SEPARATOR ."tiquet.csv", "r"); // read file from /writable/uploads folder.
 
@@ -18,7 +20,12 @@ class AfegirTiquetSeeder extends Seeder
             if (!$firstline) {
                 $model = new \App\Models\TiquetModel;
                 $uuid = $uuid_library->v4();
-                $model->addTiquet($uuid, $data[1], $data[2], $data[3], $data[4], $data[5], $data[6], $data[7], $data[8], $data[9], $data[10]);
+                if ($data[9] != null) {
+                    $id_sstt = $centre_model->obtenirCentre($data[9])['id_sstt'];
+                } else if ($data[10] != null) {
+                    $id_sstt = $centre_model->obtenirCentre($data[10])['id_sstt'];
+                }
+                $model->addTiquet($uuid, $data[1], $data[2], $data[3], $data[4], $data[5], $data[6], $data[7], $data[8], $data[9], $data[10], $id_sstt);
             }
             $firstline = false;
         }
