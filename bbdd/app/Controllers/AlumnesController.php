@@ -231,7 +231,7 @@ class AlumnesController extends BaseController
 
     public function crearAlumne_post()
     {
-
+        
         $alumne_model = new AlumneModel();
         $centre_model = new CentreModel();
         $login_model = new LoginModel();
@@ -276,7 +276,6 @@ class AlumnesController extends BaseController
             if ($alumne == null) {
 
                 if ($role == "professor") {
-
                     $codi_centre = session()->get('user_data')['codi_centre'];
                     $alumne_model->addAlumne($correu_alumne, $codi_centre);
                     $login_model->addLogin($correu_alumne, null);
@@ -302,9 +301,10 @@ class AlumnesController extends BaseController
                     }
                 }
             } else {
-
                 if ($alumne['actiu'] == 0) {
                     $alumne_model->editarAlumneActiu($alumne['correu_alumne'], 1);
+                    $msg = lang('alertes.flash_data_create_alumne');
+                        session()->setFlashdata('afegirAlumne', $msg);
                 } else {
                     session()->setFlashdata('afegir_alumne_error', 'alumne.alumne_existeix');
                     return redirect()->back()->withInput();
