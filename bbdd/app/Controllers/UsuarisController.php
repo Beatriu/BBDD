@@ -328,6 +328,8 @@ class UsuarisController extends BaseController
 
         // TODO Bea ficar alerta
         if ($codi_centre != null && $centre_model->obtenirCentre($codi_centre) == null) {
+            $msg = lang('alertes.filter_error_centre_reparador');
+            session()->setFlashdata('error_filtre', $msg);
             return redirect()->back()->withInput();
         }
 

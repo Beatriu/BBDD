@@ -174,14 +174,14 @@
             </div>
             <!--Filtres activats-->
             <?php if (isset($session_filtre)) : ?>
-                <div class="d-flex">
+                <div class="d-flex div_filtres">
                     <form method="POST" action="<?= base_url('/eliminarFiltreAlumnes') ?>">
                         <?= csrf_field() ?>
                         <div class="row row-cols-auto d-flex align-items-center">
                             <input type="hidden" name="operacio" id="operacio" value="" />
                             <?php if (count($session_filtre) !== 0) : ?>
                                 <div class="col">
-                                    <p><?= lang('registre.title_activated_filters') ?></p>
+                                    <p style="margin-bottom: 0;"><?= lang('registre.title_activated_filters') ?></p>
                                 </div>
                                 <div class="col px-0 form-check form-check-inline">
                                 <button id="submit_eliminar_tots_filtres" name="submit_eliminar_filtres" type="submit" class="badge bg-danger text-white etiqueta"><i class="fa-solid fa-trash me-2" id="trash_icon"></i><?= lang('registre.delete_all_filters') ?></button>
@@ -224,6 +224,11 @@
                 <?php if ((session()->get('editarAlumne')) !== null) : ?>
                     <div class="alert alert-warning alerta_esborrar" role="alert">
                         <?= session()->get('editarAlumne') ?>
+                    </div>
+                <?php endif; ?>
+                <?php if ((session()->get('escriure_malament_filtre')) !== null) : ?>
+                    <div class="alert alert-danger alerta_esborrar" role="alert">
+                        <?= session()->get('escriure_malament_filtre') ?>
                     </div>
                 <?php endif; ?>
             </div>

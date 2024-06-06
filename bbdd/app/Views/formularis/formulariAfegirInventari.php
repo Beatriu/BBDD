@@ -27,7 +27,11 @@
                         <h1><?= lang('inventari.formulari_afegir_inventari') ?></h1>
                     </div>
                 </div>
-
+                <?php if ((session()->get('escriure_malament')) !== null) : ?>
+                    <div class="alert alert-danger alerta_esborrar" role="alert">
+                        <?= session()->get('escriure_malament') ?>
+                    </div>
+                <?php endif; ?>
                 <div class="row border mt-4 me-0 pe-0 ps-0">
                     <div class="row form_header pt-2 pb-2 ps-3 pe-3 ms-0">
                     </div>

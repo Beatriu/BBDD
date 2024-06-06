@@ -22,7 +22,7 @@ class TiquetController extends BaseController
 
     public function viewTiquet($id_tiquet, $id_intervencio = null)
     {
-        
+
         $tiquet_model = new TiquetModel();
         $centre_model = new CentreModel();
         $tipus_dispositiu_model = new TipusDispositiuModel();
@@ -141,7 +141,6 @@ class TiquetController extends BaseController
                     }
 
                     $crud->addWhere("id_tiquet='" . $id_tiquet . "' AND (estat_tiquet='Pendent de reparar' or estat_tiquet='Reparant' or estat_tiquet='Reparat i pendent de recollir')");
-
                 } else if ($role == "sstt" || $role == "admin_sstt") {
 
                     $crud->addItemLink('view', 'fa-eye', base_url('tiquets/' . $id_tiquet . '/intervencio'), 'Veure Intervenció');
@@ -323,7 +322,7 @@ class TiquetController extends BaseController
                 }
 
 
-                
+
                 $data['output'] = $crud->render();
                 return view('tiquet' . DIRECTORY_SEPARATOR . 'vistaTiquet', $data);
             }
@@ -359,7 +358,7 @@ class TiquetController extends BaseController
     {
         $tiquet_model = new TiquetModel;
         $centre_model = new CentreModel();
-        
+
         $data['title'] = "login";
 
         $csv = $this->request->getFiles();
@@ -388,7 +387,7 @@ class TiquetController extends BaseController
             $nom_persona_contacte_centre = $this->request->getPost('sNomContacteCentre');
             $correu_persona_contacte_centre = $this->request->getPost('sCorreuContacteCentre');
             $data_alta = date("Y-m-d H:i:s");
-            
+
             $actor = session()->get('user_data');
             $centre_emissor = $actor['codi_centre'];
             $role = $actor['role'];
@@ -436,7 +435,7 @@ class TiquetController extends BaseController
                                         session()->setFlashdata('crearTiquet', $msg);
 
                                         $id_sstt = $centre_model->obtenirCentre($centre_emissor)['id_sstt'];
-                                        $model->addTiquet($uuid, $csv_data[0], $csv_data[1], $csv_data[2], $csv_data[3], $data_alta, null, $csv_data[4], 1, $centre_emissor, null,$id_sstt);
+                                        $model->addTiquet($uuid, $csv_data[0], $csv_data[1], $csv_data[2], $csv_data[3], $data_alta, null, $csv_data[4], 1, $centre_emissor, null, $id_sstt);
                                     } else if ($role == "sstt" || $role == "admin_sstt") {
 
                                         if ($csv_data[6] == null) {
@@ -451,7 +450,6 @@ class TiquetController extends BaseController
 
                                             $model->addTiquet($uuid, $csv_data[0], $csv_data[1], $csv_data[2], $csv_data[3], $data_alta, null, $csv_data[4], 2, $csv_data[5], $csv_data[6], $actor['id_sstt']);
                                         }
-
                                     } else if ($role == "desenvolupador") {
 
                                         $id_sstt = $centre_model->obtenirCentre($csv_data[5])['id_sstt'];
@@ -507,12 +505,16 @@ class TiquetController extends BaseController
                         $centre_reparador = null;
                     }
 
-                    // TODO Bea alerta que els centres que han introduït no són vàlids
+
                     if ($centre_emissor != null && $centre_model->obtenirCentre($centre_emissor) == null) {
+                        $msg = lang('alertes.filter_error_centre_reparador');
+                        session()->setFlashdata('error_filtre', $msg);
                         return redirect()->back()->withInput();
                     }
 
                     if ($centre_reparador != null && $centre_model->obtenirCentre($centre_reparador) == null) {
+                        $msg = lang('alertes.filter_error_centre_reparador');
+                        session()->setFlashdata('error_filtre', $msg);
                         return redirect()->back()->withInput();
                     }
                 }
@@ -533,7 +535,6 @@ class TiquetController extends BaseController
 
                         $id_sstt = $centre_model->obtenirCentre($centre_emissor)['id_sstt'];
                         $tiquet_model->addTiquet($uuid, $codi_equip, $problem, $nom_persona_contacte_centre, $correu_persona_contacte_centre, $data_alta, null, $tipus, 1, $centre_emissor, null, $id_sstt);
-                    
                     } else if ($role == "sstt" || $role == "admin_sstt") {
                         if ($centre_reparador == null) {
                             $msg = lang('alertes.flash_data_create_tiquet');
@@ -558,7 +559,6 @@ class TiquetController extends BaseController
                             $tiquet_model->addTiquet($uuid, $codi_equip, $problem, $nom_persona_contacte_centre, $correu_persona_contacte_centre, $data_alta, null, $tipus, 2, $centre_emissor, $centre_reparador, $id_sstt);
                         }
                     }
-
                 }
             }
         }
@@ -1110,7 +1110,7 @@ class TiquetController extends BaseController
         $tiquet_model = new TiquetModel();
         $estat_model = new EstatModel();
         $centre_model = new CentreModel();
-        
+
         $actor = session()->get('user_data');
         $role = $actor['role'];
 
@@ -1247,12 +1247,15 @@ class TiquetController extends BaseController
                         $estat_desti_nom = null;
                     }
 
-                    // TODO Bea alerta que els centres que han introduït no són vàlids
                     if ($codi_centre_emissor != null && $centre_model->obtenirCentre($codi_centre_emissor) == null) {
+                        $msg = lang('alertes.filter_error_centre_reparador');
+                        session()->setFlashdata('error_filtre', $msg);
                         return redirect()->back()->withInput();
                     }
 
                     if ($codi_centre_reparador != null && $centre_model->obtenirCentre($codi_centre_reparador) == null) {
+                        $msg = lang('alertes.filter_error_centre_reparador');
+                        session()->setFlashdata('error_filtre', $msg);
                         return redirect()->back()->withInput();
                     }
 
@@ -1327,12 +1330,15 @@ class TiquetController extends BaseController
                     $centre_emissor = trim(explode('-', (string) $centre_emissor)[0]);
                     $centre_reparador = trim(explode('-', (string) $centre_reparador)[0]);
 
-                    // TODO Bea alerta que els centres que han introduït no són vàlids
                     if ($centre_emissor != null && $centre_model->obtenirCentre($centre_emissor) == null) {
+                        $msg = lang('alertes.filter_error_centre_reparador');
+                        session()->setFlashdata('error_filtre', $msg);
                         return redirect()->back()->withInput();
                     }
 
                     if ($centre_reparador != null && $centre_model->obtenirCentre($centre_reparador) == null) {
+                        $msg = lang('alertes.filter_error_centre_reparador');
+                        session()->setFlashdata('error_filtre', $msg);
                         return redirect()->back()->withInput();
                     }
 

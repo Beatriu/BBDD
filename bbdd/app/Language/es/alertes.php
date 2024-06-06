@@ -16,5 +16,10 @@ return [
     'flash_data_delete_alumne' => "S'ha eliminat correctament el següent alumne: ",
     'change_estat_title' => "Estas seguro de este cambio de estado?",
     'change_estat_contingut' => "Estas seguro de que quieres hacer este cambio <b><i>NO REVERSIBLE?</b></i>",
-    'change_estat_contingut2' =>"El estado pasarà aser el siguiente: "
+    'change_estat_contingut2' =>"El estado pasarà aser el siguiente: ",
+    'filter_error_centre_reparador' => "Error al buscar el <b><i>CENTRO ELEGIDO</b></i>, pon los datos como se muestra en la lista.",
+    'filter_error_poblacio' => "Error al buscar la <b><i>POBLACIÓN<b><i> elegida, pon los datos como se muestra en la lista.",
+    'filter_error_comarca' => "Error al buscar la <b><i>COMARCA<b><i> elegida, pon los datos como se muestra en la lista.",
+    'filter_error_tipus_dispositiu' => "Error con el <b><i>TIPO INVENTARIO</i></b> elegido, pon los datos como se muestra en la lista.",
+    'error_tipus_inventari_assignar' => "Esta pieza no existe."
 ];

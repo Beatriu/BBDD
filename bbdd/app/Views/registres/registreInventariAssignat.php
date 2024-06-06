@@ -36,6 +36,11 @@
                 <?= session()->get('desassingarInventari') ?>
             </div>
         <?php endif; ?>
+        <?php if ((session()->get('error_tipus_inventari')) !== null) : ?>
+            <div class="alert alert-danger alerta_esborrar" role="alert">
+                <?= session()->get('error_tipus_inventari') ?>
+            </div>
+        <?php endif; ?>
     </div>
 
     <div class="row border mt-4 me-0 pe-0 ps-0">

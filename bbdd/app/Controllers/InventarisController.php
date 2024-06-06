@@ -408,8 +408,9 @@ class InventarisController extends BaseController
                 $tipus_inventari = $this->request->getPost('tipus_inventari');
                 $id_tipus_inventari = trim(explode('-', (string) $tipus_inventari)[0]);
 
-                // TODO Bea alerta que els centres que han introduït no són vàlids
                 if ($tipus_inventari_model->obtenirTipusInventariPerId($id_tipus_inventari) == null) {
+                    $msg = lang("alertes.filter_error_tipus_dispositiu");
+                    session()->setFlashdata("escriure_malament", $msg);
                     return redirect()->back()->withInput();
                 }
 
@@ -642,8 +643,9 @@ class InventarisController extends BaseController
             $inventari_post = $this->request->getPost('inventari');
             if ($inventari_post != "") {
 
-                // TODO Bea afegir alerta
                 if (substr_count((string) $inventari_post, " // ") != 2) {
+                    $msg = lang('alertes.error_tipus_inventari_assignar');
+                    session()->setFlashdata('error_tipus_inventari', $msg);
                     return redirect()->back();
                 }
                 
@@ -848,8 +850,9 @@ class InventarisController extends BaseController
                 $nom_centre_reparador = $dades['nom_centre_reparador_list'];
                 $centre_reparador = trim(explode('-', (string) $nom_centre_reparador)[0]);
 
-                // TODO Bea ficar alerta
                 if ($centre_reparador != null && $centre_model->obtenirCentre($centre_reparador) == null) {
+                    $msg = lang('alertes.filter_error_centre_reparador');
+                    session()->setFlashdata('error_filtre', $msg);
                     return redirect()->back()->withInput();
                 }
 
@@ -868,8 +871,9 @@ class InventarisController extends BaseController
                 $nom_poblacio = $dades['nom_poblacio_list'];
                 $poblacio = trim(explode('-', (string) $nom_poblacio)[0]);
 
-                // TODO Bea ficar alerta
                 if ($poblacio != null && $poblacio_model->getPoblacio($poblacio) == null) {
+                    $msg = lang('alertes.filter_error_centre_reparador');
+                    session()->setFlashdata('error_filtre', $msg);
                     return redirect()->back()->withInput();
                 }
 
@@ -882,8 +886,9 @@ class InventarisController extends BaseController
                 $nom_comarca = $dades['nom_comarca_list'];
                 $comarca = trim(explode('-', (string) $nom_comarca)[0]);
 
-                // TODO Bea ficar alerta
                 if ($comarca != null && $comarca_model->obtenirComarca($comarca) == null) {
+                    $msg = lang('alertes.filter_error_centre_reparador');
+                    session()->setFlashdata('error_filtre', $msg);
                     return redirect()->back()->withInput();
                 }
 
