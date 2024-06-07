@@ -88,4 +88,9 @@ class IntervencioModel extends Model
         return $this->where('id_tipus_intervencio', $id_tipus_intervencio);
     }
 
+    public function obtenirIntervencioCurs($id_curs) 
+    {
+        return $this->where('id_curs', $id_curs);
+    }
+
 }
