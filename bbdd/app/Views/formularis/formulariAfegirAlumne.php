@@ -78,6 +78,7 @@
         <div class="col">
             <label for="contrasenya_alumne" class="form-label"><?= lang('alumne.contrasenya') ?> *</label>
             <input type="password" class="form-control" name="contrasenya_alumne" id="contrasenya_alumne" placeholder="<?= lang('alumne.contrasenya') ?>" required>
+            <button type="button" id="pass_button" onclick=""><i class="fa-solid fa-eye"></i></button>
         </div>
 
         <?php if ($role == "admin_sstt" || $role == "desenvolupador") : ?>
@@ -103,5 +104,19 @@
     </div>
 
 </form>
+<script>
+    (function(window, document, undefined) {
+        window.onload = init;
 
+        function init() {
+            var button = document.getElementById("pass_button");
+            var input = document.getElementById("contrasenya_alumne");
+            
+            var input_width = input.clientWidth;
+            var button_width = button.clientWidth;
+            input.style = "width: calc(" + input_width + " - " + button_width + ");";
+        }
+
+    })(window, document, undefined);
+</script>
 <?= $this->endSection('contingut'); ?>
