@@ -23,4 +23,7 @@ return [
     'editar_alumne' => 'Editar alumno',
     'no_existeix' => 'Este alumno no existe!',
     'codi_no_sstt' => 'El código del centro tiene que ser de tu sstt!',
+    'nom_alumne' => 'Nombre alumno',
+    'congoms_alumne' => 'Apellidos alumno',
+    'contrasenya' => 'Contraseña'
 ];

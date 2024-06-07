@@ -101,6 +101,7 @@
                             <?= $tipus_dispositius ?>
                         </select>
                     </div>
+                    <?php if($repoemi !== 'emissor'): ?>
                     <div class="nom_centre_emissor_div px-3">
                         <br>
                         <h5><?= lang('registre.title_div_nom_centre_emissor') ?></h5>
@@ -113,7 +114,7 @@
                             <?= $centre_emissor ?>
                         </datalist>
                     </div>
-
+                    <?php endif; ?>
                     <div class="estat_div px-3">
                         <br>
                         <h5><?= lang('registre.title_div_estat') ?></h5>
@@ -181,7 +182,7 @@
                                     <span class="badge bg-light text-dark etiqueta"><?= lang('registre.title_filtre_checkbox_estat') ?> <i class="fa-solid fa-arrow-right"></i> <?= $estat_escollit ?> <button type="button" onclick="enviar('Estat')" class="btn-close btn_etiqueta" aria-label="Close"></button></span>
                                 </div>
                             <?php endif; ?>
-                            <?php if (isset($session_filtre['nom_centre_emissor'])) : ?>
+                            <?php if (isset($session_filtre['nom_centre_emissor']) ) : ?>
                                 <div class="col px-0 form-check form-check-inline">
                                     <span class="badge bg-light text-dark etiqueta"><?= lang('registre.title_filtre_checkbox_centre_emissor') ?> <i class="fa-solid fa-arrow-right"></i> <?= $centre_emissor_escollit['nom_centre'] ?><button type="button" onclick="enviar('Centre_emissor')" class="btn-close btn_etiqueta" aria-label="Close"></button></span>
                                 </div>

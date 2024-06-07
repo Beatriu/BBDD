@@ -102,17 +102,27 @@ class AlumnesController extends BaseController
 
                 $crud->setColumns([
                     'correu_alumne',
+                    'nom',
+                    'cognoms'
                 ]);
                 $crud->setColumnsInfo([
                     'correu_alumne' => [
                         'name' => lang('alumne.correu_alumne')
                     ],
+                    'nom' => [
+                        'name' => lang('alumne.nom_alumne')
+                    ],
+                    'cognoms' => [
+                        'name' => lang('alumne.congoms_alumne')
+                    ]
                 ]);
                 $crud->addWhere('codi_centre', $codi_centre);
             } else if ($role == "admin_sstt") {
 
                 $crud->setColumns([
                     'correu_alumne',
+                    'nom',
+                    'cognoms',
                     'nom_centre',
                     'nom_poblacio',
                     'nom_comarca'
@@ -120,6 +130,12 @@ class AlumnesController extends BaseController
                 $crud->setColumnsInfo([
                     'correu_alumne' => [
                         'name' => lang('alumne.correu_alumne')
+                    ],
+                    'nom' => [
+                        'name' => lang('alumne.nom_alumne')
+                    ],
+                    'cognoms' => [
+                        'name' => lang('alumne.congoms_alumne')
                     ],
                     'nom_centre' => [
                         'name' => lang('alumne.nom_centre'),
@@ -136,6 +152,8 @@ class AlumnesController extends BaseController
 
                 $crud->setColumns([
                     'correu_alumne',
+                    'nom',
+                    'cognoms',
                     'nom_centre',
                     'nom_poblacio',
                     'nom_comarca'
@@ -143,6 +161,12 @@ class AlumnesController extends BaseController
                 $crud->setColumnsInfo([
                     'correu_alumne' => [
                         'name' => lang('alumne.correu_alumne')
+                    ],
+                    'nom' => [
+                        'name' => lang('alumne.nom_alumne')
+                    ],
+                    'cognoms' => [
+                        'name' => lang('alumne.congoms_alumne')
                     ],
                     'nom_centre' => [
                         'name' => lang('alumne.nom_centre'),
@@ -181,9 +205,6 @@ class AlumnesController extends BaseController
                     $crud->addWhere('id_comarca', $comarca_escollida['id_comarca'], true);
                 }
             }
-
-
-
 
 
             $data['output'] = $crud->render();
@@ -249,6 +270,25 @@ class AlumnesController extends BaseController
                         'max_length' => lang('alumne.correu_alumne_max'),
                     ],
                 ],
+                'nom_alumne' => [
+                    'rules'  => 'required',
+                    'errors' => [
+                        'required' => lang('alumne.correu_alumne_required'),
+                    ],
+                ],
+                'congoms_alumne' => [
+                    'rules'  => 'required',
+                    'errors' => [
+                        'required' => lang('alumne.correu_alumne_required'),
+                    ],
+                ],
+                'contrasenya_alumne' => [
+                    'rules'  => 'required|min_length[6]',
+                    'errors' => [
+                        'required' => lang('general_lang.contrasenya_required'),
+                        'min_length' => lang('general_lang.contrasenya_min_length'),
+                    ],
+                ],
             ];
         } else if ($role == "admin_sstt" || $role == "desenvolupador") {
             $validationRules = [
@@ -265,20 +305,43 @@ class AlumnesController extends BaseController
                         'required' => lang('alumne.centre_required'),
                     ]
                 ],
+                'nom_alumne' => [
+                    'rules'  => 'required',
+                    'errors' => [
+                        'required' => lang('alumne.correu_alumne_required'),
+                    ],
+                ],
+                'congoms_alumne' => [
+                    'rules'  => 'required',
+                    'errors' => [
+                        'required' => lang('alumne.correu_alumne_required'),
+                    ],
+                ],
+                'contrasenya_alumne' => [
+                    'rules'  => 'required|min_length[6]',
+                    'errors' => [
+                        'required' => lang('general_lang.contrasenya_required'),
+                        'min_length' => lang('general_lang.contrasenya_min_length'),
+                    ],
+                ],
             ];
         }
 
         if ($this->validate($validationRules)) {
 
+            $nom_alumne = $this->request->getPost("nom_alumne");
+            $cognoms_alumne = $this->request->getPost("congoms_alumne");
             $correu_alumne = $this->request->getPost("correu_alumne");
+            $contrasenya = $this->request->getPost("contrasenya_alumne");
             $alumne = $alumne_model->getAlumneByCorreu($correu_alumne);
 
             if ($alumne == null) {
 
                 if ($role == "professor") {
                     $codi_centre = session()->get('user_data')['codi_centre'];
-                    $alumne_model->addAlumne($correu_alumne, $codi_centre);
-                    $login_model->addLogin($correu_alumne, null);
+                    $alumne_model->addAlumne($correu_alumne, $codi_centre, $nom_alumne, $cognoms_alumne);
+                    $contra_hash = password_hash("$contrasenya", PASSWORD_DEFAULT);
+                    $login_model->addLogin($correu_alumne, $contra_hash);
                     $login_in_rol->addLoginInRol($login_model->obtenirId($correu_alumne), $rol_model->obtenirIdRol("alumne"));
                     $msg = lang('alertes.flash_data_create_alumne');
                     session()->setFlashdata('afegirAlumne', $msg);
@@ -290,8 +353,9 @@ class AlumnesController extends BaseController
                     $id_sstt_post = $centre_model->obtenirCentre($codi_centre)['id_sstt'];
 
                     if (session()->get('user_data')['id_sstt'] == $id_sstt_post) {
-                        $alumne_model->addAlumne($correu_alumne, $codi_centre);
-                        $login_model->addLogin($correu_alumne, null);
+                        $alumne_model->addAlumne($correu_alumne, $codi_centre, $nom_alumne, $cognoms_alumne);
+                        $contra_hash = password_hash("$contrasenya", PASSWORD_DEFAULT);
+                        $login_model->addLogin($correu_alumne, $contra_hash);
                         $login_in_rol->addLoginInRol($login_model->obtenirId($correu_alumne), $rol_model->obtenirIdRol("alumne"));
                         $msg = lang('alertes.flash_data_create_alumne');
                         session()->setFlashdata('afegirAlumne', $msg);
@@ -372,6 +436,8 @@ class AlumnesController extends BaseController
             if (($role == "professor" && $codi_centre_alumne == $actor['codi_centre']) || ($role == "admin_sstt" && $id_sstt_alumne == $actor['id_sstt']) || ($role == "desenvolupador")) {
 
                 $data['correu_alumne'] = $correu_alumne_editar;
+                $data['nom'] = $alumne['nom'];
+                $data['cognoms'] = $alumne['cognoms'];
                 session()->setFlashdata('correu_alumne_editar', $correu_alumne_editar);
 
                 if ($role == "admin_sstt" || $role == "desenvolupador") {
@@ -418,99 +484,177 @@ class AlumnesController extends BaseController
         $login_in_rol = new LoginInRolModel();
         $rol_model = new RolModel();
 
+
+
         $correu_alumne_editar = session()->get('correu_alumne_editar');
 
         $actor = session()->get('user_data');
         $role = $actor['role'];
 
-        $alumne_editar = $alumne_model->getAlumneByCorreu($correu_alumne_editar);
+        if ($role == "professor") {
+            $validationRules = [
+                'correu_alumne' => [
+                    'rules'  => 'required|max_length[32]',
+                    'errors' => [
+                        'required' => lang('alumne.correu_alumne_required'),
+                        'max_length' => lang('alumne.correu_alumne_max'),
+                    ],
+                ],
+                'nom_alumne' => [
+                    'rules'  => 'required',
+                    'errors' => [
+                        'required' => lang('alumne.correu_alumne_required'),
+                    ],
+                ],
+                'congoms_alumne' => [
+                    'rules'  => 'required',
+                    'errors' => [
+                        'required' => lang('alumne.correu_alumne_required'),
+                    ],
+                ],
+                'contrasenya_alumne' => [
+                    'rules'  => 'required|min_length[6]',
+                    'errors' => [
+                        'required' => lang('general_lang.contrasenya_required'),
+                        'min_length' => lang('general_lang.contrasenya_min_length'),
+                    ],
+                ],
+            ];
+        } else if ($role == "admin_sstt" || $role == "desenvolupador") {
+            $validationRules = [
+                'correu_alumne' => [
+                    'rules'  => 'required|max_length[32]',
+                    'errors' => [
+                        'required' => lang('alumne.correu_alumne_required'),
+                        'max_length' => lang('alumne.correu_alumne_max'),
+                    ],
+                ],
+                'centre' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => lang('alumne.centre_required'),
+                    ]
+                ],
+                'nom_alumne' => [
+                    'rules'  => 'required',
+                    'errors' => [
+                        'required' => lang('alumne.correu_alumne_required'),
+                    ],
+                ],
+                'congoms_alumne' => [
+                    'rules'  => 'required',
+                    'errors' => [
+                        'required' => lang('alumne.correu_alumne_required'),
+                    ],
+                ],
+                'contrasenya_alumne' => [
+                    'rules'  => 'required|min_length[6]',
+                    'errors' => [
+                        'required' => lang('general_lang.contrasenya_required'),
+                        'min_length' => lang('general_lang.contrasenya_min_length'),
+                    ],
+                ],
+            ];
+        }
+        if ($this->validate($validationRules)) {
+            $alumne_editar = $alumne_model->getAlumneByCorreu($correu_alumne_editar);
 
-        if ($alumne_editar != null) {
+            if ($alumne_editar != null) {
 
-            $correu_alumne_post = $this->request->getPost('correu_alumne');
-            $alumne_post = $alumne_model->getAlumneByCorreu($correu_alumne_post);
-
-            //if ($alumne_post == null) {
-            $codi_centre_alumne = $alumne_editar['codi_centre'];
-            $id_sstt_alumne = $centre_model->obtenirCentre($codi_centre_alumne)['id_sstt'];
-
-            if ($role == "professor" && $codi_centre_alumne == $actor['codi_centre']) {
+                $nom_alumne_post = $this->request->getPost('nom_alumne');
+                $cognoms_alumne_post = $this->request->getPost('congoms_alumne');
+                $correu_alumne_post = $this->request->getPost('correu_alumne');
+                $contrasenya = $this->request->getPost('contrasenya_alumne');
 
                 $alumne_post = $alumne_model->getAlumneByCorreu($correu_alumne_post);
 
-                if ($alumne_post) {
-                    $alumne_model->editarAlumneActiu($correu_alumne_post, 1);
-                    //$intervencio_model->editarIntervencioCorreuNou($correu_alumne_editar, $correu_alumne_post);
-                } else {
-                    $alumne_model->addAlumne($correu_alumne_post, $alumne_editar['codi_centre']);
-                    $login_model->addLogin($correu_alumne_post, null);
-                    $login_in_rol->addLoginInRol($login_model->obtenirId($correu_alumne_post), $rol_model->obtenirIdRol("alumne"));
-                }
+                //if ($alumne_post == null) {
+                $codi_centre_alumne = $alumne_editar['codi_centre'];
+                $id_sstt_alumne = $centre_model->obtenirCentre($codi_centre_alumne)['id_sstt'];
 
-                $alumne_model->editarAlumneActiu($correu_alumne_editar, 0);
+                if ($role == "professor" && $codi_centre_alumne == $actor['codi_centre']) {
 
-                $msg = lang('alertes.flash_data_update_alumne');
-                session()->setFlashdata('editarAlumne', $msg);
+                    $alumne_post = $alumne_model->getAlumneByCorreu($correu_alumne_post);
 
-                return redirect()->to(base_url('/alumnes'));
-            } else if (($role == "admin_sstt" && $id_sstt_alumne == $actor['id_sstt']) || ($role == "desenvolupador")) {
+                    if ($alumne_post) {
+                        $alumne_model->editarAlumneActiu($correu_alumne_post, 1);
+                        //$intervencio_model->editarIntervencioCorreuNou($correu_alumne_editar, $correu_alumne_post);
+                    } else {
+                        $alumne_model->addAlumne($correu_alumne_post, $alumne_editar['codi_centre'], $nom_alumne_post, $cognoms_alumne_post);
+                        $contra_hash = password_hash("$contrasenya", PASSWORD_DEFAULT);
+                        $login_model->addLogin($correu_alumne_post, $contra_hash);
+                        $login_in_rol->addLoginInRol($login_model->obtenirId($correu_alumne_post), $rol_model->obtenirIdRol("alumne"));
+                    }
 
-                $codi_centre_post = $this->request->getPost('centre');
-                $codi_centre_post = trim(explode('-', (string) $codi_centre_post)[0]);
+                    $alumne_model->editarAlumneActiu($correu_alumne_editar, 0);
 
-                $id_sstt_post = $centre_model->obtenirCentre($codi_centre_post)['id_sstt'];
+                    $msg = lang('alertes.flash_data_update_alumne');
+                    session()->setFlashdata('editarAlumne', $msg);
 
-                if ($id_sstt_alumne == $id_sstt_post) { // Comprovem que l'identificador del sstt que volem assignar a l'alumne sigui el mateix que el de l'actor
+                    return redirect()->to(base_url('/alumnes'));
+                } else if (($role == "admin_sstt" && $id_sstt_alumne == $actor['id_sstt']) || ($role == "desenvolupador")) {
 
-                    if ($correu_alumne_editar != $correu_alumne_post) { // En cas que el correu original i el nou siguin diferents
+                    $codi_centre_post = $this->request->getPost('centre');
+                    $codi_centre_post = trim(explode('-', (string) $codi_centre_post)[0]);
 
-                        $alumne_post = $alumne_model->getAlumneByCorreu($correu_alumne_post);
+                    $id_sstt_post = $centre_model->obtenirCentre($codi_centre_post)['id_sstt'];
 
-                        if ($alumne_post) {
-                            $alumne_model->editarAlumneActiu($correu_alumne_post, 1);
-                            $alumne_model->editarAlumneCodiCentre($correu_alumne_post, $codi_centre_post);
+                    if ($id_sstt_alumne == $id_sstt_post) { // Comprovem que l'identificador del sstt que volem assignar a l'alumne sigui el mateix que el de l'actor
 
-                            $msg = lang('alertes.flash_data_update_alumne');
-                            session()->setFlashdata('editarAlumne', $msg);
-                        } else {
-                            $alumne_model->addAlumne($correu_alumne_post, $codi_centre_post); // Creem un alumne nou
-                            $login_model->addLogin($correu_alumne_post, null);
-                            $login_in_rol->addLoginInRol($login_model->obtenirId($correu_alumne_post), $rol_model->obtenirIdRol("alumne"));
-                            $msg = lang('alertes.flash_data_create_alumne');
-                            session()->setFlashdata('afegirAlumne', $msg);
-                        }
+                        if ($correu_alumne_editar != $correu_alumne_post) { // En cas que el correu original i el nou siguin diferents
+
+                            $alumne_post = $alumne_model->getAlumneByCorreu($correu_alumne_post);
+
+                            if ($alumne_post) {
+                                $alumne_model->editarAlumneActiu($correu_alumne_post, 1);
+                                $alumne_model->editarAlumneCodiCentre($correu_alumne_post, $codi_centre_post);
+
+                                $msg = lang('alertes.flash_data_update_alumne');
+                                session()->setFlashdata('editarAlumne', $msg);
+                            } else {
+                                $alumne_model->addAlumne($correu_alumne_post, $codi_centre_post, $nom_alumne_post, $cognoms_alumne_post); // Creem un alumne nou
+                                $contra_hash = password_hash("$contrasenya", PASSWORD_DEFAULT);
+                                $login_model->addLogin($correu_alumne_post, $contra_hash);
+                                $login_in_rol->addLoginInRol($login_model->obtenirId($correu_alumne_post), $rol_model->obtenirIdRol("alumne"));
+                                $msg = lang('alertes.flash_data_create_alumne');
+                                session()->setFlashdata('afegirAlumne', $msg);
+                            }
 
 
 
 
-                        $intervencio_model->editarIntervencioCorreuNou($correu_alumne_editar, $correu_alumne_post);
-                        $alumne_model->editarAlumneActiu($correu_alumne_editar, 0);
+                            $intervencio_model->editarIntervencioCorreuNou($correu_alumne_editar, $correu_alumne_post);
+                            $alumne_model->editarAlumneActiu($correu_alumne_editar, 0);
 
-                        $msg = lang('alertes.flash_data_delete_alumne') . $correu_alumne_editar;
-                        session()->setFlashdata('eliminarAlumne', $msg);
-                    } /*else { // En cas que els correu original i el nou siguin iguals, només cal editar el codi centre
+                            $msg = lang('alertes.flash_data_delete_alumne') . $correu_alumne_editar;
+                            session()->setFlashdata('eliminarAlumne', $msg);
+                        } /*else { // En cas que els correu original i el nou siguin iguals, només cal editar el codi centre
 
                         $alumne_model->editarAlumneCodiCentre($correu_alumne_editar, $codi_centre_post);
                     }*/
 
-                    return redirect()->to(base_url('/alumnes'));
-                } else {
-                    session()->setFlashdata('correu_editar', $correu_alumne_editar);
-                    session()->setFlashdata('editar_alumne_error', 'alumne.codi_no_sstt');
+                        return redirect()->to(base_url('/alumnes'));
+                    } else {
+                        session()->setFlashdata('correu_editar', $correu_alumne_editar);
+                        session()->setFlashdata('editar_alumne_error', 'alumne.codi_no_sstt');
 
-                    return redirect()->back()->withInput();
+                        return redirect()->back()->withInput();
+                    }
                 }
-            }
-            /*} else {
+                /*} else {
                 session()->setFlashdata('correu_editar', $correu_alumne_editar);
                 session()->setFlashdata('editar_alumne_error', 'alumne.alumne_existeix');
 
                 return redirect()->back()->withInput();
             }*/
-        } else {
-            session()->setFlashdata('correu_editar', $correu_alumne_editar);
-            session()->setFlashdata('editar_alumne_error', 'alumne.no_existeix');
+            } else {
+                session()->setFlashdata('correu_editar', $correu_alumne_editar);
+                session()->setFlashdata('editar_alumne_error', 'alumne.no_existeix');
 
+                return redirect()->back()->withInput();
+            }
+        } else {
+            session()->setFlashdata('afegir_alumne_error', 'alumne.afegir_no_validat');
             return redirect()->back()->withInput();
         }
     }
