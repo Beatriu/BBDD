@@ -41,65 +41,99 @@
     </div>
 <?php endif; ?>
 
-<div class="container p-0 overflow-hidden">
-
-    <div class="row mt-5 justify-content-center">
-        <div class="col-2 d-flex align-items-center">
-            <a class="btn btn-dark rounded-pill" href="<?= base_url('/tiquets') ?>">
-                <i class="fa-solid fa-arrow-left"></i> <?= lang('general_lang.tornar') ?>
-            </a>
-        </div>
-        <div class="col-10 justify-content-left">
-            <h1><?= lang('tipus.tipus_inventari') ?></h1>
-        </div>
-    </div>
-    <div>
-        <?php if ((session()->get('tipus_inventari_buit')) !== null) : ?>
-            <div class="alert alert-warning alerta_esborrar" role="alert">
-                <?= session()->get('tipus_inventari_buit') ?>
-            </div>
-        <?php endif; ?>
-        <?php if ((session()->get('tipus_inventari_existeix')) !== null) : ?>
-            <div class="alert alert-warning alerta_esborrar" role="alert">
-                <?= session()->get('tipus_inventari_existeix') ?>
-            </div>
-        <?php endif; ?>
-        <?php if ((session()->get('tipus_inventari_desactivat')) !== null) : ?>
-            <div class="alert alert-danger alerta_esborrar" role="alert">
-                <?= session()->get('tipus_inventari_desactivat') ?>
-            </div>
-        <?php endif; ?>
-        <?php if ((session()->get('tipus_inventari_esborrat')) !== null) : ?>
-            <div class="alert alert-danger alerta_esborrar" role="alert">
-                <?= session()->get('tipus_inventari_esborrat') ?>
-            </div>
-        <?php endif; ?>
-    </div>
-
-    <div class="row border mt-4 me-0 pe-0 ps-0">
-        <div class="row form_header p-3 ms-0">
-            
-        </div>
-    </div>
-
-    <form method="POST" action="/tipus/inventari/afegir" enctype="multipart/form-data">
-        <?= csrf_field() ?>
-        <div class="row">
-            <div class="col-9 mt-4">
-                <input type="text" class="form-control" name="tipus_inventari" id="tipusInventari" placeholder="<?= lang('tipus.escriu_tipus_inventari') ?>" required>
-            </div>
-            <div class="col-3 mt-4 d">
-                <button type="submit" class="btn btn-success rounded-pill"><i class="fa-solid fa-plus"></i> <?= lang('tipus.afegir_tipus_inventari') ?></button>
-            </div>
-        </div>
-    </form>
+<div class="container-fluid p-0 overflow-hidden">
 
     <div class="row">
-        <div class="col">
-            <?= $output ?>
+        <!--Sidebar estàtic-->
+        <div div class="col-sm-auto pl-0" id="sidebar">
+            <ul class="nav flex-column">
+                <li class="nav-item" title="<?= lang("registre.dispositius_rebuts") ?>">
+                    <a href="<?= base_url("/tiquets/emissor") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.table-dispositius") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                        <i class="fa-solid fa-list-check"></i>
+                    </a>
+                </li>
+                <li class="nav-item" title="<?= lang("registre.inventari") ?>">
+                    <a href="<?= base_url("/inventari") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.inventari") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
+                        <i class="fa-solid fa-boxes-stacked"></i>
+                    </a>
+                </li>
+                <?php if ($role == 'admin_sstt' || $role == 'desenvolupador') : ?>
+                    <li class="nav-item" title="<?= lang("registre.alumnes") ?>">
+                        <a href="<?= base_url("/alumnes") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.alumnes") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                            <i class="fa-solid fa-users"></i>
+                        </a>
+                    </li>
+                <?php endif; ?>
+                <?php if ($role == 'desenvolupador') : ?>
+                    <li class="nav-item" id="actiu" title="<?= lang("registre.tipus") ?>">
+                        <a href="<?= base_url("/tipus/inventari") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.tipus") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                            <i class="fa-solid fa-gear"></i>
+                        </a>
+                    </li>
+                <?php endif; ?>
+            </ul>
         </div>
-    </div>
 
+        <div class="col-sm p-0 pb-3 ps-5 pe-5 min-vh-100" id="zona_taula">
+            <div class="row mt-5 justify-content-center">
+                <div class="col-2 d-flex align-items-center">
+                    <a class="btn btn-dark rounded-pill" href="<?= base_url('/tiquets') ?>">
+                        <i class="fa-solid fa-arrow-left"></i> <?= lang('general_lang.tornar') ?>
+                    </a>
+                </div>
+                <div class="col-10 justify-content-left">
+                    <h1><?= lang('tipus.tipus_inventari') ?></h1>
+                </div>
+            </div>
+            <div>
+                <?php if ((session()->get('tipus_inventari_buit')) !== null) : ?>
+                    <div class="alert alert-warning alerta_esborrar" role="alert">
+                        <?= session()->get('tipus_inventari_buit') ?>
+                    </div>
+                <?php endif; ?>
+                <?php if ((session()->get('tipus_inventari_existeix')) !== null) : ?>
+                    <div class="alert alert-warning alerta_esborrar" role="alert">
+                        <?= session()->get('tipus_inventari_existeix') ?>
+                    </div>
+                <?php endif; ?>
+                <?php if ((session()->get('tipus_inventari_desactivat')) !== null) : ?>
+                    <div class="alert alert-danger alerta_esborrar" role="alert">
+                        <?= session()->get('tipus_inventari_desactivat') ?>
+                    </div>
+                <?php endif; ?>
+                <?php if ((session()->get('tipus_inventari_esborrat')) !== null) : ?>
+                    <div class="alert alert-danger alerta_esborrar" role="alert">
+                        <?= session()->get('tipus_inventari_esborrat') ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+
+            <div class="row border mt-4 ms-1 me-0 pe-0 ps-0">
+                <div class="row form_header p-3 ms-0">
+                    
+                </div>
+            </div>
+
+            <form method="POST" action="/tipus/inventari/afegir" enctype="multipart/form-data">
+                <?= csrf_field() ?>
+                <div class="row">
+                    <div class="col-9 mt-4">
+                        <input type="text" class="form-control" name="tipus_inventari" id="tipusInventari" placeholder="<?= lang('tipus.escriu_tipus_inventari') ?>" required>
+                    </div>
+                    <div class="col-3 mt-4 d">
+                        <button type="submit" class="btn btn-success rounded-pill"><i class="fa-solid fa-plus"></i> <?= lang('tipus.afegir_tipus_inventari') ?></button>
+                    </div>
+                </div>
+            </form>
+
+            <div class="row">
+                <div class="col">
+                    <?= $output ?>
+                </div>
+            </div>
+        </div>
+
+    </div>
 
 </div>
 <script>

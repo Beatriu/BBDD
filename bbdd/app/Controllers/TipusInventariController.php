@@ -14,6 +14,7 @@ class TipusInventariController extends BaseController
         $tipus_inventari_model = new TipusInventariModel();
 
         $role = session()->get('user_data')['role'];
+        $data['role'] = $role;
 
         if ($role != "desenvolupador") {
             return redirect()->to(base_url('/tiquets'));
@@ -60,7 +61,7 @@ class TipusInventariController extends BaseController
         ]);
         $crud->addItemLink('delete', 'fa-trash', base_url('tipus/inventari/desactivar'), 'Desactivar Tipus Inventari');
         $crud->addWhere('actiu', "1");
-        
+
         $data['output'] = $crud->render();
 
         $data['tipus_inventari_desactivar'] = null;
