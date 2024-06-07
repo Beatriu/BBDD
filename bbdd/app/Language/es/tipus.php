@@ -14,4 +14,13 @@ return [
     'tipus_intervencio_model_text' => "En caso que ya haya intervenciones con este tipo de intervención, quedará desactiviado. ¿Quieres eliminar/desactivar el siguiente tipo de intervención?",
     'escriu_tipus_intervencio' => "Escribe un nuevo tipo de intervención...",
     'afegir_tipus_intervencio' => "Añadir tipo de intervención",
+    'curs_titol' => 'Cursos',
+    'id_curs' => 'Identificador de curso',
+    'cicle' => 'Ciclo',
+    'titol' => 'Titulo',
+    'curs' => 'Curso',
+    'escriu_curs' => 'Escribe curso...',
+    'escriu_cicle' => 'Escribe ciclo...',
+    'escriu_titol' => 'Escribe titulo...',
+    'afegir_curs' => 'Añadir curso',
 ];

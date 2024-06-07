@@ -94,14 +94,25 @@ class TipusInventariController extends BaseController
         $tipus_inventari_no_existeix = $tipus_inventari_model->obtenirTipusInventariPerNom($tipus_inventari) == null;
         if ($tipus_inventari != null && $tipus_inventari != "" && $tipus_inventari_no_existeix) {
             $tipus_inventari_model->addTipusInventari($tipus_inventari);
+            $msg = lang("alertes.tipus_inventari_creat");
+            session()->setFlashdata("tipus_inventari_creat", $msg);
         } elseif ($tipus_inventari == null || $tipus_inventari == "") {
             $msg = lang("alertes.tipus_inventari_buit");
             session()->setFlashdata("tipus_inventari_buit", $msg);
             return redirect()->back()->withInput();
         } else if (!$tipus_inventari_no_existeix) {
-            $msg = lang("alertes.tipus_inventari_existeix");
-            session()->setFlashdata("tipus_inventari_existeix", $msg);
-            return redirect()->back()->withInput();
+
+            $tipus_inventari_existent = $tipus_inventari_model->obtenirTipusInventariPerNom($tipus_inventari);
+            if ($tipus_inventari_existent['actiu'] == "1") {
+                $msg = lang("alertes.tipus_inventari_existeix");
+                session()->setFlashdata("tipus_inventari_existeix", $msg);
+                return redirect()->back()->withInput();
+            } else {
+                $msg = lang("alertes.tipus_inventari_activat");
+                session()->setFlashdata("tipus_inventari_activat", $msg);
+                $tipus_inventari_model->editarTipusInventariActiu($tipus_inventari_existent['id_tipus_inventari'], "1");
+            }
+
         }
 
         $data['tipus_pantalla'] = "tipus_inventari";

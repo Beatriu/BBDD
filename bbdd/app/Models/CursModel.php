@@ -55,6 +55,10 @@ class CursModel extends Model
         return $this->where('id_curs', $id_curs)->find();
     }
 
+    public function obtenirCursosPerCursTitolCicle($cicle, $titol, $curs) {
+        return $this->where(['cicle' => $cicle, 'titol' => $titol, 'curs' => $curs])->find();
+    }
+
     public function editarCursActiu($id_curs, $actiu)
     {
         return $this->update($id_curs, ['actiu' => $actiu]);

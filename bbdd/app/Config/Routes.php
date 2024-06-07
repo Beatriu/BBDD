@@ -104,5 +104,11 @@ $routes->post('/tipus/intervencio/afegir', 'TipusIntervencioController::crearTip
 $routes->get('/tipus/intervencio/desactivar/(:segment)', 'TipusIntervencioController::registreTipusIntervencio/$1', ['filter'=>'Autentica']);
 $routes->get('/eliminarTipusIntervencio/(:segment)', 'TipusIntervencioController::desactivarTipusIntervencio/$1', ['filter'=>'Autentica']);
 
+
+// Curs
+$routes->get('/tipus/curs', 'CursController::registreCurs', ['filter'=>'Autentica']);
+$routes->post('/tipus/curs/afegir', 'CursController::crearCurs_post', ['filter'=>'Autentica']);
+$routes->get('/tipus/curs/desactivar/(:segment)', 'CursController::registreCurs/$1', ['filter'=>'Autentica']);
+$routes->get('/eliminarCurs/(:segment)', 'CursController::desactivarCurs/$1', ['filter'=>'Autentica']);
 //CENTRES
 $routes->get('/centres', 'CentresController::registreCentres', ['filter'=>'Autentica']);

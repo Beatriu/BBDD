@@ -96,15 +96,27 @@ class TipusIntervencioController extends BaseController
 
         if ($tipus_intervencio != null && $tipus_intervencio != "" && $tipus_intervencio_no_existeix) {
             $tipus_intervencio_model->addTipusIntervencio($tipus_intervencio);
+            $msg = lang("alertes.tipus_intervencio_creat");
+            session()->setFlashdata("tipus_intervencio_creat", $msg);
         } elseif ($tipus_intervencio == null || $tipus_intervencio == "") {
             $msg = lang("alertes.tipus_intervencio_buit");
             session()->setFlashdata("tipus_intervencio_buit", $msg);
             return redirect()->back()->withInput();
         } else if (!$tipus_intervencio_no_existeix) {
-            $msg = lang("alertes.tipus_intervencio_existeix");
-            session()->setFlashdata("tipus_intervencio_existeix", $msg);
-            return redirect()->back()->withInput();
+            
+            $tipus_intervencio_existent = $tipus_intervencio_model->obtenirTipusIntervencioPerNom($tipus_intervencio);
+            if ($tipus_intervencio_existent['actiu'] == "1") {
+                $msg = lang("alertes.tipus_intervencio_existeix");
+                session()->setFlashdata("tipus_intervencio_existeix", $msg);
+                return redirect()->back()->withInput();
+            } else {
+                $msg = lang("alertes.tipus_intervencio_activat");
+                session()->setFlashdata("tipus_intervencio_activat", $msg);
+                $tipus_intervencio_model->editarTipusIntervencioActiu($tipus_intervencio_existent['id_tipus_intervencio'], "1");
+            }
+
         }
+
 
         $data['tipus_pantalla'] = "tipus_intervencio";
         return redirect()->to(base_url('/tipus/intervencio'));

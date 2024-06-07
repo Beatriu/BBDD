@@ -101,18 +101,36 @@ class CursController extends BaseController
 
         // TODO Revisar aquesta part
         $curs = $this->request->getPost("curs");
-        $curs_no_existeix = $curs_model->obtenirTipusInventariPerNom($curs) == null;
+        $cicle = $this->request->getPost("cicle");
+        $titol = $this->request->getPost("titol");
+
+        if ($curs == "" || $curs == null || $titol == "" || $titol == null || $cicle == "" || $cicle == null) {
+            return redirect()->back()->withInput();
+        }
+
+        $curs_no_existeix = $curs_model->obtenirCursosPerCursTitolCicle($cicle, $titol, $curs) == null;
 
         if ($curs != null && $curs != "" && $curs_no_existeix) {
-            $curs_model->addTipusInventari($curs);
+            $curs_model->addCurs($cicle, $titol, $curs);
+            $msg = lang("alertes.curs_creat");
+            session()->setFlashdata("curs_creat", $msg);
         } elseif ($curs == null || $curs == "") {
             $msg = lang("alertes.curs_buit");
             session()->setFlashdata("curs_buit", $msg);
             return redirect()->back()->withInput();
         } else if (!$curs_no_existeix) {
-            $msg = lang("alertes.curs_existeix");
-            session()->setFlashdata("curs_existeix", $msg);
-            return redirect()->back()->withInput();
+
+            $curs_existent = $curs_model->obtenirCursosPerCursTitolCicle($cicle, $titol, $curs)[0];
+            if ($curs_existent['actiu'] == "1") {
+                $msg = lang("alertes.curs_existeix");
+                session()->setFlashdata("curs_existeix", $msg);
+                return redirect()->back()->withInput();
+            } else {
+                $msg = lang("alertes.curs_activat");
+                session()->setFlashdata("curs_activat", $msg);
+                $curs_model->editarCursActiu($curs_existent['id_curs'], "1");
+            }
+
         }
 
         $data['tipus_pantalla'] = "curs";
