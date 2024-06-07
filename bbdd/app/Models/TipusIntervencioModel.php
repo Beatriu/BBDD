@@ -58,4 +58,14 @@ class TipusIntervencioModel extends Model
     {
         return $this->where('nom_tipus_intervencio', $nom_tipus_intervencio)->first();
     }
+
+    public function editarTipusIntervencioActiu($id_tipus_intervencio)
+    {
+        return $this->update($id_tipus_intervencio, ['actiu' => '0']);
+    }
+
+    public function esborrarTipusIntervencio($id_tipus_intervencio) 
+    {
+        return $this->delete($id_tipus_intervencio);
+    }
 }

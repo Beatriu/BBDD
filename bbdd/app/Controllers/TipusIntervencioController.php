@@ -126,12 +126,12 @@ class TipusIntervencioController extends BaseController
             
         if ($tipus_intervencio_desactivar != null) {
 
-            if ($intervencio_model->obtenirInventariTipusInventari($id_tipus_intervencio) != null) {
-                $tipus_intervencio_model->editarTipusInventariActiu($id_tipus_intervencio, "0");
+            if ($intervencio_model->obtenirIntervencioTipusIntervencio($id_tipus_intervencio) != null) {
+                $tipus_intervencio_model->editarTipusIntervencioActiu($id_tipus_intervencio, "0");
                 $msg = lang("alertes.tipus_intervencio_desactivat");
                 session()->setFlashdata("tipus_intervencio_desactivat", $msg);
             } else {
-                $tipus_intervencio_model->esborrarTipusInventari($id_tipus_intervencio);
+                $tipus_intervencio_model->esborrarTipusIntervencio($id_tipus_intervencio);
                 $msg = lang("alertes.tipus_intervencio_esborrat");
                 session()->setFlashdata("tipus_intervencio_esborrat", $msg);
             }
