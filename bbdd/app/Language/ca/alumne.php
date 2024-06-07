@@ -25,5 +25,6 @@ return [
     'codi_no_sstt' => 'El codi del centre ha de ser del teu sstt!',
     'nom_alumne' => 'Nom alumne',
     'congoms_alumne' => 'Cognoms alumne',
-    'contrasenya' => 'Contrasenya'
+    'contrasenya' => 'Contrasenya',
+    'centre_no_taller' => 'El centre no és reparador!',
 ];

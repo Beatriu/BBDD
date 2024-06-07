@@ -12,7 +12,7 @@ class CursModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['cicle','titol','curs'];
+    protected $allowedFields    = ['cicle','titol','curs','actiu'];
 
     // Dates
     protected $useTimestamps = false;

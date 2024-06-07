@@ -1,7 +1,6 @@
 <?php
 
 return [
-    //Blai no toquis, que la de table-dispositius era la general, quan ho parlem ho canvio
     'titol_dispositius_sstt' => 'Registre dispositius',
     'table-dispositius' => 'Registre de dispositius emesos',
     'dispositius_rebuts' => 'Registre de dispositius rebuts',
@@ -52,5 +51,6 @@ return [
     'title_filtre_checkbox_comarca' => 'Comarca',
     'delete_all_filters' => 'Eliminar tots els filtres',
     'title_div_poblacio' => 'Població:',
-    'title_div_comarca' => 'Comarca:'
+    'title_div_comarca' => 'Comarca:',
+    'id_sstt' => 'Identificador SSTT:',
 ];

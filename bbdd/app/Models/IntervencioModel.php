@@ -69,9 +69,9 @@ class IntervencioModel extends Model
         return $this->where('id_intervencio', $id_intervencio)->first();
     }
 
-    public function editarIntervencioCorreuNou($correu_vell, $correu_nou) 
+    public function editarIntervencioCorreuNou($id_intervencio, $correu_nou) 
     {
-        return $this->where('correu',$correu_vell)->update(["correu_alumne" => $correu_nou]);
+        $this->update($id_intervencio, ["correu_alumne" => $correu_nou]);
     }
 
     public function deleteIntervencio($id_intervencio) 
@@ -81,6 +81,11 @@ class IntervencioModel extends Model
 
     public function editarIntervencio($id_intervencio, $id_tipus_intervencio, $id_curs, $descripcio_intervencio, $correu_alumne, $id_xtec) {
         return $this->update($id_intervencio,["id_tipus_intervencio" => $id_tipus_intervencio, "id_curs" => $id_curs, "descripcio_intervencio" => $descripcio_intervencio, "correu_alumne" => $correu_alumne, "id_xtec" => $id_xtec]);
+    }
+
+    public function obtenirIntervencioTipusIntervencio($id_tipus_intervencio) 
+    {
+        return $this->where('id_tipus_intervencio', $id_tipus_intervencio);
     }
 
 }

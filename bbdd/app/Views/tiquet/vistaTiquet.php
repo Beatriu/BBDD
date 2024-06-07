@@ -68,6 +68,9 @@
                         <li><?= lang('general_lang.contact_curt') ?>: <?= $tiquet['correu_persona_contacte_centre'] ?> </li>
                         <li><?= lang('registre.centre_reparador') ?>: <?= $nom_centre_reparador ?> </li>
                     <?php endif; ?>
+                    <?php if ($role == "desenvolupador") : ?>
+                        <li><?= lang('registre.id_sstt') ?> <?= $tiquet['id_sstt'] ?> </li>
+                    <?php endif; ?>
                     <li><?= lang('registre.data_alta') ?>: <?= $tiquet['data_alta'] ?> </li>
                 </ul>
                 <textarea id="mostrar_descripcio_tiquet" rows="6" disabled><?= trim($tiquet['descripcio_avaria']) ?>

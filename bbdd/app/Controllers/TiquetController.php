@@ -7,6 +7,7 @@ use App\Models\CentreModel;
 use App\Models\EstatModel;
 use App\Models\IntervencioModel;
 use App\Models\InventariModel;
+use App\Models\SSTTModel;
 use App\Models\TipusDispositiuModel;
 use App\Models\TipusIntervencioModel;
 use App\Models\TipusInventariModel;
@@ -156,7 +157,14 @@ class TiquetController extends BaseController
                     $tiquets = $tiquet_model->getTiquets();
 
                     for ($i = 0; $i < sizeof($tiquets); $i++) {
-                        $id_sstt_tiquet =  $centre_model->obtenirCentre($tiquets[$i]['codi_centre_emissor'])['id_sstt'];
+                        if ($tiquets[$i]['codi_centre_emissor'] != null) {
+                            $id_sstt_tiquet =  $centre_model->obtenirCentre($tiquets[$i]['codi_centre_emissor'])['id_sstt'];
+                        } else if ($tiquets[$i]['codi_centre_reparador']) {
+                            $id_sstt_tiquet =  $centre_model->obtenirCentre($tiquets[$i]['codi_centre_emissor'])['id_sstt'];
+                        } else {
+                            $id_sstt_tiquet = $tiquets[$i]['id_sstt'];
+                        }
+                        
 
                         if ($id_sstt_tiquet == $actor['id_sstt']) {
                             array_push($tiquets_resultat, $tiquets[$i]);
@@ -170,7 +178,7 @@ class TiquetController extends BaseController
                     $crud->addItemLink('view', 'fa-eye', base_url('tiquets/' . $id_tiquet . '/intervencio'), 'Veure Intervenció');
                     $crud->addItemLink('edit', 'fa-pencil', base_url('editar/intervencio/' . $id_tiquet), 'Editar Intervenció');
                     $crud->addItemLink('assignar', 'fa-screwdriver-wrench', base_url('tiquets/' . $id_tiquet . '/assignar'), 'Assignar Inventari');
-                    $crud->addItemLink('delete', 'fa-trash', base_url('tiquets/esborrar'), 'Eliminar Tiquet');
+                    $crud->addItemLink('delete', 'fa-trash', base_url('tiquets/' . $id_tiquet . '/esborrar'), 'Eliminar Intervenció');
                 }
 
 
@@ -307,6 +315,7 @@ class TiquetController extends BaseController
                         $crud2->addWhere('id_sstt', $actor['id_sstt']);
                         $crud2->addWhere('id_intervencio', $id_intervencio, true);
                     } else if ($role == "desenvolupador") {
+                        $crud2->addWhere('id_intervencio', $id_intervencio, true);
                     }
 
 
@@ -350,6 +359,7 @@ class TiquetController extends BaseController
     {
         $tiquet_model = new TiquetModel;
         $centre_model = new CentreModel();
+        $sstt_model = new SSTTModel();
 
         $data['title'] = "login";
 
@@ -444,18 +454,17 @@ class TiquetController extends BaseController
                                         }
                                     } else if ($role == "desenvolupador") {
 
-                                        $id_sstt = $centre_model->obtenirCentre($csv_data[5])['id_sstt'];
                                         if ($csv_data[6] == null) {
                                             $msg = lang('alertes.flash_data_create_tiquet');
                                             session()->setFlashdata('crearTiquet', $msg);
 
-                                            $model->addTiquet($uuid, $csv_data[0], $csv_data[1], $csv_data[2], $csv_data[3], $data_alta, null, $csv_data[4], 1, $csv_data[5], null, $id_sstt);
+                                            $model->addTiquet($uuid, $csv_data[0], $csv_data[1], $csv_data[2], $csv_data[3], $data_alta, null, $csv_data[4], 1, $csv_data[5], null, $csv_data[7]);
                                         } else {
 
                                             $msg = lang('alertes.flash_data_create_tiquet');
                                             session()->setFlashdata('crearTiquet', $msg);
 
-                                            $model->addTiquet($uuid, $csv_data[0], $csv_data[1], $csv_data[2], $csv_data[3], $data_alta, null, $csv_data[4], 2, $csv_data[5], $csv_data[6], $id_sstt);
+                                            $model->addTiquet($uuid, $csv_data[0], $csv_data[1], $csv_data[2], $csv_data[3], $data_alta, null, $csv_data[4], 2, $csv_data[5], $csv_data[6], $csv_data[7]);
                                         }
                                     }
                                 }
@@ -466,6 +475,7 @@ class TiquetController extends BaseController
                         }
                     }
                 }
+
             } else {
 
                 $num_tiquets = $this->request->getPost('num_tiquets');
@@ -482,6 +492,7 @@ class TiquetController extends BaseController
                 }
 
                 if ($centre_emissor == "no_codi") {
+                    
                     if ($role != "professor" && $role != "centre_emissor") {
                         $centre_emissor = $this->request->getPost('centre_emissor');
                         $centre_reparador = $this->request->getPost('centre_reparador');
@@ -527,7 +538,9 @@ class TiquetController extends BaseController
 
                         $id_sstt = $centre_model->obtenirCentre($centre_emissor)['id_sstt'];
                         $tiquet_model->addTiquet($uuid, $codi_equip, $problem, $nom_persona_contacte_centre, $correu_persona_contacte_centre, $data_alta, null, $tipus, 1, $centre_emissor, null, $id_sstt);
-                    } else if ($role == "sstt" || $role == "admin_sstt") {
+                    
+                    } elseif ($role == "sstt" || $role == "admin_sstt") {
+
                         if ($centre_reparador == null) {
                             $msg = lang('alertes.flash_data_create_tiquet');
                             session()->setFlashdata('crearTiquet', $msg);
@@ -537,9 +550,17 @@ class TiquetController extends BaseController
                             session()->setFlashdata('crearTiquet', $msg);
                             $tiquet_model->addTiquet($uuid, $codi_equip, $problem, $nom_persona_contacte_centre, $correu_persona_contacte_centre, $data_alta, null, $tipus, 2, $centre_emissor, $centre_reparador, $actor['id_sstt']);
                         }
-                    } else if ($role == "desenvolupador") {
 
-                        $id_sstt = $centre_model->obtenirCentre($centre_emissor)['id_sstt'];
+                    } elseif ($role == "desenvolupador") {
+                        
+
+                        $id_sstt = $this->request->getPost("sstt");
+                        $id_sstt = trim(explode('-', (string) $id_sstt)[0]);
+
+                        // TODO Bea ficar alerta
+                        if ($id_sstt != null && $sstt_model->obtenirSSTTPerId($id_sstt) == null) {
+                            return redirect()->back()->withInput();
+                        }
 
                         if ($centre_reparador == null) {
                             $msg = lang('alertes.flash_data_create_tiquet');
@@ -569,6 +590,9 @@ class TiquetController extends BaseController
      */
     public function createTiquet()
     {
+        $sstt_model = new SSTTModel();
+        $centre_model = new CentreModel();
+
         $actor = session()->get('user_data');
         $role = $actor['role'];
         $data['role'] = $role;
@@ -594,7 +618,7 @@ class TiquetController extends BaseController
 
 
         if ($role == "desenvolupador" || $role == "admin_sstt" || $role == "sstt") {
-            $centre_model = new CentreModel();
+            
             $array_centres = $centre_model->obtenirCentres();
             $options_tipus_dispositius_emissors = "";
             $options_tipus_dispositius_reparadors = "";
@@ -624,6 +648,23 @@ class TiquetController extends BaseController
             }
             $data['centres_emissors'] = $options_tipus_dispositius_emissors;
             $data['centres_reparadors'] = $options_tipus_dispositius_reparadors;
+        }
+
+        if ($role == "desenvolupador") {
+            $data['sstt'] = "";
+            $options_sstt = "";
+
+            $array_sstt = $sstt_model->obtenirSSTT();
+
+            for ($i = 0; $i < sizeof($array_sstt); $i++) {
+                if ($array_sstt[$i]['id_sstt'] != "0") {
+                    $options_sstt .= "<option value=\"" . $array_sstt[$i]['id_sstt'] . " - " . $array_sstt[$i]['nom_sstt'] . "\">";
+                    $options_sstt .= $array_sstt[$i]['nom_sstt'];
+                    $options_sstt .= "</option>";
+                }
+            }
+
+            $data['sstt'] = $options_sstt;
         }
 
 
@@ -656,9 +697,12 @@ class TiquetController extends BaseController
             if ($role == "professor" || $role == "centre_emissor" || $role == "centre_reparador") {
                 $file = new \CodeIgniter\Files\File(WRITEPATH . "uploads" . DIRECTORY_SEPARATOR . "csv" . DIRECTORY_SEPARATOR . "exemple_afegir_tiquet_professorat.csv"); // Definim el nom de l'arxiu amb ruta
                 $file_name = "exemple_afegir_tiquet_professorat.csv";
-            } else if ($role == "sstt" || $role == "admin_sstt" || $role == "desenvolupador") {
+            } else if ($role == "sstt" || $role == "admin_sstt") {
                 $file = new \CodeIgniter\Files\File(WRITEPATH . "uploads" . DIRECTORY_SEPARATOR . "csv" . DIRECTORY_SEPARATOR . "exemple_afegir_tiquet_sstt.csv"); // Definim el nom de l'arxiu amb ruta
                 $file_name = "exemple_afegir_tiquet_sstt.csv";
+            } else if ($role == "desenvolupador") {
+                $file = new \CodeIgniter\Files\File(WRITEPATH . "uploads" . DIRECTORY_SEPARATOR . "csv" . DIRECTORY_SEPARATOR . "exemple_afegir_tiquet_desenvolupador.csv"); // Definim el nom de l'arxiu amb ruta
+                $file_name = "exemple_afegir_tiquet_desenvolupador.csv";
             }
 
             // En cas que no es tracti d'un fitxer llencem que no s'ha trobat
@@ -1535,6 +1579,7 @@ class TiquetController extends BaseController
             }
 
             if (($role == "sstt" || $role == "admin_sstt") && ($id_sstt_emissor == $actor['id_sstt'] || $id_sstt_reparador == $actor['id_sstt']) || $role == "desenvolupador") {
+
                 $estat = $estat_model->obtenirEstatPerId($tiquet['id_estat']);
 
                 if ($estat == "Retornat" || $estat == "Desguassat") {

@@ -21,5 +21,13 @@ return [
     'filter_error_poblacio' => "Error al buscar la <b><i>POBLACIÓN<b><i> elegida, pon los datos como se muestra en la lista.",
     'filter_error_comarca' => "Error al buscar la <b><i>COMARCA<b><i> elegida, pon los datos como se muestra en la lista.",
     'filter_error_tipus_dispositiu' => "Error con el <b><i>TIPO INVENTARIO</i></b> elegido, pon los datos como se muestra en la lista.",
-    'error_tipus_inventari_assignar' => "Esta pieza no existe."
+    'error_tipus_inventari_assignar' => "Esta pieza no existe.",
+    'tipus_inventari_buit' => "No has llenado el campo",
+    'tipus_inventari_existeix' => "Este tipo de inventario ya existe!",
+    'tipus_inventari_desactivat' => "El tipo de inventario se ha desactivado",
+    'tipus_inventari_esborrat' => "El tipo de inventario se ha eliminado",
+    'tipus_intervencio_buit' => "No has llenado el campo",
+    'tipus_intervencio_existeix' => "Este tipo de intervención ya existe!",
+    'tipus_intervencio_desactivat' => "El tipo de inventario se ha desactivado",
+    'tipus_intervencio_esborrat' => "El tipo de inventario se ha eliminado",
 ];

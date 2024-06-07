@@ -6,8 +6,16 @@
     background-color: #333333 !important;
     color: #F5F5F5 !important;
 }
+#data-list-tipus_inventari > thead > tr > th {
+    background-color: #333333 !important;
+    color: #F5F5F5 !important;
+}
+#data-list-tipus_intervencio > thead > tr > th {
+    background-color: #333333 !important;
+    color: #F5F5F5 !important;
+}
 
-#data-list-vista_tiquet, #data-list-vista_intervencio{
+#data-list-vista_tiquet, #data-list-vista_intervencio, #data-list-tipus_inventari, #data-list-tipus_intervencio{
     border-right: 2px solid #900000;
     border-bottom: 2px solid #900000;
     border-left: 2px solid #900000;
@@ -124,4 +132,9 @@
 }
 .div_filtres{
     margin-left: 10px;
+}
+
+#menu_tipus > .actiu {
+    font-size: 4em;
+    color: #900000 !important;
 }
