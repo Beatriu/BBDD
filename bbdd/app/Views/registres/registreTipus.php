@@ -127,6 +127,13 @@
                                                 <a class="nav-link" aria-current="page" href="<?= base_url('/tipus/intervencio') ?>"><?= lang('tipus.tipus_intervencio') ?></a>
                                             <?php endif; ?>
                                         </li>
+                                        <li class="nav-item">
+                                            <?php if ($tipus_pantalla == "curs"): ?>
+                                                <a class="nav-link active actiu" aria-current="page" href="<?= base_url('/tipus/curs') ?>"><?= lang('tipus.curs_titol') ?></a>
+                                            <?php else: ?>
+                                                <a class="nav-link" aria-current="page" href="<?= base_url('/tipus/curs') ?>"><?= lang('tipus.curs_titol') ?></a>
+                                            <?php endif; ?>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -156,6 +163,16 @@
                     <?php if ((session()->get('tipus_inventari_esborrat')) !== null) : ?>
                         <div class="alert alert-danger alerta_esborrar" role="alert">
                             <?= session()->get('tipus_inventari_esborrat') ?>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ((session()->get('tipus_inventari_creat')) !== null) : ?>
+                        <div class="alert alert-success alerta_esborrar" role="alert">
+                            <?= session()->get('tipus_inventari_creat') ?>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ((session()->get('tipus_inventari_activat')) !== null) : ?>
+                        <div class="alert alert-success alerta_esborrar" role="alert">
+                            <?= session()->get('tipus_inventari_activat') ?>
                         </div>
                     <?php endif; ?>
                 </div>
@@ -202,6 +219,16 @@
                                 <?= session()->get('tipus_intervencio_esborrat') ?>
                             </div>
                         <?php endif; ?>
+                        <?php if ((session()->get('tipus_intervencio_creat')) !== null) : ?>
+                            <div class="alert alert-success alerta_esborrar" role="alert">
+                                <?= session()->get('tipus_intervencio_creat') ?>
+                            </div>
+                        <?php endif; ?>
+                        <?php if ((session()->get('tipus_intervencio_activat')) !== null) : ?>
+                            <div class="alert alert-success alerta_esborrar" role="alert">
+                                <?= session()->get('tipus_intervencio_activat') ?>
+                            </div>
+                        <?php endif; ?>
                     </div>
 
                     <div class="row border mt-4 ms-1 me-0 pe-0 ps-0">
@@ -222,6 +249,65 @@
                         </div>
                     </form>
 
+            <?php elseif($tipus_pantalla == "curs"): ?>
+
+                    <div>
+                        <?php if ((session()->get('curs_buit')) !== null) : ?>
+                            <div class="alert alert-warning alerta_esborrar" role="alert">
+                                <?= session()->get('curs_buit') ?>
+                            </div>
+                        <?php endif; ?>
+                        <?php if ((session()->get('curs_existeix')) !== null) : ?>
+                            <div class="alert alert-warning alerta_esborrar" role="alert">
+                                <?= session()->get('curs_existeix') ?>
+                            </div>
+                        <?php endif; ?>
+                        <?php if ((session()->get('curs_desactivat')) !== null) : ?>
+                            <div class="alert alert-danger alerta_esborrar" role="alert">
+                                <?= session()->get('curs_desactivat') ?>
+                            </div>
+                        <?php endif; ?>
+                        <?php if ((session()->get('curs_esborrat')) !== null) : ?>
+                            <div class="alert alert-danger alerta_esborrar" role="alert">
+                                <?= session()->get('curs_esborrat') ?>
+                            </div>
+                        <?php endif; ?>
+                        <?php if ((session()->get('curs_creat')) !== null) : ?>
+                            <div class="alert alert-success alerta_esborrar" role="alert">
+                                <?= session()->get('curs_creat') ?>
+                            </div>
+                        <?php endif; ?>
+                        <?php if ((session()->get('curs_activat')) !== null) : ?>
+                            <div class="alert alert-success alerta_esborrar" role="alert">
+                                <?= session()->get('curs_activat') ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+
+                    <div class="row border mt-4 ms-1 me-0 pe-0 ps-0">
+                        <div class="row form_header p-3 ms-0">
+                            
+                        </div>
+                    </div>
+
+                    <form method="POST" action="/tipus/curs/afegir" enctype="multipart/form-data">
+                        <?= csrf_field() ?>
+                        <div class="row">
+                            <div class="col-2 mt-4">
+                                <input type="number" min="0" class="form-control" name="curs" id="curs_crud" placeholder="<?= lang('tipus.escriu_curs') ?>" required>
+                            </div>
+                            <div class="col-3 mt-4">
+                                <input type="text" class="form-control" name="cicle" id="cicle_crud" placeholder="<?= lang('tipus.escriu_cicle') ?>" required>
+                            </div>
+                            <div class="col-4 mt-4">
+                                <input type="text" class="form-control" name="titol" id="titol_crud" placeholder="<?= lang('tipus.escriu_titol') ?>" required>
+                            </div>
+                            <div class="col-3 mt-4 d">
+                                <button type="submit" class="btn btn-success rounded-pill"><i class="fa-solid fa-plus"></i> <?= lang('tipus.afegir_curs') ?></button>
+                            </div>
+                        </div>
+                    </form>
+
             <?php endif; ?>
 
             <div class="row">
@@ -229,7 +315,7 @@
                         <?= $output ?>
                 </div>
             </div>
-            
+
         </div>
 
 
