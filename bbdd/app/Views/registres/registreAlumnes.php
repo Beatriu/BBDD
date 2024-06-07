@@ -42,11 +42,15 @@
         <div class="modal" tabindex="-1" role="dialog" style="display:block">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title text-danger"><?= lang('alumne.no_permisos_title') ?></h5>
-                        <a href="<?= base_url("/alumnes") ?>">
-                            <i class="fa-solid fa-xmark"></i>
-                        </a>
+                    <div class="modal-header d-flex justify-content-between">
+                        <div>
+                            <h5 class="modal-title text-danger"><?= lang('alumne.no_permisos_title') ?></h5>
+                        </div>
+                        <div>
+                            <a href="<?= base_url("/alumnes") ?>">
+                                <i class="fa-solid fa-xmark"></i>
+                            </a>
+                        </div>
                     </div>
                     <div class="modal-body text-danger">
                         <p><?= lang($no_permisos) ?></p>
@@ -133,29 +137,29 @@
                         </datalist>
                     </div>
                     <div class="poblacio_div px-3">
-                            <br>
-                            <h5><?= lang('registre.title_div_poblacio') ?></h5>
-                            <?php if (isset($session_filtre['nom_poblacio'])) : ?>
-                                <input list="nom_poblacio" name="nom_poblacio_list" class="form-select selector_filtre" value="<?= old('nom_poblacio_list') ?>" />
-                            <?php else : ?>
-                                <input list="nom_poblacio" name="nom_poblacio_list" class="form-select selector_filtre" />
-                            <?php endif; ?>
-                            <datalist id="nom_poblacio">
-                                <?= $poblacio ?>
-                            </datalist>
-                        </div>
-                        <div class="comarca_div px-3">
-                            <br>
-                            <h5><?= lang('registre.title_div_comarca') ?></h5>
-                            <?php if (isset($session_filtre['nom_comarca'])) : ?>
-                                <input list="nom_comarca" name="nom_comarca_list" class="form-select selector_filtre" value="<?= old('nom_comarca_list') ?>" />
-                            <?php else : ?>
-                                <input list="nom_comarca" name="nom_comarca_list" class="form-select selector_filtre" />
-                            <?php endif; ?>
-                            <datalist id="nom_comarca">
-                                <?= $comarca ?>
-                            </datalist>
-                        </div>
+                        <br>
+                        <h5><?= lang('registre.title_div_poblacio') ?></h5>
+                        <?php if (isset($session_filtre['nom_poblacio'])) : ?>
+                            <input list="nom_poblacio" name="nom_poblacio_list" class="form-select selector_filtre" value="<?= old('nom_poblacio_list') ?>" />
+                        <?php else : ?>
+                            <input list="nom_poblacio" name="nom_poblacio_list" class="form-select selector_filtre" />
+                        <?php endif; ?>
+                        <datalist id="nom_poblacio">
+                            <?= $poblacio ?>
+                        </datalist>
+                    </div>
+                    <div class="comarca_div px-3">
+                        <br>
+                        <h5><?= lang('registre.title_div_comarca') ?></h5>
+                        <?php if (isset($session_filtre['nom_comarca'])) : ?>
+                            <input list="nom_comarca" name="nom_comarca_list" class="form-select selector_filtre" value="<?= old('nom_comarca_list') ?>" />
+                        <?php else : ?>
+                            <input list="nom_comarca" name="nom_comarca_list" class="form-select selector_filtre" />
+                        <?php endif; ?>
+                        <datalist id="nom_comarca">
+                            <?= $comarca ?>
+                        </datalist>
+                    </div>
 
                     <div class="botons_filtre d-flex">
                         <button id="submit_eliminar_filtres" name="submit_eliminar_filtres" type="submit" class="btn btn-danger btn_save rounded-pill ms-3 me-3"><i class="fa-solid fa-trash me-2" id="trash_icon"></i><?= lang('registre.delete_filters') ?></button>
@@ -191,10 +195,10 @@
                                     <p style="margin-bottom: 0;"><?= lang('registre.title_activated_filters') ?></p>
                                 </div>
                                 <div class="col px-0 form-check form-check-inline">
-                                <button id="submit_eliminar_tots_filtres" name="submit_eliminar_filtres" type="submit" class="badge bg-danger text-white etiqueta"><i class="fa-solid fa-trash me-2" id="trash_icon"></i><?= lang('registre.delete_all_filters') ?></button>
-                            </div>
+                                    <button id="submit_eliminar_tots_filtres" name="submit_eliminar_filtres" type="submit" class="badge bg-danger text-white etiqueta"><i class="fa-solid fa-trash me-2" id="trash_icon"></i><?= lang('registre.delete_all_filters') ?></button>
+                                </div>
                             <?php endif; ?>
-                            </div>
+                        </div>
                         <div class="row d-flex align-items-center">
                             <?php if (isset($session_filtre['nom_centre_reparador'])) : ?>
                                 <div class="col px-0 form-check form-check-inline">
@@ -211,7 +215,7 @@
                                     <span class="badge bg-light text-dark etiqueta"><?= lang('registre.title_filtre_checkbox_comarca') ?> <i class="fa-solid fa-arrow-right"></i> <?= $comarca_escollida ?> <button type="button" onclick="enviar('Comarca')" class="btn-close btn_etiqueta" aria-label="Close"></button></span>
                                 </div>
                             <?php endif; ?>
-                            
+
                         </div>
                     </form>
                 </div>
