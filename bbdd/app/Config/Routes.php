@@ -103,3 +103,6 @@ $routes->get('/tipus/intervencio', 'TipusIntervencioController::registreTipusInt
 $routes->post('/tipus/intervencio/afegir', 'TipusIntervencioController::crearTipusIntervencio_post', ['filter'=>'Autentica']);
 $routes->get('/tipus/intervencio/desactivar/(:segment)', 'TipusIntervencioController::registreTipusIntervencio/$1', ['filter'=>'Autentica']);
 $routes->get('/eliminarTipusIntervencio/(:segment)', 'TipusIntervencioController::desactivarTipusIntervencio/$1', ['filter'=>'Autentica']);
+
+//CENTRES
+$routes->get('/centres', 'CentresController::registreCentres', ['filter'=>'Autentica']);

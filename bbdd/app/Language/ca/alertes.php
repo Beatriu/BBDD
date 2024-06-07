@@ -30,4 +30,5 @@ return [
     'tipus_intervencio_existeix' => "Aquest tipus d'intervenció ja existeix!",
     'tipus_intervencio_desactivat' => "El tipus d'intervenció ha estat desactivat",
     'tipus_intervencio_esborrat' => "El tipus d'intervenció ha estat esborrat",
+    'tipus_estat_canviat' => "L'estat s'ha canviat satisfactoriament: "
 ];

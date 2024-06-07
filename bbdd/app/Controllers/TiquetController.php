@@ -1214,7 +1214,7 @@ class TiquetController extends BaseController
 
         if ($role == "alumne" || $this->validate($validationRules)) {
             $error = true;
-
+            
             if ($role == "alumne") {
                 $tiquet = $tiquet_model->getTiquetById(session()->getFlashdata('id_tiquet_alumne'));
             } else {
@@ -1223,7 +1223,7 @@ class TiquetController extends BaseController
 
             if ($tiquet != null) {
                 $estat_origen = $estat_model->obtenirEstatPerId($tiquet['id_estat']);
-
+                
                 if ($role == "alumne") {
 
                     $estat_desti = $this->request->getPost('estat');
@@ -1263,9 +1263,11 @@ class TiquetController extends BaseController
                         $msg = lang('alertes.flash_data_update_tiquet') . $tiquet['id_tiquet'];
                         session()->setFlashdata('editarTiquet', $msg);
                         $error = false;
+                        
                     }
-                } else if ($role == "professor" || $role == "centre_reparador" || $role == "centre_emissor") {
 
+                } else if ($role == "professor" || $role == "centre_reparador" || $role == "centre_emissor") {
+                    
                     $codi_centre = session()->get('user_data')['codi_centre'];
                     $codi_centre_emissor = $tiquet['codi_centre_emissor'];
                     $codi_centre_reparador = $tiquet['codi_centre_reparador'];
@@ -1525,18 +1527,22 @@ class TiquetController extends BaseController
         } else {
             return redirect()->back()->withInput();
         }
-
+        
 
         if ($error) {
             if ($role == "alumne") {
-                return redirect()->to(base_url('/tiquets/editar/' . session()->getFlashdata('id_tiquet_alumne')));
+                return redirect()->to(base_url('/tiquets/' . session()->getFlashdata('id_tiquet_alumne')));
             } else {
                 return redirect()->to(base_url('/tiquets/editar/' . session()->getFlashdata('id_tiquet')));
             }
         } else {
 
             if ($role == "alumne") {
-                return redirect()->to(base_url('/tiquets/editar/' . session()->getFlashdata('id_tiquet_alumne')));
+                $model_estat = new EstatModel();
+                $estat = $model_estat->obtenirEstatPerId($this->request->getPost('estat'));
+                $msg = lang('alertes.tipus_estat_canviat') .'<b>'. $estat .'</b>';
+                session()->setFlashdata('editarEstat', $msg);
+                return redirect()->to(base_url('/tiquets/' . session()->getFlashdata('id_tiquet_alumne')));
             } else {
                 return redirect()->to(base_url('/tiquets/editar/' . session()->getFlashdata('id_tiquet')));
             }

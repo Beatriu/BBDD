@@ -161,6 +161,11 @@
                         <?= session()->get('editarIntervencio') ?>
                     </div>
                 <?php endif; ?>
+                <?php if ((session()->get('editarEstat')) !== null) : ?>
+                    <div class="alert alert-success alerta_esborrar" role="alert">
+                        <?= session()->get('editarEstat') ?>
+                    </div>
+                <?php endif; ?>
             </div>
 
             <div class="row">

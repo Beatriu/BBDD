@@ -30,4 +30,5 @@ return [
     'tipus_intervencio_existeix' => "Este tipo de intervención ya existe!",
     'tipus_intervencio_desactivat' => "El tipo de inventario se ha desactivado",
     'tipus_intervencio_esborrat' => "El tipo de inventario se ha eliminado",
+    'tipus_estat_canviat' => "El estado ha cambiado satisfactoriamente: "
 ];
