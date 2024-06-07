@@ -27,6 +27,12 @@ class TipusIntervencioCursIntervencioMigration extends Migration
                 'constraint' => '128',
                 'null'          => false,
             ],
+            'actiu'       => [
+                'type'       => 'TINYINT',
+                'constraint' => 2,
+                'null'          => false,
+                'default' => '1',
+            ],
         ]);
         $this->forge->addKey('id_tipus_intervencio', true);
         $this->forge->createTable('tipus_intervencio');
@@ -55,6 +61,12 @@ class TipusIntervencioCursIntervencioMigration extends Migration
                 'constraint' => 1,
                 'unsigned'       => true,
                 'null'          => false,
+            ],
+            'actiu'       => [
+                'type'       => 'TINYINT',
+                'constraint' => 2,
+                'null'          => false,
+                'default' => '1',
             ],
             
         ]);

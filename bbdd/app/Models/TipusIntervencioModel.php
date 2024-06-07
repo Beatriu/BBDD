@@ -12,7 +12,7 @@ class TipusIntervencioModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id_tipus_intervencio','nom_tipus_intervencio'];
+    protected $allowedFields    = ['id_tipus_intervencio','nom_tipus_intervencio','actiu'];
 
     // Dates
     protected $useTimestamps = false;
@@ -52,5 +52,10 @@ class TipusIntervencioModel extends Model
     public function obtenirNomTipusIntervencio($id_tipus_intervencio)
     {
         return $this->where('id_tipus_intervencio', $id_tipus_intervencio)->first();
+    }
+
+    public function obtenirTipusIntervencioPerNom($nom_tipus_intervencio)
+    {
+        return $this->where('nom_tipus_intervencio', $nom_tipus_intervencio)->first();
     }
 }

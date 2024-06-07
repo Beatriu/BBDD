@@ -26,4 +26,8 @@ return [
     'tipus_inventari_existeix' => "Aquest tipus d'inventari ja existeix!",
     'tipus_inventari_desactivat' => "El tipus d'inventari ha estat desactivat",
     'tipus_inventari_esborrat' => "El tipus d'inventari ha estat esborrat",
+    'tipus_intervencio_buit' => "No has omplert el camp",
+    'tipus_intervencio_existeix' => "Aquest tipus d'intervenció ja existeix!",
+    'tipus_intervencio_desactivat' => "El tipus d'intervenció ha estat desactivat",
+    'tipus_intervencio_esborrat' => "El tipus d'intervenció ha estat esborrat",
 ];

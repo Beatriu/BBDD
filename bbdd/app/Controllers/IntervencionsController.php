@@ -74,9 +74,11 @@ class IntervencionsController extends BaseController
                 $array_tipus_intervencio = $tipus_intervencio_model->obtenirTipusIntervencio();
                 $options_tipus_intervencio = "";
                 for ($i = 0; $i < sizeof($array_tipus_intervencio); $i++) {
-                    $options_tipus_intervencio .= "<option value='" . $array_tipus_intervencio[$i]['id_tipus_intervencio'] . " - " . $array_tipus_intervencio[$i]['nom_tipus_intervencio'] . "'>";
-                    $options_tipus_intervencio .= $array_tipus_intervencio[$i]['nom_tipus_intervencio'];
-                    $options_tipus_intervencio .= "</option>";
+                    if ($array_tipus_intervencio[$i]['actiu'] == "1") {
+                        $options_tipus_intervencio .= "<option value='" . $array_tipus_intervencio[$i]['id_tipus_intervencio'] . " - " . $array_tipus_intervencio[$i]['nom_tipus_intervencio'] . "'>";
+                        $options_tipus_intervencio .= $array_tipus_intervencio[$i]['nom_tipus_intervencio'];
+                        $options_tipus_intervencio .= "</option>";
+                    }
                 }
         
         
@@ -195,8 +197,8 @@ class IntervencionsController extends BaseController
                 $id_tipus_intervencio = trim(explode('-', (string) $tipus_intervencio)[0]);
                 $id_curs = trim(explode('-', (string) $curs)[0]);
 
-
-                if ($tipus_intervencio_model->obtenirNomTipusIntervencio($id_tipus_intervencio) == null || $curs_model->obtenirCursosPerId($id_curs) == null) {
+                $tipus_intervencio_obtingut = $tipus_intervencio_model->obtenirNomTipusIntervencio($id_tipus_intervencio);
+                if ($tipus_intervencio_obtingut == null || $tipus_intervencio_obtingut['actiu'] == "0" || $curs_model->obtenirCursosPerId($id_curs) == null) {
                     return redirect()->back()->withInput();
                 }
                
@@ -336,7 +338,9 @@ class IntervencionsController extends BaseController
         $tiquet_model = new TiquetModel();
         $intervencio_model = new IntervencioModel(); 
         $estat_model = new EstatModel();
-        $centre_model = new CentreModel();      
+        $centre_model = new CentreModel();  
+        $tipus_intervencio_model = new TipusIntervencioModel();
+        $curs_model = new CursModel();    
 
         $actor = session()->get('user_data');
         $role = $actor['role'];
@@ -430,12 +434,10 @@ class IntervencionsController extends BaseController
                 $id_xtec = $intervencio_editar['id_xtec'];
                 $correu_alumne = $intervencio_editar['correu_alumne'];
     
-                /*if ($role == "professor") {
-                    $id_xtec = explode("@", session()->get('user_data')['mail'])[0];
-                } else if ($role == "alumne") {
-                    $correu_alumne = session()->get('user_data')['mail'];
-                }*/
-    
+                $tipus_intervencio_obtingut = $tipus_intervencio_model->obtenirNomTipusIntervencio($id_tipus_intervencio);
+                if ($tipus_intervencio_obtingut == null || $tipus_intervencio_obtingut['actiu'] == "0" || $curs_model->obtenirCursosPerId($id_curs) == null) {
+                    return redirect()->back()->withInput();
+                }
                 
                 $intervencio_model->editarIntervencio($id_intervencio_editar, $id_tipus_intervencio, $id_curs, $descripcio_intervencio, $correu_alumne, $id_xtec);
                 $msg = lang('alertes.flash_data_update_intervencio') . $id_intervencio_editar;

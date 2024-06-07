@@ -65,6 +65,7 @@ class TipusInventariController extends BaseController
         $data['output'] = $crud->render();
 
         $data['tipus_inventari_desactivar'] = null;
+        $data['tipus_intervencio_desactivar'] = null;
         if ($id_tipus_inventari_desactivar != null) {
 
             $tipus_inventari_desactivar = $tipus_inventari_model->obtenirTipusInventariPerId($id_tipus_inventari_desactivar);
@@ -74,6 +75,7 @@ class TipusInventariController extends BaseController
             }
         }
 
+        $data['tipus_pantalla'] = "tipus_inventari";
         return view('registres' . DIRECTORY_SEPARATOR . 'registreTipus', $data);
     }
 
@@ -102,6 +104,7 @@ class TipusInventariController extends BaseController
             return redirect()->back()->withInput();
         }
 
+        $data['tipus_pantalla'] = "tipus_inventari";
         return redirect()->to(base_url('/tipus/inventari'));
     }
 
@@ -133,6 +136,7 @@ class TipusInventariController extends BaseController
 
         }
 
+        $data['tipus_pantalla'] = "tipus_inventari";
         return redirect()->to(base_url('/tipus/inventari'));
     }
 }

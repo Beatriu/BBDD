@@ -97,3 +97,9 @@ $routes->get('/tipus/inventari', 'TipusInventariController::registreTipusInventa
 $routes->post('/tipus/inventari/afegir', 'TipusInventariController::crearTipusInventari_post', ['filter'=>'Autentica']);
 $routes->get('/tipus/inventari/desactivar/(:segment)', 'TipusInventariController::registreTipusInventari/$1', ['filter'=>'Autentica']);
 $routes->get('/eliminarTipusInventari/(:segment)', 'TipusInventariController::desactivarTipusInventari/$1', ['filter'=>'Autentica']);
+
+// Tipus intervenció
+$routes->get('/tipus/intervencio', 'TipusIntervencioController::registreTipusIntervencio', ['filter'=>'Autentica']);
+$routes->post('/tipus/intervencio/afegir', 'TipusIntervencioController::crearTipusIntervencio_post', ['filter'=>'Autentica']);
+$routes->get('/tipus/intervencio/desactivar/(:segment)', 'TipusIntervencioController::registreTipusIntervencio/$1', ['filter'=>'Autentica']);
+$routes->get('/eliminarTipusIntervencio/(:segment)', 'TipusIntervencioController::desactivarTipusIntervencio/$1', ['filter'=>'Autentica']);

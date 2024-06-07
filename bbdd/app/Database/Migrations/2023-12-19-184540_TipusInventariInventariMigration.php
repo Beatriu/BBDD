@@ -28,8 +28,9 @@ class TipusInventariInventariMigration extends Migration
             ],
             'actiu'       => [
                 'type'       => 'TINYINT',
-                'constraint' => 1,
+                'constraint' => 2,
                 'null'          => false,
+                'default' => '1',
             ],
         ]);
         $this->forge->addKey('id_tipus_inventari', true);

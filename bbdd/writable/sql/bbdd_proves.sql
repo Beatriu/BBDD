@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `centre` (
   CONSTRAINT `centre_id_sstt_foreign` FOREIGN KEY (`id_sstt`) REFERENCES `sstt` (`id_sstt`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
--- Volcando datos para la tabla dbprojecte.centre: ~5.462 rows (aproximadamente)
+-- Volcando datos para la tabla dbprojecte.centre: ~5.464 rows (aproximadamente)
 INSERT INTO `centre` (`codi_centre`, `nom_centre`, `actiu`, `taller`, `telefon_centre`, `adreca_fisica_centre`, `nom_persona_contacte_centre`, `correu_persona_contacte_centre`, `id_sstt`, `id_poblacio`, `login`) VALUES
 	('17000019', 'Escola Lluís Marià Vidal', 1, 0, '972535580', 'c. del Nord, 1-2', '', '', '117', 17001, 'b7000019@xtec.cat'),
 	('17000032', 'Escola Vilademany', 1, 0, '972232489', 'c. Despoblat, s/n', '', '', '117', 17002, 'b7000032@xtec.cat'),
@@ -5587,21 +5587,22 @@ CREATE TABLE IF NOT EXISTS `curs` (
   `cicle` varchar(32) NOT NULL,
   `titol` varchar(64) NOT NULL,
   `curs` int(1) unsigned NOT NULL,
+  `actiu` tinyint(2) NOT NULL DEFAULT 1,
   PRIMARY KEY (`id_curs`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 -- Volcando datos para la tabla dbprojecte.curs: ~10 rows (aproximadamente)
-INSERT INTO `curs` (`id_curs`, `cicle`, `titol`, `curs`) VALUES
-	(1, 'CFPS', 'Desenvolupament d\'Aplicacions Web', 1),
-	(2, 'CFPS', 'Desenvolupament d\'Aplicacions Web', 2),
-	(3, 'CFPS', 'Desenvolupament d\'Aplicacions Multiplataforma', 1),
-	(4, 'CFPS', 'Desenvolupament d\'Aplicacions Multiplataforma', 2),
-	(5, 'CFPS', 'Administració de Sistemes Informàtics en Xarxa', 1),
-	(6, 'CFPS', 'Administració de Sistemes Informàtics en Xarxa', 2),
-	(7, 'CFPM', 'Sistemes Microinformàtics i Xarxes', 1),
-	(8, 'CFPM', 'Sistemes Microinformàtics i Xarxes', 2),
-	(9, 'CFPB', 'Informàtica d\'Oficina', 1),
-	(10, 'CFPB', 'Informàtica d\'Oficina', 2);
+INSERT INTO `curs` (`id_curs`, `cicle`, `titol`, `curs`, `actiu`) VALUES
+	(1, 'CFPS', 'Desenvolupament d\'Aplicacions Web', 1, 1),
+	(2, 'CFPS', 'Desenvolupament d\'Aplicacions Web', 2, 1),
+	(3, 'CFPS', 'Desenvolupament d\'Aplicacions Multiplataforma', 1, 1),
+	(4, 'CFPS', 'Desenvolupament d\'Aplicacions Multiplataforma', 2, 1),
+	(5, 'CFPS', 'Administració de Sistemes Informàtics en Xarxa', 1, 1),
+	(6, 'CFPS', 'Administració de Sistemes Informàtics en Xarxa', 2, 1),
+	(7, 'CFPM', 'Sistemes Microinformàtics i Xarxes', 1, 1),
+	(8, 'CFPM', 'Sistemes Microinformàtics i Xarxes', 2, 1),
+	(9, 'CFPB', 'Informàtica d\'Oficina', 1, 1),
+	(10, 'CFPB', 'Informàtica d\'Oficina', 2, 1);
 
 -- Volcando estructura para tabla dbprojecte.estat
 CREATE TABLE IF NOT EXISTS `estat` (
@@ -6647,47 +6648,49 @@ INSERT INTO `tipus_dispositiu` (`id_tipus_dispositiu`, `nom_tipus_dispositiu`) V
 CREATE TABLE IF NOT EXISTS `tipus_intervencio` (
   `id_tipus_intervencio` int(2) unsigned NOT NULL AUTO_INCREMENT,
   `nom_tipus_intervencio` varchar(128) NOT NULL,
+  `actiu` tinyint(2) NOT NULL DEFAULT 1,
   PRIMARY KEY (`id_tipus_intervencio`)
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 -- Volcando datos para la tabla dbprojecte.tipus_intervencio: ~15 rows (aproximadamente)
-INSERT INTO `tipus_intervencio` (`id_tipus_intervencio`, `nom_tipus_intervencio`) VALUES
-	(1, 'Canvi de placa base'),
-	(2, 'Canvi de font'),
-	(3, 'Canvi de port'),
-	(4, 'Canvi de RAM'),
-	(5, 'Canvi de pantalla'),
-	(6, 'Reposició de tecles'),
-	(7, 'Canvi de CPU'),
-	(8, 'Canvi de tarjeta gràfica'),
-	(9, 'Canvi de pasta'),
-	(10, 'Canvi de ventilador'),
-	(11, 'Canvi de caixa'),
-	(12, 'Canvi de cablejat intern'),
-	(13, 'Reinstal·lar el sistema operatiu'),
-	(14, 'Altres'),
-	(15, 'BLOQUEJANT');
+INSERT INTO `tipus_intervencio` (`id_tipus_intervencio`, `nom_tipus_intervencio`, `actiu`) VALUES
+	(1, 'Canvi de placa base', 1),
+	(2, 'Canvi de font', 1),
+	(3, 'Canvi de port', 1),
+	(4, 'Canvi de RAM', 1),
+	(5, 'Canvi de pantalla', 1),
+	(6, 'Reposició de tecles', 1),
+	(7, 'Canvi de CPU', 1),
+	(8, 'Canvi de tarjeta gràfica', 1),
+	(9, 'Canvi de pasta', 1),
+	(10, 'Canvi de ventilador', 1),
+	(11, 'Canvi de caixa', 1),
+	(12, 'Canvi de cablejat intern', 1),
+	(13, 'Reinstal·lar el sistema operatiu', 1),
+	(14, 'Altres', 1),
+	(15, 'BLOQUEJANT', 1);
 
 -- Volcando estructura para tabla dbprojecte.tipus_inventari
 CREATE TABLE IF NOT EXISTS `tipus_inventari` (
   `id_tipus_inventari` int(2) NOT NULL AUTO_INCREMENT,
   `nom_tipus_inventari` varchar(64) NOT NULL,
+  `actiu` tinyint(2) NOT NULL DEFAULT 1,
   PRIMARY KEY (`id_tipus_inventari`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 -- Volcando datos para la tabla dbprojecte.tipus_inventari: ~11 rows (aproximadamente)
-INSERT INTO `tipus_inventari` (`id_tipus_inventari`, `nom_tipus_inventari`) VALUES
-	(1, 'Processador'),
-	(2, 'Disc dur'),
-	(3, 'Memòria RAM'),
-	(4, 'Placa base'),
-	(5, 'Font d\'alimentació'),
-	(6, 'Ventilador'),
-	(7, 'Targeta gràfica'),
-	(8, 'Lent projector'),
-	(9, 'Làmpara'),
-	(10, 'Capçals de impressora'),
-	(11, 'Carcasses i peces');
+INSERT INTO `tipus_inventari` (`id_tipus_inventari`, `nom_tipus_inventari`, `actiu`) VALUES
+	(1, 'Processador', 1),
+	(2, 'Disc dur', 1),
+	(3, 'Memòria RAM', 1),
+	(4, 'Placa base', 1),
+	(5, 'Font d\'alimentació', 1),
+	(6, 'Ventilador', 1),
+	(7, 'Targeta gràfica', 1),
+	(8, 'Lent projector', 1),
+	(9, 'Làmpara', 1),
+	(10, 'Capçals de impressora', 1),
+	(11, 'Carcasses i peces', 1);
 
 -- Volcando estructura para tabla dbprojecte.tiquet
 CREATE TABLE IF NOT EXISTS `tiquet` (
@@ -6799,10 +6802,10 @@ CREATE TABLE `vista_inventari` (
 -- Creando tabla temporal para superar errores de dependencia de VIEW
 CREATE TABLE `vista_tiquet` (
 	`id_tiquet` VARCHAR(36) NOT NULL COLLATE 'utf8mb3_general_ci',
-	`id_tiquet_limitat` VARCHAR(36) NULL COLLATE 'utf8mb3_general_ci',
+	`id_tiquet_limitat` VARCHAR(36) NOT NULL COLLATE 'utf8mb3_general_ci',
 	`codi_equip` VARCHAR(32) NOT NULL COLLATE 'utf8mb3_general_ci',
-	`descripcio_avaria` VARCHAR(50) NULL COLLATE 'utf8mb3_general_ci',
-	`descripcio_avaria_limitada` VARCHAR(512) NULL COLLATE 'utf8mb3_general_ci',
+	`descripcio_avaria` VARCHAR(50) NOT NULL COLLATE 'utf8mb3_general_ci',
+	`descripcio_avaria_limitada` VARCHAR(512) NOT NULL COLLATE 'utf8mb3_general_ci',
 	`nom_persona_contacte_centre` VARCHAR(64) NOT NULL COLLATE 'utf8mb3_general_ci',
 	`correu_persona_contacte_centre` VARCHAR(32) NOT NULL COLLATE 'utf8mb3_general_ci',
 	`data_alta_format` VARCHAR(10) NULL COLLATE 'utf8mb4_general_ci',
