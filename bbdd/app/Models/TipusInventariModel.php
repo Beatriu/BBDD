@@ -12,7 +12,7 @@ class TipusInventariModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id_tipus_inventari','nom_tipus_inventari'];
+    protected $allowedFields    = ['id_tipus_inventari','nom_tipus_inventari','actiu'];
 
     // Dates
     protected $useTimestamps = false;
@@ -53,4 +53,20 @@ class TipusInventariModel extends Model
     {
         return $this->where('id_tipus_inventari', $id_tipus_inventari)->first();
     }
+
+    public function obtenirTipusInventariPerNom($nom_tipus_inventari)
+    {
+        return $this->where('nom_tipus_inventari', $nom_tipus_inventari)->first();
+    }
+
+    public function editarTipusInventariActiu($id_tipus_inventari, $actiu)
+    {
+        return $this->update($id_tipus_inventari, ['actiu' => $actiu]);
+    }
+
+    public function esborrarTipusInventari($id_tipus_inventari)
+    {
+        return $this->delete($id_tipus_inventari);
+    }
+    
 }

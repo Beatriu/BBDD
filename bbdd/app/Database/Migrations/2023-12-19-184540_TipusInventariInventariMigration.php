@@ -25,7 +25,12 @@ class TipusInventariInventariMigration extends Migration
                 'type' => 'VARCHAR',
                 'constraint' => '64',
                 'null' => false,
-            ]
+            ],
+            'actiu'       => [
+                'type'       => 'TINYINT',
+                'constraint' => 1,
+                'null'          => false,
+            ],
         ]);
         $this->forge->addKey('id_tipus_inventari', true);
         $this->forge->createTable('tipus_inventari');

@@ -61,4 +61,5 @@ return [
     'afegir_linea' => "Afegir línea",
     'clic_escriu_codi' => "Haz clic y escribe el código del dispositivo",
     'clic_escriu_problema' => "Haz clic y escribe el problema del dispositivo",
+    'sstt' => 'Servicios Territoriales',
 ];

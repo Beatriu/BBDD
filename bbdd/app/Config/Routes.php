@@ -73,7 +73,6 @@ $routes->post('/eliminarFiltreAlumnes', 'AlumnesController::eliminarFiltre', ['f
 //Backtickets
 
 
-
 //Intervencions
 $routes->get('/afegir/intervencio/(:segment)', 'IntervencionsController::createIntervencio/$1', ['filter'=>'Autentica']);
 $routes->post('/afegir/intervencio', 'IntervencionsController::createIntervencio_post', ['filter'=>'Autentica']);  
@@ -92,3 +91,9 @@ $routes->get('/tiquets/(:segment)/(:segment)', 'TiquetController::viewTiquet/$1'
 $routes->get('/canviLanguage', 'Home::canviLanguage');
 $routes->get('/descarregar/(:segment)', 'TiquetController::descarregar/$1', ['filter'=>'Autentica']);
 
+
+// Tipus inventari
+$routes->get('/tipus/inventari', 'TipusInventariController::registreTipusInventari', ['filter'=>'Autentica']);
+$routes->post('/tipus/inventari/afegir', 'TipusInventariController::crearTipusInventari_post', ['filter'=>'Autentica']);
+$routes->get('/tipus/inventari/desactivar/(:segment)', 'TipusInventariController::registreTipusInventari/$1', ['filter'=>'Autentica']);
+$routes->get('/eliminarTipusInventari/(:segment)', 'TipusInventariController::desactivarTipusInventari/$1', ['filter'=>'Autentica']);

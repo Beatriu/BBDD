@@ -52,4 +52,13 @@ class SSTTModel extends Model
     public function obtenirSSTTPerCorreu($correu) {
         return $this->where('correu_sstt', $correu)->first();
     }
+
+    public function obtenirSSTTPerId($id_sstt) {
+        return $this->where('id_sstt', $id_sstt)->first();
+    }
+
+    public function obtenirSSTT() {
+        return $this->findAll();
+    }
+
 }

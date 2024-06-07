@@ -51,5 +51,6 @@ return [
     'title_filtre_checkbox_comarca' => 'Comarca',
     'delete_all_filters' => 'Eliminar todos los filtros',
     'title_div_poblacio' => 'Població:',
-    'title_div_comarca' => 'Comarca:'
+    'title_div_comarca' => 'Comarca:',
+    'id_sstt' => 'Identificador SSTT:',
 ];

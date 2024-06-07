@@ -71,6 +71,11 @@ class InventariModel extends Model
         return $this->where('id_intervencio', $id_intervencio)->findAll();
     }
 
+    public function obtenirInventariTipusInventari($id_tipus_inventari)
+    {
+        return $this->where('id_tipus_inventari', $id_tipus_inventari)->findAll();
+    }
+
     public function editarInventariDesassignar($id_inventari) 
     {
         return $this->update($id_inventari, ["id_intervencio" => null]);

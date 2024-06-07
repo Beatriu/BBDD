@@ -277,15 +277,16 @@ class InventarisController extends BaseController
 
 
         $array_tipus_inventari = $tipus_inventari_model->obtenirTipusInventari();
-        $options_tipus_intervencio = "";
+        $options_tipus_inventari = "";
         for ($i = 0; $i < sizeof($array_tipus_inventari); $i++) {
-            $options_tipus_intervencio .= "<option value=\"" . $array_tipus_inventari[$i]['id_tipus_inventari'] . " - " . $array_tipus_inventari[$i]['nom_tipus_inventari'] . "\">";
-            $options_tipus_intervencio .= $array_tipus_inventari[$i]['nom_tipus_inventari'];
-            $options_tipus_intervencio .= "</option>";
+            if ($array_tipus_inventari[$i]['actiu'] == "1") {
+                $options_tipus_inventari .= "<option value=\"" . $array_tipus_inventari[$i]['id_tipus_inventari'] . " - " . $array_tipus_inventari[$i]['nom_tipus_inventari'] . "\">";
+                $options_tipus_inventari .= $array_tipus_inventari[$i]['nom_tipus_inventari'];
+                $options_tipus_inventari .= "</option>";
+            }
         }
 
-
-        $data['tipus_inventari'] = $options_tipus_intervencio;
+        $data['tipus_inventari'] = $options_tipus_inventari;
 
 
         if ($role == "admin_sstt") {
@@ -408,7 +409,8 @@ class InventarisController extends BaseController
                 $tipus_inventari = $this->request->getPost('tipus_inventari');
                 $id_tipus_inventari = trim(explode('-', (string) $tipus_inventari)[0]);
 
-                if ($tipus_inventari_model->obtenirTipusInventariPerId($id_tipus_inventari) == null) {
+                $tipus_inventari_obtingut = $tipus_inventari_model->obtenirTipusInventariPerId($id_tipus_inventari);
+                if ($tipus_inventari_obtingut == null || $tipus_inventari_obtingut['actiu'] == "0") {
                     $msg = lang("alertes.filter_error_tipus_dispositiu");
                     session()->setFlashdata("escriure_malament", $msg);
                     return redirect()->back()->withInput();
@@ -580,7 +582,8 @@ class InventarisController extends BaseController
                 $crud->addWhere('id_sstt', $actor['id_sstt']);
                 $crud->addWhere('id_intervencio', $id_intervencio, true);
             } else if ($role == "desenvolupador") {
-
+                $crud->addItemLink('delete', 'fa-trash', base_url('inventari/desassignar'), 'Desassignar Peça');
+                $crud->addWhere('id_intervencio', $id_intervencio, true);
             }
 
 
@@ -592,22 +595,11 @@ class InventarisController extends BaseController
                 $array_inventari = $inventari_model->obtenirInventariCentre($actor['codi_centre']);
             } else if ($role == "admin_sstt") {
 
-                /*$array_inventari = $inventari_model->obtenirInventari();
-                $array_inventari_sstt = [];
-                d($array_inventari);
-                for ($k = 0; $k < sizeof($array_inventari); $k++) {
-                    d($actor['id_sstt'], $array_inventari[$k]['codi_centre'], $centre_model->obtenirCentre($array_inventari[$k]['codi_centre'])['id_sstt']);
-                    if ($actor['id_sstt'] == $centre_model->obtenirCentre($array_inventari[$k]['codi_centre'])['id_sstt']){
-                        array_push($array_inventari_sstt, $array_inventari[$k]);
-                    }
-                }
-                dd($array_inventari_sstt);
-
-                $array_inventari = $array_inventari_sstt;*/
-
                 $array_inventari = $inventari_model->obtenirInventariCentre($tiquet['codi_centre_reparador']);
 
             } else if ($role == "desenvolupador") {
+
+                $array_inventari = $inventari_model->obtenirInventariCentre($tiquet['codi_centre_reparador']);
 
             }
             
