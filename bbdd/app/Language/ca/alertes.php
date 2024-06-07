@@ -39,6 +39,6 @@ return [
     'tipus_intervencio_creat' => "El tipus d'intervenció ha estat creat correctament",
     'tipus_intervencio_activat' => "El tipus d'intervenció ha estat reactivat correctament",
     'curs_creat' => "El curs ha estat creat correctament",
-    'curs_intervencio_activat' => "El curs ha estat reactivat correctament",
+    'curs_activat' => "El curs ha estat reactivat correctament",
     'tipus_estat_canviat' => "L'estat s'ha canviat satisfactoriament: "
 ];
