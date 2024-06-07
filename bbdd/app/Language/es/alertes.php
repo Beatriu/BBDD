@@ -40,4 +40,5 @@ return [
     'tipus_intervencio_activat' => "El tipo de intervención ha reactivado correctamente",
     'curs_creat' => "El curso se ha creado correctamente",
     'curs_activat' => "El curso se ha reactivado correctamente",
+    'tipus_estat_canviat' => "El estado ha cambiado satisfactoriamente: "
 ];
