@@ -607,7 +607,7 @@ class TiquetController extends BaseController
 
         $options_tipus_dispositius = "";
         for ($i = 0; $i < sizeof($array_tipus_dispositius); $i++) {
-            $options_tipus_dispositius .= "<option value=" . ($i + 1) . ">";
+            $options_tipus_dispositius .= "<option value=" . $array_tipus_dispositius[$i]['id_tipus_dispositiu'] . ">";
             $options_tipus_dispositius .= $array_tipus_dispositius[$i]['nom_tipus_dispositiu'];
             $options_tipus_dispositius .= "</option>";
             $array_tipus_dispositius_nom[$i] = $array_tipus_dispositius[$i]['nom_tipus_dispositiu'];

@@ -90,7 +90,7 @@
                     </li>
                     <?php if ($role == 'desenvolupador') : ?>
                         <li class="nav-item" title="<?= lang("registre.tipus") ?>">
-                            <a href="<?= base_url("/tipus/inventari") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.tipus") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                            <a href="<?= base_url("/tipus/dispositiu") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.tipus") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                                 <i class="fa-solid fa-gear"></i>
                             </a>
                         </li>

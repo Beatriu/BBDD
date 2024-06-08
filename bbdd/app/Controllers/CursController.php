@@ -72,9 +72,12 @@ class CursController extends BaseController
 
         $data['output'] = $crud->render();
 
+        $data['tipus_dispositiu_desactivar'] = null;
         $data['tipus_inventari_desactivar'] = null;
         $data['tipus_intervencio_desactivar'] = null;
         $data['curs_desactivar'] = null;
+        $data['poblacio_desactivar'] = null;
+        $data['comarca_desactivar'] = null;
         if ($id_curs_desactivar != null) {
 
             $curs_desactivar = $curs_model->obtenirCursosPerId($id_curs_desactivar);

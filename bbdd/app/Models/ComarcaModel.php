@@ -12,7 +12,7 @@ class ComarcaModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id_comarca','nom_comarca'];
+    protected $allowedFields    = ['id_comarca','nom_comarca','actiu'];
 
     // Dates
     protected $useTimestamps = false;
@@ -55,4 +55,25 @@ class ComarcaModel extends Model
         return $this->findAll();
     }
 
+
+
+    public function obtenirComarcaPerId($id_comarca)
+    {
+        return $this->where('id_comarca', $id_comarca)->first();
+    }
+
+    public function obtenirComarcaPerIdNom($id_comarca, $nom_comarca)
+    {
+        return $this->where(['id_comarca' => $id_comarca,'nom_comarca' => $nom_comarca])->first();
+    }
+
+    public function editarComarcaActiu($id_comarca, $actiu)
+    {
+        return $this->update($id_comarca, ['actiu' => $actiu]);
+    }
+
+    public function esborrarComarca($id_comarca)
+    {
+        return $this->delete($id_comarca);
+    }
 }
