@@ -70,8 +70,8 @@ class AlumneModel extends Model
         return $this->update($correu_alumne_original,["codi_centre" => $codi_centre_nou]);
     }
 
-    public function editarAlumneActiu($correu_alumne, $actiu, $nom, $cognoms)
+    public function editarAlumneActiu($correu_alumne, $actiu)
     {
-        return $this->update($correu_alumne, ["actiu" => $actiu], $nom, $cognoms);
+        return $this->update($correu_alumne, ["actiu" => $actiu]);
     }
 }

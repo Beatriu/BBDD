@@ -64,24 +64,16 @@ class UsuarisController extends BaseController
 
                 if (password_verify($password, $hash) && $password != "" && $password != null) { // Verifiquem que la contrasenya coincideixi amb la de la base de dades i que existeixi
 
-                    $session_data['mail'] = $nom_login; 
-                    
+                    $session_data['mail'] = $nom_login;
+                    //TODO: si es un alumne agafar lo de la base de dades de nom i cognom
+                    $session_data['nom'] = explode("@", (string) $nom_login)[0];
+                    $session_data['cognoms'] = "Cognom Exemple";
+                    $session_data['domain'] = explode('@', $session_data['mail'])[1];
+
                     $id_login = $login_model->obtenirId($nom_login);
                     $id_role = $login_in_rol_model->obtenirRol($id_login);
                     $role = $rol_model->obtenirRol($id_role);
                     $session_data['role'] = $role;
-                    //TODO: Revisar
-                    if($role == 'alumne'){
-                        $model_alumne = new AlumneModel();
-                        $alumne = $model_alumne->getAlumneByCorreu($nom_login);
-                        $session_data['nom'] = $alumne['nom'];
-                        $session_data['cognoms'] = $alumne['cognoms'];
-                        $session_data['domain'] = explode('@', $session_data['mail'])[1];
-                        $session_data['codi_centre'] = $alumne['codi_centre'];
-                    }
-                    $session_data['nom'] = explode("@", (string) $nom_login)[0];
-                    $session_data['cognoms'] = "Cognom Exemple";
-                    $session_data['domain'] = explode('@', $session_data['mail'])[1];
 
                     if ($role != "alumne" && $role != "professor") {
                         $session_data['codi_centre'] = "no_codi";
