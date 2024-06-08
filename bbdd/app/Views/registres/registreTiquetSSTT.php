@@ -56,14 +56,19 @@
                         <i class="fa-solid fa-boxes-stacked"></i>
                     </a>
                 </li>
-                <?php if ($tipus_sstt == 'admin_sstt' || $tipus_sstt == 'desenvolupador') : ?>
+                <?php if ($role == 'admin_sstt' || $role == 'desenvolupador') : ?>
                     <li class="nav-item" title="<?= lang("registre.alumnes") ?>">
                         <a href="<?= base_url("/alumnes") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.alumnes") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                             <i class="fa-solid fa-users"></i>
                         </a>
                     </li>
+                    <li class="nav-item" title="<?= lang("registre.professors") ?>">
+                        <a href="<?= base_url("/professor") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.professors") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                            <i class="fa-solid fa-person-chalkboard"></i>
+                        </a>
+                    </li>
                 <?php endif; ?>
-                <?php if ($tipus_sstt == 'desenvolupador') : ?>
+                <?php if ($role == 'desenvolupador') : ?>
                     <li class="nav-item" title="<?= lang("registre.tipus") ?>">
                         <a href="<?= base_url("/tipus/dispositiu") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.tipus") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                             <i class="fa-solid fa-gear"></i>

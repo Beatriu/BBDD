@@ -18,7 +18,7 @@ class UsuarisController extends BaseController
     public function login_post()
     {
         $data['title'] = "login";
-        
+
         // Determinem les regles de validació
         $validationRules = [
             'sUser' => [
@@ -38,7 +38,7 @@ class UsuarisController extends BaseController
         ];
 
         if ($this->validate($validationRules)) { // En cas que es compleixin les regles de validació
-            
+
             // Obtenim del formualri el nom d'usuari
             $nom_login = $this->request->getPost('sUser');
 
@@ -47,9 +47,9 @@ class UsuarisController extends BaseController
             $login_in_rol_model = new LoginInRolModel();
             $rol_model = new RolModel();
             $login_obtingut = $login_model->obtenirLogin($nom_login);
-            
+
             if ($login_obtingut != null) { // En cas que existeixi
-                
+
                 // Obtenim la contrasenya del formulari
                 $contrasenya = $this->request->getPost('sPssw');
 
@@ -61,30 +61,20 @@ class UsuarisController extends BaseController
                 }
 
                 $hash = $login_obtingut['contrasenya'];
-                
+
                 if (password_verify($password, $hash) && $password != "" && $password != null) { // Verifiquem que la contrasenya coincideixi amb la de la base de dades i que existeixi
+
                     $session_data['mail'] = $nom_login;
-                    
+                    //TODO: si es un alumne agafar lo de la base de dades de nom i cognom
+                    $session_data['nom'] = explode("@", (string) $nom_login)[0];
+                    $session_data['cognoms'] = "Cognom Exemple";
+                    $session_data['domain'] = explode('@', $session_data['mail'])[1];
+
                     $id_login = $login_model->obtenirId($nom_login);
-                    
                     $id_role = $login_in_rol_model->obtenirRol($id_login);
                     $role = $rol_model->obtenirRol($id_role);
                     $session_data['role'] = $role;
-                    if($role == 'alumne'){
-                        $model_alumne = new AlumneModel();
-                        $alumne = $model_alumne->getAlumneByCorreu($nom_login);
 
-                        $session_data['nom'] = $alumne['nom'];
-                        $session_data['cognoms'] = $alumne['cognoms'];
-                        $session_data['domain'] = explode('@', $session_data['mail'])[1];
-                        $session_data['codi_centre'] = $alumne['codi_centre'];
-
-                    }else {
-                        $session_data['nom'] = explode("@", (string) $nom_login)[0];
-                        $session_data['cognoms'] = "Cognom Exemple";
-                        $session_data['domain'] = explode('@', $session_data['mail'])[1];    
-                    }
-                    
                     if ($role != "alumne" && $role != "professor") {
                         $session_data['codi_centre'] = "no_codi";
 
@@ -92,7 +82,7 @@ class UsuarisController extends BaseController
                             $session_data['id_sstt'] = $login_model->obtenirIdSSTT($session_data['mail'])['id_sstt'];
                         }
                     }
-                    //dd($session_data);
+
                     session()->set('user_data', $session_data);
 
                     return redirect()->to(base_url('/tiquets'));
@@ -367,7 +357,13 @@ class UsuarisController extends BaseController
                 $session_data['role'] = "professor";
                 $rol = $rol_model->obtenirIdRol("professor");
                 $llista_admesos_model->addLlistaAdmesos($correu, date("Y-m-d H:i:s"), $codi_centre);
-                $professor_model->addProfessor($id_xtec, $nom, $cognoms, $correu, $codi_centre);
+
+                if ($professor_model->obtenirProfessor($correu) == null) {
+                    $professor_model->addProfessor($id_xtec, $nom, $cognoms, $correu, $codi_centre);
+                } else {
+                    $professor_model->editarProfessorNomCognomsCodiCentre($id_xtec, $nom, $cognoms, $codi_centre);
+                }
+
                 $login_model->addLogin($correu, null);
                 $id_login = $login_model->obtenirId($correu);
                 $login_in_rol_model->addLoginInRol($id_login, $rol);

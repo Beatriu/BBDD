@@ -80,7 +80,7 @@ class CursController extends BaseController
         $data['comarca_desactivar'] = null;
         if ($id_curs_desactivar != null) {
 
-            $curs_desactivar = $curs_model->obtenirCursosPerId($id_curs_desactivar);
+            $curs_desactivar = $curs_model->obtenirCursosPerId($id_curs_desactivar)[0];
             
             if ($curs_desactivar != null) {
                 $data['curs_desactivar'] = $curs_desactivar;

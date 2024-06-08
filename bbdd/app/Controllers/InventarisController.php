@@ -734,15 +734,17 @@ class InventarisController extends BaseController
         $options_tipus_dispositius = "";
         $options_tipus_dispositius .= "<option value='' selected disabled>" . lang('registre.not_value_option_select_tipus_dispositiu') . "</option>";
         for ($i = 0; $i < sizeof($array_tipus_dispositius); $i++) {
-            if (isset($sessio_filtres['tipus_dispositiu']) && $tipus_inventari['nom_tipus_inventari'] == $array_tipus_dispositius[$i]['nom_tipus_inventari']) {
-                $options_tipus_dispositius .= "<option value=\"" . $array_tipus_dispositius[$i]['id_tipus_inventari']. " - " . $array_tipus_dispositius[$i]['nom_tipus_inventari'] . "\" selected>";
-            } else {
-                $options_tipus_dispositius .= "<option value=\"" . $array_tipus_dispositius[$i]['id_tipus_inventari']. " - " . $array_tipus_dispositius[$i]['nom_tipus_inventari'] . "\">";
+            if ($array_tipus_dispositius[$i]['actiu'] == "1") {
+                if (isset($sessio_filtres['tipus_dispositiu']) && $tipus_inventari['nom_tipus_inventari'] == $array_tipus_dispositius[$i]['nom_tipus_inventari']) {
+                    $options_tipus_dispositius .= "<option value=\"" . $array_tipus_dispositius[$i]['id_tipus_inventari']. " - " . $array_tipus_dispositius[$i]['nom_tipus_inventari'] . "\" selected>";
+                } else {
+                    $options_tipus_dispositius .= "<option value=\"" . $array_tipus_dispositius[$i]['id_tipus_inventari']. " - " . $array_tipus_dispositius[$i]['nom_tipus_inventari'] . "\">";
+                }
+                
+                $options_tipus_dispositius .= $array_tipus_dispositius[$i]['nom_tipus_inventari'];
+                $options_tipus_dispositius .= "</option>";
+                $array_tipus_dispositius_nom[$i] = $array_tipus_dispositius[$i]['nom_tipus_inventari'];
             }
-            
-            $options_tipus_dispositius .= $array_tipus_dispositius[$i]['nom_tipus_inventari'];
-            $options_tipus_dispositius .= "</option>";
-            $array_tipus_dispositius_nom[$i] = $array_tipus_dispositius[$i]['nom_tipus_inventari'];
         }
 
         return $options_tipus_dispositius;
@@ -776,14 +778,12 @@ class InventarisController extends BaseController
         $poblacio_model = new PoblacioModel();
         $array_poblacions = $poblacio_model->obtenirPoblacions();
         $options_poblacions = "";
-        //dd($actor);
         for ($i = 0; $i < sizeof($array_poblacions); $i++) {
-            //if (($role == "sstt" || $role == "admin_sstt") && $array_poblacions[$i]['id_sstt'] == $actor['id_sstt']) {
-            //} else if ($role == "desenvolupador") {
-            //}
-            $options_poblacions .= "<option value=\"" . $array_poblacions[$i]['id_poblacio'] . " - " . $array_poblacions[$i]['nom_poblacio'] . "\">";
-            $options_poblacions .= $array_poblacions[$i]['nom_poblacio'];
-            $options_poblacions .= "</option>";
+            if ($array_poblacions[$i]['actiu'] == "1") {
+                $options_poblacions .= "<option value=\"" . $array_poblacions[$i]['id_poblacio'] . " - " . $array_poblacions[$i]['nom_poblacio'] . "\">";
+                $options_poblacions .= $array_poblacions[$i]['nom_poblacio'];
+                $options_poblacions .= "</option>";
+            }
         }
 
         return $options_poblacions;
@@ -794,14 +794,12 @@ class InventarisController extends BaseController
         $comarca_model = new ComarcaModel();
         $array_comarques = $comarca_model->obtenirComarques();
         $options_comarques = "";
-        //dd($array_comarques);
         for ($i = 0; $i < sizeof($array_comarques); $i++) {
-            //if (($role == "sstt" || $role == "admin_sstt") && $array_poblacions[$i]['id_sstt'] == $actor['id_sstt']) {
-            //} else if ($role == "desenvolupador") {
-            //}
-            $options_comarques .= "<option value=\"" . $array_comarques[$i]['id_comarca'] . " - " . $array_comarques[$i]['nom_comarca'] . "\">";
-            $options_comarques .= $array_comarques[$i]['nom_comarca'];
-            $options_comarques .= "</option>";
+            if ($array_comarques[$i]['actiu'] == "1") {
+                $options_comarques .= "<option value=\"" . $array_comarques[$i]['id_comarca'] . " - " . $array_comarques[$i]['nom_comarca'] . "\">";
+                $options_comarques .= $array_comarques[$i]['nom_comarca'];
+                $options_comarques .= "</option>";
+            }
         }
 
         return $options_comarques;

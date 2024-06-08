@@ -14,6 +14,10 @@ use App\Models\TipusInventariModel;
 use App\Models\TiquetModel;
 use Google\Service\BackupforGKE\Backup;
 use SIENSIS\KpaCrud\Libraries\KpaCrud;
+use BaconQrCode\Renderer\ImageRenderer;
+use BaconQrCode\Renderer\Image\SvgImageBackEnd;
+use BaconQrCode\Renderer\RendererStyle\RendererStyle;
+use BaconQrCode\Writer;
 
 
 class TiquetController extends BaseController
@@ -324,6 +328,17 @@ class TiquetController extends BaseController
 
 
 
+                // Establim la forma de renderitzar la imatge
+                $render = new ImageRenderer(
+                    new RendererStyle(400),
+                    new SvgImageBackEnd()
+                );
+                
+                $writer = new Writer($render); // Establim el writer amb la forma de renderitzar imatges
+        
+                $data['qrcode_image2'] = base64_encode($writer->writeString($tiquet_existent['id_tiquet'])); // Generem el codi que ha d'anar a la imatge
+
+
                 $data['output'] = $crud->render();
                 return view('tiquet' . DIRECTORY_SEPARATOR . 'vistaTiquet', $data);
             }
@@ -607,10 +622,12 @@ class TiquetController extends BaseController
 
         $options_tipus_dispositius = "";
         for ($i = 0; $i < sizeof($array_tipus_dispositius); $i++) {
-            $options_tipus_dispositius .= "<option value=" . $array_tipus_dispositius[$i]['id_tipus_dispositiu'] . ">";
-            $options_tipus_dispositius .= $array_tipus_dispositius[$i]['nom_tipus_dispositiu'];
-            $options_tipus_dispositius .= "</option>";
-            $array_tipus_dispositius_nom[$i] = $array_tipus_dispositius[$i]['nom_tipus_dispositiu'];
+            if ($array_tipus_dispositius[$i]['actiu'] == "1") {
+                $options_tipus_dispositius .= "<option value=" . $array_tipus_dispositius[$i]['id_tipus_dispositiu'] . ">";
+                $options_tipus_dispositius .= $array_tipus_dispositius[$i]['nom_tipus_dispositiu'];
+                $options_tipus_dispositius .= "</option>";
+                $array_tipus_dispositius_nom[$i] = $array_tipus_dispositius[$i]['nom_tipus_dispositiu'];
+            }
         }
 
         $data['tipus_dispositius'] = $options_tipus_dispositius;
@@ -753,14 +770,16 @@ class TiquetController extends BaseController
 
             $options_tipus_dispositius = "";
             for ($i = 0; $i < sizeof($array_tipus_dispositius); $i++) {
-                if (($i + 1) != $data['tiquet']['id_tipus_dispositiu']) {
-                    $options_tipus_dispositius .= "<option value=" . ($i + 1) . ">";
-                } else {
-                    $options_tipus_dispositius .= "<option value=" . ($i + 1) . " selected>";
+                if ($array_tipus_dispositius[$i]['actiu'] == "1") {
+                    if (($i + 1) != $data['tiquet']['id_tipus_dispositiu']) {
+                        $options_tipus_dispositius .= "<option value=" . ($i + 1) . ">";
+                    } else {
+                        $options_tipus_dispositius .= "<option value=" . ($i + 1) . " selected>";
+                    }
+                    $options_tipus_dispositius .= $array_tipus_dispositius[$i]['nom_tipus_dispositiu'];
+                    $options_tipus_dispositius .= "</option>";
+                    $array_tipus_dispositius_nom[$i] = $array_tipus_dispositius[$i]['nom_tipus_dispositiu'];
                 }
-                $options_tipus_dispositius .= $array_tipus_dispositius[$i]['nom_tipus_dispositiu'];
-                $options_tipus_dispositius .= "</option>";
-                $array_tipus_dispositius_nom[$i] = $array_tipus_dispositius[$i]['nom_tipus_dispositiu'];
             }
 
             $data['tipus_dispositius'] = $options_tipus_dispositius;

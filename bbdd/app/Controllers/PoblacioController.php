@@ -5,6 +5,8 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\PoblacioModel;
 use App\Models\CentreModel;
+use App\Models\ComarcaModel;
+use App\Models\SSTTModel;
 use SIENSIS\KpaCrud\Libraries\KpaCrud;
 
 class PoblacioController extends BaseController
@@ -12,6 +14,8 @@ class PoblacioController extends BaseController
     public function registrePoblacio($id_poblacio_desactivar = null)
     {
         $poblacio_model = new PoblacioModel();
+        $comarca_model = new ComarcaModel();
+        $sstt_model = new SSTTModel();
 
         $role = session()->get('user_data')['role'];
         $data['role'] = $role;
@@ -47,11 +51,14 @@ class PoblacioController extends BaseController
             'js-bootstrap',
             'css-bootstrap',
         ]);
+        $crud->setRelation('id_comarca', 'comarca', 'id_comarca', 'nom_comarca');
+        $crud->setRelation('id_sstt', 'sstt', 'id_sstt', 'nom_sstt');
         $crud->setColumns([
             'id_poblacio',
             'codi_postal',
             'nom_poblacio',
-            'id_comarca',
+            'comarca__nom_comarca',
+            'sstt__nom_sstt',
         ]);
         $crud->setColumnsInfo([
             'id_poblacio' => [
@@ -63,12 +70,17 @@ class PoblacioController extends BaseController
             'nom_poblacio' => [
                 'name' => lang('tipus.nom_poblacio')
             ],
-            'id_comarca' => [
-                'name' => lang('tipus.id_comarca')
+            'comarca__nom_comarca' => [
+                'name' => lang('tipus.nom_comarca')
             ],
+            'sstt__nom_sstt' => [
+                'name' => lang('tipus.nom_sstt'),
+            ]
         ]);
+        
         $crud->addItemLink('delete', 'fa-trash', base_url('tipus/poblacio/desactivar'), 'Desactivar Població');
-        $crud->addWhere('actiu', "1");
+        $crud->addWhere('poblacio.actiu', "1");
+
 
         $data['output'] = $crud->render();
 
@@ -87,6 +99,26 @@ class PoblacioController extends BaseController
             }
         }
 
+        $array_comarques = $comarca_model->obtenirComarques();
+        
+        $data['comarques'] = "";
+        for ($i = 0; $i < sizeof($array_comarques); $i++){
+            if ($array_comarques[$i]['actiu'] == "1") {
+                $data['comarques'] .= "<option value = \"" . $array_comarques[$i]['id_comarca'] . " - " . $array_comarques[$i]['nom_comarca'] . "\">";
+                $data['comarques'] .=  $array_comarques[$i]['nom_comarca'] . "</option>";
+            }
+        }
+
+        $array_sstt = $sstt_model->obtenirSSTT();
+        $data['sstt'] = "";
+        for ($i = 0; $i < sizeof($array_sstt); $i++){
+            //if ($array_sstt[$i]['actiu'] == "1") {
+                $data['sstt'] .= "<option value = \"" . $array_sstt[$i]['id_sstt'] . " - " . $array_sstt[$i]['nom_sstt'] . "\">";
+                $data['sstt'] .=  $array_sstt[$i]['nom_sstt'] . "</option>";
+            //}
+        }
+        
+
         $data['tipus_pantalla'] = "poblacio";
         return view('registres' . DIRECTORY_SEPARATOR . 'registreTipus', $data);
     }
@@ -94,6 +126,7 @@ class PoblacioController extends BaseController
     public function crearPoblacio_post()
     {
         $poblacio_model = new PoblacioModel();
+        $comarca_model = new ComarcaModel();
 
         $actor = session()->get('user_data');
         $role = $actor['role'];
@@ -106,12 +139,27 @@ class PoblacioController extends BaseController
         $codi_postal = $this->request->getPost("codi_postal");
         $poblacio = $this->request->getPost("nom_poblacio");
         $id_comarca = $this->request->getPost("id_comarca");
+        $id_sstt = $this->request->getPost("id_sstt");
+
+        $id_comarca = trim(explode('-', (string) $id_comarca)[0]);
+        if ($id_comarca != null && $comarca_model->obtenirComarca($id_comarca) == null) {
+            $msg = lang('alertes.no_existeix_comarca');
+            session()->setFlashdata('no_existeix_comarca', $msg);
+            return redirect()->back()->withInput();
+        }
+
+        $id_sstt = trim(explode('-', (string) $id_sstt)[0]);
+        if ($id_comarca != null && $comarca_model->obtenirComarca($id_comarca) == null) {
+            $msg = lang('alertes.no_existeix_sstt');
+            session()->setFlashdata('no_existeix_sstt', $msg);
+            return redirect()->back()->withInput();
+        }
 
         $poblacio_no_existeix = $poblacio_model->obtenirPoblacioPerIdCodiPoblacio($id_poblacio, $codi_postal, $poblacio) == null;
         if ($poblacio != null && $poblacio != "" && $poblacio_no_existeix) {
 
             if ($id_poblacio != null && $id_poblacio != "" && $poblacio_model->getPoblacio($id_poblacio) == null && $poblacio_model->obtenirPoblacioCodiPostal($codi_postal) == null) {
-                $poblacio_model->addPoblacio($id_poblacio, $codi_postal, $poblacio, $id_comarca, null);
+                $poblacio_model->addPoblacio($id_poblacio, $codi_postal, $poblacio, $id_comarca, $id_sstt);
                 $msg = lang("alertes.poblacio_creat");
                 session()->setFlashdata("poblacio_creat", $msg);
             } else {

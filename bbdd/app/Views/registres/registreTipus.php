@@ -189,6 +189,11 @@
                             <i class="fa-solid fa-users"></i>
                         </a>
                     </li>
+                    <li class="nav-item" title="<?= lang("registre.professors") ?>">
+                        <a href="<?= base_url("/professor") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.professors") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                            <i class="fa-solid fa-person-chalkboard"></i>
+                        </a>
+                    </li>
                 <?php endif; ?>
                 <?php if ($role == 'desenvolupador') : ?>
                     <li class="nav-item" id="actiu" title="<?= lang("registre.tipus") ?>">
@@ -516,6 +521,16 @@
                             <?= session()->get('poblacio_activat') ?>
                         </div>
                     <?php endif; ?>
+                    <?php if ((session()->get('no_existeix_comarca')) !== null) : ?>
+                        <div class="alert alert-danger alerta_esborrar" role="alert">
+                            <?= session()->get('no_existeix_comarca') ?>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ((session()->get('no_existeix_sstt')) !== null) : ?>
+                        <div class="alert alert-danger alerta_esborrar" role="alert">
+                            <?= session()->get('no_existeix_sstt') ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
 
                 <div class="row border mt-4 ms-1 me-0 pe-0 ps-0">
@@ -528,18 +543,27 @@
                     <?= csrf_field() ?>
                     <div class="row">
                         <div class="col-2 mt-4">
-                            <input type="number" min="0" class="form-control" name="id_poblacio" id="id_poblacio_crud" placeholder="<?= lang('tipus.escriu_id_poblacio') ?>" required>
+                            <input type="number" min="0" class="form-control" name="id_poblacio" id="id_poblacio_crud" placeholder="<?= lang('tipus.escriu_id_poblacio') ?>" title="<?= lang('tipus.escriu_id_poblacio') ?>" required>
                         </div>
                         <div class="col-2 mt-4">
-                            <input type="number" min="0" class="form-control" name="codi_postal" id="nom_poblacio_crud" placeholder="<?= lang('tipus.escriu_codi_postal') ?>" required>
+                            <input type="number" min="0" class="form-control" name="codi_postal" id="codi_postal_crud" placeholder="<?= lang('tipus.escriu_codi_postal') ?>" title="<?= lang('tipus.escriu_codi_postal') ?>" required>
                         </div>
                         <div class="col-2 mt-4">
-                            <input type="text" class="form-control" name="nom_poblacio" id="nom_poblacio_crud" placeholder="<?= lang('tipus.escriu_nom_poblacio') ?>" required>
+                            <input type="text" class="form-control" name="nom_poblacio" id="nom_poblacio_crud" placeholder="<?= lang('tipus.escriu_nom_poblacio') ?>" title="<?= lang('tipus.escriu_nom_poblacio') ?>" required>
                         </div>
                         <div class="col-2 mt-4">
-                            <input type="text" class="form-control" name="id_comarca" id="ic_comarca_crud" placeholder="<?= lang('tipus.escriu_id_comarca') ?>" required>
+                            <input id="id_comarca" list="dataListComarques" name="id_comarca" class="form-select selector_filtre" placeholder="<?= lang('tipus.escriu_id_comarca') ?>" title="<?= lang('tipus.escriu_id_comarca') ?>" required />
+                            <datalist id="dataListComarques">
+                                <?= $comarques ?>
+                            </datalist>
                         </div>
-                        <div class="col-3 mt-4 d">
+                        <div class="col-2 mt-4">
+                            <input id="id_sstt" list="dataListSSTT" name="id_sstt" class="form-select selector_filtre" placeholder="<?= lang('tipus.escriu_id_sstt') ?>" title="<?= lang('tipus.escriu_id_sstt') ?>" required />
+                            <datalist id="dataListSSTT">
+                                <?= $sstt ?>
+                            </datalist>
+                        </div>
+                        <div class="col-2 mt-4 d">
                             <button type="submit" class="btn btn-success rounded-pill"><i class="fa-solid fa-plus"></i> <?= lang('tipus.afegir_poblacio') ?></button>
                         </div>
                     </div>

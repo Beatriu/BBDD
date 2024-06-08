@@ -56,4 +56,14 @@ class ProfessorModel extends Model
     public function obtenirCodiCentre($correu_professor) {
         return $this->select('codi_centre')->where('correu_professor', $correu_professor)->first();
     }
+
+    public function editarProfessorNomCognomsCodiCentre($id_xtec, $nom, $cognoms, $codi_centre)
+    {
+        return $this->update($id_xtec, ['codi_centre' => $codi_centre, 'nom' => $nom, 'cognoms' => $cognoms]);
+    }
+
+    public function editarProfessorCodiCentre($id_xtec, $codi_centre)
+    {
+        return $this->update($id_xtec, ['codi_centre' => $codi_centre]);
+    }
 }

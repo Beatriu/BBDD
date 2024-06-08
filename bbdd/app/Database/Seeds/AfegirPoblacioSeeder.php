@@ -15,9 +15,11 @@ class AfegirPoblacioSeeder extends Seeder
         while (($data = fgetcsv($csvFile, 6000, ";")) !== FALSE) {
             if (!$firstline) {
                 $model = new \App\Models\PoblacioModel();
-                if ($model->getPoblacio($data[9]) == null) {
-                    $model->addPoblacio($data[9], $data[3], $data[10], $data[7], $data[5]);
-                }
+                //if ($model->getPoblacio($data[9]) == null) {
+                    //$model->addPoblacio($data[9], $data[3], $data[10], $data[7], $data[5]);
+                    echo $data[9] ."  ". $data[5];
+                    $model->editarPoblacioSSTT($data[9], $data[5]);
+                //}
                 
             }
             $firstline = false;

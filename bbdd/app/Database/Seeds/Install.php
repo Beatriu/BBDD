@@ -8,17 +8,17 @@ class Install extends Seeder
 {
     public function run()
     {
-        $this->call("AfegirComarcaSeeder");
+        //$this->call("AfegirComarcaSeeder");
         $this->call("AfegirPoblacioSeeder");
-        $this->call("AfegirSSTTSeeder");
-        $this->call("AfegirCentreSeeder");
+        //$this->call("AfegirSSTTSeeder");
+        //$this->call("AfegirCentreSeeder");
 
-        $this->call("AfegirTipusDispositiuSeeder");
-        $this->call("AfegirEstatSeeder");
-        $this->call("AfegirTipusIntervencioSeeder");
-        $this->call("AfegirCursSeeder");
+        //$this->call("AfegirTipusDispositiuSeeder");
+        //$this->call("AfegirEstatSeeder");
+        //$this->call("AfegirTipusIntervencioSeeder");
+        //$this->call("AfegirCursSeeder");
             //$this->call("AfegirLlistaAdmesosSeeder");
-        $this->call("AfegirTipusInventariSeeder");
+        //$this->call("AfegirTipusInventariSeeder");
 
             //$this->call("AfegirTiquetSeeder");
             //$this->call("AfegirProfessorSeeder");
@@ -29,8 +29,8 @@ class Install extends Seeder
 
             //$this->call("AfegirBackTicketSeeder");
 
-        $this->call("AfegirRolSeeder");
-        $this->call("AfegirLoginSeeder");
-        $this->call("AfegirLoginInRolSeeder");
+        //$this->call("AfegirRolSeeder");
+        //$this->call("AfegirLoginSeeder");
+        //$this->call("AfegirLoginInRolSeeder");
     }
 }
