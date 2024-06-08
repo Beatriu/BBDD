@@ -749,14 +749,16 @@ class RegistresController extends BaseController
         $options_tipus_dispositius = "";
         $options_tipus_dispositius .= "<option value='' selected disabled>" . lang('registre.not_value_option_select_tipus_dispositiu') . "</option>";
         for ($i = 0; $i < sizeof($array_tipus_dispositius); $i++) {
-            if (isset($sessio_filtres['tipus_dispositiu']) && $sessio_filtres['tipus_dispositiu'][0] == $array_tipus_dispositius[$i]['nom_tipus_dispositiu']) {
-                $options_tipus_dispositius .= "<option value=\"" . $array_tipus_dispositius[$i]['nom_tipus_dispositiu'] . "\" selected>";
-            } else {
-                $options_tipus_dispositius .= "<option value=\"" . $array_tipus_dispositius[$i]['nom_tipus_dispositiu'] . "\">";
+            if ($array_tipus_dispositius[$i]['actiu'] == "1") {
+                if (isset($sessio_filtres['tipus_dispositiu']) && $sessio_filtres['tipus_dispositiu'][0] == $array_tipus_dispositius[$i]['nom_tipus_dispositiu']) {
+                    $options_tipus_dispositius .= "<option value=\"" . $array_tipus_dispositius[$i]['nom_tipus_dispositiu'] . "\" selected>";
+                } else {
+                    $options_tipus_dispositius .= "<option value=\"" . $array_tipus_dispositius[$i]['nom_tipus_dispositiu'] . "\">";
+                }
+                $options_tipus_dispositius .= $array_tipus_dispositius[$i]['nom_tipus_dispositiu'];
+                $options_tipus_dispositius .= "</option>";
+                $array_tipus_dispositius_nom[$i] = $array_tipus_dispositius[$i]['nom_tipus_dispositiu'];
             }
-            $options_tipus_dispositius .= $array_tipus_dispositius[$i]['nom_tipus_dispositiu'];
-            $options_tipus_dispositius .= "</option>";
-            $array_tipus_dispositius_nom[$i] = $array_tipus_dispositius[$i]['nom_tipus_dispositiu'];
         }
 
         return $options_tipus_dispositius;

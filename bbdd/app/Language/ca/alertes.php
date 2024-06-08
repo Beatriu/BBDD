@@ -59,4 +59,6 @@ return [
     'comarca_esborrat' => "La comarca ha estat esborrada",
     'comarca_creat' => "La comarca ha estat creada correctament",
     'comarca_activat' => "La comarca ha estat reactivada correctament",
+    'no_existeix_comarca' => "La comarca introduïda no existeix!",
+    'no_existeix_sstt' => "El servei territorial introduït no existeix!",
 ];

@@ -82,4 +82,8 @@ class PoblacioModel extends Model
         return $this->delete($id_poblacio);
     }
 
+    public function editarPoblacioSSTT($id_poblacio, $id_sstt)
+    {
+        return $this->update($id_poblacio, ['id_sstt' => $id_sstt]);
+    }
 }

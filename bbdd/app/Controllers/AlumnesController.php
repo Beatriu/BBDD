@@ -710,9 +710,11 @@ class AlumnesController extends BaseController
         $options_poblacions = "";
 
         for ($i = 0; $i < sizeof($array_poblacions); $i++) {
-            $options_poblacions .= "<option value=\"" . $array_poblacions[$i]['id_poblacio'] . " - " . $array_poblacions[$i]['nom_poblacio'] . "\">";
-            $options_poblacions .= $array_poblacions[$i]['nom_poblacio'];
-            $options_poblacions .= "</option>";
+            if ($array_poblacions[$i]['actiu'] == "1") {
+                $options_poblacions .= "<option value=\"" . $array_poblacions[$i]['id_poblacio'] . " - " . $array_poblacions[$i]['nom_poblacio'] . "\">";
+                $options_poblacions .= $array_poblacions[$i]['nom_poblacio'];
+                $options_poblacions .= "</option>";
+            }
         }
 
         return $options_poblacions;
@@ -725,9 +727,11 @@ class AlumnesController extends BaseController
         $options_comarques = "";
 
         for ($i = 0; $i < sizeof($array_comarques); $i++) {
-            $options_comarques .= "<option value=\"" . $array_comarques[$i]['id_comarca'] . " - " . $array_comarques[$i]['nom_comarca'] . "\">";
-            $options_comarques .= $array_comarques[$i]['nom_comarca'];
-            $options_comarques .= "</option>";
+            if ($array_comarques[$i]['actiu'] == "1") {
+                $options_comarques .= "<option value=\"" . $array_comarques[$i]['id_comarca'] . " - " . $array_comarques[$i]['nom_comarca'] . "\">";
+                $options_comarques .= $array_comarques[$i]['nom_comarca'];
+                $options_comarques .= "</option>";
+            }
         }
 
         return $options_comarques;

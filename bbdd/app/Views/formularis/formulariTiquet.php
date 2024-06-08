@@ -87,7 +87,7 @@
             </div>
             <?php if (session()->get('user_data')['role'] == "desenvolupador"):?>
                 <div class="col">
-                    <label class="form-label" for="institutsDataListSSTT"><?= lang('general_lang.sstt') ?></label>
+                    <label class="form-label" for="institutsDataListSSTT"><?= lang('general_lang.sstt') ?> *</label>
                     <input class="form-control selector" name="sstt" list="datalistOptionsSSTT" id="institutsDataListSSTT" placeholder="<?= lang('general_lang.sstt') ?>" required>
                     <datalist id="datalistOptionsSSTT">
                         <?= $sstt ?>

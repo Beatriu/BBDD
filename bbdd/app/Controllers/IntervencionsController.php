@@ -85,9 +85,11 @@ class IntervencionsController extends BaseController
                 $array_curs = $curs_model->obtenirCursos();
                 $options_curs = "";
                 for ($i = 0; $i < sizeof($array_curs); $i++) {
-                    $options_curs .= "<option value=\"" . $array_curs[$i]['id_curs'] . " - " . $array_curs[$i]['curs'] . " " . $array_curs[$i]['cicle'] . " " . $array_curs[$i]['titol'] . "\">";
-                    $options_curs .= $array_curs[$i]['curs'] . " " . $array_curs[$i]['cicle'] . " " . $array_curs[$i]['titol'];
-                    $options_curs .= "</option>";
+                    if ($array_curs[$i]['actiu'] == "1") {
+                        $options_curs .= "<option value=\"" . $array_curs[$i]['id_curs'] . " - " . $array_curs[$i]['curs'] . " " . $array_curs[$i]['cicle'] . " " . $array_curs[$i]['titol'] . "\">";
+                        $options_curs .= $array_curs[$i]['curs'] . " " . $array_curs[$i]['cicle'] . " " . $array_curs[$i]['titol'];
+                        $options_curs .= "</option>";
+                    }
                 }
 
                 // Carregar peces d'inventari
@@ -293,11 +295,13 @@ class IntervencionsController extends BaseController
                     $options_tipus_intervencio = "";
                     $data['selected_intervencio'] = "";
                     for ($i = 0; $i < sizeof($array_tipus_intervencio); $i++) {
-                        $options_tipus_intervencio .= "<option value='" . $array_tipus_intervencio[$i]['id_tipus_intervencio'] . " - " . $array_tipus_intervencio[$i]['nom_tipus_intervencio'] . "'>";
-                        $options_tipus_intervencio .= $array_tipus_intervencio[$i]['nom_tipus_intervencio'];
-                        $options_tipus_intervencio .= "</option>";
-                        if ($array_tipus_intervencio[$i]['id_tipus_intervencio'] == $intervencio['id_tipus_intervencio']) {
-                            $data['selected_intervencio'] = $array_tipus_intervencio[$i]['id_tipus_intervencio'] . " - " . $array_tipus_intervencio[$i]['nom_tipus_intervencio'];
+                        if ($array_tipus_intervencio[$i]['actiu'] == "1") {
+                            $options_tipus_intervencio .= "<option value='" . $array_tipus_intervencio[$i]['id_tipus_intervencio'] . " - " . $array_tipus_intervencio[$i]['nom_tipus_intervencio'] . "'>";
+                            $options_tipus_intervencio .= $array_tipus_intervencio[$i]['nom_tipus_intervencio'];
+                            $options_tipus_intervencio .= "</option>";
+                            if ($array_tipus_intervencio[$i]['id_tipus_intervencio'] == $intervencio['id_tipus_intervencio']) {
+                                $data['selected_intervencio'] = $array_tipus_intervencio[$i]['id_tipus_intervencio'] . " - " . $array_tipus_intervencio[$i]['nom_tipus_intervencio'];
+                            }
                         }
                     }
             
@@ -305,11 +309,13 @@ class IntervencionsController extends BaseController
                     $options_curs = "";
                     $data['selected_curs'] = "";
                     for ($i = 0; $i < sizeof($array_curs); $i++) {
-                        $options_curs .= "<option value=\"" . $array_curs[$i]['id_curs'] . " - " . $array_curs[$i]['curs'] . " " . $array_curs[$i]['cicle'] . " " . $array_curs[$i]['titol'] . "\">";
-                        $options_curs .= $array_curs[$i]['curs'] . " " . $array_curs[$i]['cicle'] . " " . $array_curs[$i]['titol'];
-                        $options_curs .= "</option>";
-                        if ($array_curs[$i]['id_curs'] == $intervencio['id_curs']) {
-                            $data['selected_curs'] = $array_curs[$i]['id_curs'] . " - " . $array_curs[$i]['curs'] . " " . $array_curs[$i]['cicle'] . " " . $array_curs[$i]['titol'];
+                        if ($array_curs[$i]['actiu'] == "1") {
+                            $options_curs .= "<option value=\"" . $array_curs[$i]['id_curs'] . " - " . $array_curs[$i]['curs'] . " " . $array_curs[$i]['cicle'] . " " . $array_curs[$i]['titol'] . "\">";
+                            $options_curs .= $array_curs[$i]['curs'] . " " . $array_curs[$i]['cicle'] . " " . $array_curs[$i]['titol'];
+                            $options_curs .= "</option>";
+                            if ($array_curs[$i]['id_curs'] == $intervencio['id_curs']) {
+                                $data['selected_curs'] = $array_curs[$i]['id_curs'] . " - " . $array_curs[$i]['curs'] . " " . $array_curs[$i]['cicle'] . " " . $array_curs[$i]['titol'];
+                            }
                         }
                     }
             
@@ -435,7 +441,7 @@ class IntervencionsController extends BaseController
                 $correu_alumne = $intervencio_editar['correu_alumne'];
     
                 $tipus_intervencio_obtingut = $tipus_intervencio_model->obtenirNomTipusIntervencio($id_tipus_intervencio);
-                if ($tipus_intervencio_obtingut == null || $tipus_intervencio_obtingut['actiu'] == "0" || $curs_model->obtenirCursosPerId($id_curs) == null) {
+                if ($tipus_intervencio_obtingut == null || $curs_model->obtenirCursosPerId($id_curs) == null) {
                     return redirect()->back()->withInput();
                 }
                 

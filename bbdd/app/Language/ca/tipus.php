@@ -51,4 +51,8 @@ return [
     'codi_postal' => 'Codi postal',
     'nom_poblacio' => 'Nom població',
     'id_comarca' => 'Identificador comarca',
+    'nom_comarca' => 'Nom comarca',
+    'escriu_id_comarca' => 'Escriu identificador comarca...',
+    'escriu_id_sstt' => 'Escriu identificador serveis territorials...',
+    'nom_sstt' => 'Nom serveis territorials',
 ];
