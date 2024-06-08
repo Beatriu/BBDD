@@ -29,8 +29,8 @@
                     <p id="alerta_contingut"><?= lang('alertes.change_estat_contingut2') ?> </p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="tancar()"><?= lang('registre.buttons.delete') ?></button>
-                    <button type="button" class="btn btn-primary" onclick="executar()"><?= lang('registre.buttons.save_changes') ?></button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="tancar()"><?= lang('registre.buttons.delete') ?></button>
+                        <button type="button" class="btn btn-primary" onclick="executar()"><?= lang('registre.buttons.save_changes') ?></button>
                 </div>
             </div>
         </div>
@@ -138,7 +138,11 @@
 
     <div class="row justify-content-center mt-4">
         <div class="d-flex justify-content-center">
+        <?php if ($role !== 'desenvolupador') : ?>
             <button id="submit_afegir" type="submit" class="btn btn_save rounded-pill ms-3 me-3" onclick="enviar()"><i class="fa-solid fa-floppy-disk me-2"></i><?= lang('registre.buttons.save_changes') ?></button>
+        <?php else: ?>
+            <button id="submit_afegir" type="submit" class="btn btn_save rounded-pill ms-3 me-3"><i class="fa-solid fa-floppy-disk me-2"></i><?= lang('registre.buttons.save_changes') ?></button>
+        <?php endif; ?>
         </div>
     </div>
 
