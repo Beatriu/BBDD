@@ -86,4 +86,9 @@ class CentreModel extends Model
         return $this->where('id_poblacio', $id_poblacio)->first();
     }
 
+    public function eliminarCentre()
+    {
+        
+    }
+
 }

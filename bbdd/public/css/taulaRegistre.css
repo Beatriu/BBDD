@@ -34,8 +34,12 @@
     background-color: #333333 !important;
     color: #F5F5F5 !important;
 }
+#data-list-vista_centres > thead > tr > th {
+    background-color: #333333 !important;
+    color: #F5F5F5 !important;
+}
 
-#data-list-vista_tiquet, #data-list-vista_intervencio, #data-list-tipus_inventari, #data-list-tipus_intervencio, #data-list-curs, #data-list-tipus_dispositiu, #data-list-comarca, #data-list-poblacio, #data-list-llista_admesos {
+#data-list-vista_tiquet, #data-list-vista_intervencio, #data-list-tipus_inventari, #data-list-tipus_intervencio, #data-list-curs, #data-list-tipus_dispositiu, #data-list-comarca, #data-list-poblacio, #data-list-llista_admesos, #data-list-vista_centres {
     border-right: 2px solid #900000;
     border-bottom: 2px solid #900000;
     border-left: 2px solid #900000;
@@ -95,6 +99,10 @@
 }
 
 #data-list-vista_alumne_filter{
+    width: 350px;
+    height: 40px;
+}
+#data-list-vista_centres_filter{
     width: 350px;
     height: 40px;
 }

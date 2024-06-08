@@ -138,3 +138,5 @@ $routes->get('/eliminarTotsProfessors', 'LlistaAdmesosController::desactivarTots
 
 //CENTRES
 $routes->get('/centres', 'CentresController::registreCentres', ['filter'=>'Autentica']);
+/*$routes->get('/centres/desactivar/(:segment)');
+$routes->get('/eliminarCentre/(:segment)');*/
