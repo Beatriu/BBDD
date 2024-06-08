@@ -55,13 +55,21 @@
                     <a href="<?= base_url("/inventari") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.inventari") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
                         <i class="fa-solid fa-boxes-stacked"></i>
                     </a>
-                </li>
+                </li class="nav-item" title="<?= lang("registre.centres") ?>">
+
                 <?php if ($role == 'admin_sstt' || $role == 'desenvolupador') : ?>
                     <li class="nav-item" title="<?= lang("registre.alumnes") ?>">
                         <a href="<?= base_url("/alumnes") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.alumnes") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                             <i class="fa-solid fa-users"></i>
                         </a>
                     </li>
+                <?php endif; ?>
+                <li>
+                    <a href="<?= base_url("/centres") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.centres") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
+                        <i class="fa-solid fa-school"></i>
+                    </a>
+                </li>
+                <?php if ($role == 'admin_sstt' || $role == 'desenvolupador') : ?>
                     <li class="nav-item" title="<?= lang("registre.professors") ?>">
                         <a href="<?= base_url("/professor") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.professors") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                             <i class="fa-solid fa-person-chalkboard"></i>

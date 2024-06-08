@@ -69,6 +69,11 @@
                             <i class="fa-solid fa-boxes-stacked"></i>
                         </a>
                     </li>
+                    <li>
+                        <a href="<?= base_url("/centres") ?>"  class="nav-link py-3 px-2" title="<?= lang("registre.centres") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
+                            <i class="fa-solid fa-school"></i>
+                        </a>
+                    </li>
                 </ul>
             <?php endif; ?>
             <?php if ($role == 'admin_sstt' || $role == 'desenvolupador') : ?>
@@ -86,6 +91,11 @@
                     <li class="nav-item" title="<?= lang("registre.alumnes") ?>">
                         <a href="<?= base_url("/alumnes") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.alumnes") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                             <i class="fa-solid fa-users"></i>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?= base_url("/centres") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.centres") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
+                            <i class="fa-solid fa-school"></i>
                         </a>
                     </li>
                     <li class="nav-item" title="<?= lang("registre.professors") ?>">
@@ -247,10 +257,10 @@
                                     <p style="margin-bottom: 0;"><?= lang('registre.title_activated_filters') ?></p>
                                 </div>
                                 <div class="col px-0 form-check form-check-inline">
-                                <button id="submit_eliminar_tots_filtres" name="submit_eliminar_filtres" type="submit" class="badge bg-danger text-white etiqueta"><i class="fa-solid fa-trash me-2" id="trash_icon"></i><?= lang('registre.delete_all_filters') ?></button>
-                            </div>
+                                    <button id="submit_eliminar_tots_filtres" name="submit_eliminar_filtres" type="submit" class="badge bg-danger text-white etiqueta"><i class="fa-solid fa-trash me-2" id="trash_icon"></i><?= lang('registre.delete_all_filters') ?></button>
+                                </div>
                             <?php endif; ?>
-                            </div>
+                        </div>
                         <div class="row d-flex align-items-center">
                             <?php if (isset($session_filtre['tipus_dispositiu'])) : ?>
                                 <div class="col px-0 form-check form-check-inline">

@@ -101,4 +101,35 @@ JOIN poblacio p ON c.id_poblacio = p.id_poblacio
 JOIN comarca com ON p.id_comarca = com.id_comarca;
 
 
+CREATE VIEW vista_centres AS
+SELECT 
+    c.codi_centre,
+    c.nom_centre,
+    CASE 
+        WHEN c.actiu = 1 THEN 'Si'
+        ELSE 'No'
+    END AS actiu,
+    CASE 
+        WHEN c.taller = 1 THEN 'Si'
+        ELSE 'No'
+    END AS taller,
+    c.telefon_centre,
+    c.nom_persona_contacte_centre,
+    c.correu_persona_contacte_centre,
+    c.id_sstt,
+    c.login,
+    p.id_poblacio,
+    p.nom_poblacio,
+    com.id_comarca,
+    com.nom_comarca,
+    (SELECT SUM(t.preu_total) 
+     FROM tiquet t 
+     WHERE t.codi_centre_reparador = c.codi_centre) AS Preu_total,
+    (SELECT count(t.id_tiquet)
+    FROM tiquet t
+    WHERE t.codi_centre_reparador = c.codi_centre) AS Tiquets_del_centre
 
+FROM 
+    centre c
+JOIN poblacio p ON c.id_poblacio = p.id_poblacio
+JOIN comarca com ON p.id_comarca = com.id_comarca;

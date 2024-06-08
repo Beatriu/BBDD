@@ -1,14 +1,14 @@
 <?= $this->extend('layouts/professors'); ?>
 
 <?= $this->section('css_pagina'); ?>
-    <link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR . 'formulari.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR . 'taulaRegistre.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR . 'header.css') ?>">
-    <link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR . 'style.css') ?>">
+<link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR . 'formulari.css') ?>">
+<link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR . 'taulaRegistre.css') ?>">
+<link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR . 'header.css') ?>">
+<link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR . 'style.css') ?>">
 <?= $this->endSection('css_pagina'); ?>
 
 <?= $this->section('header'); ?>
-    <?= $this->include('layouts/header.php'); ?>
+<?= $this->include('layouts/header.php'); ?>
 <?= $this->endSection('header'); ?>
 
 <?= $this->section('contingut'); ?>
@@ -87,6 +87,13 @@
                             <i class="fa-solid fa-users"></i>
                         </a>
                     </li>
+                <?php endif; ?>
+                <li>
+                    <a href="<?= base_url("/centres") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.centres") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
+                        <i class="fa-solid fa-school"></i>
+                    </a>
+                </li>
+                <?php if ($role == 'admin_sstt' || $role == 'desenvolupador') : ?>
                     <li class="nav-item" title="<?= lang("registre.professors") ?>">
                         <a href="<?= base_url("/professor") ?>" id="actiu" class="nav-link py-3 px-2" title="<?= lang("registre.professors") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                             <i class="fa-solid fa-person-chalkboard"></i>
@@ -104,85 +111,85 @@
         </div>
 
 
-            <div class="col-sm p-0 pb-3 ps-5 pe-5 min-vh-100" id="zona_taula">
-                <div class="row mt-5 justify-content-center">
-                    <div class="col-2 d-flex align-items-center">
-                        <a class="btn btn-dark rounded-pill" href="<?= base_url('/tiquets') ?>">
-                            <i class="fa-solid fa-arrow-left"></i> <?= lang('general_lang.tornar') ?>
+        <div class="col-sm p-0 pb-3 ps-5 pe-5 min-vh-100" id="zona_taula">
+            <div class="row mt-5 justify-content-center">
+                <div class="col-2 d-flex align-items-center">
+                    <a class="btn btn-dark rounded-pill" href="<?= base_url('/tiquets') ?>">
+                        <i class="fa-solid fa-arrow-left"></i> <?= lang('general_lang.tornar') ?>
+                    </a>
+                </div>
+
+                <div class="col-10 justify-content-left">
+                </div>
+
+            </div>
+
+
+            <div>
+                <?php if ((session()->get('centre_no_existeix')) !== null) : ?>
+                    <div class="alert alert-warning alerta_esborrar" role="alert">
+                        <?= session()->get('centre_no_existeix') ?>
+                    </div>
+                <?php endif; ?>
+                <?php if ((session()->get('llista_admesos_buit')) !== null) : ?>
+                    <div class="alert alert-warning alerta_esborrar" role="alert">
+                        <?= session()->get('llista_admesos_buit') ?>
+                    </div>
+                <?php endif; ?>
+                <?php if ((session()->get('llista_admesos_existeix')) !== null) : ?>
+                    <div class="alert alert-danger alerta_esborrar" role="alert">
+                        <?= session()->get('llista_admesos_existeix') ?>
+                    </div>
+                <?php endif; ?>
+                <?php if ((session()->get('llista_admesos_esborrat')) !== null) : ?>
+                    <div class="alert alert-danger alerta_esborrar" role="alert">
+                        <?= session()->get('llista_admesos_esborrat') ?>
+                    </div>
+                <?php endif; ?>
+                <?php if ((session()->get('llista_admesos_creat')) !== null) : ?>
+                    <div class="alert alert-success alerta_esborrar" role="alert">
+                        <?= session()->get('llista_admesos_creat') ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+
+            <div class="row border mt-4 ms-1 me-0 pe-0 ps-0">
+                <div class="row form_header p-3 ms-0">
+
+                </div>
+            </div>
+
+            <form method="POST" action="/professor/afegir" enctype="multipart/form-data">
+                <?= csrf_field() ?>
+                <div class="row">
+                    <div class="col-3 mt-4">
+                        <input type="email" class="form-control" name="correu_professor" id="tipusInventari" placeholder="<?= lang('tipus.escriu_correu_professor') ?>" required>
+                    </div>
+                    <div class="col-2 mt-4">
+                        <input type="date" class="form-control" name="data_entrada" id="tipusInventari" required>
+                    </div>
+                    <div class="col-2 mt-4">
+                        <input id="codi_centre" list="dataListCentres" name="codi_centre" class="form-select selector_filtre" placeholder="<?= lang('tipus.escriu_codi_centre') ?>" title="<?= lang('tipus.escriu_id_comarca') ?>" required />
+                        <datalist id="dataListCentres">
+                            <?= $centres ?>
+                        </datalist>
+                    </div>
+                    <div class="col-3 mt-4">
+                        <button type="submit" class="btn btn-success rounded-pill"><i class="fa-solid fa-plus"></i> <?= lang('tipus.afegir_llista_admesos') ?></button>
+                    </div>
+                    <div class="col-2 mt-4">
+                        <a href="<?= base_url('/professor/desactivar/tots') ?>" class="btn btn-danger rounded-pill">
+                            <i class="fa-solid fa-trash"></i> <?= lang('tipus.esborrar_tots_professors') ?>
                         </a>
                     </div>
 
-                    <div class="col-10 justify-content-left">
-                    </div>
-
                 </div>
-
-
-                <div>
-                    <?php if ((session()->get('centre_no_existeix')) !== null) : ?>
-                        <div class="alert alert-warning alerta_esborrar" role="alert">
-                            <?= session()->get('centre_no_existeix') ?>
-                        </div>
-                    <?php endif; ?>
-                    <?php if ((session()->get('llista_admesos_buit')) !== null) : ?>
-                        <div class="alert alert-warning alerta_esborrar" role="alert">
-                            <?= session()->get('llista_admesos_buit') ?>
-                        </div>
-                    <?php endif; ?>
-                    <?php if ((session()->get('llista_admesos_existeix')) !== null) : ?>
-                        <div class="alert alert-danger alerta_esborrar" role="alert">
-                            <?= session()->get('llista_admesos_existeix') ?>
-                        </div>
-                    <?php endif; ?>
-                    <?php if ((session()->get('llista_admesos_esborrat')) !== null) : ?>
-                        <div class="alert alert-danger alerta_esborrar" role="alert">
-                            <?= session()->get('llista_admesos_esborrat') ?>
-                        </div>
-                    <?php endif; ?>
-                    <?php if ((session()->get('llista_admesos_creat')) !== null) : ?>
-                        <div class="alert alert-success alerta_esborrar" role="alert">
-                            <?= session()->get('llista_admesos_creat') ?>
-                        </div>
-                    <?php endif; ?>
-                </div>
-
-                <div class="row border mt-4 ms-1 me-0 pe-0 ps-0">
-                    <div class="row form_header p-3 ms-0">
-                        
-                    </div>
-                </div>
-
-                <form method="POST" action="/professor/afegir" enctype="multipart/form-data">
-                    <?= csrf_field() ?>
-                    <div class="row">
-                        <div class="col-3 mt-4">
-                            <input type="email" class="form-control" name="correu_professor" id="tipusInventari" placeholder="<?= lang('tipus.escriu_correu_professor') ?>" required>
-                        </div>
-                        <div class="col-2 mt-4">
-                            <input type="date" class="form-control" name="data_entrada" id="tipusInventari" required>
-                        </div>
-                        <div class="col-2 mt-4">
-                            <input id="codi_centre" list="dataListCentres" name="codi_centre" class="form-select selector_filtre" placeholder="<?= lang('tipus.escriu_codi_centre') ?>" title="<?= lang('tipus.escriu_id_comarca') ?>" required />
-                            <datalist id="dataListCentres">
-                               <?= $centres ?>
-                            </datalist>
-                        </div>
-                        <div class="col-3 mt-4">
-                            <button type="submit" class="btn btn-success rounded-pill"><i class="fa-solid fa-plus"></i> <?= lang('tipus.afegir_llista_admesos') ?></button>
-                        </div>
-                        <div class="col-2 mt-4">
-                            <a href="<?= base_url('/professor/desactivar/tots') ?>" class="btn btn-danger rounded-pill">
-                                <i class="fa-solid fa-trash"></i> <?= lang('tipus.esborrar_tots_professors') ?>
-                            </a>
-                        </div>
-
-                    </div>
-                </form>
+            </form>
 
 
             <div class="row">
                 <div class="col">
-                        <?= $output ?>
+                    <?= $output ?>
                 </div>
             </div>
 
