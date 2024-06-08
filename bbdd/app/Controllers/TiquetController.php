@@ -14,6 +14,10 @@ use App\Models\TipusInventariModel;
 use App\Models\TiquetModel;
 use Google\Service\BackupforGKE\Backup;
 use SIENSIS\KpaCrud\Libraries\KpaCrud;
+use BaconQrCode\Renderer\ImageRenderer;
+use BaconQrCode\Renderer\Image\SvgImageBackEnd;
+use BaconQrCode\Renderer\RendererStyle\RendererStyle;
+use BaconQrCode\Writer;
 
 
 class TiquetController extends BaseController
@@ -322,6 +326,17 @@ class TiquetController extends BaseController
                     $data['output2'] = $crud2->render();
                 }
 
+
+
+                // Establim la forma de renderitzar la imatge
+                $render = new ImageRenderer(
+                    new RendererStyle(400),
+                    new SvgImageBackEnd()
+                );
+                
+                $writer = new Writer($render); // Establim el writer amb la forma de renderitzar imatges
+        
+                $data['qrcode_image2'] = base64_encode($writer->writeString($tiquet_existent['id_tiquet'])); // Generem el codi que ha d'anar a la imatge
 
 
                 $data['output'] = $crud->render();
