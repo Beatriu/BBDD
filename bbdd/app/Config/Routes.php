@@ -92,6 +92,12 @@ $routes->get('/canviLanguage', 'Home::canviLanguage');
 $routes->get('/descarregar/(:segment)', 'TiquetController::descarregar/$1', ['filter'=>'Autentica']);
 
 
+// Tipus dispositiu
+$routes->get('/tipus/dispositiu', 'TipusDispositiuController::registreTipusDispositiu', ['filter'=>'Autentica']);
+$routes->post('/tipus/dispositiu/afegir', 'TipusDispositiuController::crearTipusDispositiu_post', ['filter'=>'Autentica']);
+$routes->get('/tipus/dispositiu/desactivar/(:segment)', 'TipusDispositiuController::registreTipusDispositiu/$1', ['filter'=>'Autentica']);
+$routes->get('/eliminarTipusDispositiu/(:segment)', 'TipusDispositiuController::desactivarTipusDispositiu/$1', ['filter'=>'Autentica']);
+
 // Tipus inventari
 $routes->get('/tipus/inventari', 'TipusInventariController::registreTipusInventari', ['filter'=>'Autentica']);
 $routes->post('/tipus/inventari/afegir', 'TipusInventariController::crearTipusInventari_post', ['filter'=>'Autentica']);
@@ -110,5 +116,18 @@ $routes->get('/tipus/curs', 'CursController::registreCurs', ['filter'=>'Autentic
 $routes->post('/tipus/curs/afegir', 'CursController::crearCurs_post', ['filter'=>'Autentica']);
 $routes->get('/tipus/curs/desactivar/(:segment)', 'CursController::registreCurs/$1', ['filter'=>'Autentica']);
 $routes->get('/eliminarCurs/(:segment)', 'CursController::desactivarCurs/$1', ['filter'=>'Autentica']);
+
+// Població
+$routes->get('/tipus/poblacio', 'PoblacioController::registrePoblacio', ['filter'=>'Autentica']);
+$routes->post('/tipus/poblacio/afegir', 'PoblacioController::crearPoblacio_post', ['filter'=>'Autentica']);
+$routes->get('/tipus/poblacio/desactivar/(:segment)', 'PoblacioController::registrePoblacio/$1', ['filter'=>'Autentica']);
+$routes->get('/eliminarPoblacio/(:segment)', 'PoblacioController::desactivarPoblacio/$1', ['filter'=>'Autentica']);
+
+// Comarca
+$routes->get('/tipus/comarca', 'ComarcaController::registreComarca', ['filter'=>'Autentica']);
+$routes->post('/tipus/comarca/afegir', 'ComarcaController::crearComarca_post', ['filter'=>'Autentica']);
+$routes->get('/tipus/comarca/desactivar/(:segment)', 'ComarcaController::registreComarca/$1', ['filter'=>'Autentica']);
+$routes->get('/eliminarComarca/(:segment)', 'ComarcaController::desactivarComarca/$1', ['filter'=>'Autentica']);
+
 //CENTRES
 $routes->get('/centres', 'CentresController::registreCentres', ['filter'=>'Autentica']);

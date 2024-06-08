@@ -81,4 +81,9 @@ class CentreModel extends Model
         return $this->where('login', $correu)->first();
     }
 
+    public function obtenirCentrePoblacio($id_poblacio)
+    {
+        return $this->where('id_poblacio', $id_poblacio)->first();
+    }
+
 }

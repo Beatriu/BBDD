@@ -12,7 +12,7 @@ class PoblacioModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id_poblacio', 'codi_postal', 'nom_poblacio','id_comarca','id_sstt'];
+    protected $allowedFields    = ['id_poblacio', 'codi_postal', 'nom_poblacio','id_comarca','id_sstt', 'actiu'];
 
     // Dates
     protected $useTimestamps = false;
@@ -53,9 +53,33 @@ class PoblacioModel extends Model
         return $this->where('id_poblacio', $d1)->first();
     }
 
+    public function obtenirPoblacioCodiPostal($codi_postal)
+    {
+        return $this->where("codi_postal", $codi_postal)->first();
+    }
+
     public function obtenirPoblacions()
     {
         return $this->findAll();
+    }
+
+    public function obtenirPoblacioComarca($id_comarca)
+    {
+        return $this->where('id_comarca', $id_comarca)->first();
+    }
+    public function obtenirPoblacioPerIdCodiPoblacio($id_poblacio, $codi_postal, $nom_poblacio)
+    {
+        return $this->where(['id_poblacio' => $id_poblacio, 'codi_postal' => $codi_postal, 'nom_poblacio' => $nom_poblacio])->first();
+    }
+
+    public function editarPoblacioActiu($id_poblacio, $actiu)
+    {
+        return $this->update($id_poblacio, ['actiu' => $actiu]);
+    }
+
+    public function esborrarPoblacio($id_poblacio)
+    {
+        return $this->delete($id_poblacio);
     }
 
 }

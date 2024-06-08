@@ -25,7 +25,13 @@ class ComarcaPoblacioMigration extends Migration
                 'type'       => 'VARCHAR',
                 'constraint' => '128',
                 'null'          => false,
-            ]
+            ],
+            'actiu'       => [
+                'type'       => 'TINYINT',
+                'constraint' => 2,
+                'null'          => false,
+                'default' => '1',
+            ],
         ]);
         $this->forge->addKey('id_comarca', true);
         $this->forge->createTable('comarca');
@@ -59,7 +65,13 @@ class ComarcaPoblacioMigration extends Migration
                 'type' => 'VARCHAR',
                 'constraint' => '4',
                 'null' => false,
-            ],  
+            ],
+            'actiu'       => [
+                'type'       => 'TINYINT',
+                'constraint' => 2,
+                'null'          => false,
+                'default' => '1',
+            ],
         ]);
         $this->forge->addForeignKey('id_comarca', 'comarca', 'id_comarca');
         $this->forge->addKey('id_poblacio', true);

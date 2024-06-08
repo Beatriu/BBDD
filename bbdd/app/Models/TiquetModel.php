@@ -82,4 +82,9 @@ class TiquetModel extends Model
         return $this->update($id_tiquet, $data);
     }
 
+    public function obtenirTiquetTipusDispositiu($id_tipus_dispositiu)
+    {
+        return $this->where('id_tipus_dispositiu', $id_tipus_dispositiu)->findAll();
+    }
+
 }

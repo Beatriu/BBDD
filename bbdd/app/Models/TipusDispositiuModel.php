@@ -12,7 +12,7 @@ class TipusDispositiuModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['nom_tipus_dispositiu'];
+    protected $allowedFields    = ['nom_tipus_dispositiu', 'actiu'];
 
     // Dates
     protected $useTimestamps = false;
@@ -52,5 +52,25 @@ class TipusDispositiuModel extends Model
     public function getNomTipusDispositiu($id_tipus_dispositiu)
     {
         return $this->where('id_tipus_dispositiu', $id_tipus_dispositiu)->first();
+    }
+
+    public function obtenirTipusDispositiuPerId($id_tipus_dispositiu)
+    {
+        return $this->where('id_tipus_dispositiu', $id_tipus_dispositiu)->first();
+    }
+
+    public function obtenirTipusDispositiuPerNom($nom_tipus_dispositiu)
+    {
+        return $this->where('nom_tipus_dispositiu', $nom_tipus_dispositiu)->first();
+    }
+
+    public function editarTipusDispositiuActiu($id_tipus_dispositiu, $actiu)
+    {
+        return $this->update($id_tipus_dispositiu, ['actiu' => $actiu]);
+    }
+
+    public function esborrarTipusDispositiu($id_tipus_dispositiu)
+    {
+        return $this->delete($id_tipus_dispositiu);
     }
 }

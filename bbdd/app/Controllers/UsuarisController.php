@@ -108,7 +108,7 @@ class UsuarisController extends BaseController
         $client = new \Google\Client(); //Generem un client de google
 
         //LINIES CREDENCIALS
-        $client->setClientSecret('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'); //Define your Client Secret Key
+        $client->setRedirectUri('http://localhost:8080/login'); //Redirect Uri
 
         // Permisos/informació que demanem a l'usuari
         $client->addScope(\Google\Service\Oauth2::USERINFO_EMAIL);

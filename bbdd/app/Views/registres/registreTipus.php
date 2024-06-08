@@ -65,6 +65,107 @@
         </div>
     </div>
 <?php endif; ?>
+<?php if ($curs_desactivar !== null) : ?>
+    <div class="modal" tabindex="-1" role="dialog" style="display:block">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header d-flex justify-content-between">
+                    <div>
+                        <h5 class="modal-title"><?= lang('tipus.curs_model_title') ?></h5>
+                    </div>
+                    <div>
+                        <a href="<?= base_url("/tipus/curs") ?>">
+                            <i class="fa-solid fa-xmark"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <p><?= lang('tipus.curs_model_text') ?><?php echo $curs_desactivar['titol'] ?></p>
+                </div>
+                <div class="modal-footer">
+                    <a href="<?= base_url("/eliminarCurs/" . $curs_desactivar['id_curs']) ?>" type="button" class="btn btn-danger"><?= lang('registre.buttons.delete') ?></a>
+                    <a href="<?= base_url("/tipus/curs") ?>" type="button" class="btn btn-secondary" data-dismiss="modal"><?= lang('registre.buttons.cancel') ?></a>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+<?php if ($tipus_dispositiu_desactivar !== null) : ?>
+    <div class="modal" tabindex="-1" role="dialog" style="display:block">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header d-flex justify-content-between">
+                    <div>
+                        <h5 class="modal-title"><?= lang('tipus.tipus_dispositiu_model_title') ?></h5>
+                    </div>
+                    <div>
+                        <a href="<?= base_url("/tipus/dispositiu") ?>">
+                            <i class="fa-solid fa-xmark"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <p><?= lang('tipus.tipus_dispositiu_model_text') ?><?php echo $tipus_dispositiu_desactivar['id_tipus_dispositiu'] ?></p>
+                </div>
+                <div class="modal-footer">
+                    <a href="<?= base_url("/eliminarTipusDispositiu/" . $tipus_dispositiu_desactivar['id_tipus_dispositiu']) ?>" type="button" class="btn btn-danger"><?= lang('registre.buttons.delete') ?></a>
+                    <a href="<?= base_url("/tipus/dispositiu") ?>" type="button" class="btn btn-secondary" data-dismiss="modal"><?= lang('registre.buttons.cancel') ?></a>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+<?php if ($poblacio_desactivar !== null) : ?>
+    <div class="modal" tabindex="-1" role="dialog" style="display:block">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header d-flex justify-content-between">
+                    <div>
+                        <h5 class="modal-title"><?= lang('tipus.poblacio_model_title') ?></h5>
+                    </div>
+                    <div>
+                        <a href="<?= base_url("/tipus/poblacio") ?>">
+                            <i class="fa-solid fa-xmark"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <p><?= lang('tipus.poblacio_model_text') ?><?php echo $poblacio_desactivar['id_poblacio'] ?></p>
+                </div>
+                <div class="modal-footer">
+                    <a href="<?= base_url("/eliminarPoblacio/" . $poblacio_desactivar['id_poblacio']) ?>" type="button" class="btn btn-danger"><?= lang('registre.buttons.delete') ?></a>
+                    <a href="<?= base_url("/tipus/poblacio") ?>" type="button" class="btn btn-secondary" data-dismiss="modal"><?= lang('registre.buttons.cancel') ?></a>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+<?php if ($comarca_desactivar !== null) : ?>
+    <div class="modal" tabindex="-1" role="dialog" style="display:block">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header d-flex justify-content-between">
+                    <div>
+                        <h5 class="modal-title"><?= lang('tipus.comarca_model_title') ?></h5>
+                    </div>
+                    <div>
+                        <a href="<?= base_url("/tipus/comarca") ?>">
+                            <i class="fa-solid fa-xmark"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <p><?= lang('tipus.comarca_model_text') ?><?php echo $comarca_desactivar['id_comarca'] ?></p>
+                </div>
+                <div class="modal-footer">
+                    <a href="<?= base_url("/eliminarComarca/" . $comarca_desactivar['id_comarca']) ?>" type="button" class="btn btn-danger"><?= lang('registre.buttons.delete') ?></a>
+                    <a href="<?= base_url("/tipus/comarca") ?>" type="button" class="btn btn-secondary" data-dismiss="modal"><?= lang('registre.buttons.cancel') ?></a>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+
 
 <div class="container-fluid p-0 overflow-hidden">
 
@@ -91,7 +192,7 @@
                 <?php endif; ?>
                 <?php if ($role == 'desenvolupador') : ?>
                     <li class="nav-item" id="actiu" title="<?= lang("registre.tipus") ?>">
-                        <a href="<?= base_url("/tipus/inventari") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.tipus") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                        <a href="<?= base_url("/tipus/dispositiu") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.tipus") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                             <i class="fa-solid fa-gear"></i>
                         </a>
                     </li>
@@ -114,6 +215,13 @@
                                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                                     <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="menu_tipus">
                                         <li class="nav-item">
+                                            <?php if ($tipus_pantalla == "tipus_dispositiu"): ?>
+                                                <a class="nav-link active actiu" aria-current="page" href="<?= base_url('/tipus/dispositiu') ?>"><?= lang('tipus.dispositiu_titol') ?></a>
+                                            <?php else: ?>
+                                                <a class="nav-link" aria-current="page" href="<?= base_url('/tipus/dispositiu') ?>"><?= lang('tipus.dispositiu_titol') ?></a>
+                                            <?php endif; ?>
+                                        </li>
+                                        <li class="nav-item">
                                             <?php if ($tipus_pantalla == "tipus_inventari"): ?>
                                                 <a class="nav-link active actiu" aria-current="page" href="<?= base_url('/tipus/inventari') ?>"><?= lang('tipus.tipus_inventari') ?></a>
                                             <?php else: ?>
@@ -132,6 +240,20 @@
                                                 <a class="nav-link active actiu" aria-current="page" href="<?= base_url('/tipus/curs') ?>"><?= lang('tipus.curs_titol') ?></a>
                                             <?php else: ?>
                                                 <a class="nav-link" aria-current="page" href="<?= base_url('/tipus/curs') ?>"><?= lang('tipus.curs_titol') ?></a>
+                                            <?php endif; ?>
+                                        </li>
+                                        <li class="nav-item">
+                                            <?php if ($tipus_pantalla == "poblacio"): ?>
+                                                <a class="nav-link active actiu" aria-current="page" href="<?= base_url('/tipus/poblacio') ?>"><?= lang('tipus.poblacio_titol') ?></a>
+                                            <?php else: ?>
+                                                <a class="nav-link" aria-current="page" href="<?= base_url('/tipus/poblacio') ?>"><?= lang('tipus.poblacio_titol') ?></a>
+                                            <?php endif; ?>
+                                        </li>
+                                        <li class="nav-item">
+                                            <?php if ($tipus_pantalla == "comarca"): ?>
+                                                <a class="nav-link active actiu" aria-current="page" href="<?= base_url('/tipus/comarca') ?>"><?= lang('tipus.comarca_titol') ?></a>
+                                            <?php else: ?>
+                                                <a class="nav-link" aria-current="page" href="<?= base_url('/tipus/comarca') ?>"><?= lang('tipus.comarca_titol') ?></a>
                                             <?php endif; ?>
                                         </li>
                                     </ul>
@@ -307,6 +429,177 @@
                             </div>
                         </div>
                     </form>
+
+            <?php elseif($tipus_pantalla == "tipus_dispositiu"): ?>
+
+                <div>
+                    <?php if ((session()->get('tipus_dispositiu_buit')) !== null) : ?>
+                        <div class="alert alert-warning alerta_esborrar" role="alert">
+                            <?= session()->get('tipus_dispositiu_buit') ?>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ((session()->get('tipus_dispositiu_existeix')) !== null) : ?>
+                        <div class="alert alert-warning alerta_esborrar" role="alert">
+                            <?= session()->get('tipus_dispositiu_existeix') ?>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ((session()->get('tipus_dispositiu_desactivat')) !== null) : ?>
+                        <div class="alert alert-danger alerta_esborrar" role="alert">
+                            <?= session()->get('tipus_dispositiu_desactivat') ?>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ((session()->get('tipus_dispositiu_esborrat')) !== null) : ?>
+                        <div class="alert alert-danger alerta_esborrar" role="alert">
+                            <?= session()->get('tipus_dispositiu_esborrat') ?>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ((session()->get('tipus_dispositiu_creat')) !== null) : ?>
+                        <div class="alert alert-success alerta_esborrar" role="alert">
+                            <?= session()->get('tipus_dispositiu_creat') ?>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ((session()->get('tipus_dispositiu_activat')) !== null) : ?>
+                        <div class="alert alert-success alerta_esborrar" role="alert">
+                            <?= session()->get('tipus_dispositiu_activat') ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
+
+                <div class="row border mt-4 ms-1 me-0 pe-0 ps-0">
+                    <div class="row form_header p-3 ms-0">
+                        
+                    </div>
+                </div>
+
+                <form method="POST" action="/tipus/dispositiu/afegir" enctype="multipart/form-data">
+                    <?= csrf_field() ?>
+                    <div class="row">
+                        <div class="col-9 mt-4">
+                            <input type="text" class="form-control" name="tipus_dispositiu" id="tipus_dispositiu_crud" placeholder="<?= lang('tipus.escriu_tipus_dispositiu') ?>" required>
+                        </div>
+                        <div class="col-3 mt-4 d">
+                            <button type="submit" class="btn btn-success rounded-pill"><i class="fa-solid fa-plus"></i> <?= lang('tipus.afegir_tipus_dispositiu') ?></button>
+                        </div>
+                    </div>
+                </form>
+
+            <?php elseif($tipus_pantalla == "poblacio"): ?>
+
+                <div>
+                    <?php if ((session()->get('poblacio_buit')) !== null) : ?>
+                        <div class="alert alert-warning alerta_esborrar" role="alert">
+                            <?= session()->get('poblacio_buit') ?>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ((session()->get('poblacio_existeix')) !== null) : ?>
+                        <div class="alert alert-warning alerta_esborrar" role="alert">
+                            <?= session()->get('poblacio_existeix') ?>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ((session()->get('poblacio_desactivat')) !== null) : ?>
+                        <div class="alert alert-danger alerta_esborrar" role="alert">
+                            <?= session()->get('poblacio_desactivat') ?>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ((session()->get('poblacio_esborrat')) !== null) : ?>
+                        <div class="alert alert-danger alerta_esborrar" role="alert">
+                            <?= session()->get('poblacio_esborrat') ?>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ((session()->get('poblacio_creat')) !== null) : ?>
+                        <div class="alert alert-success alerta_esborrar" role="alert">
+                            <?= session()->get('poblacio_creat') ?>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ((session()->get('poblacio_activat')) !== null) : ?>
+                        <div class="alert alert-success alerta_esborrar" role="alert">
+                            <?= session()->get('poblacio_activat') ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
+
+                <div class="row border mt-4 ms-1 me-0 pe-0 ps-0">
+                    <div class="row form_header p-3 ms-0">
+                        
+                    </div>
+                </div>
+
+                <form method="POST" action="/tipus/poblacio/afegir" enctype="multipart/form-data">
+                    <?= csrf_field() ?>
+                    <div class="row">
+                        <div class="col-2 mt-4">
+                            <input type="number" min="0" class="form-control" name="id_poblacio" id="id_poblacio_crud" placeholder="<?= lang('tipus.escriu_id_poblacio') ?>" required>
+                        </div>
+                        <div class="col-2 mt-4">
+                            <input type="number" min="0" class="form-control" name="codi_postal" id="nom_poblacio_crud" placeholder="<?= lang('tipus.escriu_codi_postal') ?>" required>
+                        </div>
+                        <div class="col-2 mt-4">
+                            <input type="text" class="form-control" name="nom_poblacio" id="nom_poblacio_crud" placeholder="<?= lang('tipus.escriu_nom_poblacio') ?>" required>
+                        </div>
+                        <div class="col-2 mt-4">
+                            <input type="text" class="form-control" name="id_comarca" id="ic_comarca_crud" placeholder="<?= lang('tipus.escriu_id_comarca') ?>" required>
+                        </div>
+                        <div class="col-3 mt-4 d">
+                            <button type="submit" class="btn btn-success rounded-pill"><i class="fa-solid fa-plus"></i> <?= lang('tipus.afegir_poblacio') ?></button>
+                        </div>
+                    </div>
+                </form>
+
+            <?php elseif($tipus_pantalla == "comarca"): ?>
+
+                <div>
+                    <?php if ((session()->get('comarca_buit')) !== null) : ?>
+                        <div class="alert alert-warning alerta_esborrar" role="alert">
+                            <?= session()->get('comarca_buit') ?>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ((session()->get('comarca_existeix')) !== null) : ?>
+                        <div class="alert alert-warning alerta_esborrar" role="alert">
+                            <?= session()->get('comarca_existeix') ?>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ((session()->get('comarca_desactivat')) !== null) : ?>
+                        <div class="alert alert-danger alerta_esborrar" role="alert">
+                            <?= session()->get('comarca_desactivat') ?>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ((session()->get('comarca_esborrat')) !== null) : ?>
+                        <div class="alert alert-danger alerta_esborrar" role="alert">
+                            <?= session()->get('comarca_esborrat') ?>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ((session()->get('comarca_creat')) !== null) : ?>
+                        <div class="alert alert-success alerta_esborrar" role="alert">
+                            <?= session()->get('comarca_creat') ?>
+                        </div>
+                    <?php endif; ?>
+                    <?php if ((session()->get('comarca_activat')) !== null) : ?>
+                        <div class="alert alert-success alerta_esborrar" role="alert">
+                            <?= session()->get('comarca_activat') ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
+
+                <div class="row border mt-4 ms-1 me-0 pe-0 ps-0">
+                    <div class="row form_header p-3 ms-0">
+                        
+                    </div>
+                </div>
+
+                <form method="POST" action="/tipus/comarca/afegir" enctype="multipart/form-data">
+                    <?= csrf_field() ?>
+                    <div class="row">
+                        <div class="col-3 mt-4">
+                            <input type="number" min="0" class="form-control" name="id_comarca" id="id_comarca_crud" placeholder="<?= lang('tipus.escriu_id_comarca') ?>" required>
+                        </div>
+                        <div class="col-6 mt-4">
+                            <input type="text" class="form-control" name="nom_comarca" id="nom_comarca_crud" placeholder="<?= lang('tipus.escriu_nom_comarca') ?>" required>
+                        </div>
+                        <div class="col-3 mt-4 d">
+                            <button type="submit" class="btn btn-success rounded-pill"><i class="fa-solid fa-plus"></i> <?= lang('tipus.afegir_comarca') ?></button>
+                        </div>
+                    </div>
+                </form>
 
             <?php endif; ?>
 

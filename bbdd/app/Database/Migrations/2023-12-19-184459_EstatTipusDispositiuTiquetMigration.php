@@ -41,7 +41,13 @@ class EstatTipusDispositiuTiquetMigration extends Migration
             'nom_tipus_dispositiu' =>[
                 'type' => 'VARCHAR',
                 'constraint' => '32',
-            ]
+            ],
+            'actiu'       => [
+                'type'       => 'TINYINT',
+                'constraint' => 2,
+                'null'          => false,
+                'default' => '1',
+            ],
         ]);
         $this->forge->addKey('id_tipus_dispositiu', true);
         $this->forge->createTable('tipus_dispositiu');
