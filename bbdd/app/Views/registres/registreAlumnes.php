@@ -104,6 +104,11 @@
                             <i class="fa-solid fa-users"></i>
                         </a>
                     </li>
+                    <li class="nav-item" title="<?= lang("registre.professors") ?>">
+                        <a href="<?= base_url("/professor") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.professors") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                            <i class="fa-solid fa-person-chalkboard"></i>
+                        </a>
+                    </li>
                     <?php if ($role == 'desenvolupador') : ?>
                     <li class="nav-item" title="<?= lang("registre.tipus") ?>">
                         <a href="<?= base_url("/tipus/dispositiu") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.tipus") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">

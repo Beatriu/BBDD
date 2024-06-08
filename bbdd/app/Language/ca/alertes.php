@@ -61,4 +61,9 @@ return [
     'comarca_activat' => "La comarca ha estat reactivada correctament",
     'no_existeix_comarca' => "La comarca introduïda no existeix!",
     'no_existeix_sstt' => "El servei territorial introduït no existeix!",
+    'centre_no_existeix' => "El centre seleccionat no existeix!",
+    'llista_admesos_buit' => "No has omplert el camp",
+    'llista_admesos_existeix' => "Aquest/a professor/a ja existeix!",
+    'llista_admesos_esborrat' => "El/la professor/a ha estat esborrat/da",
+    'llista_admesos_creat' => "El/la professor/a ha estat creat/da correctament",
 ];

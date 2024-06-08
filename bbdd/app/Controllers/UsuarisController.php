@@ -357,7 +357,13 @@ class UsuarisController extends BaseController
                 $session_data['role'] = "professor";
                 $rol = $rol_model->obtenirIdRol("professor");
                 $llista_admesos_model->addLlistaAdmesos($correu, date("Y-m-d H:i:s"), $codi_centre);
-                $professor_model->addProfessor($id_xtec, $nom, $cognoms, $correu, $codi_centre);
+
+                if ($professor_model->obtenirProfessor($correu) == null) {
+                    $professor_model->addProfessor($id_xtec, $nom, $cognoms, $correu, $codi_centre);
+                } else {
+                    $professor_model->editarProfessorNomCognomsCodiCentre($id_xtec, $nom, $cognoms, $codi_centre);
+                }
+
                 $login_model->addLogin($correu, null);
                 $id_login = $login_model->obtenirId($correu);
                 $login_in_rol_model->addLoginInRol($id_login, $rol);

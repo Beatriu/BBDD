@@ -50,4 +50,14 @@ class LlistaAdmesosModel extends Model
     public function existeixProfessor($correu_professor) {
         return $this->where('correu_professor', $correu_professor)->first();
     }
+
+    public function esborrarLlistaAdmesos($correu_professor)
+    {
+        return $this->delete($correu_professor);
+    }
+
+    public function obtenirLlistaAdmesos()
+    {
+        return $this->findAll();
+    }
 }

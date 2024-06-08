@@ -129,5 +129,12 @@ $routes->post('/tipus/comarca/afegir', 'ComarcaController::crearComarca_post', [
 $routes->get('/tipus/comarca/desactivar/(:segment)', 'ComarcaController::registreComarca/$1', ['filter'=>'Autentica']);
 $routes->get('/eliminarComarca/(:segment)', 'ComarcaController::desactivarComarca/$1', ['filter'=>'Autentica']);
 
+// Professors
+$routes->get('/professor', 'LlistaAdmesosController::registreLlistaAdmesos', ['filter'=>'Autentica']);
+$routes->post('/professor/afegir', 'LlistaAdmesosController::crearLlistaAdmesos_post', ['filter'=>'Autentica']);
+$routes->get('/professor/desactivar/(:segment)', 'LlistaAdmesosController::registreLlistaAdmesos/$1', ['filter'=>'Autentica']);
+$routes->get('/eliminarProfessor/(:segment)', 'LlistaAdmesosController::desactivarLlistaAdmesos/$1', ['filter'=>'Autentica']);
+$routes->get('/eliminarTotsProfessors', 'LlistaAdmesosController::desactivarTotsLlistaAdmesos', ['filter'=>'Autentica']);
+
 //CENTRES
 $routes->get('/centres', 'CentresController::registreCentres', ['filter'=>'Autentica']);
