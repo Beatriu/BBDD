@@ -66,4 +66,5 @@ return [
     'llista_admesos_existeix' => "Este/a profesor/a ja existeix!",
     'llista_admesos_esborrat' => "El/la profesor/a se ha eliminado",
     'llista_admesos_creat' => "El/la profesor/a se ha creado correctamente",
+    'nota_formulari_editar_alumne' => "<b>NOTA:</b> Si quereis editar cualquier campo del alumno tendreis que inserir la contraseña que tiene o poner una de nueva."
 ];

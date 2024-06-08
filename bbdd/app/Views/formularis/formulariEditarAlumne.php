@@ -22,7 +22,7 @@
                         <h5 class="modal-title"><?= lang('alumne.alerta') ?></h5>
                     </div>
                     <div>
-                        <a href="<?= base_url("/alumnes/editar/" . $correu_editar) ?>">
+                        <a href="<?= base_url("/alumnes/editar/$correu_editar") ?>">
                             <i class="fa-solid fa-xmark"></i>
                         </a>
                     </div>
@@ -46,7 +46,9 @@
             <h1><?= lang('alumne.formulari_alumne') ?></h1>
         </div>
     </div>
-
+    <div>
+        <p><?= lang('alertes.nota_formulari_editar_alumne')?></p>
+    </div>
     <div class="row border mt-4 me-0 pe-0 ps-0">
         <div class="row form_header pt-2 pb-2 ps-3 pe-3 ms-0">
         </div>
