@@ -77,8 +77,11 @@
         <!--Constrasenya-->
         <div class="col">
             <label for="contrasenya_alumne" class="form-label"><?= lang('alumne.contrasenya') ?> *</label>
-            <input type="password" class="form-control" name="contrasenya_alumne" id="contrasenya_alumne" placeholder="<?= lang('alumne.contrasenya') ?>" required>
-            <button type="button" id="pass_button" onclick=""><i class="fa-solid fa-eye"></i></button>
+            <div class="row mb-3 px-2">
+                <input type="password" class="form-control" name="contrasenya_alumne" id="contrasenya_alumne" placeholder="<?= lang('alumne.contrasenya') ?>" required>
+                <button type="button" id="pass_button" onclick="veure_pass()"><i class="fa-solid fa-eye"></i></button>
+                <button type="button" id="random_pass_button" onclick="generar_pass()" class="btn rounded-pill ms-3 me-3" data-toggle="tooltip" data-bs-placement="right" title="<?= lang('alumne.generate_pass') ?>"><i class="fa-solid fa-shuffle"></i></button>
+            </div>
         </div>
 
         <?php if ($role == "admin_sstt" || $role == "desenvolupador") : ?>
@@ -102,21 +105,42 @@
             <button id="submit_afegir" type="submit" class="btn btn_save rounded-pill ms-3 me-3"><i class="fa-solid fa-floppy-disk me-2"></i><?= lang('alumne.save_alumne') ?></button>
         </div>
     </div>
-
 </form>
 <script>
-    (function(window, document, undefined) {
-        window.onload = init;
+    $(document).ready(function() {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
 
-        function init() {
-            var button = document.getElementById("pass_button");
-            var input = document.getElementById("contrasenya_alumne");
-            
-            var input_width = input.clientWidth;
-            var button_width = button.clientWidth;
-            input.style = "width: calc(" + input_width + " - " + button_width + ");";
+    function veure_pass() {
+        var input = document.getElementById("contrasenya_alumne");
+        input.type = "text";
+        var boto = document.getElementById("pass_button");
+        boto.innerText = '';
+        boto.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
+        boto.onclick = function() {censurar_pass()};
+    }
+
+    function censurar_pass(){
+        var input = document.getElementById("contrasenya_alumne");
+        input.type = "password";
+        var boto = document.getElementById("pass_button");
+        boto.innerText = '';
+        boto.innerHTML = '<i class="fa-solid fa-eye"></i>';
+        boto.onclick = function()  {veure_pass()};
+    }
+
+    function generar_pass() {
+        let result = '';
+        var caracters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890?!*';
+        var longitud = 10;
+        for (let index = 0; index < longitud; index++) {
+            const random = Math.floor(Math.random() * caracters.length);
+            result += caracters[random];
         }
+        var input = document.getElementById("contrasenya_alumne");
+        input.value = '';
+        input.value = result;
+    }
 
-    })(window, document, undefined);
 </script>
 <?= $this->endSection('contingut'); ?>

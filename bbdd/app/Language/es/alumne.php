@@ -27,4 +27,5 @@ return [
     'congoms_alumne' => 'Apellidos alumno',
     'contrasenya' => 'Contraseña',
     'centre_no_taller' => 'El centro no es reparador!',
+    'generate_pass' => 'Genera una contraseña aleatoria!'
 ];

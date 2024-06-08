@@ -37,3 +37,27 @@ input {
 .alerta_esborrar{
     width: 400px;
 }
+#contrasenya_alumne{
+    width: calc(100% - 50px - 68px);
+    border-radius: 5px 0px 0px 5px;
+}
+#pass_button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 33.2px;
+    border: 0.5px solid #DEE2E6;
+    border-left: none;
+    border-radius: 0px 5px 5px 0px;
+    color: #38B6FF;
+}
+#random_pass_button{
+    width: 50px;
+    background-color: #8C52FF;
+    color: #F5F5F5;
+}
+#random_pass_button:hover{
+    background-color: #F5F5F5; 
+    color: #333333;
+    margin: 0;
+}
