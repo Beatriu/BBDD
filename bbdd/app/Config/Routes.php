@@ -138,5 +138,7 @@ $routes->get('/eliminarTotsProfessors', 'LlistaAdmesosController::desactivarTots
 
 //CENTRES
 $routes->get('/centres', 'CentresController::registreCentres', ['filter'=>'Autentica']);
+$routes->post('/centres/afegir', 'CentresController::crear_centre_post', ['filter'=>'Autentica']);
+$routes->get('/formulariCentre', 'CentresController::crear_centre', ['filter'=>'Autentica']);
 /*$routes->get('/centres/desactivar/(:segment)');
 $routes->get('/eliminarCentre/(:segment)');*/

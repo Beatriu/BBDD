@@ -64,7 +64,7 @@
                 </div>
                 <div id="botons_titol">
                     <button class="btn" id="btn-filter" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar_desplegable" aria-controls="sidebar_desplegable"><i class="fa-solid fa-filter"></i> <?= lang("registre.buttons.filter") ?></button></button>
-                    <a href="<?= base_url("/formulariTiquet") ?>" class="btn" id="btn-create"><i class="fa-solid fa-circle-plus"></i> <?= lang("registre.buttons.create") ?></a>
+                    <a href="<?= base_url("/formulariCentre") ?>" class="btn" id="btn-create"><i class="fa-solid fa-circle-plus"></i> <?= lang("centre.buttons.create") ?></a>
                 </div>
             </div>
             <!--Filtres activats-->

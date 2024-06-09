@@ -114,6 +114,7 @@ SELECT
         ELSE 'No'
     END AS taller,
     c.telefon_centre,
+    c.adreca_fisica_centre,
     c.nom_persona_contacte_centre,
     c.correu_persona_contacte_centre,
     c.id_sstt,

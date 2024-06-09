@@ -226,7 +226,6 @@ class AlumnesController extends BaseController
         $data['role'] = $role;
 
         if ($role == "professor") {
-
             return view('formularis' . DIRECTORY_SEPARATOR . 'formulariAfegirAlumne', $data);
         } else if ($role == "admin_sstt") {
 

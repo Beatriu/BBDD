@@ -66,4 +66,6 @@ return [
     'llista_admesos_existeix' => "Aquest/a professor/a ja existeix!",
     'llista_admesos_esborrat' => "El/la professor/a ha estat esborrat/da",
     'llista_admesos_creat' => "El/la professor/a ha estat creat/da correctament",
+    'centre_existeix' => "Aquest codi de centre ja està en ús!",
+    'centre_camps_requerits' => "Falta omplir alguns dels camps requerits!"
 ];
