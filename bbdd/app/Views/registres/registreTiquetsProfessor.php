@@ -124,11 +124,20 @@
                     </div>
                     <div class="data_creacio_div px-3">
                         <br>
-                        <h5><?= lang('registre.title_div_data_creacio') ?></h5>
-                        <?php if (isset($session_filtre['data_creacio'])) : ?>
-                            <input type="date" name="data_creacio" id="data_creacio" class="form-control" value="<?= old('data_creacio') ?>" />
+                        <h5><?= lang('registre.title_div_data_inici') ?></h5>
+                        <?php if (isset($session_filtre['data_creacio_inici'])) : ?>
+                            <input type="date" onchange="afegirValor()" name="data_creacio_inici" id="data_creacio_inici" class="form-control" value="<?= old('data_creacio_inici') ?>" />
                         <?php else : ?>
-                            <input type="date" name="data_creacio" id="data_creacio" class="form-control" />
+                            <input type="date" onchange="afegirValor()" name="data_creacio_inici" id="data_creacio_inici" class="form-control" />
+                        <?php endif; ?>
+                    </div>
+                    <div class="data_creacio_fi_div px-3">
+                        <br>
+                        <h5><?= lang('registre.title_div_data_fi') ?></h5>
+                        <?php if (isset($session_filtre['data_creacio_fi'])) : ?>
+                            <input type="date" name="data_creacio_fi" id="data_creacio_fi" class="form-control" value="<?= old('data_creacio_fi') ?>" />
+                        <?php else : ?>
+                            <input type="date" name="data_creacio_fi" id="data_creacio_fi" class="form-control" />
                         <?php endif; ?>
                     </div>
                     <div class="botons_filtre d-flex">
@@ -189,9 +198,9 @@
                                     <span class="badge bg-light text-dark etiqueta"><?= lang('registre.title_filtre_checkbox_centre_emissor') ?> <i class="fa-solid fa-arrow-right"></i> <?= $centre_emissor_escollit['nom_centre'] ?><button type="button" onclick="enviar('Centre_emissor')" class="btn-close btn_etiqueta" aria-label="Close"></button></span>
                                 </div>
                             <?php endif; ?>
-                            <?php if (isset($session_filtre['data_creacio'])) : ?>
+                            <?php if (isset($session_filtre['data_creacio_inici']) && isset($session_filtre['data_creacio_fi'])) : ?>
                                 <div class="col px-0 form-check form-check-inline">
-                                    <span class="badge bg-light text-dark etiqueta"><?= lang('registre.title_filtre_checkbox_data') ?> <i class="fa-solid fa-arrow-right"></i> <?= $session_filtre['data_creacio'][0] ?> <button type="button" onclick="enviar('data_creacio')" class="btn-close btn_etiqueta" aria-label="Close"></button></span>
+                                    <span class="badge bg-light text-dark etiqueta"><?= lang('registre.title_filtre_checkbox_data') ?> <i class="fa-solid fa-arrow-right"></i> <?= $session_filtre['data_creacio_inici'][0] ?> , <?= $session_filtre['data_creacio_fi'][0] ?> <button type="button" onclick="enviar('data_creacio_inici')" class="btn-close btn_etiqueta" aria-label="Close"></button></span>
                                 </div>
                             <?php endif; ?>
                         </div>
@@ -271,6 +280,13 @@
         }
 
     })(window, document, undefined);
+
+    function afegirValor(){
+        //Inputs date
+        var data_inici = document.getElementById("data_creacio_inici");
+        var data_fi = document.getElementById("data_creacio_fi");
+        data_fi.value = data_inici.value;
+    }
 </script>
 <script>
     function enviar(x) {

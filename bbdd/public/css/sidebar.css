@@ -10,6 +10,8 @@
 }
 #titol{
     text-align: center;
+    margin-top: -30px;
+    padding-top: 0;
 }
 #buscador{
     margin-top: 20px;
