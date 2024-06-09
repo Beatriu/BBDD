@@ -161,7 +161,7 @@
             </div>
             <?php if ($grafic != null || $grafic2 != null): ?>
                 <div class="row mt-4">
-                    <div class="col mb-3 d-flex align-items-middle" style="max-width: 90%; max-height: 400px;">
+                    <div class="col mb-3 d-flex align-items-middle" style="max-width: 100%; max-height: 400px;">
                         <canvas id="myChart"></canvas>
                     </div>
                 </div>
@@ -232,7 +232,7 @@
                 label: '<?= $grafic2['title'] ?>',
                 data: [<?= $grafic2['dades'] ?>],
                 fill: false,
-                borderColor: 'rgb(75, 192, 192)',
+                borderColor: 'rgb(144, 0, 0)',
                 tension: 0.1
             }]
             },
