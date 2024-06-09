@@ -45,6 +45,7 @@ class CentresController extends BaseController
                 'css-bootstrap',
             ]);
             $crud->addItemLink('edit', 'fa-pencil', base_url('/tiquets/editar'), 'Editar Tiquet');
+            $crud->addItemLink('view', 'fa-eye', base_url('/centres/filtre'), 'Veure Tiquet');
 
             $crud->setColumns([
                 'codi_centre',
@@ -242,5 +243,32 @@ class CentresController extends BaseController
             session()->setFlashdata('afegirCentre_requerits', $msg);
             return redirect()->back()->withInput();
         }
+    }
+
+    public function filtrar_centre($codi_centre){
+        $filtre_session = session()->get('filtres');
+        $session = session();
+
+        if($filtre_session !== null){
+            session()->remove('filtres');
+        } else {
+            $filtres = [];
+            $session->set('filtres', $filtres);
+        }
+
+        $model_centre = new CentreModel();
+        $centre = $model_centre->obtenirCentre($codi_centre);
+
+        if($centre['taller'] == false){
+            $array_centre_emissor = [];
+            array_push($array_centre_emissor, $codi_centre);
+            $session->push('filtres', ['nom_centre_emissor' => $array_centre_emissor]);
+        } else {
+            $array_centre_reparador = [];
+            array_push($array_centre_reparador, $codi_centre);
+            $session->push('filtres', ['nom_centre_reparador' => $array_centre_reparador]);
+        }
+        
+        return redirect()->to('tiquets');
     }
 }

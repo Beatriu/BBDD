@@ -146,5 +146,6 @@ $routes->post('/dades/visualitzar', 'DadesController::visualitzarDades', ['filte
 $routes->get('/centres', 'CentresController::registreCentres', ['filter'=>'Autentica']);
 $routes->post('/centres/afegir', 'CentresController::crear_centre_post', ['filter'=>'Autentica']);
 $routes->get('/formulariCentre', 'CentresController::crear_centre', ['filter'=>'Autentica']);
+$routes->get('/centres/filtre/(:any)', 'CentresController::filtrar_centre/$1', ['filter'=>'Autentica']);
 /*$routes->get('/centres/desactivar/(:segment)');
 $routes->get('/eliminarCentre/(:segment)');*/
