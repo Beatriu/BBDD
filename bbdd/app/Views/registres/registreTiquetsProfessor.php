@@ -101,19 +101,19 @@
                             <?= $tipus_dispositius ?>
                         </select>
                     </div>
-                    <?php if($repoemi !== 'emissor'): ?>
-                    <div class="nom_centre_emissor_div px-3">
-                        <br>
-                        <h5><?= lang('registre.title_div_nom_centre_emissor') ?></h5>
-                        <?php if (isset($session_filtre['nom_centre_emissor'])) : ?>
-                            <input list="nom_centre_emissor" name="nom_centre_emissor_list" class="form-select selector_filtre" value="<?= old('nom_centre_emissor_list') ?>" />
-                        <?php else : ?>
-                            <input list="nom_centre_emissor" name="nom_centre_emissor_list" class="form-select selector_filtre" />
-                        <?php endif; ?>
-                        <datalist id="nom_centre_emissor">
-                            <?= $centre_emissor ?>
-                        </datalist>
-                    </div>
+                    <?php if ($repoemi !== 'emissor') : ?>
+                        <div class="nom_centre_emissor_div px-3">
+                            <br>
+                            <h5><?= lang('registre.title_div_nom_centre_emissor') ?></h5>
+                            <?php if (isset($session_filtre['nom_centre_emissor'])) : ?>
+                                <input list="nom_centre_emissor" name="nom_centre_emissor_list" class="form-select selector_filtre" value="<?= old('nom_centre_emissor_list') ?>" />
+                            <?php else : ?>
+                                <input list="nom_centre_emissor" name="nom_centre_emissor_list" class="form-select selector_filtre" />
+                            <?php endif; ?>
+                            <datalist id="nom_centre_emissor">
+                                <?= $centre_emissor ?>
+                            </datalist>
+                        </div>
                     <?php endif; ?>
                     <div class="estat_div px-3">
                         <br>
@@ -151,7 +151,9 @@
                     <?php endif; ?>
                 </div>
                 <div id="botons_titol">
+                    <?php if($uri !== 'tiquets/emissor'): ?>
                     <button class="btn" id="btn-filter" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar_desplegable" aria-controls="sidebar_desplegable"><i class="fa-solid fa-filter"></i> <?= lang("registre.buttons.filter") ?></button>
+                    <?php endif;?>
                     <a href="<?= base_url("/formulariTiquet") ?>" class="btn" id="btn-create"><i class="fa-solid fa-circle-plus"></i> <?= lang("registre.buttons.create") ?></a>
                 </div>
             </div>
@@ -182,7 +184,7 @@
                                     <span class="badge bg-light text-dark etiqueta"><?= lang('registre.title_filtre_checkbox_estat') ?> <i class="fa-solid fa-arrow-right"></i> <?= $estat_escollit ?> <button type="button" onclick="enviar('Estat')" class="btn-close btn_etiqueta" aria-label="Close"></button></span>
                                 </div>
                             <?php endif; ?>
-                            <?php if (isset($session_filtre['nom_centre_emissor']) ) : ?>
+                            <?php if (isset($session_filtre['nom_centre_emissor'])) : ?>
                                 <div class="col px-0 form-check form-check-inline">
                                     <span class="badge bg-light text-dark etiqueta"><?= lang('registre.title_filtre_checkbox_centre_emissor') ?> <i class="fa-solid fa-arrow-right"></i> <?= $centre_emissor_escollit['nom_centre'] ?><button type="button" onclick="enviar('Centre_emissor')" class="btn-close btn_etiqueta" aria-label="Close"></button></span>
                                 </div>
