@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Database\Seeds\AfegirTiquetSeeder;
 use App\Models\CentreModel;
+use App\Models\ComarcaModel;
 use App\Models\PoblacioModel;
 use App\Models\TiquetModel;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -15,12 +16,16 @@ class CentresController extends BaseController
     public function registreCentres()
     {
         $role = session()->get('user_data')['role'];
+        $session_filtre = session()->get('filtresCentres');
+        $data['session_filtre'] = $session_filtre;
+
         if ($role == 'sstt' || $role == 'admin_sstt' || $role == 'desenvolupador') {
 
             $actor = session()->get('user_data');
             $data['role'] = $role;
             $data['title'] = lang('registre.titol_centres');
-
+            $data['poblacio'] = $this->selectorPoblacio($role, $actor);
+            $data['comarca'] = $this->selectorComarca($role, $actor);
 
             $crud = new KpaCrud();
             $crud->setConfig('onlyView');
@@ -101,6 +106,42 @@ class CentresController extends BaseController
 
             if ($role == 'sstt' || $role == 'admin_sstt') {
                 $crud->addWhere('id_sstt', $actor['id_sstt']);
+            }
+
+            if (is_array($session_filtre)) {
+                
+                if (isset($session_filtre['actiu'])) {
+                    if($session_filtre['actiu'][0] == 'actiu'){
+                        $crud->addWhere('actiu', "Si", true);
+                        $data['actiu'] = $session_filtre['actiu'][0];
+                    } else {
+                        $crud->addWhere('actiu', "No", true);
+                        $data['actiu'] = lang('registre.radio_innactiu');
+                    }
+                    
+                }
+                if (isset($session_filtre['taller'])) {
+                    if($session_filtre['taller'][0] == 'taller'){
+                        $crud->addWhere('taller', "Si", true);
+                        $data['taller'] = $session_filtre['taller'][0];
+                    } else {
+                        $crud->addWhere('taller', "No", true);
+                        $data['taller'] = lang('registre.radio_no_taller');
+                    }
+                }
+                if (isset($session_filtre['nom_poblacio'])) {
+                    $model_poblacio = new PoblacioModel();
+                    $poblacio_escollida = $model_poblacio->getPoblacio($session_filtre['nom_poblacio'][0], true);
+                    $data['poblacio_escollida'] = $poblacio_escollida['nom_poblacio'];
+                    $crud->addWhere('id_poblacio', $poblacio_escollida['id_poblacio'], true);
+                }
+                if (isset($session_filtre['nom_comarca'])) {
+                    $model_comarca = new ComarcaModel();
+                    $comarca_escollida = $model_comarca->obtenirComarca($session_filtre['nom_comarca'][0], true);
+                    $data['comarca_escollida'] = $comarca_escollida['nom_comarca'];
+
+                    $crud->addWhere('id_comarca', $comarca_escollida['id_comarca'], true);
+                }
             }
 
             $data['output'] = $crud->render();
@@ -328,7 +369,7 @@ class CentresController extends BaseController
             $tiquets_emissor = $tiquets_model->getTiquetByCodiCentreEmissor($codi_centre);
             $suma_tiquets = count($tiquets_emissor) + count($tiquets_reparador);
 
-            if($suma_tiquets == 0){
+            if ($suma_tiquets == 0) {
                 $data['es_editable'] = true;
             } else {
                 $data['es_editable'] = false;
@@ -383,7 +424,7 @@ class CentresController extends BaseController
                 ],
             ],
         ];
-        
+
         if ($this->validate($validationRules)) {
 
             $codi_centre_i_nom = $this->request->getPost('codi_centre');
@@ -415,7 +456,8 @@ class CentresController extends BaseController
             $centre = $model_centre->obtenirCentre($codi_centre);
             $codi_centre_antic = session()->getFlashdata('codi_centre');
 
-            if($codi_centre_antic == $codi_centre){
+            if ($codi_centre_antic == $codi_centre) {
+
                 $data = [
                     'nom_centre' => $nom_centre,
                     'actiu' => $activitat_centre,
@@ -427,7 +469,7 @@ class CentresController extends BaseController
                     'id_sstt' => $poblacio['id_sstt'],
                     'id_poblacio' => $codi_poblacio
                 ];
-    
+
                 $model_centre->editar_centre($codi_centre, $data);
             } else {
 
@@ -443,10 +485,10 @@ class CentresController extends BaseController
                     'id_sstt' => $poblacio['id_sstt'],
                     'id_poblacio' => $codi_poblacio
                 ];
-    
+
                 $model_centre->editar_centre($codi_centre_antic, $data);
             }
-            
+
 
             $msg = lang('alertes.update_centre') . '<b>' . $codi_centre . " - " . $nom_centre . '</b>';
             session()->setFlashdata('editarCentre', $msg);
@@ -454,6 +496,143 @@ class CentresController extends BaseController
         } else {
             return redirect()->back()->withInput();
         }
+    }
 
+    public function selectorPoblacio($role, $actor)
+    {
+        $poblacio_model = new PoblacioModel();
+        $array_poblacions = $poblacio_model->obtenirPoblacions();
+        $options_poblacions = "";
+
+        for ($i = 0; $i < sizeof($array_poblacions); $i++) {
+            if (($role == 'sstt' || $role == 'admin_sstt') && $actor['id_sstt'] == $array_poblacions[$i]['id_sstt']) {
+                if ($array_poblacions[$i]['actiu'] == "1") {
+                    $options_poblacions .= "<option value=\"" . $array_poblacions[$i]['id_poblacio'] . " - " . $array_poblacions[$i]['nom_poblacio'] . "\">";
+                    $options_poblacions .= $array_poblacions[$i]['nom_poblacio'];
+                    $options_poblacions .= "</option>";
+                }
+            } else if ($role == 'desenvolupador') {
+                if ($array_poblacions[$i]['actiu'] == "1") {
+                    $options_poblacions .= "<option value=\"" . $array_poblacions[$i]['id_poblacio'] . " - " . $array_poblacions[$i]['nom_poblacio'] . "\">";
+                    $options_poblacions .= $array_poblacions[$i]['nom_poblacio'];
+                    $options_poblacions .= "</option>";
+                }
+            }
+        }
+
+        return $options_poblacions;
+    }
+
+    public function selectorComarca($role, $actor)
+    {
+        $comarca_model = new ComarcaModel();
+        $array_comarques = $comarca_model->obtenirComarques();
+        $options_comarques = "";
+
+        for ($i = 0; $i < sizeof($array_comarques); $i++) {
+
+            if ($array_comarques[$i]['actiu'] == "1") {
+                $options_comarques .= "<option value=\"" . $array_comarques[$i]['id_comarca'] . " - " . $array_comarques[$i]['nom_comarca'] . "\">";
+                $options_comarques .= $array_comarques[$i]['nom_comarca'];
+                $options_comarques .= "</option>";
+            }
+        }
+
+        return $options_comarques;
+    }
+
+    public function filtrePost()
+    {
+        $poblacio_model = new PoblacioModel();
+        $comarca_model = new ComarcaModel();
+
+        $session = session();
+        $sessio_filtres = $session->get('filtresCentres');
+
+        $eliminar = $this->request->getPost('submit_eliminar_filtres');
+
+        if ($eliminar !== null) {
+            $session->remove('filtresCentres');
+        } else {
+
+            if ($sessio_filtres == null) {
+                $filtres = [];
+                $session->set('filtresCentres', $filtres);
+            }
+
+            $dades = $this->request->getPost();
+            
+            if ($dades['radio_actiu'] !== 'actiu_i_innactiu') {
+                $array_actiu = [];
+                $actiu = $dades['radio_actiu'];      
+                array_push($array_actiu, $actiu);
+                $session->push('filtresCentres', ['actiu' => $array_actiu]);
+            }
+            if ($dades['radio_taller'] !== 'taller_i_no_taller') {
+                $array_taller = [];
+                $taller = $dades['radio_taller'];
+                array_push($array_taller, $taller);
+                $session->push('filtresCentres', ['taller' => $array_taller]);
+            }
+            if (isset($dades['nom_poblacio_list']) && $dades['nom_poblacio_list'] !== '') {
+
+                $array_poblacio = [];
+                $nom_poblacio = $dades['nom_poblacio_list'];
+                $poblacio = trim(explode('-', (string) $nom_poblacio)[0]);
+
+                if ($poblacio != null && $poblacio_model->getPoblacio($poblacio) == null) {
+                    $msg = lang("alertes.filter_error_poblacio");
+                    session()->setFlashdata("escriure_malament_filtre", $msg);
+                    return redirect()->back()->withInput();
+                }
+
+                array_push($array_poblacio, $poblacio);
+                $session->push('filtresCentres', ['nom_poblacio' => $array_poblacio]);
+            }
+            if (isset($dades['nom_comarca_list']) && $dades['nom_comarca_list'] !== '') {
+
+                $array_comarca = [];
+                $nom_comarca = $dades['nom_comarca_list'];
+                $comarca = trim(explode('-', (string) $nom_comarca)[0]);
+
+                if ($comarca != null && $comarca_model->obtenirComarca($comarca) == null) {
+                    $msg = lang("alertes.filter_error_comarca");
+                    session()->setFlashdata("escriure_malament_filtre", $msg);
+                    return redirect()->back()->withInput();
+                }
+
+                array_push($array_comarca, $comarca);
+                $session->push('filtresCentres', ['nom_comarca' => $array_comarca]);
+            }
+        }
+        return redirect()->back()->withInput();
+    }
+
+    public function eliminarFiltre()
+    {
+        $filtre_eliminar = $this->request->getPost();
+        $filtre_session = session()->get('filtresCentres');
+        $eliminar = $this->request->getPost('submit_eliminar_filtres');
+
+        if ($eliminar !== null) {
+            session()->remove('filtresCentres');
+        }
+        if ($filtre_eliminar['operacio'] === 'Actiu') {
+            unset($filtre_session['actiu']);
+            session()->set('filtresCentres', $filtre_session);
+        }
+        if ($filtre_eliminar['operacio'] === 'Taller') {
+            unset($filtre_session['taller']);
+            session()->set('filtresCentres', $filtre_session);
+        }
+        if ($filtre_eliminar['operacio'] == 'Poblacio') {
+            unset($filtre_session['nom_poblacio']);
+            session()->set('filtresCentres', $filtre_session);
+        }
+        if ($filtre_eliminar['operacio'] == 'Comarca') {
+            unset($filtre_session['nom_comarca']);
+            session()->set('filtresCentres', $filtre_session);
+        }
+        return redirect()->back();
     }
 }

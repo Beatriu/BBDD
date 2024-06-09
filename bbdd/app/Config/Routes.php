@@ -149,5 +149,7 @@ $routes->get('/formulariCentre', 'CentresController::crear_centre', ['filter'=>'
 $routes->get('/centres/filtre/(:any)', 'CentresController::filtrar_centre/$1', ['filter'=>'Autentica']);
 $routes->get('/centres/editar/(:any)', 'CentresController::editar_centre/$1', ['filter'=>'Autentica']);
 $routes->post('/centres/editar', 'CentresController::editar_centre_post', ['filter'=>'Autentica']);
-/*$routes->get('/centres/desactivar/(:segment)');
-$routes->get('/eliminarCentre/(:segment)');*/
+
+//Filtre CENTRES
+$routes->post('/filtreCentres', 'CentresController::filtrePost', ['filter'=>'Autentica']);
+$routes->post('/eliminarFiltreCentres', 'CentresController::eliminarFiltre', ['filter'=>'Autentica']);

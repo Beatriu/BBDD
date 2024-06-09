@@ -58,4 +58,11 @@ return [
     'centres' => 'Centres',
     'titol_centres' => 'Registre centres',
     'dades' => 'Dades',
+    'title_filtre_actiu' => 'Actius:',
+    'title_filtre_taller' => 'Tallers:',
+    'radio_actiu' => 'Actius',
+    'radio_innactiu' => 'No actius',
+    'ambdues_opcions' => 'Amdues opcions',
+    'radio_taller' => 'Tallers',
+    'radio_no_taller' => 'No tallers'
 ];
