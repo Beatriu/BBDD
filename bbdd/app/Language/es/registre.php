@@ -56,5 +56,6 @@ return [
     'professors' => 'Profesores',
     'tipus' => 'Tipos',
     'centres' => 'Centros',
-    'titol_centres' => 'Registro centros'
+    'titol_centres' => 'Registro centros',
+    'dades' => 'Datos',
 ];

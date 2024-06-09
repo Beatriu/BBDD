@@ -67,4 +67,5 @@ return [
     'esborrar_tots_professors' => "Esborrar tots",
     'llista_admesos_tots_model_title' => 'Vols eliminar TOTS/ES els/les professors/es?',
     'llista_admesos_tots_model_text' => 'Estàs segur que vols eliminar tots/es els/les professors/es?',
+    'professors' => "Professors/es",
 ];

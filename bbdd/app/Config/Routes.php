@@ -136,6 +136,12 @@ $routes->get('/professor/desactivar/(:segment)', 'LlistaAdmesosController::regis
 $routes->get('/eliminarProfessor/(:segment)', 'LlistaAdmesosController::desactivarLlistaAdmesos/$1', ['filter'=>'Autentica']);
 $routes->get('/eliminarTotsProfessors', 'LlistaAdmesosController::desactivarTotsLlistaAdmesos', ['filter'=>'Autentica']);
 
+// DADES
+$routes->get('/dades', 'DadesController::registreDades', ['filter'=>'Autentica']);
+$routes->post('/dades/descarregar', 'DadesController::descarregarDades', ['filter'=>'Autentica']);
+$routes->post('/dades/visualitzar', 'DadesController::visualitzarDades', ['filter'=>'Autentica']);
+
+
 //CENTRES
 $routes->get('/centres', 'CentresController::registreCentres', ['filter'=>'Autentica']);
 $routes->post('/centres/afegir', 'CentresController::crear_centre_post', ['filter'=>'Autentica']);

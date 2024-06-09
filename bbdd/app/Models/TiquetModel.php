@@ -87,4 +87,81 @@ class TiquetModel extends Model
         return $this->where('id_tipus_dispositiu', $id_tipus_dispositiu)->findAll();
     }
 
+
+
+    public function countNombreDispositiusTotsEstatsSenseTipus()
+    {
+        return $this->select('codi_centre_reparador')->selectCount('id_tiquet','num_tiquets')->where('id_estat',9)->orWhere('id_estat',10)->orWhere('id_estat',11)->groupBy('codi_centre_reparador')->findAll();
+    }
+    public function countNombreDispositiusTotsEstatsSenseTipusSSTT()
+    {
+        return $this->select('id_sstt')->selectCount('id_tiquet','num_tiquets')->where('id_estat',9)->orWhere('id_estat',10)->orWhere('id_estat',11)->groupBy('id_sstt')->findAll();
+    }
+    public function countNombreDispositiusTotsEstatsSenseTipusTOTAL()
+    {
+        return $this->selectCount('id_tiquet','num_tiquets')->where('id_estat',9)->orWhere('id_estat',10)->orWhere('id_estat',11)->findAll();
+    }
+
+    public function countNombreDispositiusEstatSenseTipus($id_estat)
+    {
+        return $this->select('codi_centre_reparador')->selectCount('id_tiquet','num_tiquets')->where('id_estat',$id_estat)->groupBy('codi_centre_reparador')->findAll();
+    }
+    public function countNombreDispositiusEstatSenseTipusSSTT($id_estat)
+    {
+        return $this->select('id_sstt')->selectCount('id_tiquet','num_tiquets')->where('id_estat',$id_estat)->groupBy('id_sstt')->findAll();
+    }
+    public function countNombreDispositiusEstatSenseTipusTOTAL($id_estat)
+    {
+        return $this->selectCount('id_tiquet','num_tiquets')->where('id_estat',$id_estat)->findAll();
+    }
+
+    public function countNombreDispositiusTotsEstatsTotsTipus()
+    {
+        return $this->select('codi_centre_reparador')->select('id_tipus_dispositiu')->selectCount('id_tiquet','num_tiquets')->where('id_estat',9)->orWhere('id_estat',10)->orWhere('id_estat',11)->groupBy('codi_centre_reparador')->groupBy('id_tipus_dispositiu')->findAll();
+    }
+    public function countNombreDispositiusTotsEstatsTotsTipusSSTT()
+    {
+        return $this->select('id_sstt')->select('id_tipus_dispositiu')->selectCount('id_tiquet','num_tiquets')->where('id_estat',9)->orWhere('id_estat',10)->orWhere('id_estat',11)->groupBy('id_sstt')->groupBy('id_tipus_dispositiu')->findAll();
+    }
+    public function countNombreDispositiusTotsEstatsTotsTipusTOTAL()
+    {
+        return $this->select('id_tipus_dispositiu')->selectCount('id_tiquet','num_tiquets')->where('id_estat',9)->orWhere('id_estat',10)->orWhere('id_estat',11)->groupBy('id_tipus_dispositiu')->findAll();
+    }
+
+    public function countNombreDispositiusEstatTotsTipus($id_estat) {
+        return $this->select('codi_centre_reparador')->select('id_tipus_dispositiu')->selectCount('id_tiquet','num_tiquets')->where('id_estat',$id_estat)->groupBy('codi_centre_reparador')->groupBy('id_tipus_dispositiu')->findAll();
+    }
+    public function countNombreDispositiusEstatTotsTipusSSTT($id_estat) {
+        return $this->select('id_sstt')->select('id_tipus_dispositiu')->selectCount('id_tiquet','num_tiquets')->where('id_estat',$id_estat)->groupBy('id_sstt')->groupBy('id_tipus_dispositiu')->findAll();
+    }
+    public function countNombreDispositiusEstatTotsTipusTOTAL($id_estat) {
+        return $this->select('id_tipus_dispositiu')->selectCount('id_tiquet','num_tiquets')->where('id_estat',$id_estat)->groupBy('id_tipus_dispositiu')->findAll();
+    }
+
+    public function countNombreDispositiusTotsEstatsTipus($id_tipus_dispositiu)
+    {
+        return $this->select('codi_centre_reparador')->select('id_tipus_dispositiu')->selectCount('id_tiquet', 'num_tiquets')->where('id_tipus_dispositiu', $id_tipus_dispositiu)->groupStart()->where('id_estat', 9)->orWhere('id_estat', 10)->orWhere('id_estat', 11)->groupEnd()->groupBy('codi_centre_reparador')->findAll();
+    }
+    public function countNombreDispositiusTotsEstatsTipusSSTT($id_tipus_dispositiu)
+    {
+        return $this->select('id_sstt')->select('id_tipus_dispositiu')->selectCount('id_tiquet', 'num_tiquets')->where('id_tipus_dispositiu', $id_tipus_dispositiu)->groupStart()->where('id_estat', 9)->orWhere('id_estat', 10)->orWhere('id_estat', 11)->groupEnd()->groupBy('id_sstt')->findAll();
+    }
+    public function countNombreDispositiusTotsEstatsTipusTOTAL($id_tipus_dispositiu)
+    {
+        return $this->select('id_tipus_dispositiu')->selectCount('id_tiquet', 'num_tiquets')->where('id_tipus_dispositiu', $id_tipus_dispositiu)->groupStart()->where('id_estat', 9)->orWhere('id_estat', 10)->orWhere('id_estat', 11)->groupEnd()->findAll();
+    }
+
+    public function countNombreDispositiusEstatTipus($id_estat, $id_tipus_dispositiu)
+    {
+        return $this->select('codi_centre_reparador')->select('id_tipus_dispositiu')->selectCount('id_tiquet', 'num_tiquets')->where('id_tipus_dispositiu', $id_tipus_dispositiu)->where('id_estat', $id_estat)->groupBy('codi_centre_reparador')->findAll();
+    }
+    public function countNombreDispositiusEstatTipusSSTT($id_estat, $id_tipus_dispositiu)
+    {
+        return $this->select('id_sstt')->select('id_tipus_dispositiu')->selectCount('id_tiquet', 'num_tiquets')->where('id_tipus_dispositiu', $id_tipus_dispositiu)->where('id_estat', $id_estat)->groupBy('id_sstt')->findAll();
+    }
+    public function countNombreDispositiusEstatTipusTOTAL($id_estat, $id_tipus_dispositiu)
+    {
+        return $this->select('id_tipus_dispositiu')->selectCount('id_tiquet', 'num_tiquets')->where('id_tipus_dispositiu', $id_tipus_dispositiu)->where('id_estat', $id_estat)->findAll();
+    }
+
 }

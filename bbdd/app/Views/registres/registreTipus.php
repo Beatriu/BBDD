@@ -201,6 +201,11 @@
                             <i class="fa-solid fa-person-chalkboard"></i>
                         </a>
                     </li>
+                    <li class="nav-item" title="<?= lang("registre.dades") ?>">
+                        <a href="<?= base_url("/dades") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.dades") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                            <i class="fa-solid fa-chart-simple"></i>
+                        </a>
+                    </li>
                 <?php endif; ?>
                 <?php if ($role == 'desenvolupador') : ?>
                     <li class="nav-item" id="actiu" title="<?= lang("registre.tipus") ?>">
