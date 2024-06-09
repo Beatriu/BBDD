@@ -67,5 +67,7 @@ return [
     'llista_admesos_esborrat' => "El/la profesor/a se ha eliminado",
     'llista_admesos_creat' => "El/la profesor/a se ha creado correctamente",
     'centre_existeix' => "Este codigo de centro ya està en uso!",
-    'centre_camps_requerits' => "Falta llenar alguno de los campos requeridos!"
+    'centre_camps_requerits' => "Falta llenar alguno de los campos requeridos!",
+    'new_centre' => "Se ha añadido el nuevo centro!",
+    'update_centre' => "El siguiente centro se ha modificado correctamente: "
 ];

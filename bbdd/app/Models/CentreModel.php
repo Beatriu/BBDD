@@ -87,9 +87,9 @@ class CentreModel extends Model
         return $this->where('id_poblacio', $id_poblacio)->first();
     }
 
-    public function eliminarCentre()
+    public function editar_centre($codi_centre, $data)
     {
-        
+        $this->update($codi_centre, $data);
     }
 
     public function editarCentreComarca($codi_centre, $id_comarca)
