@@ -18,7 +18,6 @@
                 <?= session()->get('user_data')['nom'] ?>
             </button>
             <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left mt-3" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#"><i class="fa-solid fa-gear me-2"></i><?= lang('general_lang.config') ?></a>
                 <a class="dropdown-item" href="<?= base_url('/logout') ?>"><i class="fa-solid fa-power-off me-2"></i><?= lang('general_lang.tancar') ?></a>
             </div>
         </div>
