@@ -69,11 +69,20 @@ class DadesController extends BaseController
         }
 
         $tipus_dades = $this->request->getPost("tipus_dades");
+        $tipus_actor = $this->request->getPost("tipus_actor");
+        $tipus_dispositius = $this->request->getPost("tipus_dispositiu");
+
+        if ($tipus_dispositius == "sense") {
+            $id_tipus_dispositiu = "sense";
+        } elseif ($tipus_dispositius == "tots_separats") {
+            $id_tipus_dispositiu = "tots_separats";
+        } else {
+            $id_tipus_dispositiu = $tipus_dispositius;
+        }
 
         if ($tipus_dades == "nombre_finalitzats") {
             $estat = $this->request->getPost("estat");
-            $tipus_actor = $this->request->getPost("tipus_actor");
-            $tipus_dispositius = $this->request->getPost("tipus_dispositiu");
+
 
             if ($estat == "finalitzats") {
                 $id_estat = "tots";
@@ -85,14 +94,6 @@ class DadesController extends BaseController
                 $id_estat = 10;
             }
             
-            if ($tipus_dispositius == "sense") {
-                $id_tipus_dispositiu = "sense";
-            } elseif ($tipus_dispositius == "tots_separats") {
-                $id_tipus_dispositiu = "tots_separats";
-            } else {
-                $id_tipus_dispositiu = $tipus_dispositius;
-            }
-
 
             if ($tipus_actor == "centre_reparador") {
 
@@ -108,7 +109,6 @@ class DadesController extends BaseController
                                 if ($pertany_sstt) {
                                     $array_resultat[$i]['nom_centre'] = $centre_model->obtenirCentre($array_resultat[$i]['codi_centre_reparador'])['nom_centre'];
                                 } else {
-                                    //array_splice($array_net,$i,1);
                                     array_push($array_eliminar, $i);
                                 }
                             } else if ($role == "desenvolupador") {
@@ -123,6 +123,7 @@ class DadesController extends BaseController
                         $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
                         
                         $file = fopen($file_path, 'w');
+                        fwrite($file, "\xEF\xBB\xBF");
                         $header = ['Dades','Codi centre', 'Nom centre', 'Nombre dispositius'];
                         fputcsv($file, $header, ';'); 
                         foreach ($array_resultat as $row) {
@@ -146,7 +147,7 @@ class DadesController extends BaseController
                                 if ($pertany_sstt) {
                                     $array_resultat[$i]['nom_centre'] = $centre_model->obtenirCentre($array_resultat[$i]['codi_centre_reparador'])['nom_centre'];
                                 } else {
-                                    //array_splice($array_net,$i,1);
+                                    
                                     array_push($array_eliminar, $i);
                                 }
                             } else if ($role == "desenvolupador") {
@@ -161,6 +162,7 @@ class DadesController extends BaseController
                         $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
                         
                         $file = fopen($file_path, 'w');
+                        fwrite($file, "\xEF\xBB\xBF");
                         $header = ['Dades','Codi centre', 'Nom centre', 'Nombre dispositius'];
                         fputcsv($file, $header, ';'); 
                         foreach ($array_resultat as $row) {
@@ -189,7 +191,7 @@ class DadesController extends BaseController
                                     $array_resultat[$i]['nom_centre'] = $centre_model->obtenirCentre($array_resultat[$i]['codi_centre_reparador'])['nom_centre'];
                                     $array_resultat[$i]['nom_tipus_dispositiu'] = $tipus_dispositiu_model->obtenirTipusDispositiuPerId($array_resultat[$i]['id_tipus_dispositiu'])['nom_tipus_dispositiu'];
                                 } else {
-                                    //array_splice($array_net,$i,1);
+                                    
                                     array_push($array_eliminar, $i);
                                 }
                             } else if ($role == "desenvolupador") {
@@ -205,7 +207,9 @@ class DadesController extends BaseController
                         $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
                         
                         $file = fopen($file_path, 'w');
+                        fwrite($file, "\xEF\xBB\xBF");
                         $header = ['Dades','Codi centre', 'Nom centre', 'Nom tipus dispositiu', 'Nombre dispositius'];
+                        fwrite($file, "\xEF\xBB\xBF");
                         fputcsv($file, $header, ';'); 
                         foreach ($array_resultat as $row) {
                             $data = [
@@ -230,7 +234,7 @@ class DadesController extends BaseController
                                     $array_resultat[$i]['nom_centre'] = $centre_model->obtenirCentre($array_resultat[$i]['codi_centre_reparador'])['nom_centre'];
                                     $array_resultat[$i]['nom_tipus_dispositiu'] = $tipus_dispositiu_model->obtenirTipusDispositiuPerId($array_resultat[$i]['id_tipus_dispositiu'])['nom_tipus_dispositiu'];
                                 } else {
-                                    //array_splice($array_net,$i,1);
+                                    
                                     array_push($array_eliminar, $i);
                                 }
                             } else if ($role == "desenvolupador") {
@@ -246,6 +250,7 @@ class DadesController extends BaseController
                         $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
                         
                         $file = fopen($file_path, 'w');
+                        fwrite($file, "\xEF\xBB\xBF");
                         $header = ['Dades','Codi centre', 'Nom centre', 'Nom tipus dispositiu', 'Nombre dispositius'];
                         fputcsv($file, $header, ';'); 
                         foreach ($array_resultat as $row) {
@@ -277,7 +282,7 @@ class DadesController extends BaseController
                                     $array_resultat[$i]['nom_tipus_dispositiu'] = $tipus_dispositiu_model->obtenirTipusDispositiuPerId($array_resultat[$i]['id_tipus_dispositiu'])['nom_tipus_dispositiu'];
                                     $nom_tipus_dispositiu = $array_resultat[$i]['nom_tipus_dispositiu'];
                                 } else {
-                                    //array_splice($array_net,$i,1);
+                                    
                                     array_push($array_eliminar, $i);
                                 }
                             } else if ($role == "desenvolupador") {
@@ -294,6 +299,7 @@ class DadesController extends BaseController
                         $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
                         
                         $file = fopen($file_path, 'w');
+                        fwrite($file, "\xEF\xBB\xBF");
                         $header = ['Dades','Codi centre', 'Nom centre', 'Nom tipus dispositiu', 'Nombre dispositius'];
                         fputcsv($file, $header, ';'); 
                         foreach ($array_resultat as $row) {
@@ -321,7 +327,7 @@ class DadesController extends BaseController
                                     $array_resultat[$i]['nom_tipus_dispositiu'] = $tipus_dispositiu_model->obtenirTipusDispositiuPerId($array_resultat[$i]['id_tipus_dispositiu'])['nom_tipus_dispositiu'];
                                     $nom_tipus_dispositiu = $array_resultat[$i]['nom_tipus_dispositiu'];
                                 } else {
-                                    //array_splice($array_net,$i,1);
+                                    
                                     array_push($array_eliminar, $i);
                                 }
                             } else if ($role == "desenvolupador") {
@@ -338,6 +344,7 @@ class DadesController extends BaseController
                         $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
                         
                         $file = fopen($file_path, 'w');
+                        fwrite($file, "\xEF\xBB\xBF");
                         $header = ['Dades','Codi centre', 'Nom centre', 'Nom tipus dispositiu', 'Nombre dispositius'];
                         fputcsv($file, $header, ';'); 
                         foreach ($array_resultat as $row) {
@@ -369,7 +376,7 @@ class DadesController extends BaseController
                                 if ($pertany_sstt) {
                                     $array_resultat[$i]['nom_sstt'] = $sstt_model->obtenirSSTTPerId($array_resultat[$i]['id_sstt'])['nom_sstt'];
                                 } else {
-                                    //array_splice($array_net,$i,1);
+                                    
                                     array_push($array_eliminar, $i);
                                 }
                             } else if ($role == "desenvolupador") {
@@ -384,6 +391,7 @@ class DadesController extends BaseController
                         $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
                         
                         $file = fopen($file_path, 'w');
+                        fwrite($file, "\xEF\xBB\xBF");
                         $header = ['Dades','Codi SSTT', 'Nom SSTT', 'Nombre dispositius'];
                         fputcsv($file, $header, ';'); 
                         foreach ($array_resultat as $row) {
@@ -407,7 +415,7 @@ class DadesController extends BaseController
                                 if ($pertany_sstt) {
                                     $array_resultat[$i]['nom_sstt'] = $sstt_model->obtenirSSTTPerId($array_resultat[$i]['id_sstt'])['nom_sstt'];
                                 } else {
-                                    //array_splice($array_net,$i,1);
+                                    
                                     array_push($array_eliminar, $i);
                                 }
                             } else if ($role == "desenvolupador") {
@@ -422,6 +430,7 @@ class DadesController extends BaseController
                         $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
                         
                         $file = fopen($file_path, 'w');
+                        fwrite($file, "\xEF\xBB\xBF");
                         $header = ['Dades','Codi SSTT', 'Nom SSTT', 'Nombre dispositius'];
                         fputcsv($file, $header, ';'); 
                         foreach ($array_resultat as $row) {
@@ -450,7 +459,7 @@ class DadesController extends BaseController
                                     $array_resultat[$i]['nom_sstt'] = $sstt_model->obtenirSSTTPerId($array_resultat[$i]['id_sstt'])['nom_sstt'];
                                     $array_resultat[$i]['nom_tipus_dispositiu'] = $tipus_dispositiu_model->obtenirTipusDispositiuPerId($array_resultat[$i]['id_tipus_dispositiu'])['nom_tipus_dispositiu'];
                                 } else {
-                                    //array_splice($array_net,$i,1);
+                                    
                                     array_push($array_eliminar, $i);
                                 }
                             } else if ($role == "desenvolupador") {
@@ -466,6 +475,7 @@ class DadesController extends BaseController
                         $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
                         
                         $file = fopen($file_path, 'w');
+                        fwrite($file, "\xEF\xBB\xBF");
                         $header = ['Dades','Codi SSTT', 'Nom SSTT', 'Nom tipus dispositiu', 'Nombre dispositius'];
                         fputcsv($file, $header, ';'); 
                         foreach ($array_resultat as $row) {
@@ -491,7 +501,7 @@ class DadesController extends BaseController
                                     $array_resultat[$i]['nom_sstt'] = $sstt_model->obtenirSSTTPerId($array_resultat[$i]['id_sstt'])['nom_sstt'];
                                     $array_resultat[$i]['nom_tipus_dispositiu'] = $tipus_dispositiu_model->obtenirTipusDispositiuPerId($array_resultat[$i]['id_tipus_dispositiu'])['nom_tipus_dispositiu'];
                                 } else {
-                                    //array_splice($array_net,$i,1);
+                                    
                                     array_push($array_eliminar, $i);
                                 }
                             } else if ($role == "desenvolupador") {
@@ -507,6 +517,7 @@ class DadesController extends BaseController
                         $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
                         
                         $file = fopen($file_path, 'w');
+                        fwrite($file, "\xEF\xBB\xBF");
                         $header = ['Dades','Codi SSTT', 'Nom SSTT', 'Nom tipus dispositiu', 'Nombre dispositius'];
                         fputcsv($file, $header, ';'); 
                         foreach ($array_resultat as $row) {
@@ -538,7 +549,7 @@ class DadesController extends BaseController
                                     $array_resultat[$i]['nom_tipus_dispositiu'] = $tipus_dispositiu_model->obtenirTipusDispositiuPerId($array_resultat[$i]['id_tipus_dispositiu'])['nom_tipus_dispositiu'];
                                     $nom_tipus_dispositiu = $array_resultat[$i]['nom_tipus_dispositiu'];
                                 } else {
-                                    //array_splice($array_net,$i,1);
+                                    
                                     array_push($array_eliminar, $i);
                                 }
                             } else if ($role == "desenvolupador") {
@@ -555,6 +566,7 @@ class DadesController extends BaseController
                         $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
                         
                         $file = fopen($file_path, 'w');
+                        fwrite($file, "\xEF\xBB\xBF");
                         $header = ['Dades','Codi SSTT', 'Nom SSTT', 'Nom tipus dispositiu', 'Nombre dispositius'];
                         fputcsv($file, $header, ';'); 
                         foreach ($array_resultat as $row) {
@@ -582,7 +594,7 @@ class DadesController extends BaseController
                                     $array_resultat[$i]['nom_tipus_dispositiu'] = $tipus_dispositiu_model->obtenirTipusDispositiuPerId($array_resultat[$i]['id_tipus_dispositiu'])['nom_tipus_dispositiu'];
                                     $nom_tipus_dispositiu = $array_resultat[$i]['nom_tipus_dispositiu'];
                                 } else {
-                                    //array_splice($array_net,$i,1);
+                                    
                                     array_push($array_eliminar, $i);
                                 }
                             } else if ($role == "desenvolupador") {
@@ -599,6 +611,7 @@ class DadesController extends BaseController
                         $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
                         
                         $file = fopen($file_path, 'w');
+                        fwrite($file, "\xEF\xBB\xBF");
                         $header = ['Dades','Codi SSTT', 'Nom SSTT', 'Nom tipus dispositiu', 'Nombre dispositius'];
                         fputcsv($file, $header, ';'); 
                         foreach ($array_resultat as $row) {
@@ -634,6 +647,7 @@ class DadesController extends BaseController
                         $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
                         
                         $file = fopen($file_path, 'w');
+                        fwrite($file, "\xEF\xBB\xBF");
                         $header = ['Dades', 'Nombre dispositius'];
                         fputcsv($file, $header, ';'); 
                         foreach ($array_resultat as $row) {
@@ -653,6 +667,7 @@ class DadesController extends BaseController
                         $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
                         
                         $file = fopen($file_path, 'w');
+                        fwrite($file, "\xEF\xBB\xBF");
                         $header = ['Dades', 'Nombre dispositius'];
                         fputcsv($file, $header, ';'); 
                         foreach ($array_resultat as $row) {
@@ -679,6 +694,7 @@ class DadesController extends BaseController
                         $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
                         
                         $file = fopen($file_path, 'w');
+                        fwrite($file, "\xEF\xBB\xBF");
                         $header = ['Dades','Nom tipus dispositiu','Nombre dispositius'];
                         fputcsv($file, $header, ';'); 
                         foreach ($array_resultat as $row) {
@@ -703,6 +719,7 @@ class DadesController extends BaseController
                         $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
                         
                         $file = fopen($file_path, 'w');
+                        fwrite($file, "\xEF\xBB\xBF");
                         $header = ['Dades', 'Nom tipus dispositiu', 'Nombre dispositius'];
                         fputcsv($file, $header, ';'); 
                         foreach ($array_resultat as $row) {
@@ -732,6 +749,7 @@ class DadesController extends BaseController
                         $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
                         
                         $file = fopen($file_path, 'w');
+                        fwrite($file, "\xEF\xBB\xBF");
                         $header = ['Dades', 'Nom tipus dispositiu', 'Nombre dispositius'];
                         fputcsv($file, $header, ';'); 
                         foreach ($array_resultat as $row) {
@@ -757,6 +775,7 @@ class DadesController extends BaseController
                         $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
                         
                         $file = fopen($file_path, 'w');
+                        fwrite($file, "\xEF\xBB\xBF");
                         $header = ['Dades', 'Nom tipus dispositiu', 'Nombre dispositius'];
                         fputcsv($file, $header, ';'); 
                         foreach ($array_resultat as $row) {
@@ -775,16 +794,166 @@ class DadesController extends BaseController
             }
 
 
+        } else if ($tipus_dades == "nombre_emesos") {
+
+            if ($tipus_actor == "centre_emissor") {
+
+                if ($id_tipus_dispositiu == "sense") {
+
+                    $array_resultat = $tiquet_model->countTiquetsSenseTipus();
+                    $array_eliminar = [];
+                    for ($i = 0; $i < sizeof($array_resultat); $i++) {
+                        if ($role == "admin_sstt") {
+                            $pertany_sstt = $array_resultat[$i]['id_sstt'] == $id_sstt;
+                            if ($pertany_sstt) {
+                                $array_resultat[$i]['nom_centre'] = $centre_model->obtenirCentre($array_resultat[$i]['codi_centre_emissor'])['nom_centre'];
+                            } else {
+                                array_push($array_eliminar, $i);
+                            }
+                        } else if ($role == "desenvolupador") {
+                            $array_resultat[$i]['nom_centre'] = $centre_model->obtenirCentre($array_resultat[$i]['codi_centre_emissor'])['nom_centre'];
+                        }
+                    }
+                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
+                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    }
+                    
+                    $file_name = "nombre_tiquets_emesos_" . date('Ymd') . '.csv';
+                    $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
+                    
+                    $file = fopen($file_path, 'w');
+                    fwrite($file, "\xEF\xBB\xBF");
+                    $header = ['Dades','Codi centre', 'Nom centre', 'Nombre dispositius'];
+                    fputcsv($file, $header, ';'); 
+                    foreach ($array_resultat as $row) {
+                        $data = [
+                            'Nombre de tiquets emesos per',
+                            $row['codi_centre_emissor'], 
+                            $row['nom_centre'], 
+                            $row['num_tiquets']
+                        ];
+                        fputcsv($file, $data, ';'); 
+                    }
+                    fclose($file);
+
+                } else if ($id_tipus_dispositiu == "tots_separats") {
+
+                    $array_resultat = $tiquet_model->countTiquetsTotsTipus();
+                    $array_eliminar = [];
+                    for ($i = 0; $i < sizeof($array_resultat); $i++) {
+                        if ($role == "admin_sstt") {
+                            $pertany_sstt = $array_resultat[$i]['id_sstt'] == $id_sstt;
+                            if ($pertany_sstt) {
+                                $array_resultat[$i]['nom_centre'] = $centre_model->obtenirCentre($array_resultat[$i]['codi_centre_emissor'])['nom_centre'];
+                                $array_resultat[$i]['nom_tipus_dispositiu'] = $tipus_dispositiu_model->obtenirTipusDispositiuPerId($array_resultat[$i]['id_tipus_dispositiu'])['nom_tipus_dispositiu'];
+                            } else {
+                                
+                                array_push($array_eliminar, $i);
+                            }
+                        } else if ($role == "desenvolupador") {
+                            $array_resultat[$i]['nom_centre'] = $centre_model->obtenirCentre($array_resultat[$i]['codi_centre_emissor'])['nom_centre'];
+                            $array_resultat[$i]['nom_tipus_dispositiu'] = $tipus_dispositiu_model->obtenirTipusDispositiuPerId($array_resultat[$i]['id_tipus_dispositiu'])['nom_tipus_dispositiu'];
+                        }
+                    }
+                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
+                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    }
+                    
+                    $file_name = "nombre_tiquets_emesos_tipus_dispositiu_" . date('Ymd') . '.csv';
+                    $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
+                    
+                    $file = fopen($file_path, 'w');
+                    fwrite($file, "\xEF\xBB\xBF");
+                    $header = ['Dades','Codi centre', 'Nom centre', 'Nom tipus dispositiu', 'Nombre dispositius'];
+                    fwrite($file, "\xEF\xBB\xBF");
+                    fputcsv($file, $header, ';'); 
+                    foreach ($array_resultat as $row) {
+                        $data = [
+                            'Nombre de tiquets emesos per',
+                            $row['codi_centre_emissor'], 
+                            $row['nom_centre'], 
+                            $row['nom_tipus_dispositiu'],
+                            $row['num_tiquets']
+                        ];
+                        fputcsv($file, $data, ';'); 
+                    }
+                    fclose($file);
+
+                } else {
+
+                    $array_resultat = $tiquet_model->countTiquetsTipus($id_tipus_dispositiu);
+                    $nom_tipus_dispositiu = "";
+                    $array_eliminar = [];
+                    for ($i = 0; $i < sizeof($array_resultat); $i++) {
+                        if ($role == "admin_sstt") {
+                            $pertany_sstt = $array_resultat[$i]['id_sstt'] == $id_sstt;
+                            if ($pertany_sstt) {
+                                $array_resultat[$i]['nom_centre'] = $centre_model->obtenirCentre($array_resultat[$i]['codi_centre_emissor'])['nom_centre'];
+                                $array_resultat[$i]['nom_tipus_dispositiu'] = $tipus_dispositiu_model->obtenirTipusDispositiuPerId($array_resultat[$i]['id_tipus_dispositiu'])['nom_tipus_dispositiu'];
+                                $nom_tipus_dispositiu = $array_resultat[$i]['nom_tipus_dispositiu'];
+                            } else {
+                                
+                                array_push($array_eliminar, $i);
+                            }
+                        } else if ($role == "desenvolupador") {
+                            $array_resultat[$i]['nom_centre'] = $centre_model->obtenirCentre($array_resultat[$i]['codi_centre_emissor'])['nom_centre'];
+                            $array_resultat[$i]['nom_tipus_dispositiu'] = $tipus_dispositiu_model->obtenirTipusDispositiuPerId($array_resultat[$i]['id_tipus_dispositiu'])['nom_tipus_dispositiu'];
+                            $nom_tipus_dispositiu = $array_resultat[$i]['nom_tipus_dispositiu'];
+                        }
+                    }
+                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
+                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    }
+                    
+                    $file_name = "nombre_tiquets_emesos_". strtolower($nom_tipus_dispositiu) ."_" . date('Ymd') . '.csv';
+                    $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
+                    
+                    $file = fopen($file_path, 'w');
+                    fwrite($file, "\xEF\xBB\xBF");
+                    $header = ['Dades','Codi centre', 'Nom centre', 'Nom tipus dispositiu', 'Nombre dispositius'];
+                    fputcsv($file, $header, ';'); 
+                    foreach ($array_resultat as $row) {
+                        $data = [
+                            'Nombre de tiquets emesos per',
+                            $row['codi_centre_emissor'], 
+                            $row['nom_centre'], 
+                            $row['nom_tipus_dispositiu'],
+                            $row['num_tiquets']
+                        ];
+                        fputcsv($file, $data, ';'); 
+                    }
+                    fclose($file);
+
+                }
+
+            } elseif ($tipus_actor == "poblacio") {
+
+            } elseif ($tipus_actor == "comarca") {
+
+                if ($role != "desenvolupador") {
+                    return redirect()->back();
+                }
+
+            } elseif ($tipus_actor == "sstt") {
+
+            } elseif ($tipus_actor == "total") {
+
+                if ($role != "desenvolupador") {
+                    return redirect()->back();
+                }
+
+            }
+
         }
 
         header('Content-Description: File Transfer');
-        header('Content-Type: application/csv');
+        header('Content-Type: text/csv; charset=UTF-8');
         header('Content-Disposition: attachment; filename=' . basename($file_path));
         header('Expires: 0');
         header('Cache-Control: must-revalidate');
         header('Pragma: public');
         header('Content-Length: ' . filesize($file_path));
-        
+
         readfile($file_path);
         
         unlink($file_path);
