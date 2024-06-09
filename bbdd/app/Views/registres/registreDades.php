@@ -159,6 +159,13 @@
                     <?= $output ?>
                 </div>
             </div>
+            <?php if ($grafic != null || $grafic2 != null): ?>
+                <div class="row mt-4">
+                    <div class="col mb-3 d-flex align-items-middle" style="max-width: 90%; max-height: 400px;">
+                        <canvas id="myChart"></canvas>
+                    </div>
+                </div>
+            <?php endif; ?>
 
         </div>
 
@@ -167,6 +174,90 @@
     </div>
 
 </div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    <?php if ($grafic != null): ?>
+
+        const ctx = document.getElementById('myChart');
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+            labels: [<?= $grafic['labels'] ?>],
+            datasets: [{
+                label: '<?= $grafic['title'] ?>',
+                data: [<?= $grafic['dades'] ?>],    
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 205, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(201, 203, 207, 0.2)'
+                    ],
+                    borderColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 159, 64)',
+                    'rgb(255, 205, 86)',
+                    'rgb(75, 192, 192)',
+                    'rgb(54, 162, 235)',
+                    'rgb(153, 102, 255)',
+                    'rgb(201, 203, 207)'
+                    ],
+                borderWidth: 1
+            }]
+            },
+            options: {
+            scales: {
+                y: {
+                beginAtZero: true
+                }
+            }
+            }
+        });
+
+    <?php endif; ?>
+
+    <?php if ($grafic2 != null): ?>
+
+        const ctx2 = document.getElementById('myChart');
+
+        new Chart(ctx2, {
+            type: 'line',
+            data: {
+            labels: [<?= $grafic2['labels'] ?>],
+            datasets: [{
+                label: '<?= $grafic2['title'] ?>',
+                data: [<?= $grafic2['dades'] ?>],
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }]
+            },
+            options: {
+                scales: {
+                y: {
+                    beginAtZero: true
+                },
+                x: [{
+                    type: 'time',
+                    time: {
+                        parser: 'MM-YYYY',
+                        unit: 'month',
+                        displayFormats: {
+                            month: 'MM-YYYY'
+                        }
+                    }
+                }]
+                }
+            }
+        });
+
+
+    <?php endif; ?>
+</script>
 <script>    
     function submitForm(action) {
         var form = document.getElementById('formulari_dades');

@@ -68,6 +68,16 @@ class DadesController extends BaseController
             $data['output'] = session()->getFlashdata("taula");
         }
 
+        $data['grafic'] = null;
+        if (session()->getFlashdata("grafic") != null) {
+            $data['grafic'] = session()->getFlashdata("grafic");
+        }
+
+        $data['grafic2'] = null;
+        if (session()->getFlashdata("grafic2") != null) {
+            $data['grafic2'] = session()->getFlashdata("grafic2");
+        }
+
         return view('registres' . DIRECTORY_SEPARATOR . 'registreDades', $data);
     }
 
@@ -102,6 +112,8 @@ class DadesController extends BaseController
             $id_tipus_dispositiu = $tipus_dispositius;
         }
 
+        $grafic = false;
+        $grafic2 = false;
         if ($tipus_dades == "nombre_finalitzats") {
             $estat = $this->request->getPost("estat");
 
@@ -431,6 +443,10 @@ class DadesController extends BaseController
                         $header = ['Dades','Codi SSTT', 'Nom SSTT', 'Nombre dispositius'];
                         $array_visualitzar = [];
                         array_push($array_visualitzar,$header);
+                        $grafic = true;
+                        $labels = "";
+                        $title = "Nombre de dispositius finalitzats per SSTT";
+                        $dades = "";
                         fputcsv($file, $header, ';'); 
                         foreach ($array_resultat as $row) {
                             $data = [
@@ -441,6 +457,8 @@ class DadesController extends BaseController
                             ];
                             fputcsv($file, $data, ';'); 
                             array_push($array_visualitzar,$data);
+                            $labels .= "'" . $row['nom_sstt'] . "',";
+                            $dades .= "'" . $row['num_tiquets'] . "',";
                         }
                         fclose($file);
                         
@@ -473,6 +491,10 @@ class DadesController extends BaseController
                         $header = ['Dades','Codi SSTT', 'Nom SSTT', 'Nombre dispositius'];
                         $array_visualitzar = [];
                         array_push($array_visualitzar,$header);
+                        $grafic = true;
+                        $labels = "";
+                        $title = "Nombre de dispositius " . $estat . "per SSTT";
+                        $dades = "";
                         fputcsv($file, $header, ';'); 
                         foreach ($array_resultat as $row) {
                             $data = [
@@ -483,6 +505,8 @@ class DadesController extends BaseController
                             ];
                             fputcsv($file, $data, ';'); 
                             array_push($array_visualitzar,$data);
+                            $labels .= "'" . $row['nom_sstt'] . "',";
+                            $dades .= "'" . $row['num_tiquets'] . "',";
                         }
                         fclose($file);
                         
@@ -618,6 +642,10 @@ class DadesController extends BaseController
                         $header = ['Dades','Codi SSTT', 'Nom SSTT', 'Nom tipus dispositiu', 'Nombre dispositius'];
                         $array_visualitzar = [];
                         array_push($array_visualitzar,$header);
+                        $grafic = true;
+                        $labels = "";
+                        $title = "Nombre de dispositius finalitzats - ". strtolower($nom_tipus_dispositiu) . " per SSTT";
+                        $dades = "";
                         fputcsv($file, $header, ';'); 
                         foreach ($array_resultat as $row) {
                             $data = [
@@ -629,6 +657,8 @@ class DadesController extends BaseController
                             ];
                             fputcsv($file, $data, ';'); 
                             array_push($array_visualitzar,$data);
+                            $labels .= "'" . $row['nom_sstt'] . "',";
+                            $dades .= "'" . $row['num_tiquets'] . "',";
                         }
                         fclose($file);
 
@@ -666,6 +696,10 @@ class DadesController extends BaseController
                         $header = ['Dades','Codi SSTT', 'Nom SSTT', 'Nom tipus dispositiu', 'Nombre dispositius'];
                         $array_visualitzar = [];
                         array_push($array_visualitzar,$header);
+                        $grafic = true;
+                        $labels = "";
+                        $title = "Nombre de dispositius " . $estat . " - " . strtolower($nom_tipus_dispositiu) . " per SSTT";
+                        $dades = "";
                         fputcsv($file, $header, ';'); 
                         foreach ($array_resultat as $row) {
                             $data = [
@@ -677,6 +711,8 @@ class DadesController extends BaseController
                             ];
                             fputcsv($file, $data, ';'); 
                             array_push($array_visualitzar,$data);
+                            $labels .= "'" . $row['nom_sstt'] . "',";
+                            $dades .= "'" . $row['num_tiquets'] . "',";
                         }
                         fclose($file);
 
@@ -758,6 +794,10 @@ class DadesController extends BaseController
                         $header = ['Dades','Nom tipus dispositiu','Nombre dispositius'];
                         $array_visualitzar = [];
                         array_push($array_visualitzar,$header);
+                        $grafic = true;
+                        $labels = "";
+                        $title = "Nombre de dispositius finalitzats per tipus de dispositiu";
+                        $dades = "";
                         fputcsv($file, $header, ';'); 
                         foreach ($array_resultat as $row) {
                             $data = [
@@ -767,6 +807,8 @@ class DadesController extends BaseController
                             ];
                             fputcsv($file, $data, ';'); 
                             array_push($array_visualitzar,$data);
+                            $labels .= "'" . $row['nom_tipus_dispositiu'] . "',";
+                            $dades .= "'" . $row['num_tiquets'] . "',";
                         }
                         fclose($file);
 
@@ -786,6 +828,10 @@ class DadesController extends BaseController
                         $header = ['Dades', 'Nom tipus dispositiu', 'Nombre dispositius'];
                         $array_visualitzar = [];
                         array_push($array_visualitzar,$header);
+                        $grafic = true;
+                        $labels = "";
+                        $title = "Nombre de dispositius " . $estat .' per tipus de dispositiu';
+                        $dades = "";
                         fputcsv($file, $header, ';'); 
                         foreach ($array_resultat as $row) {
                             $data = [
@@ -795,6 +841,8 @@ class DadesController extends BaseController
                             ];
                             fputcsv($file, $data, ';'); 
                             array_push($array_visualitzar,$data);
+                            $labels .= "'" . $row['nom_tipus_dispositiu'] . "',";
+                            $dades .= "'" . $row['num_tiquets'] . "',";
                         }
                         fclose($file);
 
@@ -1152,6 +1200,10 @@ class DadesController extends BaseController
                     $header = ['Dades','Codi comarca', 'Nom comarca', 'Nombre dispositius'];
                     $array_visualitzar = [];
                     array_push($array_visualitzar,$header);
+                    $grafic = true;
+                    $labels = "";
+                    $title = "Nombre de tiquets emesos per comarca";
+                    $dades = "";
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -1162,6 +1214,8 @@ class DadesController extends BaseController
                         ];
                         fputcsv($file, $data, ';'); 
                         array_push($array_visualitzar,$data);
+                        $labels .= "'" . $row['nom_comarca'] . "',";
+                        $dades .= "'" . $row['num_tiquets'] . "',";
                     }
                     fclose($file);
 
@@ -1227,6 +1281,10 @@ class DadesController extends BaseController
                     $header = ['Dades','Codi comarca', 'Nom comarca', 'Nom tipus dispositiu', 'Nombre dispositius'];
                     $array_visualitzar = [];
                     array_push($array_visualitzar,$header);
+                    $grafic = true;
+                    $labels = "";
+                    $title = "Nombre de tiquets emesos per comarca - " . strtolower($tipus_dispositiu_model->obtenirTipusDispositiuPerId($id_tipus_dispositiu)['nom_tipus_dispositiu']);
+                    $dades = "";
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -1238,6 +1296,8 @@ class DadesController extends BaseController
                         ];
                         fputcsv($file, $data, ';'); 
                         array_push($array_visualitzar,$data);
+                        $labels .= "'" . $row['nom_comarca'] . "',";
+                        $dades .= "'" . $row['num_tiquets'] . "',";
                     }
                     fclose($file);
 
@@ -1269,6 +1329,10 @@ class DadesController extends BaseController
                     $header = ['Dades','Codi SSTT', 'Nom SSTT', 'Nombre dispositius'];
                     $array_visualitzar = [];
                     array_push($array_visualitzar,$header);
+                    $grafic = true;
+                    $labels = "";
+                    $title = "Nombre de tiquets emesos per SSTT";
+                    $dades = "";
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -1279,6 +1343,8 @@ class DadesController extends BaseController
                         ];
                         fputcsv($file, $data, ';'); 
                         array_push($array_visualitzar,$data);
+                        $labels .= "'" . $row['nom_sstt'] . "',";
+                        $dades .= "'" . $row['num_tiquets'] . "',";
                     }
                     fclose($file);
 
@@ -1344,6 +1410,10 @@ class DadesController extends BaseController
                     $header = ['Dades','Codi SSTT', 'Nom SSTT', 'Nom tipus dispositiu', 'Nombre dispositius'];
                     $array_visualitzar = [];
                     array_push($array_visualitzar,$header);
+                    $grafic = true;
+                    $labels = "";
+                    $title = "Nombre de tiquets emesos per SSTT - ". strtolower($tipus_dispositiu_model->obtenirTipusDispositiuPerId($id_tipus_dispositiu)['nom_tipus_dispositiu']);
+                    $dades = "";
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -1355,6 +1425,8 @@ class DadesController extends BaseController
                         ];
                         fputcsv($file, $data, ';'); 
                         array_push($array_visualitzar,$data);
+                        $labels .= "'" . $row['nom_sstt'] . "',";
+                        $dades .= "'" . $row['num_tiquets'] . "',";
                     }
                     fclose($file);
 
@@ -1401,6 +1473,10 @@ class DadesController extends BaseController
                     $header = ['Dades', 'Nom tipus dispositiu', 'Nombre dispositius'];
                     $array_visualitzar = [];
                     array_push($array_visualitzar,$header);
+                    $grafic = true;
+                    $labels = "";
+                    $title = "Nombre de tiquets emesos per tipus de dispositius";
+                    $dades = "";
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -1410,6 +1486,8 @@ class DadesController extends BaseController
                         ];
                         fputcsv($file, $data, ';'); 
                         array_push($array_visualitzar,$data);
+                        $labels .= "'" . $row['nom_tipus_dispositiu'] . "',";
+                        $dades .= "'" . $row['num_tiquets'] . "',";
                     }
                     fclose($file);
 
@@ -1820,6 +1898,10 @@ class DadesController extends BaseController
                     $header = ['Dades','Codi comarca', 'Nom comarca', 'Diners (€)'];
                     $array_visualitzar = [];
                     array_push($array_visualitzar,$header);
+                    $grafic = true;
+                    $labels = "";
+                    $title = "Despeses per comarca";
+                    $dades = "";
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -1830,6 +1912,8 @@ class DadesController extends BaseController
                         ];
                         fputcsv($file, $data, ';'); 
                         array_push($array_visualitzar,$data);
+                        $labels .= "'" . $row['nom_comarca'] . "',";
+                        $dades .= "'" . $row['total_preu'] . "',";
                     }
                     fclose($file);
 
@@ -1895,6 +1979,10 @@ class DadesController extends BaseController
                     $header = ['Dades','Codi comarca', 'Nom comarca', 'Nom tipus dispositiu', 'Diners (€)'];
                     $array_visualitzar = [];
                     array_push($array_visualitzar,$header);
+                    $grafic = true;
+                    $labels = "";
+                    $title = "Despeses per comarca - " . strtolower($tipus_dispositiu_model->obtenirTipusDispositiuPerId($id_tipus_dispositiu)['nom_tipus_dispositiu']);
+                    $dades = "";
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -1906,6 +1994,8 @@ class DadesController extends BaseController
                         ];
                         fputcsv($file, $data, ';'); 
                         array_push($array_visualitzar,$data);
+                        $labels .= "'" . $row['nom_comarca'] . "',";
+                        $dades .= "'" . $row['total_preu'] . "',";
                     }
                     fclose($file);
 
@@ -1937,6 +2027,10 @@ class DadesController extends BaseController
                     $header = ['Dades','Codi SSTT', 'Nom SSTT', 'Diners (€)'];
                     $array_visualitzar = [];
                     array_push($array_visualitzar,$header);
+                    $grafic = true;
+                    $labels = "";
+                    $title = "Despeses per SSTT (emissor)";
+                    $dades = "";
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -1947,6 +2041,8 @@ class DadesController extends BaseController
                         ];
                         fputcsv($file, $data, ';'); 
                         array_push($array_visualitzar,$data);
+                        $labels .= "'" . $row['nom_sstt'] . "',";
+                        $dades .= "'" . $row['total_preu'] . "',";
                     }
                     fclose($file);
 
@@ -2012,6 +2108,10 @@ class DadesController extends BaseController
                     $header = ['Dades','Codi SSTT', 'Nom SSTT', 'Nom tipus dispositiu', 'Diners (€)'];
                     $array_visualitzar = [];
                     array_push($array_visualitzar,$header);
+                    $grafic = true;
+                    $labels = "";
+                    $title = "Despeses per SSTT (emissor) - " . strtolower($tipus_dispositiu_model->obtenirTipusDispositiuPerId($id_tipus_dispositiu)['nom_tipus_dispositiu']);
+                    $dades = "";
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -2023,6 +2123,8 @@ class DadesController extends BaseController
                         ];
                         fputcsv($file, $data, ';'); 
                         array_push($array_visualitzar,$data);
+                        $labels .= "'" . $row['nom_sstt'] . "',";
+                        $dades .= "'" . $row['total_preu'] . "',";
                     }
                     fclose($file);
 
@@ -2054,6 +2156,10 @@ class DadesController extends BaseController
                     $header = ['Dades','Codi SSTT', 'Nom SSTT', 'Diners (€)'];
                     $array_visualitzar = [];
                     array_push($array_visualitzar,$header);
+                    $grafic = true;
+                    $labels = "";
+                    $title = "Despeses per SSTT (reparador)";
+                    $dades = "";
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -2064,6 +2170,8 @@ class DadesController extends BaseController
                         ];
                         fputcsv($file, $data, ';'); 
                         array_push($array_visualitzar,$data);
+                        $labels .= "'" . $row['nom_sstt'] . "',";
+                        $dades .= "'" . $row['total_preu'] . "',";
                     }
                     fclose($file);
 
@@ -2129,6 +2237,10 @@ class DadesController extends BaseController
                     $header = ['Dades','Codi SSTT', 'Nom SSTT', 'Nom tipus dispositiu', 'Diners (€)'];
                     $array_visualitzar = [];
                     array_push($array_visualitzar,$header);
+                    $grafic = true;
+                    $labels = "";
+                    $title = "Despeses per SSTT (reparador) - " . strtolower($tipus_dispositiu_model->obtenirTipusDispositiuPerId($id_tipus_dispositiu)['nom_tipus_dispositiu']);
+                    $dades = "";
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -2140,6 +2252,8 @@ class DadesController extends BaseController
                         ];
                         fputcsv($file, $data, ';'); 
                         array_push($array_visualitzar,$data);
+                        $labels .= "'" . $row['nom_sstt'] . "',";
+                        $dades .= "'" . $row['total_preu'] . "',";
                     }
                     fclose($file);
 
@@ -2186,6 +2300,10 @@ class DadesController extends BaseController
                     $header = ['Dades', 'Nom tipus dispositiu', 'Diners (€)'];
                     $array_visualitzar = [];
                     array_push($array_visualitzar,$header);
+                    $grafic = true;
+                    $labels = "";
+                    $title = "Despesesper tipus de dispositiu";
+                    $dades = "";
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -2195,6 +2313,8 @@ class DadesController extends BaseController
                         ];
                         fputcsv($file, $data, ';'); 
                         array_push($array_visualitzar,$data);
+                        $labels .= "'" . $row['nom_tipus_dispositiu'] . "',";
+                        $dades .= "'" . $row['total_preu'] . "',";
                     }
                     fclose($file);
 
@@ -2348,6 +2468,14 @@ class DadesController extends BaseController
                     $header = ['Dades', 'Codi SSTT', 'Nom SSTT', 'Any', 'Mes', 'Nombre dispositius'];
                     $array_visualitzar = [];
                     array_push($array_visualitzar,$header);
+                    if ($role == "admin_sstt") {
+                        $grafic2 = true;
+                        $labels = "";
+                        $title = "Nombre de dispositius finalitzats";
+                        $dades = "";
+                        $temps = [];
+                        $num_tiquets = [];
+                    }
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -2360,6 +2488,10 @@ class DadesController extends BaseController
                         ];
                         fputcsv($file, $data, ';'); 
                         array_push($array_visualitzar,$data);
+                        if ($role == "admin_sstt") {
+                            array_push($temps, [$row['mes'], $row['any']]);
+                            array_push($num_tiquets, $row['num_tiquets']);
+                        }
                     }
                     fclose($file);
 
@@ -2387,6 +2519,14 @@ class DadesController extends BaseController
                     $header = ['Dades', 'Codi SSTT', 'Nom SSTT', 'Any', 'Mes', 'Nombre dispositius'];
                     $array_visualitzar = [];
                     array_push($array_visualitzar,$header);
+                    if ($role == "admin_sstt") {
+                        $grafic2 = true;
+                        $labels = "";
+                        $title = "Nombre de dispositius finalitzats";
+                        $dades = "";
+                        $temps = [];
+                        $num_tiquets = [];
+                    }
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -2399,6 +2539,10 @@ class DadesController extends BaseController
                         ];
                         fputcsv($file, $data, ';'); 
                         array_push($array_visualitzar,$data);
+                        if ($role == "admin_sstt") {
+                            array_push($temps, [$row['mes'], $row['any']]);
+                            array_push($num_tiquets, $row['num_tiquets']);
+                        }
                     }
                     fclose($file);
 
@@ -2422,6 +2566,12 @@ class DadesController extends BaseController
                     $header = ['Dades', 'Any', 'Mes', 'Nombre dispositius'];
                     $array_visualitzar = [];
                     array_push($array_visualitzar,$header);
+                    $grafic2 = true;
+                    $labels = "";
+                    $title = "Nombre de dispositius finalitzats";
+                    $dades = "";
+                    $temps = [];
+                    $num_tiquets = [];
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -2431,7 +2581,9 @@ class DadesController extends BaseController
                             $row['num_tiquets'],
                         ];
                         fputcsv($file, $data, ';');
-                        array_push($array_visualitzar,$data); 
+                        array_push($array_visualitzar,$data);
+                        array_push($temps, [$row['mes'], $row['any']]);
+                        array_push($num_tiquets, $row['num_tiquets']);
                     }
                     fclose($file);
 
@@ -2447,6 +2599,12 @@ class DadesController extends BaseController
                     $header = ['Dades', 'Any', 'Mes', 'Nombre dispositius'];
                     $array_visualitzar = [];
                     array_push($array_visualitzar,$header);
+                    $grafic2 = true;
+                    $labels = "";
+                    $title = "Nombre de dispositius " . $estat;
+                    $dades = "";
+                    $temps = [];
+                    $num_tiquets = [];
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -2457,6 +2615,8 @@ class DadesController extends BaseController
                         ];
                         fputcsv($file, $data, ';'); 
                         array_push($array_visualitzar,$data);
+                        array_push($temps, [$row['mes'], $row['any']]);
+                        array_push($num_tiquets, $row['num_tiquets']);
                     }
                     fclose($file);
 
@@ -2529,6 +2689,14 @@ class DadesController extends BaseController
                 $header = ['Dades', 'Codi centre', 'Nom centre', 'Any', 'Mes', 'Nombre dispositius'];
                 $array_visualitzar = [];
                 array_push($array_visualitzar,$header);
+                if ($role == "admin_sstt") {
+                    $grafic2 = true;
+                    $labels = "";
+                    $title = "Nombre de tiquets emesos";
+                    $dades = "";
+                    $temps = [];
+                    $num_tiquets = [];
+                }
                 fputcsv($file, $header, ';'); 
                 foreach ($array_resultat as $row) {
                     $data = [
@@ -2541,6 +2709,10 @@ class DadesController extends BaseController
                     ];
                     fputcsv($file, $data, ';'); 
                     array_push($array_visualitzar,$data);
+                    if ($role == "admin_sstt") {
+                        array_push($temps, [$row['mes'], $row['any']]);
+                        array_push($num_tiquets, $row['num_tiquets']);
+                    }
                 }
                 fclose($file);
 
@@ -2560,6 +2732,12 @@ class DadesController extends BaseController
                 $header = ['Dades', 'Any', 'Mes', 'Nombre dispositius'];
                 $array_visualitzar = [];
                 array_push($array_visualitzar,$header);
+                $grafic2 = true;
+                $labels = "";
+                $title = "Nombre de tiquets emesos";
+                $dades = "";
+                $temps = [];
+                $num_tiquets = [];
                 fputcsv($file, $header, ';'); 
                 foreach ($array_resultat as $row) {
                     $data = [
@@ -2570,6 +2748,8 @@ class DadesController extends BaseController
                     ];
                     fputcsv($file, $data, ';'); 
                     array_push($array_visualitzar,$data);
+                    array_push($temps, [$row['mes'], $row['any']]);
+                    array_push($num_tiquets, $row['num_tiquets']);
                 }
                 fclose($file);
 
@@ -2640,6 +2820,14 @@ class DadesController extends BaseController
                 $header = ['Dades', 'Codi SSTT', 'Nom SSTT', 'Any', 'Mes', 'Diners (€)'];
                 $array_visualitzar = [];
                 array_push($array_visualitzar,$header);
+                if ($role == "admin_sstt") {
+                    $grafic2 = true;
+                    $labels = "";
+                    $title = "Despeses";
+                    $dades = "";
+                    $temps = [];
+                    $num_tiquets = [];
+                }
                 fputcsv($file, $header, ';'); 
                 foreach ($array_resultat as $row) {
                     $data = [
@@ -2652,6 +2840,10 @@ class DadesController extends BaseController
                     ];
                     fputcsv($file, $data, ';'); 
                     array_push($array_visualitzar,$data);
+                    if ($role == "admin_sstt") {
+                        array_push($temps, [$row['mes'], $row['any']]);
+                        array_push($num_tiquets, $row['total_preu']);
+                    }
                 }
                 fclose($file);
 
@@ -2671,6 +2863,12 @@ class DadesController extends BaseController
                 $header = ['Dades', 'Any', 'Mes', 'Diners (€)'];
                 $array_visualitzar = [];
                 array_push($array_visualitzar,$header);
+                $grafic2 = true;
+                $labels = "";
+                $title = "Despeses";
+                $dades = "";
+                $temps = [];
+                $num_tiquets = [];
                 fputcsv($file, $header, ';'); 
                 foreach ($array_resultat as $row) {
                     $data = [
@@ -2681,6 +2879,8 @@ class DadesController extends BaseController
                     ];
                     fputcsv($file, $data, ';'); 
                     array_push($array_visualitzar,$data);
+                    array_push($temps, [$row['mes'], $row['any']]);
+                    array_push($num_tiquets, $row['total_preu']);
                 }
                 fclose($file);
 
@@ -2702,6 +2902,7 @@ class DadesController extends BaseController
             readfile($file_path);
 
         } else if ($mode == "visualitzar") {
+
 
             $taula = '<table class="table table-striped row-border dataTable no-footer" id="data-list-vista_inventari" style="width: 100%;" aria-describedby="data-list-vista_inventari_info">';
 
@@ -2729,6 +2930,68 @@ class DadesController extends BaseController
             }
 
             $taula .= '</tbody><table>';
+
+            if ($grafic) {
+                $data = [
+                    'labels' => $labels,
+                    'title' => $title,
+                    'dades' => $dades
+                ];
+                session()->setFlashdata("grafic", $data);
+            }
+
+            if ($grafic2) {
+                
+                $nou_temps = [];
+                $nou_num_tiquets = [];
+
+                // Funció per incrementar un mes i gestionar el canvi d'any
+                function incrementarMes($mes, $any) {
+                    $mes++;
+                    if ($mes > 12) {
+                        $mes = 1;
+                        $any++;
+                    }
+                    return [$mes, $any];
+                }
+
+                list($mes_inici, $any_inici) = $temps[0];
+                list($mes_final, $any_final) = end($temps);
+
+                $current_index = 0;
+                $current_mes = $mes_inici;
+                $current_any = $any_inici;
+
+                while ($current_any < $any_final || ($current_any == $any_final && $current_mes <= $mes_final)) {
+
+                    if ($current_index < count($temps) && $temps[$current_index] == [$current_mes, $current_any]) {
+                        $nou_temps[] = $temps[$current_index];
+                        $nou_num_tiquets[] = $num_tiquets[$current_index];
+                        $current_index++;
+                    } else {
+                        $nou_temps[] = [$current_mes, $current_any];
+                        $nou_num_tiquets[] = 0;
+                    }
+                    
+                    list($current_mes, $current_any) = incrementarMes($current_mes, $current_any);
+                }
+
+                $labels_string = "";
+                $dades_string = "";
+
+                for ($i = 0; $i < sizeof($nou_temps); $i++) {
+                    $labels_string .= "'" . $nou_temps[$i][0] . "-" . $nou_temps[$i][1] . "',";
+                    $dades_string .= "'" . $nou_num_tiquets[$i] . "',";
+                }
+
+                $data = [
+                    'labels' => $labels_string,
+                    'title' => $title,
+                    'dades' => $dades_string
+                ];
+                session()->setFlashdata("grafic2", $data);
+            }
+
 
             session()->setFlashdata("taula", $taula);
             return redirect()->to(base_url('/dades'))->withInput();
