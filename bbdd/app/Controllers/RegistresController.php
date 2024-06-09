@@ -374,11 +374,15 @@ class RegistresController extends BaseController
                 $data['centre_emissor_escollit'] = $centre_emissor_escollit;
                 $crud->addWhere('codi_centre_emissor', $session_filtre['nom_centre_emissor'][0], true);
             }
-            if (isset($session_filtre['data_creacio'])) {
-                $data_de_la_sessio = $session_filtre['data_creacio'][0];
-                $data_nova = date('d-m-Y', strtotime($data_de_la_sessio));
-
-                $crud->addWhere('data_alta_format', $data_nova);
+            if (isset($session_filtre['data_creacio_inici']) && isset($session_filtre['data_creacio_fi'])) {
+                $data_de_la_sessio = $session_filtre['data_creacio_inici'][0];
+                $data_nova_inici = date('d-m-Y', strtotime($data_de_la_sessio));
+    
+    
+                $data_de_la_sessio = $session_filtre['data_creacio_fi'][0];
+                $data_nova_fi = date('d-m-Y', strtotime($data_de_la_sessio));
+                
+                $crud->addWhere("data_alta_format BETWEEN '" . $data_nova_inici . "' AND  '" . $data_nova_fi . "'");
             }
             $crud->addWhere("codi_centre_reparador='" . session()->get('user_data')['codi_centre'] . "' AND (nom_estat='Pendent de reparar' or nom_estat='Reparant' or nom_estat='Reparat i pendent de recollir')");
         }
@@ -540,7 +544,7 @@ class RegistresController extends BaseController
         ]);
 
         if ($tipus_sstt !== 'desenvolupador') {
-            $crud->addWhere("id_sstt_emissor='" . $actor['id_sstt'] . "' OR id_sstt_reparador='" . $actor['id_sstt'] . "' OR id_sstt='" . $actor['id_sstt'] . "'");
+            $crud->addWhere("(id_sstt_emissor='" . $actor['id_sstt'] . "' OR id_sstt_reparador='" . $actor['id_sstt'] . "' OR id_sstt='" . $actor['id_sstt'] . "')");
         }
 
         $crud->addItemLink('edit', 'fa-pencil', base_url('/tiquets/editar'), 'Editar Tiquet', true);
@@ -576,12 +580,14 @@ class RegistresController extends BaseController
 
                 $crud->addWhere('codi_centre_reparador', $session_filtre['nom_centre_reparador'][0], true);
             }
-            if (isset($session_filtre['data_creacio'])) {
-
-                //Ara funciona, pero el KpaCrud ha estat donant moltissims problemes.
-                $data_de_la_sessio = $session_filtre['data_creacio'][0];
-                $data_nova = date('d-m-Y', strtotime($data_de_la_sessio));
-                $crud->addWhere('data_alta_format', $data_nova, true);
+            if (isset($session_filtre['data_creacio_inici']) && isset($session_filtre['data_creacio_fi'])) {
+                $data_de_la_sessio = $session_filtre['data_creacio_inici'][0];
+                $data_nova_inici = date('d-m-Y', strtotime($data_de_la_sessio));
+    
+                $data_de_la_sessio = $session_filtre['data_creacio_fi'][0];
+                $data_nova_fi = date('d-m-Y', strtotime($data_de_la_sessio));
+                
+                $crud->addWhere("data_alta_format BETWEEN '" . $data_nova_inici . "' AND  '" . $data_nova_fi . "'");
             }
         }
 
@@ -684,11 +690,15 @@ class RegistresController extends BaseController
             $data['centre_emissor_escollit'] = $centre_emissor_escollit;
             $crud->addWhere('codi_centre_emissor', $session_filtre['nom_centre_emissor'][0], true);
         }
-        if (isset($session_filtre['data_creacio'])) {
-            $data_de_la_sessio = $session_filtre['data_creacio'][0];
-            $data_nova = date('d-m-Y', strtotime($data_de_la_sessio));
+        if (isset($session_filtre['data_creacio_inici']) && isset($session_filtre['data_creacio_fi'])) {
+            $data_de_la_sessio = $session_filtre['data_creacio_inici'][0];
+            $data_nova_inici = date('d-m-Y', strtotime($data_de_la_sessio));
 
-            $crud->addWhere('data_alta_format', $data_nova);
+
+            $data_de_la_sessio = $session_filtre['data_creacio_fi'][0];
+            $data_nova_fi = date('d-m-Y', strtotime($data_de_la_sessio));
+            
+            $crud->addWhere("data_alta_format BETWEEN '" . $data_nova_inici . "' AND  '" . $data_nova_fi . "'");
         }
 
         $crud->addWhere("codi_centre_reparador='" . session()->get('user_data')['codi_centre'] . "' AND (nom_estat='Pendent de reparar' or nom_estat='Reparant' or nom_estat='Reparat i pendent de recollir')");
@@ -891,12 +901,17 @@ class RegistresController extends BaseController
                 array_push($array_centre_reparador, $centre_reparador);
                 $session->push('filtres', ['nom_centre_reparador' => $array_centre_reparador]);
             }
-            if (isset($dades['data_creacio']) &&  $dades['data_creacio'] !== '') {
-                $array_data_creacio = [];
-                $data_creacio = $dades['data_creacio'];
-                array_push($array_data_creacio, $data_creacio);
-                $session->push('filtres', ['data_creacio' => $array_data_creacio]);
+            if (isset($dades['data_creacio_inici']) && $dades['data_creacio_inici'] !== '' && isset($dades['data_creacio_fi']) &&  $dades['data_creacio_fi'] !== '') {
+                $array_data_creacio_inici = [];
+                $data_creacio_inici = $dades['data_creacio_inici'];
+                array_push($array_data_creacio_inici, $data_creacio_inici);
+                $session->push('filtres', ['data_creacio_inici' => $array_data_creacio_inici]);
+                $array_data_creacio_fi = [];
+                $data_creacio_fi = $dades['data_creacio_fi'];
+                array_push($array_data_creacio_fi, $data_creacio_fi);
+                $session->push('filtres', ['data_creacio_fi' => $array_data_creacio_fi]);
             }
+
         }
         return redirect()->back()->withInput();
     }
@@ -926,10 +941,13 @@ class RegistresController extends BaseController
             unset($filtre_session['nom_centre_reparador']);
             session()->set('filtres', $filtre_session);
         }
-        if ($filtre_eliminar['operacio'] == 'data_creacio') {
-            unset($filtre_session['data_creacio']);
+        if ($filtre_eliminar['operacio'] == 'data_creacio_inici') {
+            unset($filtre_session['data_creacio_inici']);
+            session()->set('filtres', $filtre_session);
+            unset($filtre_session['data_creacio_fi']);
             session()->set('filtres', $filtre_session);
         }
+
         if (count($filtre_session) == 0) {
             session()->remove('filtres');
         }
