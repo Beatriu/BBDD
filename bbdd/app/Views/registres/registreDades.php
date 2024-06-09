@@ -154,9 +154,9 @@
             </form>
 
 
-            <div class="row">
+            <div class="row mt-4">
                 <div class="col">
-
+                    <?= $output ?>
                 </div>
             </div>
 

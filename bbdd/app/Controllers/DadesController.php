@@ -63,10 +63,15 @@ class DadesController extends BaseController
             $data['tipus_actor_despeses_temps'] = "\"<option value='centre_reparador' >". lang('dades.centre_reparador') ."</option><option value='sstt' >". lang('dades.sstt') ."</option><option value='total' >". lang('dades.total') ."</option>\"";
         }
 
+        $data['output'] = "";
+        if (session()->getFlashdata("taula") != null) {
+            $data['output'] = session()->getFlashdata("taula");
+        }
+
         return view('registres' . DIRECTORY_SEPARATOR . 'registreDades', $data);
     }
 
-    public function descarregarDades()
+    public function descarregarDades($mode = null)
     {
         $tiquet_model = new TiquetModel();
         $centre_model = new CentreModel();
@@ -123,13 +128,9 @@ class DadesController extends BaseController
                         for ($i = 0; $i < sizeof($array_resultat); $i++) {
                             if ($role == "admin_sstt") {
                                 $pertany_sstt = $array_resultat[$i]['id_sstt'] == $id_sstt;
-                                if ($pertany_sstt) {
-                                    $array_resultat[$i]['nom_centre'] = $centre_model->obtenirCentre($array_resultat[$i]['codi_centre_reparador'])['nom_centre'];
-                                } else {
+                                if (!$pertany_sstt) {
                                     array_push($array_eliminar, $i);
                                 }
-                            } else if ($role == "desenvolupador") {
-                                $array_resultat[$i]['nom_centre'] = $centre_model->obtenirCentre($array_resultat[$i]['codi_centre_reparador'])['nom_centre'];
                             }
                         }
                         for ($j = 0; $j < sizeof($array_eliminar); $j++) {
@@ -142,6 +143,8 @@ class DadesController extends BaseController
                         $file = fopen($file_path, 'w');
                         fwrite($file, "\xEF\xBB\xBF");
                         $header = ['Dades','Codi centre', 'Nom centre', 'Nombre dispositius'];
+                        $array_visualitzar = [];
+                        array_push($array_visualitzar,$header);
                         fputcsv($file, $header, ';'); 
                         foreach ($array_resultat as $row) {
                             $data = [
@@ -151,6 +154,7 @@ class DadesController extends BaseController
                                 $row['num_tiquets']
                             ];
                             fputcsv($file, $data, ';'); 
+                            array_push($array_visualitzar,$data);
                         }
                         fclose($file);
                         
@@ -181,6 +185,8 @@ class DadesController extends BaseController
                         $file = fopen($file_path, 'w');
                         fwrite($file, "\xEF\xBB\xBF");
                         $header = ['Dades','Codi centre', 'Nom centre', 'Nombre dispositius'];
+                        $array_visualitzar = [];
+                        array_push($array_visualitzar,$header);
                         fputcsv($file, $header, ';'); 
                         foreach ($array_resultat as $row) {
                             $data = [
@@ -190,6 +196,7 @@ class DadesController extends BaseController
                                 $row['num_tiquets']
                             ];
                             fputcsv($file, $data, ';'); 
+                            array_push($array_visualitzar,$data);
                         }
                         fclose($file);
                         
@@ -226,6 +233,8 @@ class DadesController extends BaseController
                         $file = fopen($file_path, 'w');
                         fwrite($file, "\xEF\xBB\xBF");
                         $header = ['Dades','Codi centre', 'Nom centre', 'Nom tipus dispositiu', 'Nombre dispositius'];
+                        $array_visualitzar = [];
+                        array_push($array_visualitzar,$header);
                         fwrite($file, "\xEF\xBB\xBF");
                         fputcsv($file, $header, ';'); 
                         foreach ($array_resultat as $row) {
@@ -234,9 +243,10 @@ class DadesController extends BaseController
                                 $row['codi_centre_reparador'], 
                                 $row['nom_centre'], 
                                 $row['nom_tipus_dispositiu'],
-                                $row['num_tiquets']
+                                $row['num_tiquets'],
                             ];
                             fputcsv($file, $data, ';'); 
+                            array_push($array_visualitzar,$data);
                         }
                         fclose($file);
 
@@ -269,6 +279,8 @@ class DadesController extends BaseController
                         $file = fopen($file_path, 'w');
                         fwrite($file, "\xEF\xBB\xBF");
                         $header = ['Dades','Codi centre', 'Nom centre', 'Nom tipus dispositiu', 'Nombre dispositius'];
+                        $array_visualitzar = [];
+                        array_push($array_visualitzar,$header);
                         fputcsv($file, $header, ';'); 
                         foreach ($array_resultat as $row) {
                             $data = [
@@ -279,6 +291,7 @@ class DadesController extends BaseController
                                 $row['num_tiquets']
                             ];
                             fputcsv($file, $data, ';'); 
+                            array_push($array_visualitzar,$data);
                         }
                         fclose($file);
 
@@ -318,6 +331,8 @@ class DadesController extends BaseController
                         $file = fopen($file_path, 'w');
                         fwrite($file, "\xEF\xBB\xBF");
                         $header = ['Dades','Codi centre', 'Nom centre', 'Nom tipus dispositiu', 'Nombre dispositius'];
+                        $array_visualitzar = [];
+                        array_push($array_visualitzar,$header);
                         fputcsv($file, $header, ';'); 
                         foreach ($array_resultat as $row) {
                             $data = [
@@ -328,6 +343,7 @@ class DadesController extends BaseController
                                 $row['num_tiquets']
                             ];
                             fputcsv($file, $data, ';'); 
+                            array_push($array_visualitzar,$data);
                         }
                         fclose($file);
 
@@ -363,6 +379,8 @@ class DadesController extends BaseController
                         $file = fopen($file_path, 'w');
                         fwrite($file, "\xEF\xBB\xBF");
                         $header = ['Dades','Codi centre', 'Nom centre', 'Nom tipus dispositiu', 'Nombre dispositius'];
+                        $array_visualitzar = [];
+                        array_push($array_visualitzar,$header);
                         fputcsv($file, $header, ';'); 
                         foreach ($array_resultat as $row) {
                             $data = [
@@ -373,6 +391,7 @@ class DadesController extends BaseController
                                 $row['num_tiquets']
                             ];
                             fputcsv($file, $data, ';'); 
+                            array_push($array_visualitzar,$data);
                         }
                         fclose($file);
 
@@ -410,6 +429,8 @@ class DadesController extends BaseController
                         $file = fopen($file_path, 'w');
                         fwrite($file, "\xEF\xBB\xBF");
                         $header = ['Dades','Codi SSTT', 'Nom SSTT', 'Nombre dispositius'];
+                        $array_visualitzar = [];
+                        array_push($array_visualitzar,$header);
                         fputcsv($file, $header, ';'); 
                         foreach ($array_resultat as $row) {
                             $data = [
@@ -419,6 +440,7 @@ class DadesController extends BaseController
                                 $row['num_tiquets']
                             ];
                             fputcsv($file, $data, ';'); 
+                            array_push($array_visualitzar,$data);
                         }
                         fclose($file);
                         
@@ -449,6 +471,8 @@ class DadesController extends BaseController
                         $file = fopen($file_path, 'w');
                         fwrite($file, "\xEF\xBB\xBF");
                         $header = ['Dades','Codi SSTT', 'Nom SSTT', 'Nombre dispositius'];
+                        $array_visualitzar = [];
+                        array_push($array_visualitzar,$header);
                         fputcsv($file, $header, ';'); 
                         foreach ($array_resultat as $row) {
                             $data = [
@@ -458,6 +482,7 @@ class DadesController extends BaseController
                                 $row['num_tiquets']
                             ];
                             fputcsv($file, $data, ';'); 
+                            array_push($array_visualitzar,$data);
                         }
                         fclose($file);
                         
@@ -494,6 +519,8 @@ class DadesController extends BaseController
                         $file = fopen($file_path, 'w');
                         fwrite($file, "\xEF\xBB\xBF");
                         $header = ['Dades','Codi SSTT', 'Nom SSTT', 'Nom tipus dispositiu', 'Nombre dispositius'];
+                        $array_visualitzar = [];
+                        array_push($array_visualitzar,$header);
                         fputcsv($file, $header, ';'); 
                         foreach ($array_resultat as $row) {
                             $data = [
@@ -504,6 +531,7 @@ class DadesController extends BaseController
                                 $row['num_tiquets']
                             ];
                             fputcsv($file, $data, ';'); 
+                            array_push($array_visualitzar,$data);
                         }
                         fclose($file);
 
@@ -536,6 +564,8 @@ class DadesController extends BaseController
                         $file = fopen($file_path, 'w');
                         fwrite($file, "\xEF\xBB\xBF");
                         $header = ['Dades','Codi SSTT', 'Nom SSTT', 'Nom tipus dispositiu', 'Nombre dispositius'];
+                        $array_visualitzar = [];
+                        array_push($array_visualitzar,$header);
                         fputcsv($file, $header, ';'); 
                         foreach ($array_resultat as $row) {
                             $data = [
@@ -546,6 +576,7 @@ class DadesController extends BaseController
                                 $row['num_tiquets']
                             ];
                             fputcsv($file, $data, ';'); 
+                            array_push($array_visualitzar,$data);
                         }
                         fclose($file);
 
@@ -585,6 +616,8 @@ class DadesController extends BaseController
                         $file = fopen($file_path, 'w');
                         fwrite($file, "\xEF\xBB\xBF");
                         $header = ['Dades','Codi SSTT', 'Nom SSTT', 'Nom tipus dispositiu', 'Nombre dispositius'];
+                        $array_visualitzar = [];
+                        array_push($array_visualitzar,$header);
                         fputcsv($file, $header, ';'); 
                         foreach ($array_resultat as $row) {
                             $data = [
@@ -595,6 +628,7 @@ class DadesController extends BaseController
                                 $row['num_tiquets']
                             ];
                             fputcsv($file, $data, ';'); 
+                            array_push($array_visualitzar,$data);
                         }
                         fclose($file);
 
@@ -630,6 +664,8 @@ class DadesController extends BaseController
                         $file = fopen($file_path, 'w');
                         fwrite($file, "\xEF\xBB\xBF");
                         $header = ['Dades','Codi SSTT', 'Nom SSTT', 'Nom tipus dispositiu', 'Nombre dispositius'];
+                        $array_visualitzar = [];
+                        array_push($array_visualitzar,$header);
                         fputcsv($file, $header, ';'); 
                         foreach ($array_resultat as $row) {
                             $data = [
@@ -640,6 +676,7 @@ class DadesController extends BaseController
                                 $row['num_tiquets']
                             ];
                             fputcsv($file, $data, ';'); 
+                            array_push($array_visualitzar,$data);
                         }
                         fclose($file);
 
@@ -666,6 +703,8 @@ class DadesController extends BaseController
                         $file = fopen($file_path, 'w');
                         fwrite($file, "\xEF\xBB\xBF");
                         $header = ['Dades', 'Nombre dispositius'];
+                        $array_visualitzar = [];
+                        array_push($array_visualitzar,$header);
                         fputcsv($file, $header, ';'); 
                         foreach ($array_resultat as $row) {
                             $data = [
@@ -673,6 +712,7 @@ class DadesController extends BaseController
                                 $row['num_tiquets']
                             ];
                             fputcsv($file, $data, ';'); 
+                            array_push($array_visualitzar,$data);
                         }
                         fclose($file);
                         
@@ -686,6 +726,8 @@ class DadesController extends BaseController
                         $file = fopen($file_path, 'w');
                         fwrite($file, "\xEF\xBB\xBF");
                         $header = ['Dades', 'Nombre dispositius'];
+                        $array_visualitzar = [];
+                        array_push($array_visualitzar,$header);
                         fputcsv($file, $header, ';'); 
                         foreach ($array_resultat as $row) {
                             $data = [
@@ -693,6 +735,7 @@ class DadesController extends BaseController
                                 $row['num_tiquets']
                             ];
                             fputcsv($file, $data, ';'); 
+                            array_push($array_visualitzar,$data);
                         }
                         fclose($file);
                         
@@ -713,6 +756,8 @@ class DadesController extends BaseController
                         $file = fopen($file_path, 'w');
                         fwrite($file, "\xEF\xBB\xBF");
                         $header = ['Dades','Nom tipus dispositiu','Nombre dispositius'];
+                        $array_visualitzar = [];
+                        array_push($array_visualitzar,$header);
                         fputcsv($file, $header, ';'); 
                         foreach ($array_resultat as $row) {
                             $data = [
@@ -721,6 +766,7 @@ class DadesController extends BaseController
                                 $row['num_tiquets']
                             ];
                             fputcsv($file, $data, ';'); 
+                            array_push($array_visualitzar,$data);
                         }
                         fclose($file);
 
@@ -738,6 +784,8 @@ class DadesController extends BaseController
                         $file = fopen($file_path, 'w');
                         fwrite($file, "\xEF\xBB\xBF");
                         $header = ['Dades', 'Nom tipus dispositiu', 'Nombre dispositius'];
+                        $array_visualitzar = [];
+                        array_push($array_visualitzar,$header);
                         fputcsv($file, $header, ';'); 
                         foreach ($array_resultat as $row) {
                             $data = [
@@ -746,6 +794,7 @@ class DadesController extends BaseController
                                 $row['num_tiquets']
                             ];
                             fputcsv($file, $data, ';'); 
+                            array_push($array_visualitzar,$data);
                         }
                         fclose($file);
 
@@ -768,6 +817,8 @@ class DadesController extends BaseController
                         $file = fopen($file_path, 'w');
                         fwrite($file, "\xEF\xBB\xBF");
                         $header = ['Dades', 'Nom tipus dispositiu', 'Nombre dispositius'];
+                        $array_visualitzar = [];
+                        array_push($array_visualitzar,$header);
                         fputcsv($file, $header, ';'); 
                         foreach ($array_resultat as $row) {
                             $data = [
@@ -776,6 +827,7 @@ class DadesController extends BaseController
                                 $row['num_tiquets']
                             ];
                             fputcsv($file, $data, ';'); 
+                            array_push($array_visualitzar,$data);
                         }
                         fclose($file);
 
@@ -794,6 +846,8 @@ class DadesController extends BaseController
                         $file = fopen($file_path, 'w');
                         fwrite($file, "\xEF\xBB\xBF");
                         $header = ['Dades', 'Nom tipus dispositiu', 'Nombre dispositius'];
+                        $array_visualitzar = [];
+                        array_push($array_visualitzar,$header);
                         fputcsv($file, $header, ';'); 
                         foreach ($array_resultat as $row) {
                             $data = [
@@ -802,6 +856,7 @@ class DadesController extends BaseController
                                 $row['num_tiquets']
                             ];
                             fputcsv($file, $data, ';'); 
+                            array_push($array_visualitzar,$data);
                         }
                         fclose($file);
 
@@ -841,6 +896,8 @@ class DadesController extends BaseController
                     $file = fopen($file_path, 'w');
                     fwrite($file, "\xEF\xBB\xBF");
                     $header = ['Dades','Codi centre', 'Nom centre', 'Nombre dispositius'];
+                    $array_visualitzar = [];
+                    array_push($array_visualitzar,$header);
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -850,6 +907,7 @@ class DadesController extends BaseController
                             $row['num_tiquets']
                         ];
                         fputcsv($file, $data, ';'); 
+                        array_push($array_visualitzar,$data);
                     }
                     fclose($file);
 
@@ -882,6 +940,8 @@ class DadesController extends BaseController
                     $file = fopen($file_path, 'w');
                     fwrite($file, "\xEF\xBB\xBF");
                     $header = ['Dades','Codi centre', 'Nom centre', 'Nom tipus dispositiu', 'Nombre dispositius'];
+                    $array_visualitzar = [];
+                    array_push($array_visualitzar,$header);
                     fwrite($file, "\xEF\xBB\xBF");
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
@@ -893,6 +953,7 @@ class DadesController extends BaseController
                             $row['num_tiquets']
                         ];
                         fputcsv($file, $data, ';'); 
+                        array_push($array_visualitzar,$data);
                     }
                     fclose($file);
 
@@ -928,6 +989,8 @@ class DadesController extends BaseController
                     $file = fopen($file_path, 'w');
                     fwrite($file, "\xEF\xBB\xBF");
                     $header = ['Dades','Codi centre', 'Nom centre', 'Nom tipus dispositiu', 'Nombre dispositius'];
+                    $array_visualitzar = [];
+                    array_push($array_visualitzar,$header);
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -938,6 +1001,7 @@ class DadesController extends BaseController
                             $row['num_tiquets']
                         ];
                         fputcsv($file, $data, ';'); 
+                        array_push($array_visualitzar,$data);
                     }
                     fclose($file);
 
@@ -967,6 +1031,8 @@ class DadesController extends BaseController
                     $file = fopen($file_path, 'w');
                     fwrite($file, "\xEF\xBB\xBF");
                     $header = ['Dades','Codi municipi', 'Nom municipi', 'Nombre dispositius'];
+                    $array_visualitzar = [];
+                    array_push($array_visualitzar,$header);
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -976,6 +1042,7 @@ class DadesController extends BaseController
                             $row['num_tiquets']
                         ];
                         fputcsv($file, $data, ';'); 
+                        array_push($array_visualitzar,$data);
                     }
                     fclose($file);
 
@@ -1001,6 +1068,8 @@ class DadesController extends BaseController
                     $file = fopen($file_path, 'w');
                     fwrite($file, "\xEF\xBB\xBF");
                     $header = ['Dades','Codi municipi', 'Nom municipi', 'Nom tipus dispositiu', 'Nombre dispositius'];
+                    $array_visualitzar = [];
+                    array_push($array_visualitzar,$header);
                     fwrite($file, "\xEF\xBB\xBF");
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
@@ -1012,6 +1081,7 @@ class DadesController extends BaseController
                             $row['num_tiquets']
                         ];
                         fputcsv($file, $data, ';'); 
+                        array_push($array_visualitzar,$data);
                     }
                     fclose($file);
 
@@ -1037,6 +1107,8 @@ class DadesController extends BaseController
                     $file = fopen($file_path, 'w');
                     fwrite($file, "\xEF\xBB\xBF");
                     $header = ['Dades','Codi municipi', 'Nom municipi', 'Nom tipus dispositiu', 'Nombre dispositius'];
+                    $array_visualitzar = [];
+                    array_push($array_visualitzar,$header);
                     fwrite($file, "\xEF\xBB\xBF");
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
@@ -1048,6 +1120,7 @@ class DadesController extends BaseController
                             $row['num_tiquets']
                         ];
                         fputcsv($file, $data, ';'); 
+                        array_push($array_visualitzar,$data);
                     }
                     fclose($file);
 
@@ -1077,6 +1150,8 @@ class DadesController extends BaseController
                     $file = fopen($file_path, 'w');
                     fwrite($file, "\xEF\xBB\xBF");
                     $header = ['Dades','Codi comarca', 'Nom comarca', 'Nombre dispositius'];
+                    $array_visualitzar = [];
+                    array_push($array_visualitzar,$header);
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -1086,6 +1161,7 @@ class DadesController extends BaseController
                             $row['num_tiquets']
                         ];
                         fputcsv($file, $data, ';'); 
+                        array_push($array_visualitzar,$data);
                     }
                     fclose($file);
 
@@ -1111,6 +1187,8 @@ class DadesController extends BaseController
                     $file = fopen($file_path, 'w');
                     fwrite($file, "\xEF\xBB\xBF");
                     $header = ['Dades','Codi comarca', 'Nom comarca', 'Nom tipus dispositiu', 'Nombre dispositius'];
+                    $array_visualitzar = [];
+                    array_push($array_visualitzar,$header);
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -1120,7 +1198,8 @@ class DadesController extends BaseController
                             $row['nom_tipus_dispositiu'],
                             $row['num_tiquets']
                         ];
-                        fputcsv($file, $data, ';'); 
+                        fputcsv($file, $data, ';');
+                        array_push($array_visualitzar,$data); 
                     }
                     fclose($file);
 
@@ -1146,6 +1225,8 @@ class DadesController extends BaseController
                     $file = fopen($file_path, 'w');
                     fwrite($file, "\xEF\xBB\xBF");
                     $header = ['Dades','Codi comarca', 'Nom comarca', 'Nom tipus dispositiu', 'Nombre dispositius'];
+                    $array_visualitzar = [];
+                    array_push($array_visualitzar,$header);
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -1156,6 +1237,7 @@ class DadesController extends BaseController
                             $row['num_tiquets']
                         ];
                         fputcsv($file, $data, ';'); 
+                        array_push($array_visualitzar,$data);
                     }
                     fclose($file);
 
@@ -1185,6 +1267,8 @@ class DadesController extends BaseController
                     $file = fopen($file_path, 'w');
                     fwrite($file, "\xEF\xBB\xBF");
                     $header = ['Dades','Codi SSTT', 'Nom SSTT', 'Nombre dispositius'];
+                    $array_visualitzar = [];
+                    array_push($array_visualitzar,$header);
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -1194,6 +1278,7 @@ class DadesController extends BaseController
                             $row['num_tiquets']
                         ];
                         fputcsv($file, $data, ';'); 
+                        array_push($array_visualitzar,$data);
                     }
                     fclose($file);
 
@@ -1219,6 +1304,8 @@ class DadesController extends BaseController
                     $file = fopen($file_path, 'w');
                     fwrite($file, "\xEF\xBB\xBF");
                     $header = ['Dades','Codi SSTT', 'Nom SSTT', 'Nom tipus dispositiu', 'Nombre dispositius'];
+                    $array_visualitzar = [];
+                    array_push($array_visualitzar,$header);
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -1229,6 +1316,7 @@ class DadesController extends BaseController
                             $row['num_tiquets']
                         ];
                         fputcsv($file, $data, ';'); 
+                        array_push($array_visualitzar,$data);
                     }
                     fclose($file);
 
@@ -1254,6 +1342,8 @@ class DadesController extends BaseController
                     $file = fopen($file_path, 'w');
                     fwrite($file, "\xEF\xBB\xBF");
                     $header = ['Dades','Codi SSTT', 'Nom SSTT', 'Nom tipus dispositiu', 'Nombre dispositius'];
+                    $array_visualitzar = [];
+                    array_push($array_visualitzar,$header);
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -1264,6 +1354,7 @@ class DadesController extends BaseController
                             $row['num_tiquets']
                         ];
                         fputcsv($file, $data, ';'); 
+                        array_push($array_visualitzar,$data);
                     }
                     fclose($file);
 
@@ -1285,6 +1376,8 @@ class DadesController extends BaseController
                     $file = fopen($file_path, 'w');
                     fwrite($file, "\xEF\xBB\xBF");
                     $header = ['Dades', 'Nombre dispositius'];
+                    $array_visualitzar = [];
+                    array_push($array_visualitzar,$header);
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -1292,6 +1385,7 @@ class DadesController extends BaseController
                             $row['num_tiquets']
                         ];
                         fputcsv($file, $data, ';'); 
+                        array_push($array_visualitzar,$data);
                     }
                     fclose($file);
 
@@ -1305,6 +1399,8 @@ class DadesController extends BaseController
                     $file = fopen($file_path, 'w');
                     fwrite($file, "\xEF\xBB\xBF");
                     $header = ['Dades', 'Nom tipus dispositiu', 'Nombre dispositius'];
+                    $array_visualitzar = [];
+                    array_push($array_visualitzar,$header);
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -1313,6 +1409,7 @@ class DadesController extends BaseController
                             $row['num_tiquets']
                         ];
                         fputcsv($file, $data, ';'); 
+                        array_push($array_visualitzar,$data);
                     }
                     fclose($file);
 
@@ -1326,6 +1423,8 @@ class DadesController extends BaseController
                     $file = fopen($file_path, 'w');
                     fwrite($file, "\xEF\xBB\xBF");
                     $header = ['Dades', 'Nom tipus dispositiu', 'Nombre dispositius'];
+                    $array_visualitzar = [];
+                    array_push($array_visualitzar,$header);
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -1334,6 +1433,7 @@ class DadesController extends BaseController
                             $row['num_tiquets']
                         ];
                         fputcsv($file, $data, ';'); 
+                        array_push($array_visualitzar,$data);
                     }
                     fclose($file);
 
@@ -1367,6 +1467,8 @@ class DadesController extends BaseController
                     $file = fopen($file_path, 'w');
                     fwrite($file, "\xEF\xBB\xBF");
                     $header = ['Dades','Codi centre', 'Nom centre', 'Diners (€)'];
+                    $array_visualitzar = [];
+                    array_push($array_visualitzar,$header);
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -1376,6 +1478,7 @@ class DadesController extends BaseController
                             str_replace('.', ',', $row['total_preu']),
                         ];
                         fputcsv($file, $data, ';'); 
+                        array_push($array_visualitzar,$data);
                     }
                     fclose($file);
 
@@ -1401,6 +1504,8 @@ class DadesController extends BaseController
                     $file = fopen($file_path, 'w');
                     fwrite($file, "\xEF\xBB\xBF");
                     $header = ['Dades','Codi centre', 'Nom centre', 'Nom tipus dispositiu', 'Diners (€)'];
+                    $array_visualitzar = [];
+                    array_push($array_visualitzar,$header);
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -1411,6 +1516,7 @@ class DadesController extends BaseController
                             str_replace('.', ',', $row['total_preu']),
                         ];
                         fputcsv($file, $data, ';'); 
+                        array_push($array_visualitzar,$data);
                     }
                     fclose($file);
 
@@ -1436,6 +1542,8 @@ class DadesController extends BaseController
                     $file = fopen($file_path, 'w');
                     fwrite($file, "\xEF\xBB\xBF");
                     $header = ['Dades','Codi centre', 'Nom centre', 'Nom tipus dispositiu', 'Diners (€)'];
+                    $array_visualitzar = [];
+                    array_push($array_visualitzar,$header);
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -1446,6 +1554,7 @@ class DadesController extends BaseController
                             str_replace('.', ',', $row['total_preu']),
                         ];
                         fputcsv($file, $data, ';'); 
+                        array_push($array_visualitzar,$data);
                     }
                     fclose($file);
 
@@ -1475,6 +1584,8 @@ class DadesController extends BaseController
                     $file = fopen($file_path, 'w');
                     fwrite($file, "\xEF\xBB\xBF");
                     $header = ['Dades','Codi centre', 'Nom centre', 'Diners (€)'];
+                    $array_visualitzar = [];
+                    array_push($array_visualitzar,$header);
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -1484,6 +1595,7 @@ class DadesController extends BaseController
                             str_replace('.', ',', $row['total_preu']),
                         ];
                         fputcsv($file, $data, ';'); 
+                        array_push($array_visualitzar,$data);
                     }
                     fclose($file);
 
@@ -1509,6 +1621,8 @@ class DadesController extends BaseController
                     $file = fopen($file_path, 'w');
                     fwrite($file, "\xEF\xBB\xBF");
                     $header = ['Dades','Codi centre', 'Nom centre', 'Nom tipus dispositiu', 'Diners (€)'];
+                    $array_visualitzar = [];
+                    array_push($array_visualitzar,$header);
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -1519,6 +1633,7 @@ class DadesController extends BaseController
                             str_replace('.', ',', $row['total_preu']),
                         ];
                         fputcsv($file, $data, ';'); 
+                        array_push($array_visualitzar,$data);
                     }
                     fclose($file);
 
@@ -1544,6 +1659,8 @@ class DadesController extends BaseController
                     $file = fopen($file_path, 'w');
                     fwrite($file, "\xEF\xBB\xBF");
                     $header = ['Dades','Codi centre', 'Nom centre', 'Nom tipus dispositiu', 'Diners (€)'];
+                    $array_visualitzar = [];
+                    array_push($array_visualitzar,$header);
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -1554,6 +1671,7 @@ class DadesController extends BaseController
                             str_replace('.', ',', $row['total_preu']),
                         ];
                         fputcsv($file, $data, ';'); 
+                        array_push($array_visualitzar,$data);
                     }
                     fclose($file);
 
@@ -1583,6 +1701,8 @@ class DadesController extends BaseController
                     $file = fopen($file_path, 'w');
                     fwrite($file, "\xEF\xBB\xBF");
                     $header = ['Dades','Codi municipi', 'Nom municipi', 'Diners (€)'];
+                    $array_visualitzar = [];
+                    array_push($array_visualitzar,$header);
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -1592,6 +1712,7 @@ class DadesController extends BaseController
                             str_replace('.', ',', $row['total_preu']),
                         ];
                         fputcsv($file, $data, ';'); 
+                        array_push($array_visualitzar,$data);
                     }
                     fclose($file);
 
@@ -1617,6 +1738,8 @@ class DadesController extends BaseController
                     $file = fopen($file_path, 'w');
                     fwrite($file, "\xEF\xBB\xBF");
                     $header = ['Dades','Codi municipi', 'Nom municipi', 'Nom tipus dispositiu', 'Diners (€)'];
+                    $array_visualitzar = [];
+                    array_push($array_visualitzar,$header);
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -1627,6 +1750,7 @@ class DadesController extends BaseController
                             str_replace('.', ',', $row['total_preu']),
                         ];
                         fputcsv($file, $data, ';'); 
+                        array_push($array_visualitzar,$data);
                     }
                     fclose($file);
 
@@ -1652,6 +1776,8 @@ class DadesController extends BaseController
                     $file = fopen($file_path, 'w');
                     fwrite($file, "\xEF\xBB\xBF");
                     $header = ['Dades','Codi municipi', 'Nom municipi', 'Nom tipus dispositiu', 'Diners (€)'];
+                    $array_visualitzar = [];
+                    array_push($array_visualitzar,$header);
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -1662,6 +1788,7 @@ class DadesController extends BaseController
                             str_replace('.', ',', $row['total_preu']),
                         ];
                         fputcsv($file, $data, ';'); 
+                        array_push($array_visualitzar,$data);
                     }
                     fclose($file);
 
@@ -1691,6 +1818,8 @@ class DadesController extends BaseController
                     $file = fopen($file_path, 'w');
                     fwrite($file, "\xEF\xBB\xBF");
                     $header = ['Dades','Codi comarca', 'Nom comarca', 'Diners (€)'];
+                    $array_visualitzar = [];
+                    array_push($array_visualitzar,$header);
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -1700,6 +1829,7 @@ class DadesController extends BaseController
                             str_replace('.', ',', $row['total_preu']),
                         ];
                         fputcsv($file, $data, ';'); 
+                        array_push($array_visualitzar,$data);
                     }
                     fclose($file);
 
@@ -1725,6 +1855,8 @@ class DadesController extends BaseController
                     $file = fopen($file_path, 'w');
                     fwrite($file, "\xEF\xBB\xBF");
                     $header = ['Dades','Codi comarca', 'Nom comarca', 'Nom tipus dispositiu', 'Diners (€)'];
+                    $array_visualitzar = [];
+                    array_push($array_visualitzar,$header);
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -1735,6 +1867,7 @@ class DadesController extends BaseController
                             str_replace('.', ',', $row['total_preu']),
                         ];
                         fputcsv($file, $data, ';'); 
+                        array_push($array_visualitzar,$data);
                     }
                     fclose($file);
 
@@ -1760,6 +1893,8 @@ class DadesController extends BaseController
                     $file = fopen($file_path, 'w');
                     fwrite($file, "\xEF\xBB\xBF");
                     $header = ['Dades','Codi comarca', 'Nom comarca', 'Nom tipus dispositiu', 'Diners (€)'];
+                    $array_visualitzar = [];
+                    array_push($array_visualitzar,$header);
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -1770,6 +1905,7 @@ class DadesController extends BaseController
                             str_replace('.', ',', $row['total_preu']),
                         ];
                         fputcsv($file, $data, ';'); 
+                        array_push($array_visualitzar,$data);
                     }
                     fclose($file);
 
@@ -1799,6 +1935,8 @@ class DadesController extends BaseController
                     $file = fopen($file_path, 'w');
                     fwrite($file, "\xEF\xBB\xBF");
                     $header = ['Dades','Codi SSTT', 'Nom SSTT', 'Diners (€)'];
+                    $array_visualitzar = [];
+                    array_push($array_visualitzar,$header);
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -1808,6 +1946,7 @@ class DadesController extends BaseController
                             str_replace('.', ',', $row['total_preu']),
                         ];
                         fputcsv($file, $data, ';'); 
+                        array_push($array_visualitzar,$data);
                     }
                     fclose($file);
 
@@ -1833,6 +1972,8 @@ class DadesController extends BaseController
                     $file = fopen($file_path, 'w');
                     fwrite($file, "\xEF\xBB\xBF");
                     $header = ['Dades','Codi SSTT', 'Nom SSTT', 'Nom tipus dispositiu', 'Diners (€)'];
+                    $array_visualitzar = [];
+                    array_push($array_visualitzar,$header);
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -1843,6 +1984,7 @@ class DadesController extends BaseController
                             str_replace('.', ',', $row['total_preu']),
                         ];
                         fputcsv($file, $data, ';'); 
+                        array_push($array_visualitzar,$data);
                     }
                     fclose($file);
                     
@@ -1868,6 +2010,8 @@ class DadesController extends BaseController
                     $file = fopen($file_path, 'w');
                     fwrite($file, "\xEF\xBB\xBF");
                     $header = ['Dades','Codi SSTT', 'Nom SSTT', 'Nom tipus dispositiu', 'Diners (€)'];
+                    $array_visualitzar = [];
+                    array_push($array_visualitzar,$header);
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -1878,6 +2022,7 @@ class DadesController extends BaseController
                             str_replace('.', ',', $row['total_preu']),
                         ];
                         fputcsv($file, $data, ';'); 
+                        array_push($array_visualitzar,$data);
                     }
                     fclose($file);
 
@@ -1907,6 +2052,8 @@ class DadesController extends BaseController
                     $file = fopen($file_path, 'w');
                     fwrite($file, "\xEF\xBB\xBF");
                     $header = ['Dades','Codi SSTT', 'Nom SSTT', 'Diners (€)'];
+                    $array_visualitzar = [];
+                    array_push($array_visualitzar,$header);
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -1916,6 +2063,7 @@ class DadesController extends BaseController
                             str_replace('.', ',', $row['total_preu']),
                         ];
                         fputcsv($file, $data, ';'); 
+                        array_push($array_visualitzar,$data);
                     }
                     fclose($file);
 
@@ -1941,6 +2089,8 @@ class DadesController extends BaseController
                     $file = fopen($file_path, 'w');
                     fwrite($file, "\xEF\xBB\xBF");
                     $header = ['Dades','Codi SSTT', 'Nom SSTT', 'Nom tipus dispositiu', 'Diners (€)'];
+                    $array_visualitzar = [];
+                    array_push($array_visualitzar,$header);
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -1951,6 +2101,7 @@ class DadesController extends BaseController
                             str_replace('.', ',', $row['total_preu']),
                         ];
                         fputcsv($file, $data, ';'); 
+                        array_push($array_visualitzar,$data);
                     }
                     fclose($file);
                     
@@ -1976,6 +2127,8 @@ class DadesController extends BaseController
                     $file = fopen($file_path, 'w');
                     fwrite($file, "\xEF\xBB\xBF");
                     $header = ['Dades','Codi SSTT', 'Nom SSTT', 'Nom tipus dispositiu', 'Diners (€)'];
+                    $array_visualitzar = [];
+                    array_push($array_visualitzar,$header);
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -1986,6 +2139,7 @@ class DadesController extends BaseController
                             str_replace('.', ',', $row['total_preu']),
                         ];
                         fputcsv($file, $data, ';'); 
+                        array_push($array_visualitzar,$data);
                     }
                     fclose($file);
 
@@ -2007,6 +2161,8 @@ class DadesController extends BaseController
                     $file = fopen($file_path, 'w');
                     fwrite($file, "\xEF\xBB\xBF");
                     $header = ['Dades', 'Diners (€)'];
+                    $array_visualitzar = [];
+                    array_push($array_visualitzar,$header);
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -2014,6 +2170,7 @@ class DadesController extends BaseController
                             str_replace('.', ',', $row['total_preu']),
                         ];
                         fputcsv($file, $data, ';'); 
+                        array_push($array_visualitzar,$data);
                     }
                     fclose($file);
 
@@ -2027,6 +2184,8 @@ class DadesController extends BaseController
                     $file = fopen($file_path, 'w');
                     fwrite($file, "\xEF\xBB\xBF");
                     $header = ['Dades', 'Nom tipus dispositiu', 'Diners (€)'];
+                    $array_visualitzar = [];
+                    array_push($array_visualitzar,$header);
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -2035,6 +2194,7 @@ class DadesController extends BaseController
                             str_replace('.', ',', $row['total_preu']),
                         ];
                         fputcsv($file, $data, ';'); 
+                        array_push($array_visualitzar,$data);
                     }
                     fclose($file);
 
@@ -2048,6 +2208,8 @@ class DadesController extends BaseController
                     $file = fopen($file_path, 'w');
                     fwrite($file, "\xEF\xBB\xBF");
                     $header = ['Dades', 'Nom tipus dispositiu', 'Diners (€)'];
+                    $array_visualitzar = [];
+                    array_push($array_visualitzar,$header);
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -2056,6 +2218,7 @@ class DadesController extends BaseController
                             str_replace('.', ',', $row['total_preu']),
                         ];
                         fputcsv($file, $data, ';'); 
+                        array_push($array_visualitzar,$data);
                     }
                     fclose($file);
 
@@ -2101,6 +2264,8 @@ class DadesController extends BaseController
                     $file = fopen($file_path, 'w');
                     fwrite($file, "\xEF\xBB\xBF");
                     $header = ['Dades', 'Codi centre', 'Nom centre', 'Any', 'Mes', 'Nombre dispositius'];
+                    $array_visualitzar = [];
+                    array_push($array_visualitzar,$header);
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -2111,7 +2276,8 @@ class DadesController extends BaseController
                             $row['mes'], 
                             $row['num_tiquets'],
                         ];
-                        fputcsv($file, $data, ';'); 
+                        fputcsv($file, $data, ';');
+                        array_push($array_visualitzar,$data); 
                     }
                     fclose($file);
 
@@ -2137,6 +2303,8 @@ class DadesController extends BaseController
                     $file = fopen($file_path, 'w');
                     fwrite($file, "\xEF\xBB\xBF");
                     $header = ['Dades', 'Codi centre', 'Nom centre', 'Any', 'Mes', 'Nombre dispositius'];
+                    $array_visualitzar = [];
+                    array_push($array_visualitzar,$header);
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -2148,6 +2316,7 @@ class DadesController extends BaseController
                             $row['num_tiquets'],
                         ];
                         fputcsv($file, $data, ';'); 
+                        array_push($array_visualitzar,$data);
                     }
                     fclose($file);
 
@@ -2177,6 +2346,8 @@ class DadesController extends BaseController
                     $file = fopen($file_path, 'w');
                     fwrite($file, "\xEF\xBB\xBF");
                     $header = ['Dades', 'Codi SSTT', 'Nom SSTT', 'Any', 'Mes', 'Nombre dispositius'];
+                    $array_visualitzar = [];
+                    array_push($array_visualitzar,$header);
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -2188,6 +2359,7 @@ class DadesController extends BaseController
                             $row['num_tiquets'],
                         ];
                         fputcsv($file, $data, ';'); 
+                        array_push($array_visualitzar,$data);
                     }
                     fclose($file);
 
@@ -2213,6 +2385,8 @@ class DadesController extends BaseController
                     $file = fopen($file_path, 'w');
                     fwrite($file, "\xEF\xBB\xBF");
                     $header = ['Dades', 'Codi SSTT', 'Nom SSTT', 'Any', 'Mes', 'Nombre dispositius'];
+                    $array_visualitzar = [];
+                    array_push($array_visualitzar,$header);
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -2224,6 +2398,7 @@ class DadesController extends BaseController
                             $row['num_tiquets'],
                         ];
                         fputcsv($file, $data, ';'); 
+                        array_push($array_visualitzar,$data);
                     }
                     fclose($file);
 
@@ -2245,6 +2420,8 @@ class DadesController extends BaseController
                     $file = fopen($file_path, 'w');
                     fwrite($file, "\xEF\xBB\xBF");
                     $header = ['Dades', 'Any', 'Mes', 'Nombre dispositius'];
+                    $array_visualitzar = [];
+                    array_push($array_visualitzar,$header);
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -2253,7 +2430,8 @@ class DadesController extends BaseController
                             $row['mes'], 
                             $row['num_tiquets'],
                         ];
-                        fputcsv($file, $data, ';'); 
+                        fputcsv($file, $data, ';');
+                        array_push($array_visualitzar,$data); 
                     }
                     fclose($file);
 
@@ -2267,6 +2445,8 @@ class DadesController extends BaseController
                     $file = fopen($file_path, 'w');
                     fwrite($file, "\xEF\xBB\xBF");
                     $header = ['Dades', 'Any', 'Mes', 'Nombre dispositius'];
+                    $array_visualitzar = [];
+                    array_push($array_visualitzar,$header);
                     fputcsv($file, $header, ';'); 
                     foreach ($array_resultat as $row) {
                         $data = [
@@ -2276,6 +2456,7 @@ class DadesController extends BaseController
                             $row['num_tiquets'],
                         ];
                         fputcsv($file, $data, ';'); 
+                        array_push($array_visualitzar,$data);
                     }
                     fclose($file);
 
@@ -2307,6 +2488,8 @@ class DadesController extends BaseController
                 $file = fopen($file_path, 'w');
                 fwrite($file, "\xEF\xBB\xBF");
                 $header = ['Dades', 'Codi centre', 'Nom centre', 'Any', 'Mes', 'Nombre dispositius'];
+                $array_visualitzar = [];
+                array_push($array_visualitzar,$header);
                 fputcsv($file, $header, ';'); 
                 foreach ($array_resultat as $row) {
                     $data = [
@@ -2318,6 +2501,7 @@ class DadesController extends BaseController
                         $row['num_tiquets'],
                     ];
                     fputcsv($file, $data, ';'); 
+                    array_push($array_visualitzar,$data);
                 }
                 fclose($file);
 
@@ -2343,6 +2527,8 @@ class DadesController extends BaseController
                 $file = fopen($file_path, 'w');
                 fwrite($file, "\xEF\xBB\xBF");
                 $header = ['Dades', 'Codi centre', 'Nom centre', 'Any', 'Mes', 'Nombre dispositius'];
+                $array_visualitzar = [];
+                array_push($array_visualitzar,$header);
                 fputcsv($file, $header, ';'); 
                 foreach ($array_resultat as $row) {
                     $data = [
@@ -2354,6 +2540,7 @@ class DadesController extends BaseController
                         $row['num_tiquets'],
                     ];
                     fputcsv($file, $data, ';'); 
+                    array_push($array_visualitzar,$data);
                 }
                 fclose($file);
 
@@ -2371,6 +2558,8 @@ class DadesController extends BaseController
                 $file = fopen($file_path, 'w');
                 fwrite($file, "\xEF\xBB\xBF");
                 $header = ['Dades', 'Any', 'Mes', 'Nombre dispositius'];
+                $array_visualitzar = [];
+                array_push($array_visualitzar,$header);
                 fputcsv($file, $header, ';'); 
                 foreach ($array_resultat as $row) {
                     $data = [
@@ -2380,6 +2569,7 @@ class DadesController extends BaseController
                         $row['num_tiquets'],
                     ];
                     fputcsv($file, $data, ';'); 
+                    array_push($array_visualitzar,$data);
                 }
                 fclose($file);
 
@@ -2409,6 +2599,8 @@ class DadesController extends BaseController
                 $file = fopen($file_path, 'w');
                 fwrite($file, "\xEF\xBB\xBF");
                 $header = ['Dades', 'Codi centre', 'Nom centre', 'Any', 'Mes', 'Diners (€)'];
+                $array_visualitzar = [];
+                array_push($array_visualitzar,$header);
                 fputcsv($file, $header, ';'); 
                 foreach ($array_resultat as $row) {
                     $data = [
@@ -2420,6 +2612,7 @@ class DadesController extends BaseController
                         str_replace('.', ',', $row['total_preu']),
                     ];
                     fputcsv($file, $data, ';'); 
+                    array_push($array_visualitzar,$data);
                 }
                 fclose($file);
 
@@ -2445,6 +2638,8 @@ class DadesController extends BaseController
                 $file = fopen($file_path, 'w');
                 fwrite($file, "\xEF\xBB\xBF");
                 $header = ['Dades', 'Codi SSTT', 'Nom SSTT', 'Any', 'Mes', 'Diners (€)'];
+                $array_visualitzar = [];
+                array_push($array_visualitzar,$header);
                 fputcsv($file, $header, ';'); 
                 foreach ($array_resultat as $row) {
                     $data = [
@@ -2456,6 +2651,7 @@ class DadesController extends BaseController
                         str_replace('.', ',', $row['total_preu']),
                     ];
                     fputcsv($file, $data, ';'); 
+                    array_push($array_visualitzar,$data);
                 }
                 fclose($file);
 
@@ -2473,6 +2669,8 @@ class DadesController extends BaseController
                 $file = fopen($file_path, 'w');
                 fwrite($file, "\xEF\xBB\xBF");
                 $header = ['Dades', 'Any', 'Mes', 'Diners (€)'];
+                $array_visualitzar = [];
+                array_push($array_visualitzar,$header);
                 fputcsv($file, $header, ';'); 
                 foreach ($array_resultat as $row) {
                     $data = [
@@ -2482,6 +2680,7 @@ class DadesController extends BaseController
                         str_replace('.', ',', $row['total_preu']),
                     ];
                     fputcsv($file, $data, ';'); 
+                    array_push($array_visualitzar,$data);
                 }
                 fclose($file);
 
@@ -2489,18 +2688,59 @@ class DadesController extends BaseController
         
         }
 
-        header('Content-Description: File Transfer');
-        header('Content-Type: text/csv; charset=UTF-8');
-        header('Content-Disposition: attachment; filename=' . basename($file_path));
-        header('Expires: 0');
-        header('Cache-Control: must-revalidate');
-        header('Pragma: public');
-        header('Content-Length: ' . filesize($file_path));
+    
+        if ($mode == "descarregar") {
 
-        readfile($file_path);
+            header('Content-Description: File Transfer');
+            header('Content-Type: text/csv; charset=UTF-8');
+            header('Content-Disposition: attachment; filename=' . basename($file_path));
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($file_path));
+    
+            readfile($file_path);
+
+        } else if ($mode == "visualitzar") {
+
+            $taula = '<table class="table table-striped row-border dataTable no-footer" id="data-list-vista_inventari" style="width: 100%;" aria-describedby="data-list-vista_inventari_info">';
+
+            for ($i = 0; $i < sizeof($array_visualitzar); $i++) {
+                if ($i == 0) {
+                    $taula .= "<thead><tr>";
+                } else if ($i == 1) {
+                    $taula .= "</thead><tbody><tr>";
+                } else {
+                    $taula .= "<tr>";
+                }
+
+                foreach ($array_visualitzar[$i] as $valor) {
+                    if ($i == 0) {
+                        $taula .= '<th class="sorting align-middle">';
+                        $taula .= $valor;
+                        $taula .= '</th>';
+                    } else {
+                        $taula .= '<td class="odd">';
+                        $taula .= $valor;
+                        $taula .= '</td>';
+                    }
+                }
+                $taula .= "</tr>";
+            }
+
+            $taula .= '</tbody><table>';
+
+            session()->setFlashdata("taula", $taula);
+            return redirect()->to(base_url('/dades'))->withInput();
+        }
+
         
         unlink($file_path);
-        exit;
+
+        if ($mode == "descarregar") {
+            exit;
+        }
+
     }
 
 }
