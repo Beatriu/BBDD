@@ -94,7 +94,15 @@ class TiquetModel extends Model
 
     public function countNombreDispositiusTotsEstatsSenseTipus()
     {
-        return $this->select('codi_centre_reparador')->selectCount('id_tiquet','num_tiquets')->where('id_estat',9)->orWhere('id_estat',10)->orWhere('id_estat',11)->groupBy('codi_centre_reparador')->findAll();
+        return $this->select('tiquet.codi_centre_reparador, centre.nom_centre, poblacio.id_sstt')
+                        ->selectCount('id_tiquet','num_tiquets')
+                        ->where('id_estat',9)
+                        ->orWhere('id_estat',10)
+                        ->orWhere('id_estat',11)
+                        ->join('centre', 'tiquet.codi_centre_reparador = centre.codi_centre')
+                        ->join('poblacio', 'centre.id_poblacio = poblacio.id_poblacio')
+                        ->groupBy('codi_centre_reparador')
+                        ->findAll();
     }
     public function countNombreDispositiusTotsEstatsSenseTipusSSTT()
     {
