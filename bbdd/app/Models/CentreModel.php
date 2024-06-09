@@ -12,7 +12,7 @@ class CentreModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['codi_centre','nom_centre','actiu','taller','telefon_centre','adreca_fisica_centre','nom_persona_contacte_centre','correu_persona_contacte_centre','id_sstt','id_poblacio','login'];
+    protected $allowedFields    = ['codi_centre','nom_centre','actiu','taller','telefon_centre','adreca_fisica_centre','nom_persona_contacte_centre','correu_persona_contacte_centre','id_sstt','id_poblacio','id_comarca','login'];
 
     // Dates
     protected $useTimestamps = false;
@@ -38,7 +38,7 @@ class CentreModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function addCentre($d1,$d2,$d3,$d4,$d5,$d6,$d7,$d8,$d9,$d10,$d11)
+    public function addCentre($d1,$d2,$d3,$d4,$d5,$d6,$d7,$d8,$d9,$d10,$d11,$d12)
     {
         $this->insert([
             "codi_centre" => $d1,
@@ -51,7 +51,8 @@ class CentreModel extends Model
             "correu_persona_contacte_centre" => $d8,
             "id_sstt" => $d9,
             "id_poblacio" => $d10,
-            "login" => $d11,
+            "id_comarca" => $d11,
+            "login" => $d12,
         ]);
     }
 
@@ -89,6 +90,11 @@ class CentreModel extends Model
     public function eliminarCentre()
     {
         
+    }
+
+    public function editarCentreComarca($codi_centre, $id_comarca)
+    {
+        return $this->update($codi_centre, ['id_comarca' => $id_comarca]);
     }
 
 }

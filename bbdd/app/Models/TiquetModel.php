@@ -101,6 +101,10 @@ class TiquetModel extends Model
     {
         return $this->selectCount('id_tiquet','num_tiquets')->where('id_estat',9)->orWhere('id_estat',10)->orWhere('id_estat',11)->findAll();
     }
+    public function countTiquetsSenseTipus()
+    {
+        return $this->select('codi_centre_emissor')->selectCount('id_tiquet','num_tiquets')->groupBy('codi_centre_emissor')->findAll();
+    }
 
     public function countNombreDispositiusEstatSenseTipus($id_estat)
     {
@@ -127,6 +131,10 @@ class TiquetModel extends Model
     {
         return $this->select('id_tipus_dispositiu')->selectCount('id_tiquet','num_tiquets')->where('id_estat',9)->orWhere('id_estat',10)->orWhere('id_estat',11)->groupBy('id_tipus_dispositiu')->findAll();
     }
+    public function countTiquetsTotsTipus()
+    {
+        return $this->select('codi_centre_emissor')->select('id_tipus_dispositiu')->selectCount('id_tiquet','num_tiquets')->groupBy('codi_centre_emissor')->groupBy('id_tipus_dispositiu')->findAll();
+    }
 
     public function countNombreDispositiusEstatTotsTipus($id_estat) {
         return $this->select('codi_centre_reparador')->select('id_tipus_dispositiu')->selectCount('id_tiquet','num_tiquets')->where('id_estat',$id_estat)->groupBy('codi_centre_reparador')->groupBy('id_tipus_dispositiu')->findAll();
@@ -149,6 +157,10 @@ class TiquetModel extends Model
     public function countNombreDispositiusTotsEstatsTipusTOTAL($id_tipus_dispositiu)
     {
         return $this->select('id_tipus_dispositiu')->selectCount('id_tiquet', 'num_tiquets')->where('id_tipus_dispositiu', $id_tipus_dispositiu)->groupStart()->where('id_estat', 9)->orWhere('id_estat', 10)->orWhere('id_estat', 11)->groupEnd()->findAll();
+    }
+    public function countTiquetsTipus($id_tipus_dispositiu)
+    {
+        return $this->select('codi_centre_emissor')->select('id_tipus_dispositiu')->selectCount('id_tiquet', 'num_tiquets')->where('id_tipus_dispositiu', $id_tipus_dispositiu)->groupBy('codi_centre_emissor')->findAll();
     }
 
     public function countNombreDispositiusEstatTipus($id_estat, $id_tipus_dispositiu)

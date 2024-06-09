@@ -65,6 +65,12 @@ class CentreProfessorAlumneLlistaAdmesosMigration extends Migration
                 'constraint'     => 5,
                 'unsigned'       => true,
                 'null'          => false,
+            ],        
+            'id_comarca'          => [
+                'type'           => 'INT',
+                'constraint'     => 2,
+                'unsigned'       => true,
+                'null'          => false,
             ],
         ]);
         $this->forge->addForeignKey('id_sstt', 'sstt', 'id_sstt');

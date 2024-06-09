@@ -204,7 +204,7 @@ class CentresController extends BaseController
             $login_centre = $this->request->getPost('login_centre');
 
             $model_centre = new CentreModel();
-
+            $poblacio_model = new PoblacioModel();
             $centre = $model_centre->obtenirCentre($codi_centre);
             
             if($centre == null){
@@ -217,7 +217,8 @@ class CentresController extends BaseController
                     if($centre_taller == 'taller'){
                         $es_taller = true;
                     }
-                    $model_centre->addCentre($codi_centre, $nom_centre, $activitat_centre, $es_taller, $telefon_centre, $adreca_centre, $nom_persona_de_contacte, $correu_persona_contacte, $actor['id_sstt'], $codi_poblacio, $login_centre);
+                    $id_comarca = $poblacio_model->getPoblacio($codi_poblacio)['id_comarca'];
+                    $model_centre->addCentre($codi_centre, $nom_centre, $activitat_centre, $es_taller, $telefon_centre, $adreca_centre, $nom_persona_de_contacte, $correu_persona_contacte, $actor['id_sstt'], $codi_poblacio, $id_comarca, $login_centre);
                 } else {
                     $activitat_centre = false;
                     $es_taller = false;
@@ -229,7 +230,8 @@ class CentresController extends BaseController
                     }
                     $model_poblacio = new PoblacioModel();
                     $poblacio = $model_poblacio->getPoblacio($codi_poblacio);
-                    $model_centre->addCentre($codi_centre, $nom_centre, $activitat_centre, $es_taller, $telefon_centre, $adreca_centre, $nom_persona_de_contacte, $correu_persona_contacte, $poblacio['id_sstt'], $codi_poblacio, $login_centre);
+                    $id_comarca = $poblacio_model->getPoblacio($codi_poblacio)['id_comarca'];
+                    $model_centre->addCentre($codi_centre, $nom_centre, $activitat_centre, $es_taller, $telefon_centre, $adreca_centre, $nom_persona_de_contacte, $correu_persona_contacte, $poblacio['id_sstt'], $codi_poblacio, $id_comarca, $login_centre);
                 }
                 return redirect()->to(base_url('/centres'));
             } else {
