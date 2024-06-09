@@ -22,4 +22,7 @@ return [
     'comarca' => "Comarca",
     'sstt_emissor' => "Servicios Territoriales (emisor)",
     'sstt_reparador' => "Servicios Territoriales (reparador)",
+    'nombre_finalitzats' => 'Número de dispositivos finalizados en función del tiempo',
+    'nombre_emesos' => 'Número de dispositivos emitdos en función del tiempo',
+    'despeses' => 'Gastos en función del tiempo',
 ];

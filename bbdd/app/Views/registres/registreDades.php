@@ -121,6 +121,9 @@
                             <option value="nombre_finalitzats" ><?= lang('dades.nombre_finalitzats') ?></option>
                             <option  value="nombre_emesos" ><?= lang('dades.nombre_emesos') ?></option>
                             <option  value="despeses" ><?= lang('dades.despeses') ?></option>
+                            <option  value="nombre_finalitzats_temps" ><?= lang('dades.nombre_finalitzats_temps') ?></option>
+                            <option  value="nombre_emesos_temps" ><?= lang('dades.nombre_emesos_temps') ?></option>
+                            <option  value="despeses_temps" ><?= lang('dades.despeses_temps') ?></option>
                         </select>
                     </div>
                     <div class="col-2 mt-4 d-none" id="estat_div">
@@ -202,7 +205,34 @@
 
             document.getElementById("tipus_actor").innerHTML = <?= $tipus_actor_despeses ?>;
 
-        } else {
+        } else if (tipus_dades_value == "nombre_finalitzats_temps") {
+
+            document.getElementById("estat_div").classList.remove("d-none");
+            document.getElementById("tipus_actor_div").classList.remove("d-none");
+            document.getElementById("tipus_dispositiu_div").classList.add("d-none");
+            document.getElementById("buttons_div").classList.remove("d-none");
+
+            document.getElementById("tipus_actor").innerHTML = <?= $tipus_actor_nombre_finalitzats_temps ?>;
+
+            } else if (tipus_dades_value == "nombre_emesos_temps") {
+
+            document.getElementById("estat_div").classList.add("d-none");
+            document.getElementById("tipus_actor_div").classList.remove("d-none");
+            document.getElementById("tipus_dispositiu_div").classList.add("d-none");
+            document.getElementById("buttons_div").classList.remove("d-none");
+
+            document.getElementById("tipus_actor").innerHTML = <?= $tipus_actor_nombre_emesos_temps ?>;
+
+            } else if (tipus_dades_value == "despeses_temps") {
+
+            document.getElementById("estat_div").classList.add("d-none");
+            document.getElementById("tipus_actor_div").classList.remove("d-none");
+            document.getElementById("tipus_dispositiu_div").classList.add("d-none");
+            document.getElementById("buttons_div").classList.remove("d-none");
+
+            document.getElementById("tipus_actor").innerHTML = <?= $tipus_actor_despeses_temps ?>;
+
+            } else {
             
             document.getElementById("estat_div").classList.add("d-none");
             document.getElementById("tipus_actor_div").classList.add("d-none");

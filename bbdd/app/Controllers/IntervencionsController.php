@@ -217,10 +217,17 @@ class IntervencionsController extends BaseController
                 $inventari_json = $this->request->getPost('inventari_json');
                 $inventari_array = json_decode((string) $inventari_json);
 
+                $preu_sum = 0.0;
                 if ($inventari_array != null) {
                     for ($i = 0; $i < sizeof($inventari_array); $i++) {
                         $inventari_model->editarInventariAssignar($inventari_array[$i]->id, $uuid);
+                        $preu_sum += $inventari_model->obtenirInventariPerId($inventari_array[$i]->id)['preu'];
                     }
+
+                    $data = [
+                        "preu_total" => $tiquet['preu_total'] + $preu_sum,
+                    ];
+                    $tiquet_model->updateTiquet($tiquet['id_tiquet'], $data);
                 }
 
                 return redirect()->to('tiquets/' . $id_tiquet);
@@ -582,9 +589,16 @@ class IntervencionsController extends BaseController
 
                     $array_inventari = $inventari_model->obtenirInventariIntervencio($id_intervencio);
 
+                    $preu_sum = 0;
                     for ($k = 0; $k < sizeof($array_inventari); $k++) {
                         $inventari_model->editarInventariDesassignar($array_inventari[$k]['id_inventari']);
+                        $preu_sum += $array_inventari[$k]['preu'];
                     }
+
+                    $data = [
+                        "preu_total" => $tiquet['preu_total'] - $preu_sum,
+                    ];
+                    $tiquet_model->updateTiquet($tiquet['id_tiquet'], $data);
                     
                     $intervencio_model->deleteIntervencio($id_intervencio);
                     $msg = lang('alertes.flash_data_delete_intervencio') . $id_tiquet;

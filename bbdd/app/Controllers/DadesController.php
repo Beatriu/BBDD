@@ -35,17 +35,32 @@ class DadesController extends BaseController
         }
 
         if ($role == "admin_sstt") {
+
             $data['tipus_actor_nombre_finalitzats'] = "\"<option value='centre_reparador' >". lang('dades.centre_reparador') ."</option><option  value='sstt' >". lang('dades.sstt') ."</option>\"";
             
             $data['tipus_actor_nombre_emesos'] = "\"<option value='centre_emissor' >". lang('dades.centre_emissor') ."</option><option value='poblacio' >". lang('dades.poblacio') ."</option><option value='comarca' >". lang('dades.comarca') ."</option><option  value='sstt' >". lang('dades.sstt') ."</option>\"";
 
-            $data['tipus_actor_despeses'] = "\"<option value='centre_emissor' >". lang('dades.centre_emissor') ."</option><option value='centre_reparador' >". lang('dades.centre_reparador') ."</option><option value='poblacio' >". lang('dades.poblacio') ."</option><option  value='sstt_emissor' >". lang('dades.sstt_emissor') ."</option><option value='sstt_reparador' >". lang('dades.sstt_reparador') ."</option>\"";
+            $data['tipus_actor_despeses'] = "\"<option value='centre_emissor' >". lang('dades.centre_emissor') ."</option><option value='centre_reparador' >". lang('dades.centre_reparador') ."</option><option value='poblacio' >". lang('dades.poblacio') ."</option><option value='comarca' >". lang('dades.comarca') ."</option><option  value='sstt_emissor' >". lang('dades.sstt_emissor') ."</option><option value='sstt_reparador' >". lang('dades.sstt_reparador') ."</option>\"";
+        
+            $data['tipus_actor_nombre_finalitzats_temps'] = "\"<option value='centre_reparador' >". lang('dades.centre_reparador') ."</option><option value='sstt' >". lang('dades.sstt') ."</option>\"";
+
+            $data['tipus_actor_nombre_emesos_temps'] = "\"<option value='centre_emissor' >". lang('dades.centre_emissor') ."</option><option value='sstt' >". lang('dades.sstt') ."</option>\"";
+
+            $data['tipus_actor_despeses_temps'] = "\"<option value='centre_reparador' >". lang('dades.centre_reparador') ."</option><option value='sstt' >". lang('dades.sstt') ."</option>\"";
+
         } else if ($role == "desenvolupador") {
+           
             $data['tipus_actor_nombre_finalitzats'] = "\"<option value='centre_reparador' >". lang('dades.centre_reparador') ."</option><option  value='sstt' >". lang('dades.sstt') ."</option><option  value='total' >". lang('dades.total') ."</option>\"";
             
             $data['tipus_actor_nombre_emesos'] = "\"<option value='centre_emissor' >". lang('dades.centre_emissor') ."</option><option value='poblacio' >". lang('dades.poblacio') ."</option><option value='comarca' >". lang('dades.comarca') ."</option><option  value='sstt' >". lang('dades.sstt') ."</option><option  value='total' >". lang('dades.total') ."</option>\"";
 
             $data['tipus_actor_despeses'] = "\"<option value='centre_emissor' >". lang('dades.centre_emissor') ."</option><option value='centre_reparador' >". lang('dades.centre_reparador') ."</option><option value='poblacio' >". lang('dades.poblacio') ."</option><option value='comarca' >". lang('dades.comarca') ."</option><option  value='sstt_emissor' >". lang('dades.sstt_emissor') ."</option><option value='sstt_reparador' >". lang('dades.sstt_reparador') ."</option><option  value='total' >". lang('dades.total') ."</option>\"";
+        
+            $data['tipus_actor_nombre_finalitzats_temps'] = "\"<option value='centre_reparador' >". lang('dades.centre_reparador') ."</option><option value='sstt' >". lang('dades.sstt') ."</option><option value='total' >". lang('dades.total') ."</option>\"";
+
+            $data['tipus_actor_nombre_emesos_temps'] = "\"<option value='centre_emissor' >". lang('dades.centre_emissor') ."</option><option value='sstt' >". lang('dades.sstt') ."</option><option value='total' >". lang('dades.total') ."</option>\"";
+        
+            $data['tipus_actor_despeses_temps'] = "\"<option value='centre_reparador' >". lang('dades.centre_reparador') ."</option><option value='sstt' >". lang('dades.sstt') ."</option><option value='total' >". lang('dades.total') ."</option>\"";
         }
 
         return view('registres' . DIRECTORY_SEPARATOR . 'registreDades', $data);
@@ -185,7 +200,6 @@ class DadesController extends BaseController
                     if ($id_estat == "tots") {
 
                         $array_resultat = $tiquet_model->countNombreDispositiusTotsEstatsTotsTipus();
-                        dd($array_resultat);
                         $array_eliminar = [];
                         for ($i = 0; $i < sizeof($array_resultat); $i++) {
                             if ($role == "admin_sstt") {
@@ -1327,6 +1341,1152 @@ class DadesController extends BaseController
 
             }
 
+        }  else if ($tipus_dades == "despeses") {
+
+            if ($tipus_actor == "centre_emissor") {
+
+                if ($id_tipus_dispositiu == "sense") {
+
+                    $array_resultat = $tiquet_model->sumTiquetsSenseTipusCentreEmissor();
+                    $array_eliminar = [];
+                    for ($i = 0; $i < sizeof($array_resultat); $i++) {
+                        if ($role == "admin_sstt") {
+                            $pertany_sstt = $poblacio_model->getPoblacio($array_resultat[$i]['id_poblacio'])['id_sstt'] == $id_sstt;
+                            if (!$pertany_sstt) {
+                                array_push($array_eliminar, $i);
+                            }
+                        }
+                    }
+                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
+                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    }
+                    
+                    $file_name = "despeses_centre_emissor_" . date('Ymd') . '.csv';
+                    $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
+                    
+                    $file = fopen($file_path, 'w');
+                    fwrite($file, "\xEF\xBB\xBF");
+                    $header = ['Dades','Codi centre', 'Nom centre', 'Diners (€)'];
+                    fputcsv($file, $header, ';'); 
+                    foreach ($array_resultat as $row) {
+                        $data = [
+                            'Despeses per',
+                            $row['codi_centre_emissor'], 
+                            $row['nom_centre'], 
+                            str_replace('.', ',', $row['total_preu']),
+                        ];
+                        fputcsv($file, $data, ';'); 
+                    }
+                    fclose($file);
+
+                } else if ($id_tipus_dispositiu == "tots_separats") {
+
+                    $array_resultat = $tiquet_model->sumTiquetsTotsTipusCentreEmissor();
+                    $array_eliminar = [];
+                    for ($i = 0; $i < sizeof($array_resultat); $i++) {
+                        if ($role == "admin_sstt") {
+                            $pertany_sstt = $poblacio_model->getPoblacio($array_resultat[$i]['id_poblacio'])['id_sstt'] == $id_sstt;
+                            if (!$pertany_sstt) {
+                                array_push($array_eliminar, $i);
+                            }
+                        }
+                    }
+                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
+                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    }
+                    
+                    $file_name = "despeses_centre_emissor_tipus_dispositiu_" . date('Ymd') . '.csv';
+                    $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
+                    
+                    $file = fopen($file_path, 'w');
+                    fwrite($file, "\xEF\xBB\xBF");
+                    $header = ['Dades','Codi centre', 'Nom centre', 'Nom tipus dispositiu', 'Diners (€)'];
+                    fputcsv($file, $header, ';'); 
+                    foreach ($array_resultat as $row) {
+                        $data = [
+                            'Despeses per',
+                            $row['codi_centre_emissor'], 
+                            $row['nom_centre'], 
+                            $row['nom_tipus_dispositiu'],
+                            str_replace('.', ',', $row['total_preu']),
+                        ];
+                        fputcsv($file, $data, ';'); 
+                    }
+                    fclose($file);
+
+                } else {
+
+                    $array_resultat = $tiquet_model->sumTiquetsTipusCentreEmissor($id_tipus_dispositiu);
+                    $array_eliminar = [];
+                    for ($i = 0; $i < sizeof($array_resultat); $i++) {
+                        if ($role == "admin_sstt") {
+                            $pertany_sstt = $poblacio_model->getPoblacio($array_resultat[$i]['id_poblacio'])['id_sstt'] == $id_sstt;
+                            if (!$pertany_sstt) {
+                                array_push($array_eliminar, $i);
+                            }
+                        }
+                    }
+                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
+                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    }
+                    
+                    $file_name = "despeses_centre_emissor_". strtolower($tipus_dispositiu_model->obtenirTipusDispositiuPerId($id_tipus_dispositiu)['nom_tipus_dispositiu']) ."_" . date('Ymd') . '.csv';
+                    $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
+                    
+                    $file = fopen($file_path, 'w');
+                    fwrite($file, "\xEF\xBB\xBF");
+                    $header = ['Dades','Codi centre', 'Nom centre', 'Nom tipus dispositiu', 'Diners (€)'];
+                    fputcsv($file, $header, ';'); 
+                    foreach ($array_resultat as $row) {
+                        $data = [
+                            'Despeses per',
+                            $row['codi_centre_emissor'], 
+                            $row['nom_centre'], 
+                            $row['nom_tipus_dispositiu'],
+                            str_replace('.', ',', $row['total_preu']),
+                        ];
+                        fputcsv($file, $data, ';'); 
+                    }
+                    fclose($file);
+
+                }
+
+            } elseif ($tipus_actor == "centre_reparador") {
+
+                if ($id_tipus_dispositiu == "sense") {
+
+                    $array_resultat = $tiquet_model->sumTiquetsSenseTipusCentreReparador();
+                    $array_eliminar = [];
+                    for ($i = 0; $i < sizeof($array_resultat); $i++) {
+                        if ($role == "admin_sstt") {
+                            $pertany_sstt = $poblacio_model->getPoblacio($array_resultat[$i]['id_poblacio'])['id_sstt'] == $id_sstt;
+                            if (!$pertany_sstt) {
+                                array_push($array_eliminar, $i);
+                            }
+                        }
+                    }
+                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
+                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    }
+                    
+                    $file_name = "despeses_centre_reparador_" . date('Ymd') . '.csv';
+                    $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
+                    
+                    $file = fopen($file_path, 'w');
+                    fwrite($file, "\xEF\xBB\xBF");
+                    $header = ['Dades','Codi centre', 'Nom centre', 'Diners (€)'];
+                    fputcsv($file, $header, ';'); 
+                    foreach ($array_resultat as $row) {
+                        $data = [
+                            'Despeses per',
+                            $row['codi_centre_reparador'], 
+                            $row['nom_centre'], 
+                            str_replace('.', ',', $row['total_preu']),
+                        ];
+                        fputcsv($file, $data, ';'); 
+                    }
+                    fclose($file);
+
+                } else if ($id_tipus_dispositiu == "tots_separats") {
+
+                    $array_resultat = $tiquet_model->sumTiquetsTotsTipusCentreReparador();
+                    $array_eliminar = [];
+                    for ($i = 0; $i < sizeof($array_resultat); $i++) {
+                        if ($role == "admin_sstt") {
+                            $pertany_sstt = $poblacio_model->getPoblacio($array_resultat[$i]['id_poblacio'])['id_sstt'] == $id_sstt;
+                            if (!$pertany_sstt) {
+                                array_push($array_eliminar, $i);
+                            }
+                        }
+                    }
+                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
+                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    }
+                    
+                    $file_name = "despeses_centre_reparador_tipus_dispositiu_" . date('Ymd') . '.csv';
+                    $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
+                    
+                    $file = fopen($file_path, 'w');
+                    fwrite($file, "\xEF\xBB\xBF");
+                    $header = ['Dades','Codi centre', 'Nom centre', 'Nom tipus dispositiu', 'Diners (€)'];
+                    fputcsv($file, $header, ';'); 
+                    foreach ($array_resultat as $row) {
+                        $data = [
+                            'Despeses per',
+                            $row['codi_centre_reparador'], 
+                            $row['nom_centre'], 
+                            $row['nom_tipus_dispositiu'],
+                            str_replace('.', ',', $row['total_preu']),
+                        ];
+                        fputcsv($file, $data, ';'); 
+                    }
+                    fclose($file);
+
+                } else {
+
+                    $array_resultat = $tiquet_model->sumTiquetsTipusCentreReparador($id_tipus_dispositiu);
+                    $array_eliminar = [];
+                    for ($i = 0; $i < sizeof($array_resultat); $i++) {
+                        if ($role == "admin_sstt") {
+                            $pertany_sstt = $poblacio_model->getPoblacio($array_resultat[$i]['id_poblacio'])['id_sstt'] == $id_sstt;
+                            if (!$pertany_sstt) {
+                                array_push($array_eliminar, $i);
+                            }
+                        }
+                    }
+                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
+                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    }
+                    
+                    $file_name = "despeses_centre_reparador_". strtolower($tipus_dispositiu_model->obtenirTipusDispositiuPerId($id_tipus_dispositiu)['nom_tipus_dispositiu']) ."_" . date('Ymd') . '.csv';
+                    $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
+                    
+                    $file = fopen($file_path, 'w');
+                    fwrite($file, "\xEF\xBB\xBF");
+                    $header = ['Dades','Codi centre', 'Nom centre', 'Nom tipus dispositiu', 'Diners (€)'];
+                    fputcsv($file, $header, ';'); 
+                    foreach ($array_resultat as $row) {
+                        $data = [
+                            'Despeses per',
+                            $row['codi_centre_reparador'], 
+                            $row['nom_centre'], 
+                            $row['nom_tipus_dispositiu'],
+                            str_replace('.', ',', $row['total_preu']),
+                        ];
+                        fputcsv($file, $data, ';'); 
+                    }
+                    fclose($file);
+
+                }
+
+            } elseif ($tipus_actor == "poblacio") {
+
+                if ($id_tipus_dispositiu == "sense") {
+
+                    $array_resultat = $tiquet_model->sumTiquetsSenseTipusPoblacio();
+                    $array_eliminar = [];
+                    for ($i = 0; $i < sizeof($array_resultat); $i++) {
+                        if ($role == "admin_sstt") {
+                            $pertany_sstt = $poblacio_model->getPoblacio($array_resultat[$i]['id_poblacio'])['id_sstt'] == $id_sstt;
+                            if (!$pertany_sstt) {
+                                array_push($array_eliminar, $i);
+                            }
+                        }
+                    }
+                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
+                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    }
+                    
+                    $file_name = "despeses_poblacio_" . date('Ymd') . '.csv';
+                    $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
+                    
+                    $file = fopen($file_path, 'w');
+                    fwrite($file, "\xEF\xBB\xBF");
+                    $header = ['Dades','Codi municipi', 'Nom municipi', 'Diners (€)'];
+                    fputcsv($file, $header, ';'); 
+                    foreach ($array_resultat as $row) {
+                        $data = [
+                            'Despeses per',
+                            $row['id_poblacio'], 
+                            $row['nom_poblacio'], 
+                            str_replace('.', ',', $row['total_preu']),
+                        ];
+                        fputcsv($file, $data, ';'); 
+                    }
+                    fclose($file);
+
+                } else if ($id_tipus_dispositiu == "tots_separats") {
+                    
+                    $array_resultat = $tiquet_model->sumTiquetsTotsTipusPoblacio();
+                    $array_eliminar = [];
+                    for ($i = 0; $i < sizeof($array_resultat); $i++) {
+                        if ($role == "admin_sstt") {
+                            $pertany_sstt = $poblacio_model->getPoblacio($array_resultat[$i]['id_poblacio'])['id_sstt'] == $id_sstt;
+                            if (!$pertany_sstt) {
+                                array_push($array_eliminar, $i);
+                            }
+                        }
+                    }
+                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
+                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    }
+                    
+                    $file_name = "despeses_poblacio_tipus_dispositiu_" . date('Ymd') . '.csv';
+                    $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
+                    
+                    $file = fopen($file_path, 'w');
+                    fwrite($file, "\xEF\xBB\xBF");
+                    $header = ['Dades','Codi municipi', 'Nom municipi', 'Nom tipus dispositiu', 'Diners (€)'];
+                    fputcsv($file, $header, ';'); 
+                    foreach ($array_resultat as $row) {
+                        $data = [
+                            'Despeses per',
+                            $row['id_poblacio'], 
+                            $row['nom_poblacio'], 
+                            $row['nom_tipus_dispositiu'],
+                            str_replace('.', ',', $row['total_preu']),
+                        ];
+                        fputcsv($file, $data, ';'); 
+                    }
+                    fclose($file);
+
+                } else {
+
+                    $array_resultat = $tiquet_model->sumTiquetsTipusPoblacio($id_tipus_dispositiu);
+                    $array_eliminar = [];
+                    for ($i = 0; $i < sizeof($array_resultat); $i++) {
+                        if ($role == "admin_sstt") {
+                            $pertany_sstt = $poblacio_model->getPoblacio($array_resultat[$i]['id_poblacio'])['id_sstt'] == $id_sstt;
+                            if (!$pertany_sstt) {
+                                array_push($array_eliminar, $i);
+                            }
+                        }
+                    }
+                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
+                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    }
+                    
+                    $file_name = "despeses_poblacio_". strtolower($tipus_dispositiu_model->obtenirTipusDispositiuPerId($id_tipus_dispositiu)['nom_tipus_dispositiu']) ."_" . date('Ymd') . '.csv';
+                    $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
+                    
+                    $file = fopen($file_path, 'w');
+                    fwrite($file, "\xEF\xBB\xBF");
+                    $header = ['Dades','Codi municipi', 'Nom municipi', 'Nom tipus dispositiu', 'Diners (€)'];
+                    fputcsv($file, $header, ';'); 
+                    foreach ($array_resultat as $row) {
+                        $data = [
+                            'Despeses per',
+                            $row['id_poblacio'], 
+                            $row['nom_poblacio'], 
+                            $row['nom_tipus_dispositiu'],
+                            str_replace('.', ',', $row['total_preu']),
+                        ];
+                        fputcsv($file, $data, ';'); 
+                    }
+                    fclose($file);
+
+                }
+
+            } elseif ($tipus_actor == "comarca") {
+
+                if ($id_tipus_dispositiu == "sense") {
+
+                    $array_resultat = $tiquet_model->sumTiquetsSenseTipusComarca();
+                    $array_eliminar = [];
+                    for ($i = 0; $i < sizeof($array_resultat); $i++) {
+                        if ($role == "admin_sstt") {
+                            $pertany_sstt = $poblacio_model->getPoblacio($array_resultat[$i]['id_poblacio'])['id_sstt'] == $id_sstt;
+                            if (!$pertany_sstt) {
+                                array_push($array_eliminar, $i);
+                            }
+                        }
+                    }
+                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
+                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    }
+                    
+                    $file_name = "despeses_comarca_" . date('Ymd') . '.csv';
+                    $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
+                    
+                    $file = fopen($file_path, 'w');
+                    fwrite($file, "\xEF\xBB\xBF");
+                    $header = ['Dades','Codi comarca', 'Nom comarca', 'Diners (€)'];
+                    fputcsv($file, $header, ';'); 
+                    foreach ($array_resultat as $row) {
+                        $data = [
+                            'Despeses per',
+                            $row['id_comarca'], 
+                            $row['nom_comarca'], 
+                            str_replace('.', ',', $row['total_preu']),
+                        ];
+                        fputcsv($file, $data, ';'); 
+                    }
+                    fclose($file);
+
+                } else if ($id_tipus_dispositiu == "tots_separats") {
+                    
+                    $array_resultat = $tiquet_model->sumTiquetsTotsTipusComarca();
+                    $array_eliminar = [];
+                    for ($i = 0; $i < sizeof($array_resultat); $i++) {
+                        if ($role == "admin_sstt") {
+                            $pertany_sstt = $poblacio_model->getPoblacio($array_resultat[$i]['id_poblacio'])['id_sstt'] == $id_sstt;
+                            if (!$pertany_sstt) {
+                                array_push($array_eliminar, $i);
+                            }
+                        }
+                    }
+                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
+                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    }
+                    
+                    $file_name = "despeses_comarca_tipus_dispositiu_" . date('Ymd') . '.csv';
+                    $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
+                    
+                    $file = fopen($file_path, 'w');
+                    fwrite($file, "\xEF\xBB\xBF");
+                    $header = ['Dades','Codi comarca', 'Nom comarca', 'Nom tipus dispositiu', 'Diners (€)'];
+                    fputcsv($file, $header, ';'); 
+                    foreach ($array_resultat as $row) {
+                        $data = [
+                            'Despeses per',
+                            $row['id_comarca'], 
+                            $row['nom_comarca'], 
+                            $row['nom_tipus_dispositiu'],
+                            str_replace('.', ',', $row['total_preu']),
+                        ];
+                        fputcsv($file, $data, ';'); 
+                    }
+                    fclose($file);
+
+                } else {
+
+                    $array_resultat = $tiquet_model->sumTiquetsTipusComarca($id_tipus_dispositiu);
+                    $array_eliminar = [];
+                    for ($i = 0; $i < sizeof($array_resultat); $i++) {
+                        if ($role == "admin_sstt") {
+                            $pertany_sstt = $poblacio_model->getPoblacio($array_resultat[$i]['id_poblacio'])['id_sstt'] == $id_sstt;
+                            if (!$pertany_sstt) {
+                                array_push($array_eliminar, $i);
+                            }
+                        }
+                    }
+                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
+                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    }
+                    
+                    $file_name = "despeses_comarca_". strtolower($tipus_dispositiu_model->obtenirTipusDispositiuPerId($id_tipus_dispositiu)['nom_tipus_dispositiu']) ."_" . date('Ymd') . '.csv';
+                    $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
+                    
+                    $file = fopen($file_path, 'w');
+                    fwrite($file, "\xEF\xBB\xBF");
+                    $header = ['Dades','Codi comarca', 'Nom comarca', 'Nom tipus dispositiu', 'Diners (€)'];
+                    fputcsv($file, $header, ';'); 
+                    foreach ($array_resultat as $row) {
+                        $data = [
+                            'Despeses per',
+                            $row['id_comarca'], 
+                            $row['nom_comarca'], 
+                            $row['nom_tipus_dispositiu'],
+                            str_replace('.', ',', $row['total_preu']),
+                        ];
+                        fputcsv($file, $data, ';'); 
+                    }
+                    fclose($file);
+
+                }
+
+            } elseif ($tipus_actor == "sstt_emissor") {
+
+                if ($id_tipus_dispositiu == "sense") {
+
+                    $array_resultat = $tiquet_model->sumTiquetsSenseTipusSSTTEmissor();
+                    $array_eliminar = [];
+                    for ($i = 0; $i < sizeof($array_resultat); $i++) {
+                        if ($role == "admin_sstt") {
+                            $pertany_sstt = $array_resultat[$i]['id_sstt'] == $id_sstt;
+                            if (!$pertany_sstt) {
+                                array_push($array_eliminar, $i);
+                            }
+                        }
+                    }
+                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
+                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    }
+                    
+                    $file_name = "despeses_sstt_emissor_" . date('Ymd') . '.csv';
+                    $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
+                    
+                    $file = fopen($file_path, 'w');
+                    fwrite($file, "\xEF\xBB\xBF");
+                    $header = ['Dades','Codi SSTT', 'Nom SSTT', 'Diners (€)'];
+                    fputcsv($file, $header, ';'); 
+                    foreach ($array_resultat as $row) {
+                        $data = [
+                            'Despeses per',
+                            $row['id_sstt'], 
+                            $row['nom_sstt'], 
+                            str_replace('.', ',', $row['total_preu']),
+                        ];
+                        fputcsv($file, $data, ';'); 
+                    }
+                    fclose($file);
+
+                } else if ($id_tipus_dispositiu == "tots_separats") {
+
+                    $array_resultat = $tiquet_model->sumTiquetsTotsTipusSSTTEmissor();
+                    $array_eliminar = [];
+                    for ($i = 0; $i < sizeof($array_resultat); $i++) {
+                        if ($role == "admin_sstt") {
+                            $pertany_sstt = $array_resultat[$i]['id_sstt'] == $id_sstt;
+                            if (!$pertany_sstt) {
+                                array_push($array_eliminar, $i);
+                            }
+                        }
+                    }
+                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
+                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    }
+                    
+                    $file_name = "despeses_sstt_emissor_tipus_dispositiu_" . date('Ymd') . '.csv';
+                    $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
+                    
+                    $file = fopen($file_path, 'w');
+                    fwrite($file, "\xEF\xBB\xBF");
+                    $header = ['Dades','Codi SSTT', 'Nom SSTT', 'Nom tipus dispositiu', 'Diners (€)'];
+                    fputcsv($file, $header, ';'); 
+                    foreach ($array_resultat as $row) {
+                        $data = [
+                            'Despeses per',
+                            $row['id_sstt'], 
+                            $row['nom_sstt'], 
+                            $row['nom_tipus_dispositiu'],
+                            str_replace('.', ',', $row['total_preu']),
+                        ];
+                        fputcsv($file, $data, ';'); 
+                    }
+                    fclose($file);
+                    
+                } else {
+
+                    $array_resultat = $tiquet_model->sumTiquetsTipusSSTTEmissor($id_tipus_dispositiu);
+                    $array_eliminar = [];
+                    for ($i = 0; $i < sizeof($array_resultat); $i++) {
+                        if ($role == "admin_sstt") {
+                            $pertany_sstt = $array_resultat[$i]['id_sstt'] == $id_sstt;
+                            if (!$pertany_sstt) {
+                                array_push($array_eliminar, $i);
+                            }
+                        }
+                    }
+                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
+                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    }
+                    
+                    $file_name = "despeses_sstt_emissor_". strtolower($tipus_dispositiu_model->obtenirTipusDispositiuPerId($id_tipus_dispositiu)['nom_tipus_dispositiu']) ."_" . date('Ymd') . '.csv';
+                    $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
+                    
+                    $file = fopen($file_path, 'w');
+                    fwrite($file, "\xEF\xBB\xBF");
+                    $header = ['Dades','Codi SSTT', 'Nom SSTT', 'Nom tipus dispositiu', 'Diners (€)'];
+                    fputcsv($file, $header, ';'); 
+                    foreach ($array_resultat as $row) {
+                        $data = [
+                            'Despeses per',
+                            $row['id_sstt'], 
+                            $row['nom_sstt'], 
+                            $row['nom_tipus_dispositiu'],
+                            str_replace('.', ',', $row['total_preu']),
+                        ];
+                        fputcsv($file, $data, ';'); 
+                    }
+                    fclose($file);
+
+                }
+
+            } elseif ($tipus_actor == "sstt_reparador") {
+
+                if ($id_tipus_dispositiu == "sense") {
+
+                    $array_resultat = $tiquet_model->sumTiquetsSenseTipusSSTTReparador();
+                    $array_eliminar = [];
+                    for ($i = 0; $i < sizeof($array_resultat); $i++) {
+                        if ($role == "admin_sstt") {
+                            $pertany_sstt = $array_resultat[$i]['id_sstt'] == $id_sstt;
+                            if (!$pertany_sstt) {
+                                array_push($array_eliminar, $i);
+                            }
+                        }
+                    }
+                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
+                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    }
+                    
+                    $file_name = "despeses_sstt_reparador_" . date('Ymd') . '.csv';
+                    $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
+                    
+                    $file = fopen($file_path, 'w');
+                    fwrite($file, "\xEF\xBB\xBF");
+                    $header = ['Dades','Codi SSTT', 'Nom SSTT', 'Diners (€)'];
+                    fputcsv($file, $header, ';'); 
+                    foreach ($array_resultat as $row) {
+                        $data = [
+                            'Despeses per',
+                            $row['id_sstt'], 
+                            $row['nom_sstt'], 
+                            str_replace('.', ',', $row['total_preu']),
+                        ];
+                        fputcsv($file, $data, ';'); 
+                    }
+                    fclose($file);
+
+                } else if ($id_tipus_dispositiu == "tots_separats") {
+
+                    $array_resultat = $tiquet_model->sumTiquetsTotsTipusSSTTReparador();
+                    $array_eliminar = [];
+                    for ($i = 0; $i < sizeof($array_resultat); $i++) {
+                        if ($role == "admin_sstt") {
+                            $pertany_sstt = $array_resultat[$i]['id_sstt'] == $id_sstt;
+                            if (!$pertany_sstt) {
+                                array_push($array_eliminar, $i);
+                            }
+                        }
+                    }
+                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
+                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    }
+                    
+                    $file_name = "despeses_sstt_reparador_tipus_dispositiu_" . date('Ymd') . '.csv';
+                    $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
+                    
+                    $file = fopen($file_path, 'w');
+                    fwrite($file, "\xEF\xBB\xBF");
+                    $header = ['Dades','Codi SSTT', 'Nom SSTT', 'Nom tipus dispositiu', 'Diners (€)'];
+                    fputcsv($file, $header, ';'); 
+                    foreach ($array_resultat as $row) {
+                        $data = [
+                            'Despeses per',
+                            $row['id_sstt'], 
+                            $row['nom_sstt'], 
+                            $row['nom_tipus_dispositiu'],
+                            str_replace('.', ',', $row['total_preu']),
+                        ];
+                        fputcsv($file, $data, ';'); 
+                    }
+                    fclose($file);
+                    
+                } else {
+
+                    $array_resultat = $tiquet_model->sumTiquetsTipusSSTTReparador($id_tipus_dispositiu);
+                    $array_eliminar = [];
+                    for ($i = 0; $i < sizeof($array_resultat); $i++) {
+                        if ($role == "admin_sstt") {
+                            $pertany_sstt = $array_resultat[$i]['id_sstt'] == $id_sstt;
+                            if (!$pertany_sstt) {
+                                array_push($array_eliminar, $i);
+                            }
+                        }
+                    }
+                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
+                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    }
+                    
+                    $file_name = "despeses_sstt_reparador_". strtolower($tipus_dispositiu_model->obtenirTipusDispositiuPerId($id_tipus_dispositiu)['nom_tipus_dispositiu']) ."_" . date('Ymd') . '.csv';
+                    $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
+                    
+                    $file = fopen($file_path, 'w');
+                    fwrite($file, "\xEF\xBB\xBF");
+                    $header = ['Dades','Codi SSTT', 'Nom SSTT', 'Nom tipus dispositiu', 'Diners (€)'];
+                    fputcsv($file, $header, ';'); 
+                    foreach ($array_resultat as $row) {
+                        $data = [
+                            'Despeses per',
+                            $row['id_sstt'], 
+                            $row['nom_sstt'], 
+                            $row['nom_tipus_dispositiu'],
+                            str_replace('.', ',', $row['total_preu']),
+                        ];
+                        fputcsv($file, $data, ';'); 
+                    }
+                    fclose($file);
+
+                }
+
+            } elseif ($tipus_actor == "total") {
+
+                if ($role != "desenvolupador") {
+                    return redirect()->back();
+                }
+
+                if ($id_tipus_dispositiu == "sense") {
+
+                    $array_resultat = $tiquet_model->sumTiquetsSenseTipusTOTAL();
+                    
+                    $file_name = "despeses_total_" . date('Ymd') . '.csv';
+                    $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
+                    
+                    $file = fopen($file_path, 'w');
+                    fwrite($file, "\xEF\xBB\xBF");
+                    $header = ['Dades', 'Diners (€)'];
+                    fputcsv($file, $header, ';'); 
+                    foreach ($array_resultat as $row) {
+                        $data = [
+                            'Despeses per',
+                            str_replace('.', ',', $row['total_preu']),
+                        ];
+                        fputcsv($file, $data, ';'); 
+                    }
+                    fclose($file);
+
+                } else if ($id_tipus_dispositiu == "tots_separats") {
+                    
+                    $array_resultat = $tiquet_model->sumTiquetsTotsTipusTOTAL();
+                    
+                    $file_name = "despeses_total_tipus_dispositiu_" . date('Ymd') . '.csv';
+                    $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
+                    
+                    $file = fopen($file_path, 'w');
+                    fwrite($file, "\xEF\xBB\xBF");
+                    $header = ['Dades', 'Nom tipus dispositiu', 'Diners (€)'];
+                    fputcsv($file, $header, ';'); 
+                    foreach ($array_resultat as $row) {
+                        $data = [
+                            'Despeses per',
+                            $row['nom_tipus_dispositiu'],
+                            str_replace('.', ',', $row['total_preu']),
+                        ];
+                        fputcsv($file, $data, ';'); 
+                    }
+                    fclose($file);
+
+                } else {
+
+                    $array_resultat = $tiquet_model->sumTiquetsTipusTOTAL($id_tipus_dispositiu);
+                    
+                    $file_name = "despeses_total_". strtolower($tipus_dispositiu_model->obtenirTipusDispositiuPerId($id_tipus_dispositiu)['nom_tipus_dispositiu']) ."_" . date('Ymd') . '.csv';
+                    $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
+                    
+                    $file = fopen($file_path, 'w');
+                    fwrite($file, "\xEF\xBB\xBF");
+                    $header = ['Dades', 'Nom tipus dispositiu', 'Diners (€)'];
+                    fputcsv($file, $header, ';'); 
+                    foreach ($array_resultat as $row) {
+                        $data = [
+                            'Despeses per',
+                            $row['nom_tipus_dispositiu'],
+                            str_replace('.', ',', $row['total_preu']),
+                        ];
+                        fputcsv($file, $data, ';'); 
+                    }
+                    fclose($file);
+
+                }
+
+            }
+
+        } else if ($tipus_dades == "nombre_finalitzats_temps") {
+
+            $estat = $this->request->getPost("estat");
+
+            if ($estat == "finalitzats") {
+                $id_estat = "tots";
+            } elseif ($estat == "retornats") {
+                $id_estat = 9;
+            } elseif ($estat == "desguassats") {
+                $id_estat = 11;
+            } elseif ($estat == "rebutjats") {
+                $id_estat = 10;
+            }
+
+            if ($tipus_actor == "centre_reparador") {
+
+                if ($id_estat == "tots") {
+
+                    $array_resultat = $tiquet_model->countNombreDispositiusTempsCentreReparador();
+                    $array_eliminar = [];
+                    for ($i = 0; $i < sizeof($array_resultat); $i++) {
+                        if ($role == "admin_sstt") {
+                            $pertany_sstt = $poblacio_model->getPoblacio($array_resultat[$i]['id_poblacio'])['id_sstt'] == $id_sstt;
+                            if (!$pertany_sstt) {
+                                array_push($array_eliminar, $i);
+                            }
+                        }
+                    }
+                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
+                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    }
+                    
+                    $file_name = "nombre_finalitzats_centre_reparador_temps_" . date('Ymd') . '.csv';
+                    $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
+                    
+                    $file = fopen($file_path, 'w');
+                    fwrite($file, "\xEF\xBB\xBF");
+                    $header = ['Dades', 'Codi centre', 'Nom centre', 'Any', 'Mes', 'Nombre dispositius'];
+                    fputcsv($file, $header, ';'); 
+                    foreach ($array_resultat as $row) {
+                        $data = [
+                            'Nombre dispositius finalitzats per',
+                            $row['codi_centre_reparador'], 
+                            $row['nom_centre'], 
+                            $row['any'], 
+                            $row['mes'], 
+                            $row['num_tiquets'],
+                        ];
+                        fputcsv($file, $data, ';'); 
+                    }
+                    fclose($file);
+
+                } else {
+
+                    $array_resultat = $tiquet_model->countNombreDispositiusTempsCentreReparadorEstat($id_estat);
+                    $array_eliminar = [];
+                    for ($i = 0; $i < sizeof($array_resultat); $i++) {
+                        if ($role == "admin_sstt") {
+                            $pertany_sstt = $poblacio_model->getPoblacio($array_resultat[$i]['id_poblacio'])['id_sstt'] == $id_sstt;
+                            if (!$pertany_sstt) {
+                                array_push($array_eliminar, $i);
+                            }
+                        }
+                    }
+                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
+                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    }
+                    
+                    $file_name = "nombre_". $estat ."_centre_reparador_temps_" . date('Ymd') . '.csv';
+                    $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
+                    
+                    $file = fopen($file_path, 'w');
+                    fwrite($file, "\xEF\xBB\xBF");
+                    $header = ['Dades', 'Codi centre', 'Nom centre', 'Any', 'Mes', 'Nombre dispositius'];
+                    fputcsv($file, $header, ';'); 
+                    foreach ($array_resultat as $row) {
+                        $data = [
+                            'Nombre dispositius '. $estat .' per',
+                            $row['codi_centre_reparador'], 
+                            $row['nom_centre'], 
+                            $row['any'], 
+                            $row['mes'], 
+                            $row['num_tiquets'],
+                        ];
+                        fputcsv($file, $data, ';'); 
+                    }
+                    fclose($file);
+
+                }
+
+            } else if ($tipus_actor == "sstt") {
+
+                if ($id_estat == "tots") {
+
+                    $array_resultat = $tiquet_model->countNombreDispositiusTempsSSTT();
+                    $array_eliminar = [];
+                    for ($i = 0; $i < sizeof($array_resultat); $i++) {
+                        if ($role == "admin_sstt") {
+                            $pertany_sstt = $poblacio_model->getPoblacio($array_resultat[$i]['id_poblacio'])['id_sstt'] == $id_sstt;
+                            if (!$pertany_sstt) {
+                                array_push($array_eliminar, $i);
+                            }
+                        }
+                    }
+                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
+                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    }
+                    
+                    $file_name = "nombre_finalitzats_sstt_temps_" . date('Ymd') . '.csv';
+                    $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
+                    
+                    $file = fopen($file_path, 'w');
+                    fwrite($file, "\xEF\xBB\xBF");
+                    $header = ['Dades', 'Codi SSTT', 'Nom SSTT', 'Any', 'Mes', 'Nombre dispositius'];
+                    fputcsv($file, $header, ';'); 
+                    foreach ($array_resultat as $row) {
+                        $data = [
+                            'Nombre dispositius finalitzats per',
+                            $row['id_sstt'], 
+                            $row['nom_sstt'], 
+                            $row['any'], 
+                            $row['mes'], 
+                            $row['num_tiquets'],
+                        ];
+                        fputcsv($file, $data, ';'); 
+                    }
+                    fclose($file);
+
+                } else {
+
+                    $array_resultat = $tiquet_model->countNombreDispositiusTempsSSTTEstat($id_estat);
+                    $array_eliminar = [];
+                    for ($i = 0; $i < sizeof($array_resultat); $i++) {
+                        if ($role == "admin_sstt") {
+                            $pertany_sstt = $poblacio_model->getPoblacio($array_resultat[$i]['id_poblacio'])['id_sstt'] == $id_sstt;
+                            if (!$pertany_sstt) {
+                                array_push($array_eliminar, $i);
+                            }
+                        }
+                    }
+                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
+                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    }
+                    
+                    $file_name = "nombre_". $estat ."_sstt_temps_" . date('Ymd') . '.csv';
+                    $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
+                    
+                    $file = fopen($file_path, 'w');
+                    fwrite($file, "\xEF\xBB\xBF");
+                    $header = ['Dades', 'Codi SSTT', 'Nom SSTT', 'Any', 'Mes', 'Nombre dispositius'];
+                    fputcsv($file, $header, ';'); 
+                    foreach ($array_resultat as $row) {
+                        $data = [
+                            'Nombre dispositius '. $estat .' per',
+                            $row['id_sstt'], 
+                            $row['nom_sstt'], 
+                            $row['any'], 
+                            $row['mes'], 
+                            $row['num_tiquets'],
+                        ];
+                        fputcsv($file, $data, ';'); 
+                    }
+                    fclose($file);
+
+                }
+
+            } else if ($tipus_actor == "total") {
+
+                if ($role != "desenvolupador") {
+                    return redirect()->back();
+                }
+
+                if ($id_estat == "tots") {
+
+                    $array_resultat = $tiquet_model->countNombreDispositiusTempsTOTAL();
+                
+                    $file_name = "nombre_finalitzats_total_temps_" . date('Ymd') . '.csv';
+                    $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
+                    
+                    $file = fopen($file_path, 'w');
+                    fwrite($file, "\xEF\xBB\xBF");
+                    $header = ['Dades', 'Any', 'Mes', 'Nombre dispositius'];
+                    fputcsv($file, $header, ';'); 
+                    foreach ($array_resultat as $row) {
+                        $data = [
+                            'Nombre dispositius finalitzats per',
+                            $row['any'], 
+                            $row['mes'], 
+                            $row['num_tiquets'],
+                        ];
+                        fputcsv($file, $data, ';'); 
+                    }
+                    fclose($file);
+
+                } else {
+
+                    $array_resultat = $tiquet_model->countNombreDispositiusTempsTOTALEstat($id_estat);
+                
+                    $file_name = "nombre_". $estat ."_total_temps_" . date('Ymd') . '.csv';
+                    $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
+                    
+                    $file = fopen($file_path, 'w');
+                    fwrite($file, "\xEF\xBB\xBF");
+                    $header = ['Dades', 'Any', 'Mes', 'Nombre dispositius'];
+                    fputcsv($file, $header, ';'); 
+                    foreach ($array_resultat as $row) {
+                        $data = [
+                            'Nombre dispositius '. $estat .' per',
+                            $row['any'], 
+                            $row['mes'], 
+                            $row['num_tiquets'],
+                        ];
+                        fputcsv($file, $data, ';'); 
+                    }
+                    fclose($file);
+
+                }
+
+            }
+        
+        } else if ($tipus_dades == "nombre_emesos_temps") {
+        
+            if ($tipus_actor == "centre_emissor") {
+
+                $array_resultat = $tiquet_model->countTiquetsTempsCentreEmissor();
+                $array_eliminar = [];
+                for ($i = 0; $i < sizeof($array_resultat); $i++) {
+                    if ($role == "admin_sstt") {
+                        $pertany_sstt = $poblacio_model->getPoblacio($array_resultat[$i]['id_poblacio'])['id_sstt'] == $id_sstt;
+                        if (!$pertany_sstt) {
+                            array_push($array_eliminar, $i);
+                        }
+                    }
+                }
+                for ($j = 0; $j < sizeof($array_eliminar); $j++) {
+                    array_splice($array_resultat,$array_eliminar[$j],1);
+                }
+                
+                $file_name = "nombre_tiquets_emesos_centre_emissor_temps_" . date('Ymd') . '.csv';
+                $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
+                
+                $file = fopen($file_path, 'w');
+                fwrite($file, "\xEF\xBB\xBF");
+                $header = ['Dades', 'Codi centre', 'Nom centre', 'Any', 'Mes', 'Nombre dispositius'];
+                fputcsv($file, $header, ';'); 
+                foreach ($array_resultat as $row) {
+                    $data = [
+                        'Nombre tiquets emesos per',
+                        $row['codi_centre_emissor'], 
+                        $row['nom_centre'], 
+                        $row['any'], 
+                        $row['mes'], 
+                        $row['num_tiquets'],
+                    ];
+                    fputcsv($file, $data, ';'); 
+                }
+                fclose($file);
+
+            } else if ($tipus_actor == "sstt") {
+
+                $array_resultat = $tiquet_model->countTiquetsTempsSSTT();
+                $array_eliminar = [];
+                for ($i = 0; $i < sizeof($array_resultat); $i++) {
+                    if ($role == "admin_sstt") {
+                        $pertany_sstt = $poblacio_model->getPoblacio($array_resultat[$i]['id_poblacio'])['id_sstt'] == $id_sstt;
+                        if (!$pertany_sstt) {
+                            array_push($array_eliminar, $i);
+                        }
+                    }
+                }
+                for ($j = 0; $j < sizeof($array_eliminar); $j++) {
+                    array_splice($array_resultat,$array_eliminar[$j],1);
+                }
+                
+                $file_name = "nombre_tiquets_emesos_sstt_temps_" . date('Ymd') . '.csv';
+                $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
+                
+                $file = fopen($file_path, 'w');
+                fwrite($file, "\xEF\xBB\xBF");
+                $header = ['Dades', 'Codi centre', 'Nom centre', 'Any', 'Mes', 'Nombre dispositius'];
+                fputcsv($file, $header, ';'); 
+                foreach ($array_resultat as $row) {
+                    $data = [
+                        'Nombre tiquets emesos per',
+                        $row['id_sstt'], 
+                        $row['nom_sstt'], 
+                        $row['any'], 
+                        $row['mes'], 
+                        $row['num_tiquets'],
+                    ];
+                    fputcsv($file, $data, ';'); 
+                }
+                fclose($file);
+
+            } else if ($tipus_actor == "total") {
+
+                if ($role != "desenvolupador") {
+                    return redirect()->back();
+                }
+
+                $array_resultat = $tiquet_model->countTiquetsTempsTOTAL();
+                
+                $file_name = "nombre_tiquets_emesos_total_temps_" . date('Ymd') . '.csv';
+                $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
+                
+                $file = fopen($file_path, 'w');
+                fwrite($file, "\xEF\xBB\xBF");
+                $header = ['Dades', 'Any', 'Mes', 'Nombre dispositius'];
+                fputcsv($file, $header, ';'); 
+                foreach ($array_resultat as $row) {
+                    $data = [
+                        'Nombre tiquets emesos per',
+                        $row['any'], 
+                        $row['mes'], 
+                        $row['num_tiquets'],
+                    ];
+                    fputcsv($file, $data, ';'); 
+                }
+                fclose($file);
+
+            }
+        
+        } else if ($tipus_dades == "despeses_temps") {
+        
+            if ($tipus_actor == "centre_reparador") {
+
+                $array_resultat = $tiquet_model->sumTiquetsTempsCentreReparador();
+                $array_eliminar = [];
+                for ($i = 0; $i < sizeof($array_resultat); $i++) {
+                    if ($role == "admin_sstt") {
+                        $pertany_sstt = $poblacio_model->getPoblacio($array_resultat[$i]['id_poblacio'])['id_sstt'] == $id_sstt;
+                        if (!$pertany_sstt) {
+                            array_push($array_eliminar, $i);
+                        }
+                    }
+                }
+                for ($j = 0; $j < sizeof($array_eliminar); $j++) {
+                    array_splice($array_resultat,$array_eliminar[$j],1);
+                }
+                
+                $file_name = "despeses_centre_reparador_temps_" . date('Ymd') . '.csv';
+                $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
+                
+                $file = fopen($file_path, 'w');
+                fwrite($file, "\xEF\xBB\xBF");
+                $header = ['Dades', 'Codi centre', 'Nom centre', 'Any', 'Mes', 'Diners (€)'];
+                fputcsv($file, $header, ';'); 
+                foreach ($array_resultat as $row) {
+                    $data = [
+                        'Despeses per',
+                        $row['codi_centre_reparador'], 
+                        $row['nom_centre'], 
+                        $row['any'], 
+                        $row['mes'], 
+                        str_replace('.', ',', $row['total_preu']),
+                    ];
+                    fputcsv($file, $data, ';'); 
+                }
+                fclose($file);
+
+            } else if ($tipus_actor == "sstt") {
+
+                $array_resultat = $tiquet_model->sumTiquetsTempsSSTT();
+                $array_eliminar = [];
+                for ($i = 0; $i < sizeof($array_resultat); $i++) {
+                    if ($role == "admin_sstt") {
+                        $pertany_sstt = $poblacio_model->getPoblacio($array_resultat[$i]['id_poblacio'])['id_sstt'] == $id_sstt;
+                        if (!$pertany_sstt) {
+                            array_push($array_eliminar, $i);
+                        }
+                    }
+                }
+                for ($j = 0; $j < sizeof($array_eliminar); $j++) {
+                    array_splice($array_resultat,$array_eliminar[$j],1);
+                }
+                
+                $file_name = "despeses_sstt_temps_" . date('Ymd') . '.csv';
+                $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
+                
+                $file = fopen($file_path, 'w');
+                fwrite($file, "\xEF\xBB\xBF");
+                $header = ['Dades', 'Codi SSTT', 'Nom SSTT', 'Any', 'Mes', 'Diners (€)'];
+                fputcsv($file, $header, ';'); 
+                foreach ($array_resultat as $row) {
+                    $data = [
+                        'Despeses per',
+                        $row['id_sstt'], 
+                        $row['nom_sstt'], 
+                        $row['any'], 
+                        $row['mes'], 
+                        str_replace('.', ',', $row['total_preu']),
+                    ];
+                    fputcsv($file, $data, ';'); 
+                }
+                fclose($file);
+
+            } else if ($tipus_actor == "total") {
+
+                if ($role != "desenvolupador") {
+                    return redirect()->back();
+                }
+
+                $array_resultat = $tiquet_model->sumTiquetsTempsTOTAL();
+                
+                $file_name = "despeses_total_temps_" . date('Ymd') . '.csv';
+                $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
+                
+                $file = fopen($file_path, 'w');
+                fwrite($file, "\xEF\xBB\xBF");
+                $header = ['Dades', 'Any', 'Mes', 'Diners (€)'];
+                fputcsv($file, $header, ';'); 
+                foreach ($array_resultat as $row) {
+                    $data = [
+                        'Despeses per',
+                        $row['any'], 
+                        $row['mes'], 
+                        str_replace('.', ',', $row['total_preu']),
+                    ];
+                    fputcsv($file, $data, ';'); 
+                }
+                fclose($file);
+
+            }
+        
         }
 
         header('Content-Description: File Transfer');
