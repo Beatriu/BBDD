@@ -16,7 +16,8 @@ return [
     'preu_total' => 'Preu total',
     'adreca' => 'Adreça del centre',
     'buttons' => [
-        'create' => 'Afegir centre'
+        'create' => 'Afegir centre',
+        'update' => 'Editar centre'
     ],
     'formulari_centre' => 'Formulari centre',
     'save_centre' => 'Afegir centre',

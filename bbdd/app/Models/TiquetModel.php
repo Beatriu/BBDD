@@ -72,6 +72,10 @@ class TiquetModel extends Model
         return $this->where('codi_centre_reparador', $codi_centre_reparador)->findAll();
     }
 
+    public function getTiquetByCodiCentreEmissor($codi_centre){
+        return $this->where('codi_centre_emissor', $codi_centre)->findAll();
+    }
+
     public function deleteTiquetById($id_tiquet)
     {
         return $this->delete(['id_tiquet' => $id_tiquet]);
@@ -86,7 +90,6 @@ class TiquetModel extends Model
     {
         return $this->where('id_tipus_dispositiu', $id_tipus_dispositiu)->findAll();
     }
-
 
 
     public function countNombreDispositiusTotsEstatsSenseTipus()

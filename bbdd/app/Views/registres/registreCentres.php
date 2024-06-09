@@ -16,7 +16,7 @@
         <!--Sidebar estàtic-->
         <div class="col-sm-auto pl-0" id="sidebar">
             <ul class="nav flex-column">
-                <li class="nav-item"  title="<?= lang("registre.dispositius_rebuts") ?>">
+                <li class="nav-item" title="<?= lang("registre.dispositius_rebuts") ?>">
                     <a href="<?= base_url("/tiquets/emissor") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.table-dispositius") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                         <i class="fa-solid fa-list-check"></i>
                     </a>
@@ -73,6 +73,18 @@
                 </div>
             </div>
             <!--Filtres activats-->
+            <div>
+                <?php if ((session()->get('afegirCentre_success')) !== null) : ?>
+                    <div class="alert alert-success alerta_esborrar" role="alert">
+                        <?= session()->get('afegirCentre_success') ?>
+                    </div>
+                <?php endif; ?>
+                <?php if ((session()->get('editarCentre')) !== null) : ?>
+                    <div class="alert alert-warning alerta_esborrar" role="alert">
+                        <?= session()->get('editarCentre') ?>
+                    </div>
+                <?php endif; ?>
+            </div>
 
             <!--Taula i errors-->
             <div>
