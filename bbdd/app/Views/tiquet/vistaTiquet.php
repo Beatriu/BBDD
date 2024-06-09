@@ -51,7 +51,7 @@
                 </a>
             </div>
 
-            <a href="<?= base_url('/tiquets') ?>">
+            <a href="#">
                 <img src="data:image/svg+xml;base64, <?php echo $qrcode_image2; ?> " alt="" width="200px" class="mb-3">
             </a>
 

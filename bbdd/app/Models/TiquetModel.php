@@ -105,6 +105,40 @@ class TiquetModel extends Model
     {
         return $this->select('codi_centre_emissor')->selectCount('id_tiquet','num_tiquets')->groupBy('codi_centre_emissor')->findAll();
     }
+    public function countTiquetsSenseTipusPOBLACIO()
+    {
+        return $this->select('centre.id_poblacio, poblacio.nom_poblacio')
+                        ->selectCount('tiquet.id_tiquet', 'num_tiquets')
+                        ->join('centre', 'tiquet.codi_centre_emissor = centre.codi_centre')
+                        ->join('poblacio', 'centre.id_poblacio = poblacio.id_poblacio')
+                        ->groupBy('centre.id_poblacio, poblacio.nom_poblacio')
+                        ->findAll();
+    }
+    public function countTiquetsSenseTipusCOMARCA()
+    {
+        return $this->select('centre.id_poblacio, comarca.id_comarca, comarca.nom_comarca')
+                        ->selectCount('tiquet.id_tiquet', 'num_tiquets')
+                        ->join('centre', 'tiquet.codi_centre_emissor = centre.codi_centre')
+                        ->join('poblacio', 'centre.id_poblacio = poblacio.id_poblacio')
+                        ->join('comarca', 'centre.id_comarca = comarca.id_comarca')
+                        ->groupBy('comarca.id_comarca')
+                        ->findAll();
+    }
+    public function countTiquetsSenseTipusSSTT()
+    {
+        return $this->select('sstt.id_sstt, sstt.nom_sstt')
+                        ->selectCount('tiquet.id_tiquet', 'num_tiquets')
+                        ->join('centre', 'tiquet.codi_centre_emissor = centre.codi_centre')
+                        ->join('poblacio', 'centre.id_poblacio = poblacio.id_poblacio')
+                        ->join('sstt', 'centre.id_sstt = sstt.id_sstt')
+                        ->groupBy('sstt.id_sstt')
+                        ->findAll();
+    }
+    public function countTiquetsSenseTipusTOTAL()
+    {
+        return $this->selectCount('id_tiquet','num_tiquets')->findAll();
+    }
+    
 
     public function countNombreDispositiusEstatSenseTipus($id_estat)
     {
@@ -135,6 +169,45 @@ class TiquetModel extends Model
     {
         return $this->select('codi_centre_emissor')->select('id_tipus_dispositiu')->selectCount('id_tiquet','num_tiquets')->groupBy('codi_centre_emissor')->groupBy('id_tipus_dispositiu')->findAll();
     }
+    public function countTiquetsTotsTipusPOBLACIO()
+    {
+        return $this->select('centre.id_poblacio, poblacio.nom_poblacio, tipus_dispositiu.nom_tipus_dispositiu')
+                        ->selectCount('tiquet.id_tiquet', 'num_tiquets')
+                        ->join('centre', 'tiquet.codi_centre_emissor = centre.codi_centre')
+                        ->join('poblacio', 'centre.id_poblacio = poblacio.id_poblacio')
+                        ->join('tipus_dispositiu', 'tiquet.id_tipus_dispositiu = tipus_dispositiu.id_tipus_dispositiu')
+                        ->groupBy('centre.id_poblacio, poblacio.nom_poblacio, tiquet.id_tipus_dispositiu')
+                        ->findAll();
+    }
+    public function countTiquetsTotsTipusCOMARCA()
+    {
+        return $this->select('centre.id_poblacio, comarca.id_comarca, comarca.nom_comarca, tipus_dispositiu.nom_tipus_dispositiu')
+                        ->selectCount('tiquet.id_tiquet', 'num_tiquets')
+                        ->join('centre', 'tiquet.codi_centre_emissor = centre.codi_centre')
+                        ->join('poblacio', 'centre.id_poblacio = poblacio.id_poblacio')
+                        ->join('comarca', 'centre.id_comarca = comarca.id_comarca')
+                        ->join('tipus_dispositiu', 'tiquet.id_tipus_dispositiu = tipus_dispositiu.id_tipus_dispositiu')
+                        ->groupBy('comarca.id_comarca, tiquet.id_tipus_dispositiu')
+                        ->findAll();
+    }
+    public function countTiquetsTotsTipusSSTT()
+    {
+        return $this->select('sstt.id_sstt, sstt.nom_sstt, tipus_dispositiu.nom_tipus_dispositiu')
+                        ->selectCount('tiquet.id_tiquet', 'num_tiquets')
+                        ->join('centre', 'tiquet.codi_centre_emissor = centre.codi_centre')
+                        ->join('sstt', 'centre.id_sstt = sstt.id_sstt')
+                        ->join('tipus_dispositiu', 'tiquet.id_tipus_dispositiu = tipus_dispositiu.id_tipus_dispositiu')
+                        ->groupBy('sstt.id_sstt, tiquet.id_tipus_dispositiu')
+                        ->findAll();
+    }
+    public function countTiquetsTotsTipusTOTAL()
+    {
+        return $this->select('tipus_dispositiu.nom_tipus_dispositiu')
+                        ->selectCount('tiquet.id_tiquet', 'num_tiquets')
+                        ->join('tipus_dispositiu', 'tiquet.id_tipus_dispositiu = tipus_dispositiu.id_tipus_dispositiu')
+                        ->groupBy('tiquet.id_tipus_dispositiu')
+                        ->findAll();
+    }
 
     public function countNombreDispositiusEstatTotsTipus($id_estat) {
         return $this->select('codi_centre_reparador')->select('id_tipus_dispositiu')->selectCount('id_tiquet','num_tiquets')->where('id_estat',$id_estat)->groupBy('codi_centre_reparador')->groupBy('id_tipus_dispositiu')->findAll();
@@ -161,6 +234,49 @@ class TiquetModel extends Model
     public function countTiquetsTipus($id_tipus_dispositiu)
     {
         return $this->select('codi_centre_emissor')->select('id_tipus_dispositiu')->selectCount('id_tiquet', 'num_tiquets')->where('id_tipus_dispositiu', $id_tipus_dispositiu)->groupBy('codi_centre_emissor')->findAll();
+    }
+    public function countTiquetsTipusPOBLACIO($id_tipus_dispositiu)
+    {
+        return $this->select('centre.id_poblacio, poblacio.nom_poblacio, tipus_dispositiu.nom_tipus_dispositiu')
+                        ->selectCount('tiquet.id_tiquet', 'num_tiquets')
+                        ->where('tiquet.id_tipus_dispositiu', $id_tipus_dispositiu)
+                        ->join('centre', 'tiquet.codi_centre_emissor = centre.codi_centre')
+                        ->join('poblacio', 'centre.id_poblacio = poblacio.id_poblacio')
+                        ->join('tipus_dispositiu', 'tiquet.id_tipus_dispositiu = tipus_dispositiu.id_tipus_dispositiu')
+                        ->groupBy('centre.id_poblacio, poblacio.nom_poblacio, tiquet.id_tipus_dispositiu')
+                        ->findAll();
+    }
+    public function countTiquetsTipusCOMARCA($id_tipus_dispositiu)
+    {
+        return $this->select('centre.id_poblacio, comarca.id_comarca, comarca.nom_comarca, tipus_dispositiu.nom_tipus_dispositiu')
+                        ->selectCount('tiquet.id_tiquet', 'num_tiquets')
+                        ->where('tiquet.id_tipus_dispositiu', $id_tipus_dispositiu)
+                        ->join('centre', 'tiquet.codi_centre_emissor = centre.codi_centre')
+                        ->join('poblacio', 'centre.id_poblacio = poblacio.id_poblacio')
+                        ->join('comarca', 'centre.id_comarca = comarca.id_comarca')
+                        ->join('tipus_dispositiu', 'tiquet.id_tipus_dispositiu = tipus_dispositiu.id_tipus_dispositiu')
+                        ->groupBy('comarca.id_comarca, tiquet.id_tipus_dispositiu')
+                        ->findAll();
+    }
+    public function countTiquetsTipusSSTT($id_tipus_dispositiu)
+    {
+        return $this->select('sstt.id_sstt, sstt.nom_sstt, tipus_dispositiu.nom_tipus_dispositiu')
+                        ->selectCount('tiquet.id_tiquet', 'num_tiquets')
+                        ->where('tiquet.id_tipus_dispositiu', $id_tipus_dispositiu)
+                        ->join('centre', 'tiquet.codi_centre_emissor = centre.codi_centre')
+                        ->join('sstt', 'centre.id_sstt = sstt.id_sstt')
+                        ->join('tipus_dispositiu', 'tiquet.id_tipus_dispositiu = tipus_dispositiu.id_tipus_dispositiu')
+                        ->groupBy('sstt.id_sstt, tiquet.id_tipus_dispositiu')
+                        ->findAll();
+    }
+    public function countTiquetsTipusTOTAL($id_tipus_dispositiu)
+    {
+        return $this->select('tipus_dispositiu.nom_tipus_dispositiu')
+                        ->selectCount('tiquet.id_tiquet', 'num_tiquets')
+                        ->where('tiquet.id_tipus_dispositiu', $id_tipus_dispositiu)
+                        ->join('tipus_dispositiu', 'tiquet.id_tipus_dispositiu = tipus_dispositiu.id_tipus_dispositiu')
+                        ->groupBy('tiquet.id_tipus_dispositiu')
+                        ->findAll();
     }
 
     public function countNombreDispositiusEstatTipus($id_estat, $id_tipus_dispositiu)
