@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'dades' => "Dades",
+    'nombre_finalitzats' => 'Nombre de dispositius finalitzats',
+    'nombre_emesos' => 'Nombre de dispositius emesos',
+    'despeses' => 'Despeses',
+    'finalitzats' => 'Finalitzats (total)',
+    'retornats' => 'Retornats',
+    'desguassats' => 'Desguassats',
+    'rebutjats' => 'Rebutjats',
+    'sense_tipus' => 'Sense mostrar tipus dispositiu',
+    'tots_separats' => 'Tots els tipus separats',
+    'descarregar_csv' => "Descarregar CSV",
+    'visualitzar' => "Visualitzar",
+    'centre_reparador' => "Centre Reparador",
+    "sstt" => "Serveis Territorials",
+    "total" => "Total",
+    'esculli_opcio' => "Escull una opció...",
+    'centre_emissor' => "Centre Emissor",
+    'poblacio' => "Població",
+    'comarca' => "Comarca",
+    'sstt_emissor' => "Serveis territorials (emissor)",
+    'sstt_reparador' => "Serveis territorials (reparador)",
+];

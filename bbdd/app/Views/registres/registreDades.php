@@ -13,58 +13,6 @@
 
 <?= $this->section('contingut'); ?>
 
-<?php if ($llista_admesos_desactivar !== null) : ?>
-    <div class="modal" tabindex="-1" role="dialog" style="display:block">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header d-flex justify-content-between">
-                    <div>
-                        <h5 class="modal-title"><?= lang('tipus.llista_admesos_model_title') ?></h5>
-                    </div>
-                    <div>
-                        <a href="<?= base_url("/professor") ?>">
-                            <i class="fa-solid fa-xmark"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="modal-body">
-                    <p><?= lang('tipus.llista_admesos_model_text') ?> <?php echo $llista_admesos_desactivar['correu_professor'] ?></p>
-                </div>
-                <div class="modal-footer">
-                    <a href="<?= base_url("/eliminarProfessor/" . $llista_admesos_desactivar['correu_professor']) ?>" type="button" class="btn btn-danger"><?= lang('registre.buttons.delete') ?></a>
-                    <a href="<?= base_url("/professor") ?>" type="button" class="btn btn-secondary" data-dismiss="modal"><?= lang('registre.buttons.cancel') ?></a>
-                </div>
-            </div>
-        </div>
-    </div>
-<?php endif; ?>
-<?php if ($eliminar_tots !== null) : ?>
-    <div class="modal" tabindex="-1" role="dialog" style="display:block">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header d-flex justify-content-between">
-                    <div>
-                        <h5 class="modal-title"><?= lang('tipus.llista_admesos_tots_model_title') ?></h5>
-                    </div>
-                    <div>
-                        <a href="<?= base_url("/professor") ?>">
-                            <i class="fa-solid fa-xmark"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="modal-body text-danger">
-                    <p><?= lang('tipus.llista_admesos_tots_model_text') ?></p>
-                </div>
-                <div class="modal-footer">
-                    <a href="<?= base_url("/eliminarTotsProfessors") ?>" type="button" class="btn btn-danger"><?= lang('registre.buttons.delete') ?></a>
-                    <a href="<?= base_url("/professor") ?>" type="button" class="btn btn-secondary" data-dismiss="modal"><?= lang('registre.buttons.cancel') ?></a>
-                </div>
-            </div>
-        </div>
-    </div>
-<?php endif; ?>
-
-
 <div class="container-fluid p-0 overflow-hidden">
 
     <div class="row">
@@ -95,12 +43,12 @@
                 </li>
                 <?php if ($role == 'admin_sstt' || $role == 'desenvolupador') : ?>
                     <li class="nav-item" title="<?= lang("registre.professors") ?>">
-                        <a href="<?= base_url("/professor") ?>" id="actiu" class="nav-link py-3 px-2" title="<?= lang("registre.professors") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                        <a href="<?= base_url("/professor") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.professors") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                             <i class="fa-solid fa-person-chalkboard"></i>
                         </a>
                     </li>
                     <li class="nav-item" title="<?= lang("registre.dades") ?>">
-                        <a href="<?= base_url("/dades") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.dades") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+                        <a href="<?= base_url("/dades") ?>" id="actiu" class="nav-link py-3 px-2" title="<?= lang("registre.dades") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                             <i class="fa-solid fa-chart-simple"></i>
                         </a>
                     </li>
@@ -125,7 +73,7 @@
                 </div>
 
                 <div class="col-10 justify-content-left">
-                    <h2><?= lang('tipus.professors') ?></h2>
+                    <h2><?= lang('dades.dades') ?></h2>
                 </div>
 
             </div>
@@ -161,41 +109,51 @@
 
             <div class="row border mt-4 ms-1 me-0 pe-0 ps-0">
                 <div class="row form_header p-3 ms-0">
-
                 </div>
             </div>
 
-            <form method="POST" action="/professor/afegir" enctype="multipart/form-data">
+            <form id="formulari_dades" method="POST" enctype="multipart/form-data">
                 <?= csrf_field() ?>
                 <div class="row">
-                    <div class="col-3 mt-4">
-                        <input type="email" class="form-control" name="correu_professor" id="tipusInventari" placeholder="<?= lang('tipus.escriu_correu_professor') ?>" required>
+                    <div class="col-2 mt-4" id="tipus_dades_div">
+                        <select class="form-select" id="tipus_dades" name = "tipus_dades" onchange = "tipusDades();" required>
+                            <option value=""><?= lang('dades.esculli_opcio') ?></option>
+                            <option value="nombre_finalitzats" ><?= lang('dades.nombre_finalitzats') ?></option>
+                            <option  value="nombre_emesos" ><?= lang('dades.nombre_emesos') ?></option>
+                            <option  value="despeses" ><?= lang('dades.despeses') ?></option>
+                        </select>
                     </div>
-                    <div class="col-2 mt-4">
-                        <input type="date" class="form-control" name="data_entrada" id="tipusInventari" required>
+                    <div class="col-2 mt-4 d-none" id="estat_div">
+                        <select class="form-select" id="estat" name = "estat" required>
+                            <option value="finalitzats" ><?= lang('dades.finalitzats') ?></option>
+                            <option  value="retornats" ><?= lang('dades.retornats') ?></option>
+                            <option  value="desguassats" ><?= lang('dades.desguassats') ?></option>
+                            <option  value="rebutjats" ><?= lang('dades.rebutjats') ?></option>
+                        </select>
                     </div>
-                    <div class="col-2 mt-4">
-                        <input id="codi_centre" list="dataListCentres" name="codi_centre" class="form-select selector_filtre" placeholder="<?= lang('tipus.escriu_codi_centre') ?>" title="<?= lang('tipus.escriu_id_comarca') ?>" required />
-                        <datalist id="dataListCentres">
-                            <?= $centres ?>
-                        </datalist>
+                    <div class="col-2 mt-4 d-none" id="tipus_actor_div">
+                        <select class="form-select" id="tipus_actor" name = "tipus_actor" required>
+                            
+                        </select>
                     </div>
-                    <div class="col-3 mt-4">
-                        <button type="submit" class="btn btn-success rounded-pill"><i class="fa-solid fa-plus"></i> <?= lang('tipus.afegir_llista_admesos') ?></button>
+                    <div class="col-2 mt-4 d-none" id="tipus_dispositiu_div">
+                        <select class="form-select" id="tipus_dispositiu" name = "tipus_dispositiu" required>
+                            <option  value="sense" > <?= lang('dades.sense_tipus') ?> </option>
+                            <option  value="tots_separats" ><?= lang('dades.tots_separats') ?></option>
+                            <?= $tipus_dispositiu ?>
+                        </select>
                     </div>
-                    <div class="col-2 mt-4">
-                        <a href="<?= base_url('/professor/desactivar/tots') ?>" class="btn btn-danger rounded-pill">
-                            <i class="fa-solid fa-trash"></i> <?= lang('tipus.esborrar_tots_professors') ?>
-                        </a>
+                    <div class="col-4 mt-4 d-none" id="buttons_div">
+                        <button type="submit" onclick="submitForm('/dades/descarregar')" class="btn btn-success rounded-pill"><i class="fa-solid fa-file-csv"></i> <?= lang('dades.descarregar_csv') ?></button>
+                        <button type="submit" onclick="submitForm('/dades/visualitzar')" class="btn btn-info rounded-pill text-white"><i class="fa-solid fa-eye text-white"></i> <?= lang('dades.visualitzar') ?></button>
                     </div>
-
                 </div>
             </form>
 
 
             <div class="row">
                 <div class="col">
-                    <?= $output ?>
+
                 </div>
             </div>
 
@@ -206,6 +164,52 @@
     </div>
 
 </div>
-<script>
+<script>    
+    function submitForm(action) {
+        var form = document.getElementById('formulari_dades');
+        form.action = action;
+    }
+
+    function tipusDades()
+    {
+        let tipus_dades_select = document.getElementById("tipus_dades");
+        let tipus_dades_value = tipus_dades_select.value;
+
+        if (tipus_dades_value == "nombre_finalitzats") {
+
+            document.getElementById("estat_div").classList.remove("d-none");
+            document.getElementById("tipus_actor_div").classList.remove("d-none");
+            document.getElementById("tipus_dispositiu_div").classList.remove("d-none");
+            document.getElementById("buttons_div").classList.remove("d-none");
+
+            document.getElementById("tipus_actor").innerHTML = <?= $tipus_actor_nombre_finalitzats ?>;
+
+        } else if (tipus_dades_value == "nombre_emesos") {
+
+            document.getElementById("estat_div").classList.add("d-none");
+            document.getElementById("tipus_actor_div").classList.remove("d-none");
+            document.getElementById("tipus_dispositiu_div").classList.remove("d-none");
+            document.getElementById("buttons_div").classList.remove("d-none");
+
+            document.getElementById("tipus_actor").innerHTML = <?= $tipus_actor_nombre_emesos ?>;
+
+        } else if (tipus_dades_value == "despeses") {
+
+            document.getElementById("estat_div").classList.add("d-none");
+            document.getElementById("tipus_actor_div").classList.remove("d-none");
+            document.getElementById("tipus_dispositiu_div").classList.remove("d-none");
+            document.getElementById("buttons_div").classList.remove("d-none");
+
+            document.getElementById("tipus_actor").innerHTML = <?= $tipus_actor_despeses ?>;
+
+        } else {
+            
+            document.getElementById("estat_div").classList.add("d-none");
+            document.getElementById("tipus_actor_div").classList.add("d-none");
+            document.getElementById("tipus_dispositiu_div").classList.add("d-none");
+            document.getElementById("buttons_div").classList.add("d-none");
+
+        }
+    }
 </script>
 <?= $this->endSection('contingut'); ?>
