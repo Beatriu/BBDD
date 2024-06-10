@@ -699,7 +699,6 @@ class TiquetController extends BaseController
         //dades tipus dispositiu
         $tipus_dispositiu_model = new TipusDispositiuModel();
         $array_tipus_dispositiu = $tipus_dispositiu_model->getTipusDispositius();
-        //dd($array_tipus_dispositiu[0]);
         $data['array_tipus_dispositiu'] = $array_tipus_dispositiu;
 
         $data['title'] = lang('general_lang.formulari_tiquet');
