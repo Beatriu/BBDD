@@ -384,7 +384,7 @@ class RegistresController extends BaseController
                 
                 $crud->addWhere("data_alta_format BETWEEN '" . $data_nova_inici . "' AND  '" . $data_nova_fi . "'");
             }
-            $crud->addWhere("codi_centre_reparador='" . session()->get('user_data')['codi_centre'] . "' AND (nom_estat='Pendent de reparar' or nom_estat='Reparant' or nom_estat='Reparat i pendent de recollir')");
+            $crud->addWhere("(STR_TO_DATE(`data_alta_format`, '%d-%m-%Y') BETWEEN STR_TO_DATE('".$data_nova_inici."', '%d-%m-%Y') AND STR_TO_DATE('". $data_nova_fi ."', '%d-%m-%Y'))");
         }
 
 
@@ -587,7 +587,7 @@ class RegistresController extends BaseController
                 $data_de_la_sessio = $session_filtre['data_creacio_fi'][0];
                 $data_nova_fi = date('d-m-Y', strtotime($data_de_la_sessio));
                 
-                $crud->addWhere("data_alta_format BETWEEN '" . $data_nova_inici . "' AND  '" . $data_nova_fi . "'");
+                $crud->addWhere("(STR_TO_DATE(`data_alta_format`, '%d-%m-%Y') BETWEEN STR_TO_DATE('".$data_nova_inici."', '%d-%m-%Y') AND STR_TO_DATE('". $data_nova_fi ."', '%d-%m-%Y'))");
             }
         }
 
@@ -691,14 +691,11 @@ class RegistresController extends BaseController
             $crud->addWhere('codi_centre_emissor', $session_filtre['nom_centre_emissor'][0], true);
         }
         if (isset($session_filtre['data_creacio_inici']) && isset($session_filtre['data_creacio_fi'])) {
-            $data_de_la_sessio = $session_filtre['data_creacio_inici'][0];
-            $data_nova_inici = date('d-m-Y', strtotime($data_de_la_sessio));
-
-
-            $data_de_la_sessio = $session_filtre['data_creacio_fi'][0];
-            $data_nova_fi = date('d-m-Y', strtotime($data_de_la_sessio));
-            
-            $crud->addWhere("data_alta_format BETWEEN '" . $data_nova_inici . "' AND  '" . $data_nova_fi . "'");
+            $data_de_la_sessio_inici = $session_filtre['data_creacio_inici'][0];
+            $data_nova_inici = date('d-m-Y', strtotime($data_de_la_sessio_inici));
+            $data_de_la_sessio_fi = $session_filtre['data_creacio_fi'][0];
+            $data_nova_fi = date('d-m-Y', strtotime($data_de_la_sessio_fi));
+            $crud->addWhere("(STR_TO_DATE(`data_alta_format`, '%d-%m-%Y') BETWEEN STR_TO_DATE('".$data_nova_inici."', '%d-%m-%Y') AND STR_TO_DATE('". $data_nova_fi ."', '%d-%m-%Y'))");
         }
 
         $crud->addWhere("codi_centre_reparador='" . session()->get('user_data')['codi_centre'] . "' AND (nom_estat='Pendent de reparar' or nom_estat='Reparant' or nom_estat='Reparat i pendent de recollir')");
