@@ -183,11 +183,13 @@
                     <div class="col-3 mt-4">
                         <button type="submit" class="btn btn-success rounded-pill"><i class="fa-solid fa-plus"></i> <?= lang('tipus.afegir_llista_admesos') ?></button>
                     </div>
-                    <div class="col-2 mt-4">
-                        <a href="<?= base_url('/professor/desactivar/tots') ?>" class="btn btn-danger rounded-pill">
-                            <i class="fa-solid fa-trash"></i> <?= lang('tipus.esborrar_tots_professors') ?>
-                        </a>
-                    </div>
+                    <?php if($role == "desenvolupador"): ?>
+                        <div class="col-2 mt-4">
+                            <a href="<?= base_url('/professor/desactivar/tots') ?>" class="btn btn-danger rounded-pill">
+                                <i class="fa-solid fa-trash"></i> <?= lang('tipus.esborrar_tots_professors') ?>
+                            </a>
+                        </div>
+                    <?php endif; ?>
 
                 </div>
             </form>

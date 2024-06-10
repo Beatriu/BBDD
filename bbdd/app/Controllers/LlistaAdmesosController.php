@@ -52,6 +52,7 @@ class LlistaAdmesosController extends BaseController
             'css-bootstrap',
         ]);
         $crud->setRelation('codi_centre', 'centre', 'codi_centre', 'nom_centre');
+        $crud->setRelation('codi_centre', 'centre', 'codi_centre', 'id_sstt');
         $crud->setColumns([
             'correu_professor',
             'data_entrada',
@@ -74,6 +75,10 @@ class LlistaAdmesosController extends BaseController
         ]);
         $crud->addItemLink('delete', 'fa-trash', base_url('professor/desactivar'), 'Desactivar Professor');
         $crud->addWhere('actiu', "1");
+
+        if ($role == "admin_sstt") {
+            $crud->addWhere('id_sstt', session()->get('user_data')['id_sstt'], true);
+        }
 
         $data['output'] = $crud->render();
 
@@ -98,8 +103,13 @@ class LlistaAdmesosController extends BaseController
         $data['centres'] = "";
         for ($i = 0; $i < sizeof($array_centres); $i++){
             //if ($array_centres[$i]['actiu'] == "1") {
+            if ($role == "admin_sstt" &&  session()->get('user_data')['id_sstt'] == $array_centres[$i]['id_sstt']) {
                 $data['centres'] .= "<option value = \"" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "\">";
                 $data['centres'] .=  $array_centres[$i]['nom_centre'] . "</option>";
+            } else if ($role == "desenvolupador") {
+                $data['centres'] .= "<option value = \"" . $array_centres[$i]['codi_centre'] . " - " . $array_centres[$i]['nom_centre'] . "\">";
+                $data['centres'] .=  $array_centres[$i]['nom_centre'] . "</option>";
+            }
             //}
         }
 
@@ -198,7 +208,7 @@ class LlistaAdmesosController extends BaseController
         $actor = session()->get('user_data');
         $role = $actor['role'];
 
-        if ($role != "desenvolupador" && $role != "admin_sstt") {
+        if ($role != "desenvolupador") {
             return redirect()->to(base_url('/tiquets'));
         }
 
