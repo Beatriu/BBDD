@@ -123,9 +123,9 @@ SELECT
     p.nom_poblacio,
     com.id_comarca,
     com.nom_comarca,
-    (SELECT SUM(t.preu_total) 
-     FROM tiquet t 
-     WHERE t.codi_centre_reparador = c.codi_centre) AS Preu_total,
+    ROUND((SELECT SUM(t.preu_total) 
+           FROM tiquet t 
+           WHERE t.codi_centre_reparador = c.codi_centre), 2) AS Preu_total,
     (SELECT COUNT(t.id_tiquet)
      FROM tiquet t
      WHERE t.codi_centre_reparador = c.codi_centre OR t.codi_centre_emissor = c.codi_centre) AS Tiquets_del_centre
