@@ -47,6 +47,7 @@ class UsuarisController extends BaseController
             $login_in_rol_model = new LoginInRolModel();
             $rol_model = new RolModel();
             $login_obtingut = $login_model->obtenirLogin($nom_login);
+            $alumne_model = new AlumneModel();
 
             if ($login_obtingut != null) { // En cas que existeixi
 
@@ -81,6 +82,11 @@ class UsuarisController extends BaseController
                         if ($role == "sstt" || $role == "admin_sstt") {
                             $session_data['id_sstt'] = $login_model->obtenirIdSSTT($session_data['mail'])['id_sstt'];
                         }
+                    } else if ($role == "alumne") {
+                        $alumne = $alumne_model->getAlumneByCorreu($session_data['mail']);
+                        $session_data['nom'] = $alumne['nom'];
+                        $session_data['cognoms'] = $alumne['cognoms'];
+                        $session_data['codi_centre'] = $alumne['codi_centre'];
                     }
 
                     session()->set('user_data', $session_data);
