@@ -4,7 +4,9 @@
 <link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR . 'taulaRegistre.css') ?>">
 <link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR . 'header.css') ?>">
 <link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR . 'style.css') ?>">
-<script>var role = '<?= $role ?>';</script>
+<script>
+    var role = '<?= $role ?>';
+</script>
 <script src="<?= base_url('js' . DIRECTORY_SEPARATOR . 'estats.js') ?>"></script>
 <?= $this->endSection('css_pagina'); ?>
 
@@ -17,11 +19,15 @@
     <div class="modal" tabindex="-1" role="dialog" style="display:block">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title"><?= lang('registre.model_title') ?></h5>
-                    <a href="<?= base_url("/tiquets") ?>">
-                        <i class="fa-solid fa-xmark"></i>
-                    </a>
+                <div class="modal-header d-flex justify-content-between">
+                    <div>
+                        <h5 class="modal-title"><?= lang('registre.model_title') ?></h5>
+                    </div>
+                    <div>
+                        <a href="<?= base_url("/tiquets") ?>">
+                            <i class="fa-solid fa-xmark"></i>
+                        </a>
+                    </div>
                 </div>
                 <div class="modal-body">
                     <p><?= lang('registre.model_text') ?><?php echo session()->getFlashdata('tiquet')["codi_equip"]; ?></p>
@@ -39,11 +45,11 @@
         <!--Sidebar estàtic-->
         <div class="col-sm-auto pl-0" style="display:none" id="mySidebar">
             <ul class="nav flex-column">
-               <li> <a onclick="_close()"> <i class="fa-solid fa-xmark"></i></a></li>
-               <hr style="height:10px">
-               <li> <a href="#" class="w3-bar-item w3-button">Link 1</a></li>
-               <li> <a href="#" class="w3-bar-item w3-button">Link 2</a></li>
-               <li><a href="#" class="w3-bar-item w3-button">Link 3</a></li>
+                <li> <a onclick="_close()"> <i class="fa-solid fa-xmark"></i></a></li>
+                <hr style="height:10px">
+                <li> <a href="#" class="w3-bar-item w3-button">Link 1</a></li>
+                <li> <a href="#" class="w3-bar-item w3-button">Link 2</a></li>
+                <li><a href="#" class="w3-bar-item w3-button">Link 3</a></li>
             </ul>
         </div>
         <!--Taula i títol-->
@@ -52,13 +58,16 @@
                 <div>
                     <h1><?= lang("registre.table-dispositius") ?></h1>
                 </div>
-                <div id="botons_titol"> 
-                    <!--<button onclick="_open()" class="btn" id="btn-filter"><i class="fa-solid fa-filter"></i> <?//= lang("registre.buttons.filter") ?></button>-->
+                <div id="botons_titol">
+                    <!--<button onclick="_open()" class="btn" id="btn-filter"><i class="fa-solid fa-filter"></i> <? //= lang("registre.buttons.filter") 
+                                                                                                                    ?></button>-->
                     <a href="<?= base_url("/formulariTiquet") ?>" class="btn" id="btn-create"><i class="fa-solid fa-circle-plus"></i> <?= lang("registre.buttons.create") ?></a>
                 </div>
             </div>
             <div>
-                <?php if($error != null) { echo lang( $error ); } ?>
+                <?php if ($error != null) {
+                    echo lang($error);
+                } ?>
                 <?php if ((session()->get('crearTiquet')) !== null) : ?>
                     <div class="alert alert-success alerta_esborrar" role="alert">
                         <?= session()->get('crearTiquet') ?>
@@ -70,7 +79,7 @@
     </div>
 </div>
 <script>
-(function(window, document, undefined) {
+    (function(window, document, undefined) {
         window.onload = init;
 
         function init() {

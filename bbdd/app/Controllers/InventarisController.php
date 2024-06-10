@@ -236,11 +236,15 @@ class InventarisController extends BaseController
 
                     $crud->addWhere('codi_centre', $session_filtre['nom_centre_reparador'][0], true);
                 }
-                if (isset($session_filtre['data_creacio'])) {
-
-                    $data_de_la_sessio = $session_filtre['data_creacio'][0];
-                    $data_nova = date('d-m-Y', strtotime($data_de_la_sessio));
-                    $crud->addWhere('data_compra', $data_nova, true);
+                if (isset($session_filtre['data_creacio_inici']) && isset($session_filtre['data_creacio_fi'])) {
+                    $data_de_la_sessio = $session_filtre['data_creacio_inici'][0];
+                    $data_nova_inici = date('d-m-Y', strtotime($data_de_la_sessio));
+        
+        
+                    $data_de_la_sessio = $session_filtre['data_creacio_fi'][0];
+                    $data_nova_fi = date('d-m-Y', strtotime($data_de_la_sessio));
+                    
+                    $crud->addWhere("data_alta_format BETWEEN '" . $data_nova_inici . "' AND  '" . $data_nova_fi . "'");
                 }
                 if (isset($session_filtre['nom_poblacio'])) {
                     $model_poblacio = new PoblacioModel();
@@ -849,11 +853,15 @@ class InventarisController extends BaseController
                 array_push($array_centre_reparador, $centre_reparador);
                 $session->push('filtresInventari', ['nom_centre_reparador' => $array_centre_reparador]);
             }
-            if (isset($dades['data_creacio']) &&  $dades['data_creacio'] !== '') {
-                $array_data_creacio = [];
-                $data_creacio = $dades['data_creacio'];
-                array_push($array_data_creacio, $data_creacio);
-                $session->push('filtresInventari', ['data_creacio' => $array_data_creacio]);
+            if (isset($dades['data_creacio_inici']) && $dades['data_creacio_inici'] !== '' && isset($dades['data_creacio_fi']) &&  $dades['data_creacio_fi'] !== '') {
+                $array_data_creacio_inici = [];
+                $data_creacio_inici = $dades['data_creacio_inici'];
+                array_push($array_data_creacio_inici, $data_creacio_inici);
+                $session->push('filtres', ['data_creacio_inici' => $array_data_creacio_inici]);
+                $array_data_creacio_fi = [];
+                $data_creacio_fi = $dades['data_creacio_fi'];
+                array_push($array_data_creacio_fi, $data_creacio_fi);
+                $session->push('filtres', ['data_creacio_fi' => $array_data_creacio_fi]);
             }
             if (isset($dades['nom_poblacio_list']) && $dades['nom_poblacio_list'] !== '') {
 
@@ -920,13 +928,11 @@ class InventarisController extends BaseController
         if (count($filtre_session) == 0) {
             session()->remove('filtresInventari');
         }
-        if ($filtre_eliminar['operacio'] == 'Poblacio') {
-            unset($filtre_session['nom_poblacio']);
-            session()->set('filtresInventari', $filtre_session);
-        }
-        if ($filtre_eliminar['operacio'] == 'Comarca') {
-            unset($filtre_session['nom_comarca']);
-            session()->set('filtresInventari', $filtre_session);
+        if ($filtre_eliminar['operacio'] == 'data_creacio_inici') {
+            unset($filtre_session['data_creacio_inici']);
+            session()->set('filtres', $filtre_session);
+            unset($filtre_session['data_creacio_fi']);
+            session()->set('filtres', $filtre_session);
         }
 
         return redirect()->back()->withInput();
