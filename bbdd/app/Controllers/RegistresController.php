@@ -382,9 +382,8 @@ class RegistresController extends BaseController
                 $data_de_la_sessio = $session_filtre['data_creacio_fi'][0];
                 $data_nova_fi = date('d-m-Y', strtotime($data_de_la_sessio));
                 
-                $crud->addWhere("data_alta_format BETWEEN '" . $data_nova_inici . "' AND  '" . $data_nova_fi . "'");
+                $crud->addWhere("(STR_TO_DATE(`data_alta_format`, '%d-%m-%Y') BETWEEN STR_TO_DATE('".$data_nova_inici."', '%d-%m-%Y') AND STR_TO_DATE('". $data_nova_fi ."', '%d-%m-%Y'))");
             }
-            $crud->addWhere("(STR_TO_DATE(`data_alta_format`, '%d-%m-%Y') BETWEEN STR_TO_DATE('".$data_nova_inici."', '%d-%m-%Y') AND STR_TO_DATE('". $data_nova_fi ."', '%d-%m-%Y'))");
         }
 
 
