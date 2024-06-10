@@ -22,7 +22,6 @@ use SebastianBergmann\Type\TrueType;
 
 class RegistresController extends BaseController
 {
-    
 
     public function index($id_tiquet = null)
     {  

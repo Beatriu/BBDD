@@ -66,5 +66,6 @@ return [
     'radio_innactiu' => 'No actius',
     'ambdues_opcions' => 'Amdues opcions',
     'radio_taller' => 'Tallers',
-    'radio_no_taller' => 'No tallers'
+    'radio_no_taller' => 'No tallers',
+    'llegenda_tipus_dispositiu' => 'Llegenda tipus dispositius'
 ];

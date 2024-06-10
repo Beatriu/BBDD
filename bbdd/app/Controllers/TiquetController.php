@@ -696,6 +696,8 @@ class TiquetController extends BaseController
             $data['correu_persona_contacte_centre'] = null;
         }
 
+        //$data['taula_tipus_dispositiu'];
+
         $data['title'] = lang('general_lang.formulari_tiquet');
         return view('formularis' . DIRECTORY_SEPARATOR . 'formulariTiquet', $data);
     }
