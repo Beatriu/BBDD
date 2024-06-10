@@ -145,8 +145,9 @@ class DadesController extends BaseController
                                 }
                             }
                         }
-                        for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                            array_splice($array_resultat,$array_eliminar[$j],1);
+                        rsort($array_eliminar);
+                        foreach ($array_eliminar as $index) {
+                            array_splice($array_resultat, $index, 1);
                         }
                         
                         $file_name = "nombre_dispositius_finalitzats_" . date('Ymd') . '.csv';
@@ -187,8 +188,9 @@ class DadesController extends BaseController
                                 $array_resultat[$i]['nom_centre'] = $centre_model->obtenirCentre($array_resultat[$i]['codi_centre_reparador'])['nom_centre'];
                             }
                         }
-                        for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                            array_splice($array_resultat,$array_eliminar[$j],1);
+                        rsort($array_eliminar);
+                        foreach ($array_eliminar as $index) {
+                            array_splice($array_resultat, $index, 1);
                         }
                         
                         $file_name = "nombre_dispositius_". $estat . "_" . date('Ymd') . '.csv';
@@ -235,8 +237,9 @@ class DadesController extends BaseController
                                 $array_resultat[$i]['nom_tipus_dispositiu'] = $tipus_dispositiu_model->obtenirTipusDispositiuPerId($array_resultat[$i]['id_tipus_dispositiu'])['nom_tipus_dispositiu'];
                             }
                         }
-                        for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                            array_splice($array_resultat,$array_eliminar[$j],1);
+                        rsort($array_eliminar);
+                        foreach ($array_eliminar as $index) {
+                            array_splice($array_resultat, $index, 1);
                         }
                         
                         $file_name = "nombre_dispositius_finalitzats_tipus_dispositiu_" . date('Ymd') . '.csv';
@@ -281,8 +284,9 @@ class DadesController extends BaseController
                                 $array_resultat[$i]['nom_tipus_dispositiu'] = $tipus_dispositiu_model->obtenirTipusDispositiuPerId($array_resultat[$i]['id_tipus_dispositiu'])['nom_tipus_dispositiu'];
                             }
                         }
-                        for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                            array_splice($array_resultat,$array_eliminar[$j],1);
+                        rsort($array_eliminar);
+                        foreach ($array_eliminar as $index) {
+                            array_splice($array_resultat, $index, 1);
                         }
                         
                         $file_name = "nombre_dispositius_". $estat ."_tipus_dispositiu_" . date('Ymd') . '.csv';
@@ -333,8 +337,9 @@ class DadesController extends BaseController
                                 $nom_tipus_dispositiu = $array_resultat[$i]['nom_tipus_dispositiu'];
                             }
                         }
-                        for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                            array_splice($array_resultat,$array_eliminar[$j],1);
+                        rsort($array_eliminar);
+                        foreach ($array_eliminar as $index) {
+                            array_splice($array_resultat, $index, 1);
                         }
                         
                         $file_name = "nombre_dispositius_finalitzats_". strtolower($nom_tipus_dispositiu) ."_" . date('Ymd') . '.csv';
@@ -381,8 +386,9 @@ class DadesController extends BaseController
                                 $nom_tipus_dispositiu = $array_resultat[$i]['nom_tipus_dispositiu'];
                             }
                         }
-                        for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                            array_splice($array_resultat,$array_eliminar[$j],1);
+                        rsort($array_eliminar);
+                        foreach ($array_eliminar as $index) {
+                            array_splice($array_resultat, $index, 1);
                         }
                         
                         $file_name = "nombre_dispositius_". $estat ."_". strtolower($nom_tipus_dispositiu) ."_" . date('Ymd') . '.csv';
@@ -431,8 +437,9 @@ class DadesController extends BaseController
                                 $array_resultat[$i]['nom_sstt'] = $sstt_model->obtenirSSTTPerId($array_resultat[$i]['id_sstt'])['nom_sstt'];
                             }
                         }
-                        for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                            array_splice($array_resultat,$array_eliminar[$j],1);
+                        rsort($array_eliminar);
+                        foreach ($array_eliminar as $index) {
+                            array_splice($array_resultat, $index, 1);
                         }
                         
                         $file_name = "nombre_dispositius_finalitzats_" . date('Ymd') . '.csv';
@@ -479,8 +486,9 @@ class DadesController extends BaseController
                                 $array_resultat[$i]['nom_sstt'] = $sstt_model->obtenirSSTTPerId($array_resultat[$i]['id_sstt'])['nom_sstt'];
                             }
                         }
-                        for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                            array_splice($array_resultat,$array_eliminar[$j],1);
+                        rsort($array_eliminar);
+                        foreach ($array_eliminar as $index) {
+                            array_splice($array_resultat, $index, 1);
                         }
                         
                         $file_name = "nombre_dispositius_". $estat . "_" . date('Ymd') . '.csv';
@@ -533,8 +541,9 @@ class DadesController extends BaseController
                                 $array_resultat[$i]['nom_tipus_dispositiu'] = $tipus_dispositiu_model->obtenirTipusDispositiuPerId($array_resultat[$i]['id_tipus_dispositiu'])['nom_tipus_dispositiu'];
                             }
                         }
-                        for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                            array_splice($array_resultat,$array_eliminar[$j],1);
+                        rsort($array_eliminar);
+                        foreach ($array_eliminar as $index) {
+                            array_splice($array_resultat, $index, 1);
                         }
                         
                         $file_name = "nombre_dispositius_finalitzats_tipus_dispositiu_" . date('Ymd') . '.csv';
@@ -578,8 +587,9 @@ class DadesController extends BaseController
                                 $array_resultat[$i]['nom_tipus_dispositiu'] = $tipus_dispositiu_model->obtenirTipusDispositiuPerId($array_resultat[$i]['id_tipus_dispositiu'])['nom_tipus_dispositiu'];
                             }
                         }
-                        for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                            array_splice($array_resultat,$array_eliminar[$j],1);
+                        rsort($array_eliminar);
+                        foreach ($array_eliminar as $index) {
+                            array_splice($array_resultat, $index, 1);
                         }
                         
                         $file_name = "nombre_dispositius_". $estat ."_tipus_dispositiu_" . date('Ymd') . '.csv';
@@ -630,8 +640,9 @@ class DadesController extends BaseController
                                 $nom_tipus_dispositiu = $array_resultat[$i]['nom_tipus_dispositiu'];
                             }
                         }
-                        for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                            array_splice($array_resultat,$array_eliminar[$j],1);
+                        rsort($array_eliminar);
+                        foreach ($array_eliminar as $index) {
+                            array_splice($array_resultat, $index, 1);
                         }
                         
                         $file_name = "nombre_dispositius_finalitzats_". strtolower($nom_tipus_dispositiu) ."_" . date('Ymd') . '.csv';
@@ -684,8 +695,9 @@ class DadesController extends BaseController
                                 $nom_tipus_dispositiu = $array_resultat[$i]['nom_tipus_dispositiu'];
                             }
                         }
-                        for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                            array_splice($array_resultat,$array_eliminar[$j],1);
+                        rsort($array_eliminar);
+                        foreach ($array_eliminar as $index) {
+                            array_splice($array_resultat, $index, 1);
                         }
                         
                         $file_name = "nombre_dispositius_". $estat ."_". strtolower($nom_tipus_dispositiu) ."_" . date('Ymd') . '.csv';
@@ -934,8 +946,9 @@ class DadesController extends BaseController
                             $array_resultat[$i]['nom_centre'] = $centre_model->obtenirCentre($array_resultat[$i]['codi_centre_emissor'])['nom_centre'];
                         }
                     }
-                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    rsort($array_eliminar);
+                    foreach ($array_eliminar as $index) {
+                        array_splice($array_resultat, $index, 1);
                     }
                     
                     $file_name = "nombre_tiquets_emesos_" . date('Ymd') . '.csv';
@@ -978,8 +991,9 @@ class DadesController extends BaseController
                             $array_resultat[$i]['nom_tipus_dispositiu'] = $tipus_dispositiu_model->obtenirTipusDispositiuPerId($array_resultat[$i]['id_tipus_dispositiu'])['nom_tipus_dispositiu'];
                         }
                     }
-                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    rsort($array_eliminar);
+                    foreach ($array_eliminar as $index) {
+                        array_splice($array_resultat, $index, 1);
                     }
                     
                     $file_name = "nombre_tiquets_emesos_tipus_dispositiu_" . date('Ymd') . '.csv';
@@ -1027,8 +1041,9 @@ class DadesController extends BaseController
                             $nom_tipus_dispositiu = $array_resultat[$i]['nom_tipus_dispositiu'];
                         }
                     }
-                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    rsort($array_eliminar);
+                    foreach ($array_eliminar as $index) {
+                        array_splice($array_resultat, $index, 1);
                     }
                     
                     $file_name = "nombre_tiquets_emesos_". strtolower($nom_tipus_dispositiu) ."_" . date('Ymd') . '.csv';
@@ -1069,8 +1084,9 @@ class DadesController extends BaseController
                             }
                         }
                     }
-                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    rsort($array_eliminar);
+                    foreach ($array_eliminar as $index) {
+                        array_splice($array_resultat, $index, 1);
                     }
                     
                     $file_name = "nombre_tiquets_emesos_poblacio_" . date('Ymd') . '.csv';
@@ -1106,8 +1122,9 @@ class DadesController extends BaseController
                             }
                         }
                     }
-                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    rsort($array_eliminar);
+                    foreach ($array_eliminar as $index) {
+                        array_splice($array_resultat, $index, 1);
                     }
                     
                     $file_name = "nombre_tiquets_emesos_poblacio_tipus_dispositiu_" . date('Ymd') . '.csv';
@@ -1145,8 +1162,9 @@ class DadesController extends BaseController
                             }
                         }
                     }
-                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    rsort($array_eliminar);
+                    foreach ($array_eliminar as $index) {
+                        array_splice($array_resultat, $index, 1);
                     }
                     
                     $file_name = "nombre_tiquets_emesos_poblacio_tipus_dispositiu_" . date('Ymd') . '.csv';
@@ -1188,8 +1206,9 @@ class DadesController extends BaseController
                             }
                         }
                     }
-                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    rsort($array_eliminar);
+                    foreach ($array_eliminar as $index) {
+                        array_splice($array_resultat, $index, 1);
                     }
                     
                     $file_name = "nombre_tiquets_emesos_comarca_" . date('Ymd') . '.csv';
@@ -1231,8 +1250,9 @@ class DadesController extends BaseController
                             }
                         }
                     }
-                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    rsort($array_eliminar);
+                    foreach ($array_eliminar as $index) {
+                        array_splice($array_resultat, $index, 1);
                     }
                     
                     $file_name = "nombre_tiquets_emesos_comarca_tipus_dispositiu_" . date('Ymd') . '.csv';
@@ -1269,8 +1289,9 @@ class DadesController extends BaseController
                             }
                         }
                     }
-                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    rsort($array_eliminar);
+                    foreach ($array_eliminar as $index) {
+                        array_splice($array_resultat, $index, 1);
                     }
                     
                     $file_name = "nombre_tiquets_emesos_comarca_". strtolower($tipus_dispositiu_model->obtenirTipusDispositiuPerId($id_tipus_dispositiu)['nom_tipus_dispositiu']) ."_" . date('Ymd') . '.csv';
@@ -1317,8 +1338,9 @@ class DadesController extends BaseController
                             }
                         }
                     }
-                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    rsort($array_eliminar);
+                    foreach ($array_eliminar as $index) {
+                        array_splice($array_resultat, $index, 1);
                     }
                     
                     $file_name = "nombre_tiquets_emesos_sstt_" . date('Ymd') . '.csv';
@@ -1360,8 +1382,9 @@ class DadesController extends BaseController
                             }
                         }
                     }
-                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    rsort($array_eliminar);
+                    foreach ($array_eliminar as $index) {
+                        array_splice($array_resultat, $index, 1);
                     }
                     
                     $file_name = "nombre_tiquets_emesos_sstt_tipus_dispositiu_" . date('Ymd') . '.csv';
@@ -1398,8 +1421,9 @@ class DadesController extends BaseController
                             }
                         }
                     }
-                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    rsort($array_eliminar);
+                    foreach ($array_eliminar as $index) {
+                        array_splice($array_resultat, $index, 1);
                     }
                     
                     $file_name = "nombre_tiquets_emesos_sstt_". strtolower($tipus_dispositiu_model->obtenirTipusDispositiuPerId($id_tipus_dispositiu)['nom_tipus_dispositiu']) ."_" . date('Ymd') . '.csv';
@@ -1535,8 +1559,9 @@ class DadesController extends BaseController
                             }
                         }
                     }
-                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    rsort($array_eliminar);
+                    foreach ($array_eliminar as $index) {
+                        array_splice($array_resultat, $index, 1);
                     }
                     
                     $file_name = "despeses_centre_emissor_" . date('Ymd') . '.csv';
@@ -1572,8 +1597,9 @@ class DadesController extends BaseController
                             }
                         }
                     }
-                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    rsort($array_eliminar);
+                    foreach ($array_eliminar as $index) {
+                        array_splice($array_resultat, $index, 1);
                     }
                     
                     $file_name = "despeses_centre_emissor_tipus_dispositiu_" . date('Ymd') . '.csv';
@@ -1610,8 +1636,9 @@ class DadesController extends BaseController
                             }
                         }
                     }
-                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    rsort($array_eliminar);
+                    foreach ($array_eliminar as $index) {
+                        array_splice($array_resultat, $index, 1);
                     }
                     
                     $file_name = "despeses_centre_emissor_". strtolower($tipus_dispositiu_model->obtenirTipusDispositiuPerId($id_tipus_dispositiu)['nom_tipus_dispositiu']) ."_" . date('Ymd') . '.csv';
@@ -1652,8 +1679,9 @@ class DadesController extends BaseController
                             }
                         }
                     }
-                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    rsort($array_eliminar);
+                    foreach ($array_eliminar as $index) {
+                        array_splice($array_resultat, $index, 1);
                     }
                     
                     $file_name = "despeses_centre_reparador_" . date('Ymd') . '.csv';
@@ -1689,8 +1717,9 @@ class DadesController extends BaseController
                             }
                         }
                     }
-                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    rsort($array_eliminar);
+                    foreach ($array_eliminar as $index) {
+                        array_splice($array_resultat, $index, 1);
                     }
                     
                     $file_name = "despeses_centre_reparador_tipus_dispositiu_" . date('Ymd') . '.csv';
@@ -1727,8 +1756,9 @@ class DadesController extends BaseController
                             }
                         }
                     }
-                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    rsort($array_eliminar);
+                    foreach ($array_eliminar as $index) {
+                        array_splice($array_resultat, $index, 1);
                     }
                     
                     $file_name = "despeses_centre_reparador_". strtolower($tipus_dispositiu_model->obtenirTipusDispositiuPerId($id_tipus_dispositiu)['nom_tipus_dispositiu']) ."_" . date('Ymd') . '.csv';
@@ -1769,8 +1799,9 @@ class DadesController extends BaseController
                             }
                         }
                     }
-                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    rsort($array_eliminar);
+                    foreach ($array_eliminar as $index) {
+                        array_splice($array_resultat, $index, 1);
                     }
                     
                     $file_name = "despeses_poblacio_" . date('Ymd') . '.csv';
@@ -1806,8 +1837,9 @@ class DadesController extends BaseController
                             }
                         }
                     }
-                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    rsort($array_eliminar);
+                    foreach ($array_eliminar as $index) {
+                        array_splice($array_resultat, $index, 1);
                     }
                     
                     $file_name = "despeses_poblacio_tipus_dispositiu_" . date('Ymd') . '.csv';
@@ -1844,8 +1876,9 @@ class DadesController extends BaseController
                             }
                         }
                     }
-                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    rsort($array_eliminar);
+                    foreach ($array_eliminar as $index) {
+                        array_splice($array_resultat, $index, 1);
                     }
                     
                     $file_name = "despeses_poblacio_". strtolower($tipus_dispositiu_model->obtenirTipusDispositiuPerId($id_tipus_dispositiu)['nom_tipus_dispositiu']) ."_" . date('Ymd') . '.csv';
@@ -1886,8 +1919,9 @@ class DadesController extends BaseController
                             }
                         }
                     }
-                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    rsort($array_eliminar);
+                    foreach ($array_eliminar as $index) {
+                        array_splice($array_resultat, $index, 1);
                     }
                     
                     $file_name = "despeses_comarca_" . date('Ymd') . '.csv';
@@ -1929,8 +1963,9 @@ class DadesController extends BaseController
                             }
                         }
                     }
-                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    rsort($array_eliminar);
+                    foreach ($array_eliminar as $index) {
+                        array_splice($array_resultat, $index, 1);
                     }
                     
                     $file_name = "despeses_comarca_tipus_dispositiu_" . date('Ymd') . '.csv';
@@ -1967,8 +2002,9 @@ class DadesController extends BaseController
                             }
                         }
                     }
-                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    rsort($array_eliminar);
+                    foreach ($array_eliminar as $index) {
+                        array_splice($array_resultat, $index, 1);
                     }
                     
                     $file_name = "despeses_comarca_". strtolower($tipus_dispositiu_model->obtenirTipusDispositiuPerId($id_tipus_dispositiu)['nom_tipus_dispositiu']) ."_" . date('Ymd') . '.csv';
@@ -2015,8 +2051,9 @@ class DadesController extends BaseController
                             }
                         }
                     }
-                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    rsort($array_eliminar);
+                    foreach ($array_eliminar as $index) {
+                        array_splice($array_resultat, $index, 1);
                     }
                     
                     $file_name = "despeses_sstt_emissor_" . date('Ymd') . '.csv';
@@ -2058,8 +2095,9 @@ class DadesController extends BaseController
                             }
                         }
                     }
-                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    rsort($array_eliminar);
+                    foreach ($array_eliminar as $index) {
+                        array_splice($array_resultat, $index, 1);
                     }
                     
                     $file_name = "despeses_sstt_emissor_tipus_dispositiu_" . date('Ymd') . '.csv';
@@ -2096,8 +2134,9 @@ class DadesController extends BaseController
                             }
                         }
                     }
-                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    rsort($array_eliminar);
+                    foreach ($array_eliminar as $index) {
+                        array_splice($array_resultat, $index, 1);
                     }
                     
                     $file_name = "despeses_sstt_emissor_". strtolower($tipus_dispositiu_model->obtenirTipusDispositiuPerId($id_tipus_dispositiu)['nom_tipus_dispositiu']) ."_" . date('Ymd') . '.csv';
@@ -2144,8 +2183,9 @@ class DadesController extends BaseController
                             }
                         }
                     }
-                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    rsort($array_eliminar);
+                    foreach ($array_eliminar as $index) {
+                        array_splice($array_resultat, $index, 1);
                     }
                     
                     $file_name = "despeses_sstt_reparador_" . date('Ymd') . '.csv';
@@ -2187,8 +2227,9 @@ class DadesController extends BaseController
                             }
                         }
                     }
-                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    rsort($array_eliminar);
+                    foreach ($array_eliminar as $index) {
+                        array_splice($array_resultat, $index, 1);
                     }
                     
                     $file_name = "despeses_sstt_reparador_tipus_dispositiu_" . date('Ymd') . '.csv';
@@ -2225,8 +2266,9 @@ class DadesController extends BaseController
                             }
                         }
                     }
-                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    rsort($array_eliminar);
+                    foreach ($array_eliminar as $index) {
+                        array_splice($array_resultat, $index, 1);
                     }
                     
                     $file_name = "despeses_sstt_reparador_". strtolower($tipus_dispositiu_model->obtenirTipusDispositiuPerId($id_tipus_dispositiu)['nom_tipus_dispositiu']) ."_" . date('Ymd') . '.csv';
@@ -2374,8 +2416,9 @@ class DadesController extends BaseController
                             }
                         }
                     }
-                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    rsort($array_eliminar);
+                    foreach ($array_eliminar as $index) {
+                        array_splice($array_resultat, $index, 1);
                     }
                     
                     $file_name = "nombre_finalitzats_centre_reparador_temps_" . date('Ymd') . '.csv';
@@ -2413,8 +2456,9 @@ class DadesController extends BaseController
                             }
                         }
                     }
-                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    rsort($array_eliminar);
+                    foreach ($array_eliminar as $index) {
+                        array_splice($array_resultat, $index, 1);
                     }
                     
                     $file_name = "nombre_". $estat ."_centre_reparador_temps_" . date('Ymd') . '.csv';
@@ -2456,8 +2500,9 @@ class DadesController extends BaseController
                             }
                         }
                     }
-                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    rsort($array_eliminar);
+                    foreach ($array_eliminar as $index) {
+                        array_splice($array_resultat, $index, 1);
                     }
                     
                     $file_name = "nombre_finalitzats_sstt_temps_" . date('Ymd') . '.csv';
@@ -2507,8 +2552,9 @@ class DadesController extends BaseController
                             }
                         }
                     }
-                    for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                        array_splice($array_resultat,$array_eliminar[$j],1);
+                    rsort($array_eliminar);
+                    foreach ($array_eliminar as $index) {
+                        array_splice($array_resultat, $index, 1);
                     }
                     
                     $file_name = "nombre_". $estat ."_sstt_temps_" . date('Ymd') . '.csv';
@@ -2638,8 +2684,9 @@ class DadesController extends BaseController
                         }
                     }
                 }
-                for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                    array_splice($array_resultat,$array_eliminar[$j],1);
+                rsort($array_eliminar);
+                foreach ($array_eliminar as $index) {
+                    array_splice($array_resultat, $index, 1);
                 }
                 
                 $file_name = "nombre_tiquets_emesos_centre_emissor_temps_" . date('Ymd') . '.csv';
@@ -2677,8 +2724,9 @@ class DadesController extends BaseController
                         }
                     }
                 }
-                for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                    array_splice($array_resultat,$array_eliminar[$j],1);
+                rsort($array_eliminar);
+                foreach ($array_eliminar as $index) {
+                    array_splice($array_resultat, $index, 1);
                 }
                 
                 $file_name = "nombre_tiquets_emesos_sstt_temps_" . date('Ymd') . '.csv';
@@ -2769,8 +2817,9 @@ class DadesController extends BaseController
                         }
                     }
                 }
-                for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                    array_splice($array_resultat,$array_eliminar[$j],1);
+                rsort($array_eliminar);
+                foreach ($array_eliminar as $index) {
+                    array_splice($array_resultat, $index, 1);
                 }
                 
                 $file_name = "despeses_centre_reparador_temps_" . date('Ymd') . '.csv';
@@ -2808,8 +2857,9 @@ class DadesController extends BaseController
                         }
                     }
                 }
-                for ($j = 0; $j < sizeof($array_eliminar); $j++) {
-                    array_splice($array_resultat,$array_eliminar[$j],1);
+                rsort($array_eliminar);
+                foreach ($array_eliminar as $index) {
+                    array_splice($array_resultat, $index, 1);
                 }
                 
                 $file_name = "despeses_sstt_temps_" . date('Ymd') . '.csv';

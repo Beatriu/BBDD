@@ -114,7 +114,12 @@ class TiquetModel extends Model
     }
     public function countTiquetsSenseTipus()
     {
-        return $this->select('codi_centre_emissor')->selectCount('id_tiquet','num_tiquets')->groupBy('codi_centre_emissor')->findAll();
+        return $this->select('tiquet.codi_centre_emissor, poblacio.id_sstt')
+                    ->selectCount('id_tiquet','num_tiquets')
+                    ->join('centre', 'tiquet.codi_centre_emissor = centre.codi_centre')
+                    ->join('poblacio','centre.id_poblacio = poblacio.id_poblacio')
+                    ->groupBy('tiquet.codi_centre_emissor')
+                    ->findAll();
     }
     public function countTiquetsSenseTipusPOBLACIO()
     {
