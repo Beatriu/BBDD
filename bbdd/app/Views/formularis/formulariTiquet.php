@@ -21,6 +21,29 @@
 
 <form class="container" method="POST" action="<?= base_url('/formulariTiquet') ?>" enctype="multipart/form-data">
     <?= csrf_field() ?>
+    <!-- Modal llegenda -->
+    <div class="modal" tabindex="-1" role="dialog" style="display:block">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header d-flex justify-content-between">
+                    <div>
+                        <h5 class="modal-title"><?= lang('registre.llegenda_tipus_dispositiu') ?></h5>
+                    </div>
+                    <div>
+                        <button type="button" onclick="tancarModal()">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <table>
+                        
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row mt-5 justify-content-center">
         <div class="col-2 d-flex align-items-center">
             <?php if ($role != "professor") : ?>
@@ -44,6 +67,7 @@
                 <div id="cancelar_importar_csv" class="btn btn_cancell rounded-pill" onclick="cancellFitxer();" style="display: none;"><i class="fa-solid fa-xmark me-2"></i><?= lang('general_lang.cancell') ?></div>
                 <input type="file" id="csv_tiquet" name="csv_tiquet" class="btn btn_csv rounded-pill" hidden onchange="mostrarFitxers(this);"> </input>
                 <a id="div_csv_descarregar" href="<?= base_url('/descarregar/exemple_afegir_tiquet') ?>" class="btn btn_csv rounded-pill ms-3"> <i class="fa-solid fa-file-csv me-2"></i><?= lang('general_lang.plantilla_csv') ?></a>
+                <button type="button" class="btn btn_save rounded-pill ms-3 " style="width: 40px;"><i class="fa-solid fa-info"></i></button>
             </div>
         </div>
     </div>
@@ -85,7 +109,7 @@
                     <?= $centres_reparadors ?>
                 </datalist>
             </div>
-            <?php if (session()->get('user_data')['role'] == "desenvolupador"):?>
+            <?php if (session()->get('user_data')['role'] == "desenvolupador") : ?>
                 <div class="col">
                     <label class="form-label" for="institutsDataListSSTT"><?= lang('general_lang.sstt') ?> *</label>
                     <input class="form-control selector" name="sstt" list="datalistOptionsSSTT" id="institutsDataListSSTT" placeholder="<?= lang('general_lang.sstt') ?>" required>
