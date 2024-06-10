@@ -185,8 +185,8 @@
                     </div>
                     <?php if($role == "desenvolupador"): ?>
                         <div class="col-2 mt-4">
-                            <a href="<?= base_url('/professor/desactivar/tots') ?>" class="btn btn-danger rounded-pill">
-                                <i class="fa-solid fa-trash"></i> <?= lang('tipus.esborrar_tots_professors') ?>
+                            <a href="<?= base_url('/professor/desactivar/tots') ?>" class="btn btn-danger rounded-pill text-white">
+                                <i class="fa-solid fa-trash text-white"></i> <?= lang('tipus.esborrar_tots_professors') ?>
                             </a>
                         </div>
                     <?php endif; ?>
