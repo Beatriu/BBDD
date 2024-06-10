@@ -322,6 +322,11 @@
                         <?= session()->get('error_filtre') ?>
                     </div>
                 <?php endif; ?>
+                <?php if ((session()->get('no_permisos')) !== null) : ?>
+                    <div class="alert alert-danger alerta_esborrar" role="alert">
+                        <?= session()->get('no_permisos') ?>
+                    </div>
+                <?php endif; ?>
             </div>
 
             <div>

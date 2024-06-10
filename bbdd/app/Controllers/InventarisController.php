@@ -168,7 +168,6 @@ class InventarisController extends BaseController
                 ]);
 
                 $crud->addWhere('id_sstt', $actor['id_sstt']);
-
             } else if ($role == "desenvolupador") {
 
                 $crud->setColumns([
@@ -239,11 +238,11 @@ class InventarisController extends BaseController
                 if (isset($session_filtre['data_creacio_inici']) && isset($session_filtre['data_creacio_fi'])) {
                     $data_de_la_sessio = $session_filtre['data_creacio_inici'][0];
                     $data_nova_inici = date('d-m-Y', strtotime($data_de_la_sessio));
-        
-        
+
+
                     $data_de_la_sessio = $session_filtre['data_creacio_fi'][0];
                     $data_nova_fi = date('d-m-Y', strtotime($data_de_la_sessio));
-                    
+
                     $crud->addWhere("data_alta_format BETWEEN '" . $data_nova_inici . "' AND  '" . $data_nova_fi . "'");
                 }
                 if (isset($session_filtre['nom_poblacio'])) {
@@ -474,7 +473,6 @@ class InventarisController extends BaseController
         $centre_model = new CentreModel();
 
         $inventari_eliminar = $inventari_model->obtenirInventariPerId($id_inventari_eliminar);
-
         if ($inventari_eliminar != null) {
             $actor = session()->get('user_data');
             $role = $actor['role'];
@@ -482,9 +480,10 @@ class InventarisController extends BaseController
             if ($role == "centre_emissor") {
                 return redirect()->to(base_url('/tiquets'));
             } else if ($role == "alumne" || $role == "centre_reparador" || $role == "sstt") {
+                $msg = lang("inventari.no_permisos");
+                session()->setFlashdata("no_permisos", $msg);
                 return redirect()->to(base_url('/inventari'));
             } else {
-
                 if ($role == "professor" && $inventari_eliminar['codi_centre'] == $actor['codi_centre'] && $inventari_eliminar['id_intervencio'] == null) {
 
                     $inventari_model->deleteInventari($inventari_eliminar['id_inventari']);
@@ -500,8 +499,11 @@ class InventarisController extends BaseController
                     $inventari_model->deleteInventari($inventari_eliminar['id_inventari']);
                     $msg = lang('alertes.flash_data_delete_inventari') . $inventari_eliminar['id_inventari'];
                     session()->setFlashdata('esborrarInventari', $msg);
+                } else {
+                    $msg = lang("inventari.no_permisos");
+                    session()->setFlashdata("no_permisos", $msg);
                 }
-
+                
                 return redirect()->to(base_url('/inventari'));
             }
         } else {
@@ -600,13 +602,11 @@ class InventarisController extends BaseController
             } else if ($role == "admin_sstt") {
 
                 $array_inventari = $inventari_model->obtenirInventariCentre($tiquet['codi_centre_reparador']);
-
             } else if ($role == "desenvolupador") {
 
                 $array_inventari = $inventari_model->obtenirInventariCentre($tiquet['codi_centre_reparador']);
-
             }
-            
+
             $data['inventari_list'] = "";
             for ($i = 0; $i < sizeof($array_inventari); $i++) {
 
@@ -644,7 +644,7 @@ class InventarisController extends BaseController
                     session()->setFlashdata('error_tipus_inventari', $msg);
                     return redirect()->back();
                 }
-                
+
                 $id_inventari = trim(explode('//', (string) $inventari_post)[2]);
                 $tipus_inventari = trim(explode('//', (string) $inventari_post)[0]);
                 $inventari = $inventari_model->obtenirInventariPerId($id_inventari);
@@ -731,8 +731,8 @@ class InventarisController extends BaseController
         $sessio_filtres = session()->get('filtresInventari');
         $model_tipus_inventari = new TipusInventariModel();
         $tipus_inventari = '';
-        
-        if(isset($sessio_filtres['tipus_dispositiu'])){
+
+        if (isset($sessio_filtres['tipus_dispositiu'])) {
             $tipus_inventari = $model_tipus_inventari->obtenirTipusInventariPerId($sessio_filtres['tipus_dispositiu'][0]);
         }
         $options_tipus_dispositius = "";
@@ -740,11 +740,11 @@ class InventarisController extends BaseController
         for ($i = 0; $i < sizeof($array_tipus_dispositius); $i++) {
             if ($array_tipus_dispositius[$i]['actiu'] == "1") {
                 if (isset($sessio_filtres['tipus_dispositiu']) && $tipus_inventari['nom_tipus_inventari'] == $array_tipus_dispositius[$i]['nom_tipus_inventari']) {
-                    $options_tipus_dispositius .= "<option value=\"" . $array_tipus_dispositius[$i]['id_tipus_inventari']. " - " . $array_tipus_dispositius[$i]['nom_tipus_inventari'] . "\" selected>";
+                    $options_tipus_dispositius .= "<option value=\"" . $array_tipus_dispositius[$i]['id_tipus_inventari'] . " - " . $array_tipus_dispositius[$i]['nom_tipus_inventari'] . "\" selected>";
                 } else {
-                    $options_tipus_dispositius .= "<option value=\"" . $array_tipus_dispositius[$i]['id_tipus_inventari']. " - " . $array_tipus_dispositius[$i]['nom_tipus_inventari'] . "\">";
+                    $options_tipus_dispositius .= "<option value=\"" . $array_tipus_dispositius[$i]['id_tipus_inventari'] . " - " . $array_tipus_dispositius[$i]['nom_tipus_inventari'] . "\">";
                 }
-                
+
                 $options_tipus_dispositius .= $array_tipus_dispositius[$i]['nom_tipus_inventari'];
                 $options_tipus_dispositius .= "</option>";
                 $array_tipus_dispositius_nom[$i] = $array_tipus_dispositius[$i]['nom_tipus_inventari'];
