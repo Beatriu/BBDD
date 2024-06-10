@@ -67,6 +67,9 @@ return [
     'ambdues_opcions' => 'Ambas opciones',
     'radio_taller' => 'Talleres',
     'radio_no_taller' => 'No talleres',
-    'llegenda_tipus_dispositiu' => 'Leyenda tipos dispositivos'
+    'llegenda_tipus_dispositiu' => 'Leyenda tipos dispositivos',
+    'id_tipus_dispositiu' => 'Identificador',
+    'nom_tipus_dispositiu' => 'Nombre',
+    'actiu' => 'Activo'
     
 ];

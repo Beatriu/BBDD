@@ -696,7 +696,11 @@ class TiquetController extends BaseController
             $data['correu_persona_contacte_centre'] = null;
         }
 
-        //$data['taula_tipus_dispositiu'];
+        //dades tipus dispositiu
+        $tipus_dispositiu_model = new TipusDispositiuModel();
+        $array_tipus_dispositiu = $tipus_dispositiu_model->getTipusDispositius();
+        //dd($array_tipus_dispositiu[0]);
+        $data['array_tipus_dispositiu'] = $array_tipus_dispositiu;
 
         $data['title'] = lang('general_lang.formulari_tiquet');
         return view('formularis' . DIRECTORY_SEPARATOR . 'formulariTiquet', $data);
