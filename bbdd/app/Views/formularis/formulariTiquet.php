@@ -19,7 +19,7 @@
 
 <?= $this->section('contingut'); ?>
 
-<form class="container" method="POST" action="<?= base_url('/formulariTiquet') ?>" enctype="multipart/form-data">
+<form class="container" method="POST" action="<?= base_url('/tiquets/afegir') ?>" enctype="multipart/form-data">
     <?= csrf_field() ?>
     <!-- Modal llegenda -->
     <div class="modal" tabindex="-1" role="dialog" id="modal_alerta" style="display:none">

@@ -7,6 +7,7 @@ use App\Models\CentreModel;
 use App\Models\EstatModel;
 use App\Models\IntervencioModel;
 use App\Models\InventariModel;
+use App\Models\ProfessorModel;
 use App\Models\SSTTModel;
 use App\Models\TipusDispositiuModel;
 use App\Models\TipusIntervencioModel;
@@ -376,6 +377,7 @@ class TiquetController extends BaseController
         $centre_model = new CentreModel();
         $sstt_model = new SSTTModel();
 
+        $actor = session()->get('user_data');
         $data['title'] = "login";
 
         $csv = $this->request->getFiles();
@@ -405,14 +407,13 @@ class TiquetController extends BaseController
             $correu_persona_contacte_centre = $this->request->getPost('sCorreuContacteCentre');
             $data_alta = date("Y-m-d H:i:s");
 
-            $actor = session()->get('user_data');
             $centre_emissor = $actor['codi_centre'];
             $role = $actor['role'];
 
 
             if ($csv['csv_tiquet'] != "") {
 
-                $codi_professor = "1";
+                $codi_professor = $actor['mail'];
 
                 // Carreguem el fitxer a writable/uploads
                 if ($csv) {
@@ -421,6 +422,12 @@ class TiquetController extends BaseController
                         if ($file->isValid() && !$file->hasMoved()) {
 
                             $newName = $file->getClientName();
+
+                            if ($role == "desenvolupador") {
+                                    $centre_emissor = "desenvolupador";
+                            } else if ($role == "sstt" || $role == "admin_sstt") {
+                                $centre_emissor = $sstt_model->obtenirSSTTPerId($actor['id_sstt'])['nom_sstt'];
+                            }
 
                             $ruta = WRITEPATH . "uploads" . DIRECTORY_SEPARATOR . $centre_emissor;
                             if (!is_dir($ruta)) {
@@ -448,44 +455,49 @@ class TiquetController extends BaseController
                                     $uuid = $uuid_library->v4();
                                     if ($role == "professor" || $role == "centre_emissor" || $role == "centre_reparador") {
 
-                                        $msg = lang('alertes.flash_data_create_tiquet');
-                                        session()->setFlashdata('crearTiquet', $msg);
+                                        if ($csv_data[0] != null && $csv_data[1] != null && $csv_data[2] != null && $csv_data[3] != null && $csv_data[4] != null) {
+                                            $msg = lang('alertes.flash_data_create_tiquet');
+                                            session()->setFlashdata('crearTiquet', $msg);
 
-                                        $id_sstt = $centre_model->obtenirCentre($centre_emissor)['id_sstt'];
-                                        $model->addTiquet($uuid, $csv_data[0], $csv_data[1], $csv_data[2], $csv_data[3], $data_alta, null, $csv_data[4], 1, $centre_emissor, null, $id_sstt);
+                                            $id_sstt = $centre_model->obtenirCentre($centre_emissor)['id_sstt'];
+                                            $model->addTiquet($uuid, $csv_data[0], $csv_data[1], $csv_data[2], $csv_data[3], $data_alta, null, $csv_data[4], 1, $centre_emissor, null, $id_sstt);
+                                        } else {
+
+                                        }
+
                                     } else if ($role == "sstt" || $role == "admin_sstt") {
 
-                                        if ($csv_data[6] == null) {
+                                        if ($csv_data[0] != null && $csv_data[1] != null && $csv_data[2] != null && $csv_data[3] != null && $csv_data[4] != null) {
                                             $msg = lang('alertes.flash_data_create_tiquet');
                                             session()->setFlashdata('crearTiquet', $msg);
-
-                                            $model->addTiquet($uuid, $csv_data[0], $csv_data[1], $csv_data[2], $csv_data[3], $data_alta, null, $csv_data[4], 1, $csv_data[5], null, $actor['id_sstt']);
+                                            if ($csv_data[6] == null) {
+                                                $model->addTiquet($uuid, $csv_data[0], $csv_data[1], $csv_data[2], $csv_data[3], $data_alta, null, $csv_data[4], 1, $csv_data[5], null, $actor['id_sstt']);
+                                            } else {
+                                                $model->addTiquet($uuid, $csv_data[0], $csv_data[1], $csv_data[2], $csv_data[3], $data_alta, null, $csv_data[4], 2, $csv_data[5], $csv_data[6], $actor['id_sstt']);
+                                            }
                                         } else {
 
-                                            $msg = lang('alertes.flash_data_create_tiquet');
-                                            session()->setFlashdata('crearTiquet', $msg);
-
-                                            $model->addTiquet($uuid, $csv_data[0], $csv_data[1], $csv_data[2], $csv_data[3], $data_alta, null, $csv_data[4], 2, $csv_data[5], $csv_data[6], $actor['id_sstt']);
                                         }
+
                                     } else if ($role == "desenvolupador") {
 
-                                        if ($csv_data[6] == null) {
+                                        if ($csv_data[0] != null && $csv_data[1] != null && $csv_data[2] != null && $csv_data[3] != null && $csv_data[4] != null && $csv_data[7] != null) {
                                             $msg = lang('alertes.flash_data_create_tiquet');
                                             session()->setFlashdata('crearTiquet', $msg);
-
-                                            $model->addTiquet($uuid, $csv_data[0], $csv_data[1], $csv_data[2], $csv_data[3], $data_alta, null, $csv_data[4], 1, $csv_data[5], null, $csv_data[7]);
+                                            if ($csv_data[6] == null) {
+                                                $model->addTiquet($uuid, $csv_data[0], $csv_data[1], $csv_data[2], $csv_data[3], $data_alta, null, $csv_data[4], 1, $csv_data[5], null, $csv_data[7]);
+                                            } else {
+                                                $model->addTiquet($uuid, $csv_data[0], $csv_data[1], $csv_data[2], $csv_data[3], $data_alta, null, intval($csv_data[4]), 2, $csv_data[5], $csv_data[6], $csv_data[7]);
+                                            }
                                         } else {
-
-                                            $msg = lang('alertes.flash_data_create_tiquet');
-                                            session()->setFlashdata('crearTiquet', $msg);
-
-                                            $model->addTiquet($uuid, $csv_data[0], $csv_data[1], $csv_data[2], $csv_data[3], $data_alta, null, $csv_data[4], 2, $csv_data[5], $csv_data[6], $csv_data[7]);
+                                            
                                         }
+
                                     }
                                 }
                                 $firstline = false;
                             }
-
+                        
                             fclose($csvFile);
                         }
                     }

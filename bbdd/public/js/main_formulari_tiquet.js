@@ -303,6 +303,12 @@ function mostrarFitxers(input) {
         document.getElementById("sCorreuContacteCentre").disabled = true;
         //document.getElementById("button_afegir_fila_tiquet").disabled = true;
 
+        let camp_sstt = document.getElementById("institutsDataListSSTT");
+        if (camp_sstt) {
+            camp_sstt.required = false;
+            camp_sstt.disabled = true;
+        }
+
         document.getElementById("cancelar_importar_csv").style.display = "inline"; // Botó Cancel·lar
         document.getElementById("div_csv").style.display = "none"; // Botó Importar CSV
         document.getElementById("div_csv_descarregar").style.display = "none"; // Botó Importar CSV
@@ -334,6 +340,12 @@ function cancellFitxer() {
     document.getElementById("sCorreuContacteCentre").required = true;
     document.getElementById("sCorreuContacteCentre").disabled = false;
     //document.getElementById("button_afegir_fila_tiquet").disabled = false;
+
+    let camp_sstt = document.getElementById("institutsDataListSSTT");
+    if (camp_sstt) {
+        camp_sstt.required = true;
+        camp_sstt.disabled = false;
+    }
 
     document.getElementById("cancelar_importar_csv").style.display = "none";
     document.getElementById("div_csv").style.display = "inline";

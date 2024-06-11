@@ -61,7 +61,7 @@
                 <div id="botons_titol">
                     <!--<button onclick="_open()" class="btn" id="btn-filter"><i class="fa-solid fa-filter"></i> <? //= lang("registre.buttons.filter") 
                                                                                                                     ?></button>-->
-                    <a href="<?= base_url("/formulariTiquet") ?>" class="btn" id="btn-create"><i class="fa-solid fa-circle-plus"></i> <?= lang("registre.buttons.create") ?></a>
+                    <a href="<?= base_url("/tiquets/afegir") ?>" class="btn" id="btn-create"><i class="fa-solid fa-circle-plus"></i> <?= lang("registre.buttons.create") ?></a>
                 </div>
             </div>
             <div>
