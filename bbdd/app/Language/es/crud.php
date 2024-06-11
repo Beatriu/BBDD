@@ -13,7 +13,7 @@ return [
         'update' => 'Actualitzar',
         'cancel' => 'Cancelar',
         'enter' => 'Iniciar sessión',
-        'enter_google' => 'Iniciar sessión con Google',
+        'enter_google' => 'Iniciar sessión con XTEC',
         'register' => 'Registrar',
     ],
     

@@ -159,7 +159,7 @@ class UsuarisController extends BaseController
         $login_button = '';
 
         if (!session()->get('access_token') && !session()->get('user_data')) { // En cas que no existeixi el token de sessió i la infromació de l'usuari guardades en sessió
-            $login_button = '<a class = "btn btn-outline-dark" href="' . $client->createAuthUrl() . '"><i class="fa-brands fa-google me-2"></i>' . lang("crud.buttons.enter_google") . '</a>';
+            $login_button = '<a class = "btn btn-outline-dark" href="' . $client->createAuthUrl() . '">' . lang("crud.buttons.enter_google") . '</a>';
             $data['login_button'] = $login_button;
 
             return view('logins' . DIRECTORY_SEPARATOR . 'loginGeneral', $data); // Es retorna la vista bàsica d'inici de sessió

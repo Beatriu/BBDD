@@ -36,6 +36,11 @@
             <button class="btn btn-outline-dark"><?= lang('crud.buttons.enter') ?></button>
         </div>
         <br/>
+        <div class="linia"></div>
+        <br>
+        <div>
+            <p><?= lang( 'general_lang.nota_login_professsorat')?></p>
+        </div>
         <div>
         <?php
             if (!isset($login_button)) {

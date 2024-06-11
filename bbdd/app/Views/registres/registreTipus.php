@@ -641,5 +641,41 @@
 
 </div>
 <script>
+    (function(window, document, undefined) {
+        window.onload = init;
+
+        function init() {
+            var buscador = document.getElementById("data-list-poblacio_filter");
+            var parent = buscador.parentElement;
+            buscador.style = "display: none;";
+            var nou_buscador = buscador;
+            nou_buscador.style = "display: unset";
+            nou_buscador.classList.add("d-flex");
+
+
+            var sidebar_des = document.getElementById("titol");
+            var label = nou_buscador.firstChild;
+            var input = label.lastChild;
+            input.id = "input_buscador";
+            input.style = "width:250px;  margin: 0;";
+            input.classList.add("input_buscador_class");
+            input.placeholder = "<?= lang("registre.searcher_placeholder") ?>";
+            nou_buscador.textContent = '';
+
+            var div = document.createElement('div');
+            var _span = document.createElement('span');
+            _span.id = "icono_busqueda";
+            var icon = document.createElement('i');
+            icon.classList.add("fa-solid");
+            icon.classList.add("fa-magnifying-glass");
+
+            _span.appendChild(icon);
+            nou_buscador.appendChild(_span);
+            nou_buscador.appendChild(input);
+            parent.appendChild(nou_buscador);
+
+        }
+
+    })(window, document, undefined);
 </script>
 <?= $this->endSection('contingut'); ?>
