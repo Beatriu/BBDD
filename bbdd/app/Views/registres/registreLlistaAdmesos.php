@@ -117,15 +117,19 @@
 
 
         <div class="col-sm p-0 pb-3 ps-5 pe-5 min-vh-100" id="zona_taula">
-            <div class="row mt-5 justify-content-center">
+            <div class="row mt-5 d-flex justify-content-around">
                 <div class="col-2 d-flex align-items-center">
                     <a class="btn btn-dark rounded-pill" href="<?= base_url('/tiquets') ?>">
                         <i class="fa-solid fa-arrow-left"></i> <?= lang('general_lang.tornar') ?>
                     </a>
                 </div>
 
-                <div class="col-10 justify-content-left">
+                <div class="col-5 justify-content-left" >
                     <h2><?= lang('tipus.professors') ?></h2>
+                </div>
+
+                <div id="lloc_del_sidebar" class="col-3" style="margin-top:10px;">
+
                 </div>
 
             </div>
@@ -209,5 +213,44 @@
 
 </div>
 <script>
+
+(function(window, document, undefined) {
+        window.onload = init;
+
+        function init() {
+            var buscador = document.getElementById("data-list-llista_admesos_filter");
+            buscador.style = "display: none;";
+            var nou_buscador = buscador;
+            nou_buscador.style = "display: unset";
+            nou_buscador.classList.add("d-flex");
+            var main = document.getElementById("zona_taula");
+            var botons = document.getElementById("lloc_del_sidebar");
+
+            var sidebar_des = document.getElementById("titol");
+            var label = nou_buscador.firstChild;
+            var input = label.lastChild;
+            input.id = "input_buscador";
+            input.style = "width:250px;";
+            input.classList.add("input_buscador_class");
+            input.placeholder = "<?= lang("registre.searcher_placeholder") ?>";
+            nou_buscador.textContent = '';
+
+            var div = document.createElement('div');
+            var _span = document.createElement('span');
+            _span.id = "icono_busqueda";
+            var icon = document.createElement('i');
+            icon.classList.add("fa-solid");
+            icon.classList.add("fa-magnifying-glass");
+
+            _span.appendChild(icon);
+            nou_buscador.appendChild(_span);
+            nou_buscador.appendChild(input);
+            div.appendChild(nou_buscador);
+            botons.appendChild(nou_buscador);
+
+        }
+
+    })(window, document, undefined);
+
 </script>
 <?= $this->endSection('contingut'); ?>
