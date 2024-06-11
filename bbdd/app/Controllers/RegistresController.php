@@ -25,6 +25,7 @@ class RegistresController extends BaseController
 
     public function index($id_tiquet = null)
     {  
+
         $role = session()->get('user_data')['role'];
 
         switch ($role) {
@@ -385,7 +386,7 @@ class RegistresController extends BaseController
                 $crud->addWhere("(STR_TO_DATE(`data_alta_format`, '%d-%m-%Y') BETWEEN STR_TO_DATE('".$data_nova_inici."', '%d-%m-%Y') AND STR_TO_DATE('". $data_nova_fi ."', '%d-%m-%Y'))");
             }
         }
-
+        $crud->addWhere("codi_centre_reparador='" . session()->get('user_data')['codi_centre'] . "' AND (nom_estat='Pendent de reparar' or nom_estat='Reparant' or nom_estat='Reparat i pendent de recollir')");
 
         $data['output'] = $crud->render();
         return $data;
