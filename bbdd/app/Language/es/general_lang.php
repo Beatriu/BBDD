@@ -62,4 +62,5 @@ return [
     'clic_escriu_codi' => "Haz clic y escribe el código del dispositivo",
     'clic_escriu_problema' => "Haz clic y escribe el problema del dispositivo",
     'sstt' => 'Servicios Territoriales',
+    'generate_equipment_code' => "Genera un código de equipo aleatorio",
 ];

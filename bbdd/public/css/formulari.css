@@ -64,3 +64,13 @@ input {
 .form-check-input{
     border: 1px solid #333333;
 }
+.random_pass_button{
+    width: 50px;
+    background-color: #8C52FF;
+    color: #F5F5F5;
+}
+.random_pass_button:hover{
+    background-color: #F5F5F5; 
+    color: #333333;
+    margin: 0;
+}

@@ -154,6 +154,7 @@
             <div class="row p-2" id="fila_formulari_tiquet_1">
                 <div class="col d-flex align-items-center justify-content-center">
                     <input id="equipment_code_1" class="form-control" title="Codi equip línea 1" type="text" name="provisional_equipment_code_1" oninput="afegirTiquetDisabled('fila_formulari_tiquet_1');" placeholder="<?= lang('general_lang.clic_escriu_codi') ?> 1" required />
+                    <button type="button" id="random_pass_button_1" onclick="generar_pass(1)" class="btn rounded-pill ms-1 me-3 random_pass_button" data-toggle="tooltip" data-bs-placement="right" title="<?= lang('general_lang.generate_equipment_code') ?>"><i class="fa-solid fa-shuffle"></i></button>
                 </div>
                 <div class="col d-flex align-items-center justify-content-center">
                     <select id="type_1" class="form-select" name="provisional_type_1" title="Tipus dispositiu línea 1" onchange="afegirTiquetDisabled('fila_formulari_tiquet_1');" required>
@@ -192,6 +193,19 @@
     function tancarModal() {
         var modal = document.getElementById("modal_alerta");
         modal.style = "display:none;";
+    }
+
+    function generar_pass(number) {
+        let result = '';
+        var caracters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890?!*';
+        var longitud = 10;
+        for (let index = 0; index < longitud; index++) {
+            const random = Math.floor(Math.random() * caracters.length);
+            result += caracters[random];
+        }
+        var input = document.getElementById("equipment_code_" + number);
+        input.value = '';
+        input.value = result;
     }
 </script>
 <?= $this->endSection('contingut'); ?>

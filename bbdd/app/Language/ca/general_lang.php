@@ -65,4 +65,5 @@ return [
     'clic_escriu_codi' => "Fes clic i escriu el codi del dispositiu",
     'clic_escriu_problema' => "Fes clic i escriu el problema del dispositiu",
     'sstt' => 'Serveis Territorials',
+    'generate_equipment_code' => "Genera un codi d'equip aleatori",
 ];

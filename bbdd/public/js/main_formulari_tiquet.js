@@ -31,8 +31,18 @@ function afegirTiquet() {
     input_codi_equip.placeholder = clic_escriu_codi + " " + numero;
     input_codi_equip.addEventListener("input", () => afegirTiquetDisabled('fila_formulari_tiquet_' + numero));
     input_codi_equip.style.backgroundColor = "#e9ecef";
-    //input_codi_equip.required = true;
+    let button_aleatori = document.createElement("button");
+    button_aleatori.type = "button";
+    button_aleatori.id = "random_pass_button_" + numero;
+    button_aleatori.addEventListener('click', () => this.generar_pass(numero));
+    button_aleatori.addEventListener("click", () => afegirTiquetDisabled('fila_formulari_tiquet_' + numero));
+    button_aleatori.classList.add('btn', 'rounded-pill', 'ms-1', 'me-3', 'random_pass_button');
+    let i_button_aleatori = document.createElement("i");
+    i_button_aleatori.classList.add("fa-solid", "fa-shuffle");
+    button_aleatori.appendChild(i_button_aleatori);
+    
     div_col_codi_equip.appendChild(input_codi_equip);
+    div_col_codi_equip.appendChild(button_aleatori);
 
     let div_col_type = document.createElement("div");
     div_col_type.classList.add("col", "d-flex", "align-items-center", "justify-content-center");
@@ -452,4 +462,17 @@ function eliminarLinea(numero_linea) {
     document.getElementById('num_tiquets').value = numero_files;
     console.log(tiquets);
     console.log(tiquets.length);
+}
+
+function generar_pass(number) {
+    let result = '';
+    var caracters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890?!*';
+    var longitud = 10;
+    for (let index = 0; index < longitud; index++) {
+        const random = Math.floor(Math.random() * caracters.length);
+        result += caracters[random];
+    }
+    var input = document.getElementById("equipment_code_" + number);
+    input.value = '';
+    input.value = result;
 }
