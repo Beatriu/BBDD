@@ -194,8 +194,9 @@ class RegistresController extends BaseController
             ]
 
         ]);
-        //$crud->addWhere('blog.blog_id!="1"'); // show filtered data
-        $data['output'] = $crud->render();          // renders view
+        
+
+        $data['output'] = $crud->render(); 
         return $data;
     }
 
@@ -214,7 +215,8 @@ class RegistresController extends BaseController
         $data['uri'] = $uri;
 
         $actor = session()->get('user_data');
-        $data['role'] = $actor['role'];
+        $role = $actor['role'];
+        $data['role'] = $role;
 
         $model_centre = new CentreModel();
         $dades_centre = $model_centre->obtenirCentre($actor['codi_centre']);
@@ -388,6 +390,12 @@ class RegistresController extends BaseController
         if($repoemi == 'reparador'){
             $crud->addWhere("codi_centre_reparador='" . session()->get('user_data')['codi_centre'] . "' AND (nom_estat='Pendent de reparar' or nom_estat='Reparant' or nom_estat='Reparat i pendent de recollir')");
         }
+
+        $data['tiquets_esborrar'] = [];
+        if ($role == "professor" && $repoemi == "emissor") {
+            $data['tiquets_esborrar'] = $tiquet_model->obtenirTiquetsEsborrarProfessor($actor['codi_centre']);
+        }
+        $data['tiquets_esborrar'] = json_encode($data['tiquets_esborrar']);
 
         $data['output'] = $crud->render();
         return $data;
@@ -591,6 +599,15 @@ class RegistresController extends BaseController
                 $crud->addWhere("(STR_TO_DATE(`data_alta_format`, '%d-%m-%Y') BETWEEN STR_TO_DATE('".$data_nova_inici."', '%d-%m-%Y') AND STR_TO_DATE('". $data_nova_fi ."', '%d-%m-%Y'))");
             }
         }
+
+        $data['tiquets_esborrar'] = [];
+        if ($role == "sstt") {
+            $tiquetsEmissor = $tiquet_model->obtenirTiquetsEsborrarSSTT('emissor');
+            $tiquetsReparador = $tiquet_model->obtenirTiquetsEsborrarSSTT('reparador');
+            
+            $data['tiquets_esborrar'] = array_merge($tiquetsEmissor, $tiquetsReparador);
+        }
+        $data['tiquets_esborrar'] = json_encode($data['tiquets_esborrar']);
 
         $data['output'] = $crud->render();
         return $data;

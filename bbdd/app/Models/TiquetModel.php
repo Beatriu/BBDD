@@ -671,4 +671,24 @@ class TiquetModel extends Model
         ->findAll();
     }
 
+    public function obtenirTiquetsEsborrarSSTT($type) 
+    {
+        $column = $type === 'emissor' ? 'codi_centre_emissor' : 'codi_centre_reparador';
+    
+        return $this->select('id_tiquet')
+                    ->where('tiquet.id_estat', "1")
+                    ->join('centre', "tiquet.$column = centre.codi_centre")
+                    ->join('sstt', 'sstt.id_sstt = centre.id_sstt')
+                    ->findAll();
+    }
+    public function obtenirTiquetsEsborrarProfessor($codi_centre_emissor) 
+    {
+        return $this->select('id_tiquet')
+                    ->where('tiquet.id_estat', "1")
+                    ->where('tiquet.codi_centre_emissor', $codi_centre_emissor)
+                    ->join('centre', "tiquet.codi_centre_emissor = centre.codi_centre")
+                    ->findAll();
+    }
+    
+
 }

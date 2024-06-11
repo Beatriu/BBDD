@@ -55,7 +55,7 @@ function actualitzarColorsEstats() {
                 div_accions.style.minWidth = "100px";
             }
 
-        } else if (role == "centre_emissor") {
+        } else if (role == "centre_emissor" || role == "centre_reparador") {
 
             let element = tiquets[i].children[4];
             if (element.textContent == "Pendent de recollir") {

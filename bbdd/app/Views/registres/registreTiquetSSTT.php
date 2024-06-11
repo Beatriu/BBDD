@@ -322,4 +322,28 @@
         document.forms[1].submit();
     }
 </script>
+<script>
+    let tiquets_esborrar = <?= $tiquets_esborrar ?>;
+    let role = "<?= $role ?>";
+
+    if (role == "sstt") {
+        let taula = document.getElementById("data-list-vista_tiquet");
+        let tbody = taula.children[1];
+        let trs = tbody.children;
+
+        for (let i = 0; i < trs.length; i++) {
+            let item = JSON.parse(trs[i].getAttribute('data-kpc-id')).id_tiquet;
+            if (!tiquets_esborrar.some(tiquets_esborrar => tiquets_esborrar.id_tiquet === item)) {
+                trs[i].children[10].children[1].style.pointerEvents = "none";
+                trs[i].children[10].children[1].children[0].style.color = "grey !important";
+                trs[i].children[10].children[1].children[0].classList.add('text-muted');
+                trs[i].children[10].children[1].children[0].classList.remove('text-primary');
+            } else {
+                console.log(trs);
+            }
+            
+        }
+    }
+
+</script>
 <?= $this->endSection('contingut'); ?>

@@ -467,6 +467,7 @@ class TiquetController extends BaseController
                                     $uuid = $uuid_library->v4();
                                     if ($role == "professor" || $role == "centre_emissor" || $role == "centre_reparador") {
 
+                                        d($llargada);
                                         if ($llargada >= 7) {
                                             if ($csv_data[0] != null && $csv_data[1] != null && $csv_data[2] != null && $csv_data[3] != null && $csv_data[4] != null) {
                                                 $msg = lang('alertes.flash_data_create_tiquet');
@@ -815,6 +816,8 @@ class TiquetController extends BaseController
                     }
                     fputcsv($file, $data, ';');
                 }
+                $data = ['','','','','','','','', "Has d'esborrar aquesta taula",''];
+                fputcsv($file, $data, ';');
                 fclose($file);
 
             } else if ($role == "sstt" || $role == "admin_sstt") {
@@ -837,6 +840,8 @@ class TiquetController extends BaseController
                     }
                     fputcsv($file, $data, ';');
                 }
+                $data = ['','','','','','','','', "Has d'esborrar aquesta taula",''];
+                fputcsv($file, $data, ';');
                 fclose($file);
             } else if ($role == "desenvolupador") {
                 //$file = new \CodeIgniter\Files\File(WRITEPATH . "uploads" . DIRECTORY_SEPARATOR . "csv" . DIRECTORY_SEPARATOR . "exemple_afegir_tiquet_desenvolupador.csv"); // Definim el nom de l'arxiu amb ruta
@@ -858,6 +863,8 @@ class TiquetController extends BaseController
                     }
                     fputcsv($file, $data, ';');
                 }
+                $data = ['','','','','','','','', "Has d'esborrar aquesta taula",''];
+                fputcsv($file, $data, ';');
                 fclose($file);
             }
 
