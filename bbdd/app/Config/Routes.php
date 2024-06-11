@@ -22,8 +22,8 @@ $routes->get('/logout', 'UsuarisController::logout', ['filter'=>'Autentica']);
 $routes->match(['GET','POST'],'/crudadmin',"RegistresController::index");
 
 //Tiquets
-$routes->get('/formulariTiquet', 'TiquetController::createTiquet', ['filter'=>'Autentica']);
-$routes->post('/formulariTiquet', 'TiquetController::createTiquet_post', ['filter'=>'Autentica']);  
+$routes->get('/tiquets/afegir', 'TiquetController::createTiquet', ['filter'=>'Autentica']);
+$routes->post('/tiquets/afegir', 'TiquetController::createTiquet_post', ['filter'=>'Autentica']);  
 $routes->get('/tiquets', 'RegistresController::index', ['filter'=>'Autentica']);
 $routes->get('/tiquets/emissor', 'RegistresController::index2', ['filter'=>'Autentica']);
 $routes->get('/tiquets/pdf/(:segment)', 'TiquetController::descarregarTiquetPDF/$1', ['filter'=>'Autentica']);

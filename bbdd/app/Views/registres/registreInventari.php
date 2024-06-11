@@ -335,14 +335,19 @@
                 <div>
                     <h5>Selecciona quines peces vols veure:</h5>
                 </div>
-                <div>
-                    <select name="select_inventari" id="select_inventari" class="form-select" style="width:200px;">
-                            <option value="no_assignat"><?= lang('inventari.selector_inventari_no_assignat') ?></option>
-                            <option value="assignat"><?= lang('inventari.selector_inventari_assignat') ?></option>
-                            <option value="tot"><?= lang('inventari.selector_inventari_tot') ?></option>
-                    </select>
+                <div class="row">
+                    <div class="col-2">
+                        <select name="select_inventari" id="select_inventari" class="form-select" style="width:200px;">
+                                <option value="no_assignat"><?= lang('inventari.selector_inventari_no_assignat') ?></option>
+                                <option value="assignat"><?= lang('inventari.selector_inventari_assignat') ?></option>
+                                <option value="tot"><?= lang('inventari.selector_inventari_tot') ?></option>
+                        </select>
+                    </div>
+                    <div class="col-1">
+                        <button type="submit" class="btn btn-info rounded-pill"> Aplicar </button>
+                    </div>
                 </div>
-                <button type="submit"> Aplicar </button>
+
             </form>
             <div>
                     <?= $output ?>
