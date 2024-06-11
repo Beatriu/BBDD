@@ -4,6 +4,7 @@
 <link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR . 'taulaRegistre.css') ?>">
 <link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR . 'header.css') ?>">
 <link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR . 'style.css') ?>">
+<link rel="stylesheet" href="<?= base_url('css' . DIRECTORY_SEPARATOR . 'formulari.css') ?>">
 <?= $this->endSection('css_pagina'); ?>
 
 <?= $this->section('header'); ?>
@@ -70,7 +71,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="<?= base_url("/centres") ?>"  class="nav-link py-3 px-2" title="<?= lang("registre.centres") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
+                        <a href="<?= base_url("/centres") ?>" class="nav-link py-3 px-2" title="<?= lang("registre.centres") ?>" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Orders">
                             <i class="fa-solid fa-school"></i>
                         </a>
                     </li>
@@ -194,7 +195,7 @@
                         </div>
                     <?php endif; ?>
                     <div class="botons_filtre d-flex">
-                        <button id="submit_eliminar_filtres" name="submit_eliminar_filtres" type="submit" class="btn btn-danger btn_save rounded-pill ms-3 me-3"><i class="fa-solid fa-trash me-2" id="trash_icon"></i><?= lang('registre.delete_filters') ?></button>
+                        <button id="submit_eliminar_filtres" name="submit_eliminar_filtres" type="submit" class="btn btn-danger  rounded-pill ms-3 me-3"><i class="fa-solid fa-trash me-2" id="trash_icon"></i><?= lang('registre.delete_filters') ?></button>
                         <button id="submit_afegir_filtres" name="submit_afegir_filtres" type="submit" class="btn btn-primary btn_save rounded-pill ms-3 me-3"><i class="fa-solid fa-floppy-disk me-2"></i><?= lang('registre.save_filters') ?></button>
                     </div>
                 </form>
@@ -328,9 +329,23 @@
                     </div>
                 <?php endif; ?>
             </div>
-
+            <!--taula -->
+            <form method="POST" action="<?= base_url('/inventari') ?>" class="mt-4">
+                <?= csrf_field() ?>
+                <div>
+                    <h5>Selecciona quines peces vols veure:</h5>
+                </div>
+                <div>
+                    <select name="select_inventari" id="select_inventari" class="form-select" style="width:200px;">
+                            <option value="no_assignat"><?= lang('inventari.selector_inventari_no_assignat') ?></option>
+                            <option value="assignat"><?= lang('inventari.selector_inventari_assignat') ?></option>
+                            <option value="tot"><?= lang('inventari.selector_inventari_tot') ?></option>
+                    </select>
+                </div>
+                <button type="submit"> Aplicar </button>
+            </form>
             <div>
-                <?= $output ?>
+                    <?= $output ?>
             </div>
         </div>
     </div>
@@ -393,11 +408,17 @@
         document.getElementById("operacio").value = x;
         document.forms[1].submit();
     }
-    function afegirValor(){
+
+    function afegirValor() {
         //Inputs date
         var data_inici = document.getElementById("data_creacio_inici");
         var data_fi = document.getElementById("data_creacio_fi");
         data_fi.value = data_inici.value;
     }
+
+    /*function triar_inventari() {
+        var formulari = document.getElementById("formulari_inventari");
+        formulari.submit();
+    }*/
 </script>
 <?= $this->endSection('contingut'); ?>

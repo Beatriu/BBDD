@@ -22,13 +22,13 @@ class InventarisController extends BaseController
     {
     }
 
-    public function registreInventari($id_inventari = null)
+    public function registreInventari($asignacio = null, $id_inventari = null)
     {
         $inventari_model = new InventariModel();
         $centre_model = new CentreModel();
         $session_filtre = session()->get('filtresInventari');
         $data['session_filtre'] = $session_filtre;
-
+        
         $actor = session()->get('user_data');
         $role = $actor['role'];
         $data['role'] = $role;
@@ -217,7 +217,7 @@ class InventarisController extends BaseController
             }
 
             if ($role !== 'sstt' && $role !== 'alumne') {
-                $crud->addItemLink('delete', 'fa-trash', base_url('inventari/esborrar'), 'Eliminar Peça');
+                $crud->addItemLink('delete', 'fa-trash', base_url('inventari/esborrar/' . $asignacio), 'Eliminar Peça');
             }
 
             if (is_array($session_filtre)) {
@@ -259,6 +259,14 @@ class InventarisController extends BaseController
                     $crud->addWhere('id_comarca', $comarca_escollida['id_comarca'], true);
                 }
             }
+
+            if($asignacio == "no_assignat" || $asignacio == null){
+                $crud->addWhere('id_intervencio', null, true);
+            } else if($asignacio == "assignat"){
+                $crud->addWhere("id_intervencio IS NOT null");
+            } 
+            
+            $data['asignat'] = $asignacio;
 
             $data['output'] = $crud->render();
             $data['uri'] = $this->request->getPath();
@@ -944,5 +952,19 @@ class InventarisController extends BaseController
         }
 
         return redirect()->back()->withInput();
+    }
+
+    function triar_Inventari(){
+        $inventari = $this->request->getPost()['select_inventari'];
+        //dd($this->request->getPost());
+        if($inventari == "no_assignat"){
+            return $this->registreInventari("no_assignat", null);
+        } else if ($inventari == "assignat"){
+            return $this->registreInventari( "assignat", null);
+        } else if($inventari == "tot") {
+            return $this->registreInventari( "tot", null);
+        } else {
+            return $this->registreInventari( null, null);
+        }
     }
 }

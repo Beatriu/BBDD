@@ -32,5 +32,8 @@ return [
     'no_permisos_title' => 'Acción bloqueada',
     'no_existeix' => 'Esta pieza no existe',
     'nom_poblacio' => 'Población',
-    'nom_comarca' => 'Comarca'
+    'nom_comarca' => 'Comarca',
+    'selector_inventari_no_assignat' => 'Piezas no usadas',
+    'selector_inventari_assignat' => 'Piezas usadas',
+    'selector_inventari_tot' => 'Todas las piezas'
 ];
