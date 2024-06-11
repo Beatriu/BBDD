@@ -49,6 +49,10 @@ class TipusDispositiuModel extends Model
         return $this->findAll();
     }
 
+    public function obtenirTipusDispositiuActiu() {
+        return $this->select('id_tipus_dispositiu, nom_tipus_dispositiu')->where('actiu', "1")->findAll();
+    }
+
     public function getNomTipusDispositiu($id_tipus_dispositiu)
     {
         return $this->where('id_tipus_dispositiu', $id_tipus_dispositiu)->first();

@@ -712,31 +712,101 @@ class TiquetController extends BaseController
      */
     public function descarregar($arxiu)
     {
+        $tipus_dispositiu_model = new TipusDispositiuModel();
+
         $role = session()->get('user_data')['role'];
+
+        $array_tipus_dispositiu = $tipus_dispositiu_model->obtenirTipusDispositiuActiu();
 
         if ($arxiu == "exemple_afegir_tiquet") {
 
             if ($role == "professor" || $role == "centre_emissor" || $role == "centre_reparador") {
-                $file = new \CodeIgniter\Files\File(WRITEPATH . "uploads" . DIRECTORY_SEPARATOR . "csv" . DIRECTORY_SEPARATOR . "exemple_afegir_tiquet_professorat.csv"); // Definim el nom de l'arxiu amb ruta
+                //$file = new \CodeIgniter\Files\File(WRITEPATH . "uploads" . DIRECTORY_SEPARATOR . "csv" . DIRECTORY_SEPARATOR . "exemple_afegir_tiquet_professorat.csv"); // Definim el nom de l'arxiu amb ruta
+                //$file_name = "exemple_afegir_tiquet_professorat.csv";
+
                 $file_name = "exemple_afegir_tiquet_professorat.csv";
+                $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
+                $file = fopen($file_path, 'w');
+                fwrite($file, "\xEF\xBB\xBF");
+                $header = ['Codi del equip *','Descripció avaria *', 'Nom persona contacte centre *', 'Correu persona contacte centre *', 'Codi tipus de dispositiu *','','','Informació codi tipus dispositiu','Informació tipus dispositiu'];
+                fputcsv($file, $header, ';'); 
+                $primer =  true;
+                foreach ($array_tipus_dispositiu as $row) {
+                    if ($primer) {
+                        $data = ['EXEMPLE',"Descripció d'exemple.",'Persona contacte','Correu persona contacte','1','','', $row['id_tipus_dispositiu'], $row['nom_tipus_dispositiu']];
+                        $primer = false;
+                    } else {
+                        $data = ['','','','','','','', $row['id_tipus_dispositiu'], $row['nom_tipus_dispositiu']];
+                    }
+                    fputcsv($file, $data, ';');
+                }
+                fclose($file);
+
             } else if ($role == "sstt" || $role == "admin_sstt") {
-                $file = new \CodeIgniter\Files\File(WRITEPATH . "uploads" . DIRECTORY_SEPARATOR . "csv" . DIRECTORY_SEPARATOR . "exemple_afegir_tiquet_sstt.csv"); // Definim el nom de l'arxiu amb ruta
+                //$file = new \CodeIgniter\Files\File(WRITEPATH . "uploads" . DIRECTORY_SEPARATOR . "csv" . DIRECTORY_SEPARATOR . "exemple_afegir_tiquet_sstt.csv"); // Definim el nom de l'arxiu amb ruta
+                //$file_name = "exemple_afegir_tiquet_sstt.csv";
+
                 $file_name = "exemple_afegir_tiquet_sstt.csv";
+                $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
+                $file = fopen($file_path, 'w');
+                fwrite($file, "\xEF\xBB\xBF");
+                $header = ['Codi del equip *','Descripció avaria *', 'Nom persona contacte centre *', 'Correu persona contacte centre *', 'Codi tipus de dispositiu *','Codi centre emissor','Codi centre reparador','','','Informació codi tipus dispositiu','Informació tipus dispositiu'];
+                fputcsv($file, $header, ';'); 
+                $primer =  true;
+                foreach ($array_tipus_dispositiu as $row) {
+                    if ($primer) {
+                        $data = ['EXEMPLE',"Descripció d'exemple.",'Persona contacte','Correu persona contacte','1','25006732 (pot estar buit)','25002799 (pot estar buit)','','', $row['id_tipus_dispositiu'], $row['nom_tipus_dispositiu']];
+                        $primer = false;
+                    } else {
+                        $data = ['','','','','','','','','', $row['id_tipus_dispositiu'], $row['nom_tipus_dispositiu']];
+                    }
+                    fputcsv($file, $data, ';');
+                }
+                fclose($file);
             } else if ($role == "desenvolupador") {
-                $file = new \CodeIgniter\Files\File(WRITEPATH . "uploads" . DIRECTORY_SEPARATOR . "csv" . DIRECTORY_SEPARATOR . "exemple_afegir_tiquet_desenvolupador.csv"); // Definim el nom de l'arxiu amb ruta
+                //$file = new \CodeIgniter\Files\File(WRITEPATH . "uploads" . DIRECTORY_SEPARATOR . "csv" . DIRECTORY_SEPARATOR . "exemple_afegir_tiquet_desenvolupador.csv"); // Definim el nom de l'arxiu amb ruta
+                //$file_name = "exemple_afegir_tiquet_desenvolupador.csv";
+
                 $file_name = "exemple_afegir_tiquet_desenvolupador.csv";
+                $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
+                $file = fopen($file_path, 'w');
+                fwrite($file, "\xEF\xBB\xBF");
+                /*Codi del equip *;Descripció avaria *;Nom persona contacte centre;Correu persona contacte centre;Codi tipus de dispositiu *;Codi centre emissor;Codi centre reparador;Serveis Territorials
+                EXEMPLE;Descripció d'exemple.;Persona;Correu persona;1;25006732 (pot estar buit);25002799 (pot estar buit);125*/
+                $header = ['Codi del equip *','Descripció avaria *', 'Nom persona contacte centre *', 'Correu persona contacte centre *', 'Codi tipus de dispositiu *','Codi centre emissor','Codi centre reparador','Serveis Territorials *','','','Informació codi tipus dispositiu','Informació tipus dispositiu'];
+                fputcsv($file, $header, ';'); 
+                $primer =  true;
+                foreach ($array_tipus_dispositiu as $row) {
+                    if ($primer) {
+                        $data = ['EXEMPLE',"Descripció d'exemple.",'Persona contacte','Correu persona contacte','1','25006732 (pot estar buit)','25002799 (pot estar buit)','125','','', $row['id_tipus_dispositiu'], $row['nom_tipus_dispositiu']];
+                        $primer = false;
+                    } else {
+                        $data = ['','','','','','','','','','', $row['id_tipus_dispositiu'], $row['nom_tipus_dispositiu']];
+                    }
+                    fputcsv($file, $data, ';');
+                }
+                fclose($file);
             }
 
             // En cas que no es tracti d'un fitxer llencem que no s'ha trobat
-            if (!$file->isFile()) {
+            /*if (!$file->isFile()) {
                 throw new \CodeIgniter\Exceptions\PageNotFoundException("El fitxer CSV d'exemple per afegir tiquets no ha estat trobat!");
-            }
+            }*/
 
-            // Llegim l'arxiu i donem resposta
+            header('Content-Description: File Transfer');
+            header('Content-Type: text/csv; charset=UTF-8');
+            header('Content-Disposition: attachment; filename=' . basename($file_path));
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($file_path));
+            readfile($file_path);
+
+            /*// Llegim l'arxiu i donem resposta
             $filedata = new \SplFileObject($file->getPathname(), "r");
             $data1 = $filedata->fread($filedata->getSize());
             //return $this->response->setContentType($file->getMimeType())->setBody($data1);
-            return $this->response->download($file_name, "\xEF\xBB\xBF" . $data1, $file->getMimeType());
+            return $this->response->download($file_name, "\xEF\xBB\xBF" . $data1, $file->getMimeType());*/
         }
     }
 
