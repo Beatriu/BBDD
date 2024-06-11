@@ -89,11 +89,17 @@
             <?= session()->get('error_filtre') ?>
         </div>
     <?php endif; ?>
+    <?php if ((session()->get('error_csv')) !== null) : ?>
+        <div class="alert alert-danger alerta_esborrar" role="alert">
+            <?= session()->get('error_csv') ?>
+        </div>
+    <?php endif; ?>
     <div class="row border mt-4 me-0 pe-0 ps-0">
         <div class="row form_header pt-2 pb-2 ps-3 pe-3 ms-0">
             <span><?= lang('general_lang.informacio_comuna') ?></span>
         </div>
     </div>
+    
 
     <div class="row mt-3">
         <div class="col">

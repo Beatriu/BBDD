@@ -69,5 +69,6 @@ return [
     'centre_existeix' => "Aquest codi de centre ja està en ús!",
     'centre_camps_requerits' => "Falta omplir alguns dels camps requerits!",
     'new_centre' => "S'ha afegit el nou centre!",
-    'update_centre' => "El següent centre s'ha editat correctament: "
+    'update_centre' => "El següent centre s'ha editat correctament: ",
+    'error_csv' => "Hi ha un error en l'arxiu CSV. Pot ser que t'hagis deixat algun camp!",
 ];

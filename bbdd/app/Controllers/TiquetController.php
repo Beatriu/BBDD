@@ -421,7 +421,8 @@ class TiquetController extends BaseController
                         $file = $csv['csv_tiquet'];
                         if ($file->isValid() && !$file->hasMoved()) {
 
-                            $newName = $file->getClientName();
+                            $uuid_arxiu = $uuid_library->v4();
+                            $newName = $uuid_arxiu;
 
                             if ($role == "desenvolupador") {
                                     $centre_emissor = "desenvolupador";
@@ -447,50 +448,109 @@ class TiquetController extends BaseController
                             $csvFile = fopen($ruta, "r"); // read file from /writable/uploads folder.
 
                             $firstline = true;
+                            $count_lines = 1;
+
 
                             while (($csv_data = fgetcsv($csvFile, 2000, ";")) !== FALSE) {
                                 if (!$firstline) {
+
+                                    $count_lines += 1;
                                     $model = new \App\Models\TiquetModel;
+
+                                    $llargada = 0;
+                                    foreach ($csv_data as $valor) {
+                                        if ($valor != "") {
+                                            $llargada += 1;
+                                        }
+                                    }
 
                                     $uuid = $uuid_library->v4();
                                     if ($role == "professor" || $role == "centre_emissor" || $role == "centre_reparador") {
 
-                                        if ($csv_data[0] != null && $csv_data[1] != null && $csv_data[2] != null && $csv_data[3] != null && $csv_data[4] != null) {
-                                            $msg = lang('alertes.flash_data_create_tiquet');
-                                            session()->setFlashdata('crearTiquet', $msg);
-
-                                            $id_sstt = $centre_model->obtenirCentre($centre_emissor)['id_sstt'];
-                                            $model->addTiquet($uuid, $csv_data[0], $csv_data[1], $csv_data[2], $csv_data[3], $data_alta, null, $csv_data[4], 1, $centre_emissor, null, $id_sstt);
+                                        if ($llargada >= 7) {
+                                            if ($csv_data[0] != null && $csv_data[1] != null && $csv_data[2] != null && $csv_data[3] != null && $csv_data[4] != null) {
+                                                $msg = lang('alertes.flash_data_create_tiquet');
+                                                session()->setFlashdata('crearTiquet', $msg);
+    
+                                                $id_sstt = $centre_model->obtenirCentre($centre_emissor)['id_sstt'];
+                                                $model->addTiquet($uuid, $csv_data[0], $csv_data[1], $csv_data[2], $csv_data[3], $data_alta, null, $csv_data[4], 1, $centre_emissor, null, $id_sstt);
+                                            } else {
+                                                fclose($csvFile);
+                                                $msg = lang('alertes.error_csv');
+                                                session()->setFlashdata('error_csv', $msg);
+                                                return redirect()->to(base_url('/tiquets/afegir'));
+                                            }
                                         } else {
-
+                                            if ($llargada == 0) {
+                                                $msg = lang('alertes.flash_data_create_tiquet');
+                                                session()->setFlashdata('crearTiquet', $msg);
+                                            } else {
+                                                $msg = lang('alertes.error_csv');
+                                                session()->setFlashdata('error_csv', $msg);
+                                            }
+                                            fclose($csvFile);
+                                            return redirect()->to(base_url('/tiquets/afegir'));
                                         }
 
                                     } else if ($role == "sstt" || $role == "admin_sstt") {
 
-                                        if ($csv_data[0] != null && $csv_data[1] != null && $csv_data[2] != null && $csv_data[3] != null && $csv_data[4] != null) {
-                                            $msg = lang('alertes.flash_data_create_tiquet');
-                                            session()->setFlashdata('crearTiquet', $msg);
-                                            if ($csv_data[6] == null) {
-                                                $model->addTiquet($uuid, $csv_data[0], $csv_data[1], $csv_data[2], $csv_data[3], $data_alta, null, $csv_data[4], 1, $csv_data[5], null, $actor['id_sstt']);
+                                        if ($llargada >= 7) {
+                            
+                                            if ($csv_data[0] != null && $csv_data[1] != null && $csv_data[2] != null && $csv_data[3] != null && $csv_data[4] != null) {
+                                                $msg = lang('alertes.flash_data_create_tiquet');
+                                                session()->setFlashdata('crearTiquet', $msg);
+                                                if ($csv_data[6] == null) {
+                                                    $model->addTiquet($uuid, $csv_data[0], $csv_data[1], $csv_data[2], $csv_data[3], $data_alta, null, $csv_data[4], 1, $csv_data[5], null, $actor['id_sstt']);
+                                                } else {
+                                                    $model->addTiquet($uuid, $csv_data[0], $csv_data[1], $csv_data[2], $csv_data[3], $data_alta, null, $csv_data[4], 2, $csv_data[5], $csv_data[6], $actor['id_sstt']);
+                                                }
                                             } else {
-                                                $model->addTiquet($uuid, $csv_data[0], $csv_data[1], $csv_data[2], $csv_data[3], $data_alta, null, $csv_data[4], 2, $csv_data[5], $csv_data[6], $actor['id_sstt']);
+                                                fclose($csvFile);
+                                                $msg = lang('alertes.error_csv');
+                                                session()->setFlashdata('error_csv', $msg);
+                                                return redirect()->to(base_url('/tiquets/afegir'));
                                             }
                                         } else {
-
+                                            if ($llargada == 0) {
+                                                $msg = lang('alertes.flash_data_create_tiquet');
+                                                session()->setFlashdata('crearTiquet', $msg);
+                                            } else {
+                                                $msg = lang('alertes.error_csv');
+                                                session()->setFlashdata('error_csv', $msg);
+                                            }
+                                            fclose($csvFile);
+                                            return redirect()->to(base_url('/tiquets/afegir'));
                                         }
+
 
                                     } else if ($role == "desenvolupador") {
 
-                                        if ($csv_data[0] != null && $csv_data[1] != null && $csv_data[2] != null && $csv_data[3] != null && $csv_data[4] != null && $csv_data[7] != null) {
-                                            $msg = lang('alertes.flash_data_create_tiquet');
-                                            session()->setFlashdata('crearTiquet', $msg);
-                                            if ($csv_data[6] == null) {
-                                                $model->addTiquet($uuid, $csv_data[0], $csv_data[1], $csv_data[2], $csv_data[3], $data_alta, null, $csv_data[4], 1, $csv_data[5], null, $csv_data[7]);
+                                        if ($llargada >= 8) {
+                                            d($csv_data[0] != null && $csv_data[1] != null && $csv_data[2] != null && $csv_data[3] != null && $csv_data[4] != null && $csv_data[7] != null);
+                                            if ($csv_data[0] != null && $csv_data[1] != null && $csv_data[2] != null && $csv_data[3] != null && $csv_data[4] != null && $csv_data[7] != null) {
+                                                $msg = lang('alertes.flash_data_create_tiquet');
+                                                session()->setFlashdata('crearTiquet', $msg);
+                                                if ($csv_data[6] == null) {
+                                                    $model->addTiquet($uuid, $csv_data[0], $csv_data[1], $csv_data[2], $csv_data[3], $data_alta, null, $csv_data[4], 1, $csv_data[5], null, $csv_data[7]);
+                                                } else {
+                                                    $model->addTiquet($uuid, $csv_data[0], $csv_data[1], $csv_data[2], $csv_data[3], $data_alta, null, intval($csv_data[4]), 2, $csv_data[5], $csv_data[6], $csv_data[7]);
+                                                }
                                             } else {
-                                                $model->addTiquet($uuid, $csv_data[0], $csv_data[1], $csv_data[2], $csv_data[3], $data_alta, null, intval($csv_data[4]), 2, $csv_data[5], $csv_data[6], $csv_data[7]);
+                                                fclose($csvFile);
+                                                $msg = lang('alertes.error_csv');
+                                                session()->setFlashdata('error_csv', $msg);
+                                                return redirect()->to(base_url('/tiquets/afegir'));
                                             }
                                         } else {
-                                            
+                                            if ($llargada == 0) {
+                                                $msg = lang('alertes.flash_data_create_tiquet');
+                                                session()->setFlashdata('crearTiquet', $msg);
+                                            } else {
+                                                $msg = lang('alertes.error_csv');
+                                                session()->setFlashdata('error_csv', $msg);
+                                            }
+                                            fclose($csvFile);
+                                            return redirect()->to(base_url('/tiquets/afegir'));
                                         }
 
                                     }
@@ -499,6 +559,12 @@ class TiquetController extends BaseController
                             }
                         
                             fclose($csvFile);
+
+                            if ($count_lines == 1) {
+                                $msg = lang('alertes.error_csv');
+                                session()->setFlashdata('error_csv', $msg);
+                                return redirect()->to(base_url('/tiquets/afegir'));
+                            }
                         }
                     }
                 }
@@ -733,22 +799,19 @@ class TiquetController extends BaseController
         if ($arxiu == "exemple_afegir_tiquet") {
 
             if ($role == "professor" || $role == "centre_emissor" || $role == "centre_reparador") {
-                //$file = new \CodeIgniter\Files\File(WRITEPATH . "uploads" . DIRECTORY_SEPARATOR . "csv" . DIRECTORY_SEPARATOR . "exemple_afegir_tiquet_professorat.csv"); // Definim el nom de l'arxiu amb ruta
-                //$file_name = "exemple_afegir_tiquet_professorat.csv";
-
                 $file_name = "exemple_afegir_tiquet_professorat.csv";
                 $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
                 $file = fopen($file_path, 'w');
                 fwrite($file, "\xEF\xBB\xBF");
-                $header = ['Codi del equip *','Descripció avaria *', 'Nom persona contacte centre *', 'Correu persona contacte centre *', 'Codi tipus de dispositiu *','','','Informació codi tipus dispositiu','Informació tipus dispositiu'];
+                $header = ['Codi del equip *','Descripció avaria *', 'Nom persona contacte centre *', 'Correu persona contacte centre *', 'Codi tipus de dispositiu *','','','','Informació codi tipus dispositiu','Informació tipus dispositiu'];
                 fputcsv($file, $header, ';'); 
                 $primer =  true;
                 foreach ($array_tipus_dispositiu as $row) {
                     if ($primer) {
-                        $data = ['EXEMPLE',"Descripció d'exemple.",'Persona contacte','Correu persona contacte','1','','', $row['id_tipus_dispositiu'], $row['nom_tipus_dispositiu']];
+                        $data = ['EXEMPLE',"Descripció d'exemple.",'Persona contacte','Correu persona contacte','1','','','', $row['id_tipus_dispositiu'], $row['nom_tipus_dispositiu']];
                         $primer = false;
                     } else {
-                        $data = ['','','','','','','', $row['id_tipus_dispositiu'], $row['nom_tipus_dispositiu']];
+                        $data = ['','','','','','','','', $row['id_tipus_dispositiu'], $row['nom_tipus_dispositiu']];
                     }
                     fputcsv($file, $data, ';');
                 }
@@ -762,15 +825,15 @@ class TiquetController extends BaseController
                 $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
                 $file = fopen($file_path, 'w');
                 fwrite($file, "\xEF\xBB\xBF");
-                $header = ['Codi del equip *','Descripció avaria *', 'Nom persona contacte centre *', 'Correu persona contacte centre *', 'Codi tipus de dispositiu *','Codi centre emissor','Codi centre reparador','','','Informació codi tipus dispositiu','Informació tipus dispositiu'];
+                $header = ['Codi del equip *','Descripció avaria *', 'Nom persona contacte centre *', 'Correu persona contacte centre *', 'Codi tipus de dispositiu *','Codi centre emissor','Codi centre reparador','','','','Informació codi tipus dispositiu','Informació tipus dispositiu'];
                 fputcsv($file, $header, ';'); 
                 $primer =  true;
                 foreach ($array_tipus_dispositiu as $row) {
                     if ($primer) {
-                        $data = ['EXEMPLE',"Descripció d'exemple.",'Persona contacte','Correu persona contacte','1','25006732 (pot estar buit)','25002799 (pot estar buit)','','', $row['id_tipus_dispositiu'], $row['nom_tipus_dispositiu']];
+                        $data = ['EXEMPLE',"Descripció d'exemple.",'Persona contacte','Correu persona contacte','1','25006732 (pot estar buit)','25002799 (pot estar buit)','','','', $row['id_tipus_dispositiu'], $row['nom_tipus_dispositiu']];
                         $primer = false;
                     } else {
-                        $data = ['','','','','','','','','', $row['id_tipus_dispositiu'], $row['nom_tipus_dispositiu']];
+                        $data = ['','','','','','','','','','', $row['id_tipus_dispositiu'], $row['nom_tipus_dispositiu']];
                     }
                     fputcsv($file, $data, ';');
                 }
@@ -783,17 +846,15 @@ class TiquetController extends BaseController
                 $file_path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $file_name;
                 $file = fopen($file_path, 'w');
                 fwrite($file, "\xEF\xBB\xBF");
-                /*Codi del equip *;Descripció avaria *;Nom persona contacte centre;Correu persona contacte centre;Codi tipus de dispositiu *;Codi centre emissor;Codi centre reparador;Serveis Territorials
-                EXEMPLE;Descripció d'exemple.;Persona;Correu persona;1;25006732 (pot estar buit);25002799 (pot estar buit);125*/
-                $header = ['Codi del equip *','Descripció avaria *', 'Nom persona contacte centre *', 'Correu persona contacte centre *', 'Codi tipus de dispositiu *','Codi centre emissor','Codi centre reparador','Serveis Territorials *','','','Informació codi tipus dispositiu','Informació tipus dispositiu'];
+                $header = ['Codi del equip *','Descripció avaria *', 'Nom persona contacte centre *', 'Correu persona contacte centre *', 'Codi tipus de dispositiu *','Codi centre emissor','Codi centre reparador','Serveis Territorials *','','','','Informació codi tipus dispositiu','Informació tipus dispositiu'];
                 fputcsv($file, $header, ';'); 
                 $primer =  true;
                 foreach ($array_tipus_dispositiu as $row) {
                     if ($primer) {
-                        $data = ['EXEMPLE',"Descripció d'exemple.",'Persona contacte','Correu persona contacte','1','25006732 (pot estar buit)','25002799 (pot estar buit)','125','','', $row['id_tipus_dispositiu'], $row['nom_tipus_dispositiu']];
+                        $data = ['EXEMPLE',"Descripció d'exemple.",'Persona contacte','Correu persona contacte','1','25006732 (pot estar buit)','25002799 (pot estar buit)','125','','','', $row['id_tipus_dispositiu'], $row['nom_tipus_dispositiu']];
                         $primer = false;
                     } else {
-                        $data = ['','','','','','','','','','', $row['id_tipus_dispositiu'], $row['nom_tipus_dispositiu']];
+                        $data = ['','','','','','','','','','','', $row['id_tipus_dispositiu'], $row['nom_tipus_dispositiu']];
                     }
                     fputcsv($file, $data, ';');
                 }
