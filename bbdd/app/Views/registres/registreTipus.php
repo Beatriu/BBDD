@@ -229,9 +229,6 @@
                 <div class="col-10 justify-content-left" id="div_menu">
                     <nav class="navbar navbar-expand-lg main" style="background-color: #333333;">
                         <div class="container-fluid">
-                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse">
-                                <span class="navbar-toggler-icon"></span>
-                            </button>
                             <div class="collapse navbar-collapse">
                                 <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="menu_tipus">
                                     <li class="nav-item">
