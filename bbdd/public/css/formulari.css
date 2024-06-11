@@ -87,7 +87,9 @@ input {
     color: red !important;
 }
 
-
+.main .navbar-nav .nav-link{
+    color:white;
+}
 .main .navbar-nav .nav-link.actiu {
     background-color: #F5F5F5; 
     color: #333333 !important; 
