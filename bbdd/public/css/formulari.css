@@ -74,3 +74,15 @@ input {
     color: #333333;
     margin: 0;
 }
+#data-list-vista_inventari > thead > tr > th {
+    background-color: #333333;
+    color: #F5F5F5;
+}
+#data-list-vista_inventari {
+    border-right: 2px solid #900000;
+    border-bottom: 2px solid #900000;
+    border-left: 2px solid #900000;
+}
+#data-list-vista_inventari i {
+    color: red !important;
+}

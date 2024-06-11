@@ -622,7 +622,7 @@ class InventarisController extends BaseController
         }
     }
 
-    public function assignarInventari_post($id_tiquet, $id_intervencio)
+    public function assignarInventari_post($id_tiquet, $id_intervencio, $editar)
     {
         $tiquet_model = new TiquetModel();
         $intervencio_model = new IntervencioModel();
@@ -670,12 +670,16 @@ class InventarisController extends BaseController
                     $tiquet_model->updateTiquet($tiquet['id_tiquet'], $data);
                 }
             }
-
-            return redirect()->to(base_url('/tiquets/' . $id_tiquet . "/assignar/" . $id_intervencio));
+            if ($editar == "noeditar") {
+                return redirect()->to(base_url('/tiquets/' . $id_tiquet . "/assignar/" . $id_intervencio));
+            } else if ($editar == "editar") {
+                return redirect()->to('editar/intervencio/' . $id_tiquet . '/' . $id_intervencio);
+            }
+            
         }
     }
 
-    public function desassignarInventari($id_inventari)
+    public function desassignarInventari($id_inventari, $editar = null)
     {
         $inventari_model = new InventariModel();
         $intervencio_model = new IntervencioModel();
@@ -716,7 +720,11 @@ class InventarisController extends BaseController
 
                 $tiquet_model->updateTiquet($tiquet['id_tiquet'], $data);
 
-                return redirect()->to(base_url('/tiquets/' . $id_tiquet . "/assignar/" . $id_intervencio));
+                if ($editar == null) {
+                    return redirect()->to(base_url('/tiquets/' . $id_tiquet . "/assignar/" . $id_intervencio));
+                } else if ($editar == "editar") {
+                    return redirect()->to('editar/intervencio/' . $id_tiquet . '/' . $id_intervencio);
+                }
             }
         } else {
             return redirect()->back();

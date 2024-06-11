@@ -50,8 +50,9 @@ $routes->get('/inventari/esborrar/(:segment)', 'InventarisController::registreIn
 $routes->get('/eliminarInventari/(:segment)', 'InventarisController::eliminarInventari/$1', ['filter'=>'Autentica']);
 
 $routes->get('/tiquets/(:segment)/assignar/(:segment)', 'InventarisController::assignarInventari/$1/$2', ['filter'=>'Autentica']);
-$routes->post('/tiquets/(:segment)/assignar/(:segment)', 'InventarisController::assignarInventari_post/$1/$2', ['filter'=>'Autentica']);
+$routes->post('/tiquets/(:segment)/assignar/(:segment)/(:segment)', 'InventarisController::assignarInventari_post/$1/$2/$3', ['filter'=>'Autentica']);
 $routes->get('/inventari/desassignar/(:segment)', 'InventarisController::desassignarInventari/$1', ['filter'=>'Autentica']);
+$routes->get('/inventari/desassignar_editar/(:segment)', 'InventarisController::desassignarInventari/$1/editar', ['filter'=>'Autentica']);
 
 //FILTRE INVENTARI
 $routes->post('/filtreInventari', 'InventarisController::filtrePost', ['filter'=>'Autentica']);

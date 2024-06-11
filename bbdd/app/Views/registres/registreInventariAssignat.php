@@ -49,7 +49,7 @@
         </div>
     </div>
 
-    <form method="POST" action="<?= base_url('/tiquets/' . $id_tiquet . '/assignar/' . $id_intervencio) ?>" enctype="multipart/form-data">
+    <form method="POST" action="<?= base_url('/tiquets/' . $id_tiquet . '/assignar/' . $id_intervencio . '/noeditar') ?>" enctype="multipart/form-data">
         <?= csrf_field() ?>
         <div class="row">
             <div class="col-10 mt-4">
