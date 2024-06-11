@@ -129,8 +129,6 @@ SELECT
     (SELECT COUNT(t.id_tiquet)
      FROM tiquet t
      WHERE t.codi_centre_reparador = c.codi_centre OR t.codi_centre_emissor = c.codi_centre) AS Tiquets_del_centre
-
-    
 FROM 
     centre c
 JOIN poblacio p ON c.id_poblacio = p.id_poblacio
