@@ -336,7 +336,7 @@ class TiquetController extends BaseController
                 
                 $writer = new Writer($render); // Establim el writer amb la forma de renderitzar imatges
         
-                $data['qrcode_image2'] = base64_encode($writer->writeString($tiquet_existent['id_tiquet'])); // Generem el codi que ha d'anar a la imatge
+                $data['qrcode_image2'] = base64_encode($writer->writeString(base_url($tiquet_existent['id_tiquet']))); // Generem el codi que ha d'anar a la imatge
 
 
                 $data['output'] = $crud->render();
