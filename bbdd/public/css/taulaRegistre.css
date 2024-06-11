@@ -161,7 +161,10 @@
 .div_filtres{
     margin-left: 10px;
 }
-
+#contenidor_de_les_opcions{
+    padding-left: 20px;
+    padding-right: 20px;
+}
 #menu_tipus > .actiu {
     font-size: 4em;
     color: #900000 !important;

@@ -226,52 +226,43 @@
                     </a>
                 </div>
 
-                <div class="col-10 justify-content-left">
-                    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="col-10 justify-content-left" id="div_menu">
+                    <nav class="navbar navbar-expand-lg main" style="background-color: #333333;">
                         <div class="container-fluid">
-                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse">
                                 <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="menu_tipus">
                                     <li class="nav-item">
-                                        <?php if ($tipus_pantalla == "tipus_dispositiu") : ?>
-                                            <a class="nav-link active actiu" aria-current="page" href="<?= base_url('/tipus/dispositiu') ?>"><?= lang('tipus.dispositiu_titol') ?></a>
-                                        <?php else : ?>
-                                            <a class="nav-link" aria-current="page" href="<?= base_url('/tipus/dispositiu') ?>"><?= lang('tipus.dispositiu_titol') ?></a>
-                                        <?php endif; ?>
+                                        <a class="nav-link <?= ($tipus_pantalla == "tipus_dispositiu") ? 'active actiu' : '' ?>" href="<?= base_url('/tipus/dispositiu') ?>">
+                                            <i class="fas fa-laptop"></i> <?= lang('tipus.dispositiu_titol') ?>
+                                        </a>
                                     </li>
                                     <li class="nav-item">
-                                        <?php if ($tipus_pantalla == "tipus_inventari") : ?>
-                                            <a class="nav-link active actiu" aria-current="page" href="<?= base_url('/tipus/inventari') ?>"><?= lang('tipus.tipus_inventari') ?></a>
-                                        <?php else : ?>
-                                            <a class="nav-link" aria-current="page" href="<?= base_url('/tipus/inventari') ?>"><?= lang('tipus.tipus_inventari') ?></a>
-                                        <?php endif; ?>
+                                        <a class="nav-link <?= ($tipus_pantalla == "tipus_inventari") ? 'active actiu' : '' ?>" href="<?= base_url('/tipus/inventari') ?>">
+                                            <i class="fas fa-box"></i> <?= lang('tipus.tipus_inventari') ?>
+                                        </a>
                                     </li>
                                     <li class="nav-item">
-                                        <?php if ($tipus_pantalla == "tipus_intervencio") : ?>
-                                            <a class="nav-link active actiu" aria-current="page" href="<?= base_url('/tipus/intervencio') ?>"><?= lang('tipus.tipus_intervencio') ?></a>
-                                        <?php else : ?>
-                                            <a class="nav-link" aria-current="page" href="<?= base_url('/tipus/intervencio') ?>"><?= lang('tipus.tipus_intervencio') ?></a>
-                                        <?php endif; ?>
+                                        <a class="nav-link <?= ($tipus_pantalla == "tipus_intervencio") ? 'active actiu' : '' ?>" href="<?= base_url('/tipus/intervencio') ?>">
+                                            <i class="fas fa-tools"></i> <?= lang('tipus.tipus_intervencio') ?>
+                                        </a>
                                     </li>
                                     <li class="nav-item">
-                                        <?php if ($tipus_pantalla == "curs") : ?>
-                                            <a class="nav-link active actiu" aria-current="page" href="<?= base_url('/tipus/curs') ?>"><?= lang('tipus.curs_titol') ?></a>
-                                        <?php else : ?>
-                                            <a class="nav-link" aria-current="page" href="<?= base_url('/tipus/curs') ?>"><?= lang('tipus.curs_titol') ?></a>
-                                        <?php endif; ?>
+                                        <a class="nav-link <?= ($tipus_pantalla == "curs") ? 'active actiu' : '' ?>" href="<?= base_url('/tipus/curs') ?>">
+                                            <i class="fas fa-graduation-cap"></i> <?= lang('tipus.curs_titol') ?>
+                                        </a>
                                     </li>
                                     <li class="nav-item">
-                                        <?php if ($tipus_pantalla == "poblacio") : ?>
-                                            <a class="nav-link active actiu" aria-current="page" href="<?= base_url('/tipus/poblacio') ?>"><?= lang('tipus.poblacio_titol') ?></a>
-                                        <?php else : ?>
-                                            <a class="nav-link" aria-current="page" href="<?= base_url('/tipus/poblacio') ?>"><?= lang('tipus.poblacio_titol') ?></a>
-                                        <?php endif; ?>
+                                        <a class="nav-link <?= ($tipus_pantalla == "poblacio") ? 'active actiu' : '' ?>" href="<?= base_url('/tipus/poblacio') ?>">
+                                            <i class="fas fa-city"></i> <?= lang('tipus.poblacio_titol') ?>
+                                        </a>
                                     </li>
                                     <li class="nav-item">
-                                        <?php if ($tipus_pantalla == "comarca") : ?>
-                                            <a class="nav-link active actiu" aria-current="page" href="<?= base_url('/tipus/comarca') ?>"><?= lang('tipus.comarca_titol') ?></a>
-                                        <?php else : ?>
-                                            <a class="nav-link" aria-current="page" href="<?= base_url('/tipus/comarca') ?>"><?= lang('tipus.comarca_titol') ?></a>
-                                        <?php endif; ?>
+                                        <a class="nav-link <?= ($tipus_pantalla == "comarca") ? 'active actiu' : '' ?>" href="<?= base_url('/tipus/comarca') ?>">
+                                            <i class="fas fa-map"></i> <?= lang('tipus.comarca_titol') ?>
+                                        </a>
                                     </li>
                                 </ul>
                             </div>
