@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="<?= base_url('css/sidebar.css')?>">
     <title><?= esc($title) ?></title>
     <?= $this->renderSection('css_pagina') ?>
+    <link rel="icon" type="image/png" href="img/Logotip/Logotip per aplicar a fons en blanc.png">
 </head>
 
 <body>

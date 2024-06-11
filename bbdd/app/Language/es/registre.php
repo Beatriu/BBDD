@@ -31,7 +31,7 @@ return [
     'no_permisos_eliminar' => 'No tienes permisos para eliminar este tiquet!',
     'sidebar_search_title' => 'BUSCAR',
     'searcher_placeholder' => 'Buscador automático...',
-    'save_filters' => 'Guardar',
+    'save_filters' => 'Aplicar',
     'delete_filters' => 'Eliminar',
     'title_div_tipus_dispositiu' => 'Tipo dispositivo: ',
     'title_div_nom_centre_emissor' => 'Centro emisor: ',

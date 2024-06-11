@@ -9,6 +9,7 @@
     <title><?= esc($title) ?></title>
     <?= $this->renderSection('css_pagina') ?>
     <script src="https://kit.fontawesome.com/7f13a820d7.js" crossorigin="anonymous"></script>
+    <link rel="icon" type="image/png" href="img/Logotip/Logotip per aplicar a fons en blanc.png">
 </head>
 
 <body>

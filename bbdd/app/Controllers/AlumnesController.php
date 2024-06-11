@@ -362,6 +362,33 @@ class AlumnesController extends BaseController
                     $login_in_rol->addLoginInRol($login_model->obtenirId($correu_alumne), $rol_model->obtenirIdRol("alumne"));
                     $msg = lang('alertes.flash_data_create_alumne');
                     session()->setFlashdata('afegirAlumne', $msg);
+
+                    $email = \Config\Services::email();
+
+                    $email->setFrom('projectebbdd@gmail.com', 'Projecte BBDD');
+                    $email->setTo($correu_alumne);
+                    $email->setSubject('Contrasenya Programa Reparació Dispositius');
+                    $msg = "
+                    <html>
+                    <head>
+                        <title>Contrasenya Programa Reparació Dispositius</title>
+                    </head>
+                    <body>
+                        <p>Benvolgut/da $nom_alumne,</p>
+                        <p>En aquest correu et fem arribar la contrasenya del programa de reparació de dispositius.</p>
+                        <p>La contrasenya és <b>$contrasenya</b> i l'enllaç per accedir al programa és: <a href='https://kpatek2.capalabs.com/login'>https://kpatek2.capalabs.com/login</a>.</p>
+                        <p>Gràcies!</p>
+                    </body>
+                    </html>
+                    ";
+                    $email->setMessage($msg);
+            
+                    if ($email->send()) {
+                        echo 'Email sent.';
+                    } else {
+                        echo 'Email sending failed.';
+                        echo $email->printDebugger(['headers', 'subject', 'body']);
+                    }
                 } else if ($role == "admin_sstt" || $role == "desenvolupador") {
 
                     $codi_centre = $this->request->getPost('centre');
@@ -377,6 +404,35 @@ class AlumnesController extends BaseController
                         $login_in_rol->addLoginInRol($login_model->obtenirId($correu_alumne), $rol_model->obtenirIdRol("alumne"));
                         $msg = lang('alertes.flash_data_create_alumne');
                         session()->setFlashdata('afegirAlumne', $msg);
+
+
+                        
+                        $email = \Config\Services::email();
+
+                        $email->setFrom('projectebbdd@gmail.com', 'Projecte BBDD');
+                        $email->setTo($correu_alumne);
+                        $email->setSubject('Contrasenya Programa Reparació Dispositius');
+                        $msg = "
+                        <html>
+                        <head>
+                            <title>Contrasenya Programa Reparació Dispositius</title>
+                        </head>
+                        <body>
+                            <p>Benvolgut/da $nom_alumne,</p>
+                            <p>En aquest correu et fem arribar la contrasenya del programa de reparació de dispositius.</p>
+                            <p>La contrasenya és <b>$contrasenya</b> i l'enllaç per accedir al programa és: <a href='https://kpatek2.capalabs.com/login'>https://kpatek2.capalabs.com/login</a>.</p>
+                            <p>Gràcies!</p>
+                        </body>
+                        </html>
+                        ";
+                        $email->setMessage($msg);
+                
+                        if ($email->send()) {
+                            echo 'Email sent.';
+                        } else {
+                            echo 'Email sending failed.';
+                            echo $email->printDebugger(['headers', 'subject', 'body']);
+                        }
                     } elseif ($actor['id_sstt'] != $id_sstt_post) {
                         // TODO Bea revisar si està bé
                         session()->setFlashdata('afegir_alumne_error', 'alumne.codi_no_sstt');
