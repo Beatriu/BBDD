@@ -141,7 +141,7 @@ class TiquetController extends BaseController
 
                     if ($estat == 'Pendent de reparar' || $estat == 'Reparant') {
                         $crud->addItemLink('edit', 'fa-pencil', base_url('editar/intervencio/' . $id_tiquet), 'Editar Intervenció');
-                        $crud->addItemLink('assignar', 'fa-screwdriver-wrench', base_url('tiquets/' . $id_tiquet . '/assignar'), 'Assignar Inventari');
+                        //$crud->addItemLink('assignar', 'fa-screwdriver-wrench', base_url('tiquets/' . $id_tiquet . '/assignar'), 'Assignar Inventari');
                         $crud->addItemLink('delete', 'fa-trash', base_url('tiquets/' . $id_tiquet . '/esborrar'), 'Eliminar Intervenció');
                     }
 
@@ -152,7 +152,7 @@ class TiquetController extends BaseController
 
                     if ($role == "admin_sstt") {
                         $crud->addItemLink('edit', 'fa-pencil', base_url('editar/intervencio/' . $id_tiquet), 'Editar Intervenció');
-                        $crud->addItemLink('assignar', 'fa-screwdriver-wrench', base_url('tiquets/' . $id_tiquet . '/assignar'), 'Assignar Inventari');
+                        //$crud->addItemLink('assignar', 'fa-screwdriver-wrench', base_url('tiquets/' . $id_tiquet . '/assignar'), 'Assignar Inventari');
                         $crud->addItemLink('delete', 'fa-trash', base_url('tiquets/' . $id_tiquet . '/esborrar'), 'Eliminar Intervenció');
                     }
 
@@ -181,7 +181,7 @@ class TiquetController extends BaseController
 
                     $crud->addItemLink('view', 'fa-eye', base_url('tiquets/' . $id_tiquet . '/intervencio'), 'Veure Intervenció');
                     $crud->addItemLink('edit', 'fa-pencil', base_url('editar/intervencio/' . $id_tiquet), 'Editar Intervenció');
-                    $crud->addItemLink('assignar', 'fa-screwdriver-wrench', base_url('tiquets/' . $id_tiquet . '/assignar'), 'Assignar Inventari');
+                    //$crud->addItemLink('assignar', 'fa-screwdriver-wrench', base_url('tiquets/' . $id_tiquet . '/assignar'), 'Assignar Inventari');
                     $crud->addItemLink('delete', 'fa-trash', base_url('tiquets/' . $id_tiquet . '/esborrar'), 'Eliminar Intervenció');
                 }
 
